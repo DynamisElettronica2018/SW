@@ -163,27 +163,9 @@ main
 									Glcd_Read_Data
 									Glcd_Write_Data
 							dd_Indicator_clearPrintUpdateRequest
-				dd_Interface_printBoardDebug
-					dd_boardDebug_print
-						dd_boardDebug_setStartPrintIndex
-						dd_boardDebug_printRect
-							dd_boardDebug_drawRect
-								dd_boardDebug_getPrintPosition
-								eGlcd_drawRect
-							dd_boardDebug_writeValue
-								xGlcd_Set_Font
-								dd_boardDebug_getPrintPosition
-								eGlcd_getTextPixelLength
-									strlen
-									xGlcd_Char_Width
-										_Multiply_32x32
-								eGlcd_writeText
-								dd_Indicator_parseValueLabel
-						dd_boardDebug_setPrintValue
 				dd_Dashboard_init
 				dd_Menu_init
 					dd_Menu_reset
-				dd_boardDebug_init
 				d_UI_BoardDebugModeInit
 					dd_GraphicController_setCollectionInterface
 						dd_GraphicController_setInterface
@@ -202,10 +184,8 @@ main
 						strcpy
 						dd_Dashboard_print
 						dd_Interface_printMenu
-						dd_Interface_printBoardDebug
 						dd_Dashboard_init
 						dd_Menu_init
-						dd_boardDebug_init
 						d_UI_BoardDebugModeInit | Recursion.
 				d_UI_SettingsModeInit
 					d_DashboardSetting_updateValue
@@ -289,6 +269,7 @@ main
 						_Div_FP
 						_Float2Longint
 			dd_GraphicController_forceFullFrameUpdate
+	d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		dGear_isNeutralSet
@@ -312,6 +293,9 @@ external4
 					dd_printMessage
 						xGlcd_Set_Font
 						eGlcd_getTextPixelLength
+							strlen
+							xGlcd_Char_Width
+								_Multiply_32x32
 						eGlcd_drawRect
 						eGlcd_writeText
 					dd_GraphicController_setNotificationFlag
@@ -389,7 +373,6 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
-		dSignalLed_switch
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -405,6 +388,11 @@ external1
 	clearExternalInterrupt
 cn_interrupt
 	d_controls_onLeftEncoder
+		dd_Menu_moveSelection
+			Debug_UART_Write
+			dd_Menu_scroll
+				Debug_UART_Write
+	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -418,14 +406,6 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
-		dd_boardDebug_Move
-			dd_boardDebug_setPrintValue
-	d_controls_onRightEncoder
-		dd_Menu_moveSelection
-			Debug_UART_Write
-			dd_Menu_scroll
-				Debug_UART_Write
-		dd_boardDebug_Move
 	clearExternalInterrupt
 timer2_interrupt
 	Buttons_tick
@@ -476,10 +456,8 @@ timer1_interrupt
 		eGlcd_fill
 		dd_Dashboard_print
 		dd_Interface_printMenu
-		dd_Interface_printBoardDebug
 		dd_Dashboard_init
 		dd_Menu_init
-		dd_boardDebug_init
 		d_UI_BoardDebugModeInit
 		d_UI_SettingsModeInit
 		d_UI_DebugModeInit

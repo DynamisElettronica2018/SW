@@ -35,6 +35,10 @@ void main(){
     Debug_UART_Write("ON\r\n");
     d_UIController_init();
     
+    delay_ms(500);
+
+    d_UI_setOperatingMode(BOARD_DEBUG_MODE);
+    
     while(1){
 
     }
@@ -175,24 +179,17 @@ onCanInterrupt{
            dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
            dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
            break;  */
-       /*case GCU_DEBUG_1_ID:
-           dd_Indicator_setIntCoupleValueP(&ind_gcu_board.base, (firstInt), 0);
-           dd_Indicator_setIntCoupleValueP(&ind_H2O_fans.base, 0,(secondInt));
-           dd_Indicator_setIntCoupleValueP(&ind_H2O_pump.base, 0, (thirdInt));
-           dd_Indicator_setIntCoupleValueP(&ind_fuel_pump.base, 0, (fourthInt));
-           /*dd_Indicator_setIntValueP(&ind_ebb_motor_curr.base, (firstInt));
+       case GCU_DEBUG_1_ID:
+           dd_Indicator_setIntValueP(&ind_ebb_motor_curr.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
-           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt)); */
-         //  break; //*/
-      /* case GCU_DEBUG_2_ID:
-           dd_Indicator_setIntCoupleValueP(&ind_gear_motor.base, 0,(firstInt));
-           dd_Indicator_setIntCoupleValueP(&ind_clutch.base, 0, (secondInt));
-           dd_Indicator_setIntCoupleValueP(&ind_drs.base, 0,(thirdInt));
-           /*dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt)); //*/
+           break; //*/
+       case GCU_DEBUG_2_ID:
+           dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
-           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));  */
-          // break;  //*/
+           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt)); // */
+           break;  //*/
       /* case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;     */

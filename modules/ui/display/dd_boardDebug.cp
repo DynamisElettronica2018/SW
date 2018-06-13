@@ -34,11 +34,13 @@ char * strtok(char * s1, char * s2);
 
 
 
-void dd_boardDebug_print() ;
 void dd_boardDebug_init(void);
-void dd_boardDebug_Move(signed char movement);
-void dd_boardDebug_downMovement(void);
-void dd_boardDebug_upMovement(void);
+
+void dd_boardDebug_print(void);
+
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
+
+void dd_boardDebug_moveSelection(signed char movements);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
@@ -48,7 +50,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -1254,156 +1256,200 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
-int dd_downMoves = 0, dd_upMoves =  3 ;
-int dd_currentPage = 0;
-unsigned char dd_StartPrintIndex =  0 ;
-unsigned char dd_PrintValue =  0 ;
-unsigned char dd_upMovement =  0 , dd_downMovement =  0 ;
+#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+static const unsigned char MAX_BOARD_DEBUG_HEIGHT = (unsigned char) ( 64  /  8 );
+
+static const unsigned char MAX_BOARD_DEBUG_WIDTH = (int) ( 128  / ( 6  +  1 ));
 
 
 
 
 
 
+static signed char dd_boardDebug_SelectedLineIndex = 0;
+static signed char dd_boardDebug_FirstLineIndex = 0;
 
 
-static const unsigned char BOARD_RECT_HEIGHT = (unsigned char) ( 64  / 2) - ( 1  * 2) - 2;
-static const unsigned char BOARD_RECT_WIDTH = (unsigned char) (( 128  -  1  * 2) / 2) - 2;
+static unsigned char dd_boardDebug_Height_param = MAX_BOARD_DEBUG_HEIGHT;
+static unsigned char dd_boardDebug_Width = MAX_BOARD_DEBUG_WIDTH;
+static unsigned char dd_boardDebug_X_OFFSET = 0;
+static unsigned char dd_boardDebug_Y_OFFSET = 0;
+static unsigned char dd_boardDebug_Height = MAX_BOARD_DEBUG_HEIGHT;
 
 
+static int dd_boardDebug_DescriptionScrollingTicks = 0;
 
 
-
-
-
-
-
-
-static const unsigned char BOARD_POSITION_COORDINATES[ 4 ][2] = {
- { 1 ,  1 },
- { 128  - BOARD_RECT_WIDTH - 1  * 2 - 1 ,  1 },
- { 1 ,  64  - BOARD_RECT_HEIGHT - 1  * 2 - 1 },
- { 128  - BOARD_RECT_WIDTH - 1  * 2 - 1 ,  64  - BOARD_RECT_HEIGHT - 1  * 2 - 1 }
-};
-
-
-
-
-void dd_boardDebug_setPrintValue(unsigned char index){
- dd_PrintValue = index;
+void dd_boardDebug_reset(void) {
+ dd_boardDebug_SelectedLineIndex = 0;
+ dd_boardDebug_FirstLineIndex = 0;
 }
 
-void dd_boardDebug_setStartPrintIndex(unsigned char index){
- dd_StartPrintIndex = index;
+void dd_boardDebug_init() {
+ dd_boardDebug_reset();
 }
 
-unsigned char dd_boardDebug_getPrintPosition(unsigned char index){
- if(dd_upMoves!= 3  || dd_downMoves!=0){
- return index - 4*(dd_downMoves);
+void dd_boardDebug_setY_OFFSET(unsigned char y) {
+ dd_boardDebug_Y_OFFSET = y;
+ dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
+}
+
+void dd_boardDebug_setX_OFFSET(unsigned char x) {
+ dd_boardDebug_X_OFFSET = x;
+}
+
+void dd_boardDebug_setHeight(unsigned char height) {
+ if (height > MAX_BOARD_DEBUG_HEIGHT) {
+ height = MAX_BOARD_DEBUG_HEIGHT;
  }
- else return index;
+ dd_boardDebug_Height_param = height;
+ dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
 }
 
- void dd_boardDebug_drawRect(unsigned char index) {
- unsigned char x, y;
- index = dd_boardDebug_getPrintPosition(index);
- x = BOARD_POSITION_COORDINATES[index][0];
- y = BOARD_POSITION_COORDINATES[index][1];
-
-  eGlcd_drawRect( x + 1 , y + 1 , BOARD_RECT_WIDTH, BOARD_RECT_HEIGHT ); ;
-#line 78 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+void dd_boardDebug_setWidth(unsigned char width) {
+ if (width > MAX_BOARD_DEBUG_WIDTH) {
+ width = MAX_BOARD_DEBUG_WIDTH;
+ }
+ dd_boardDebug_Width = width;
 }
 
-void dd_boardDebug_writeValue(unsigned char index){
- Indicator* indicator = dd_currentIndicators[index+ 0 ];
- unsigned char print_position;
- unsigned char title_letters = 0;
-  xGlcd_Set_Font ( DynamisFont_xTerminal6x8, 6 , 8 , 32 );
- print_position = dd_boardDebug_getPrintPosition(index);
- if(index +  0  <  7  ){
- title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
- eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2  - title_letters, BOARD_POSITION_COORDINATES[print_position][1] +  1  +  2 );
- eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3* BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- dd_Indicator_parseValueLabel(index+  0  );
- eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4* 1  , BOARD_POSITION_COORDINATES[print_position][1] +  1 *2 + ( 8 +1)*2);
- } else if(index <  7  +  6  && index +  0  >=  7  ){
- title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
- eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2  - title_letters, BOARD_POSITION_COORDINATES[print_position][1] +  1  +  2 );
- eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3* BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- dd_Indicator_parseValueLabel(index+  0  );
- eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4* 1  , BOARD_POSITION_COORDINATES[print_position][1] +  1 *2 + ( 8 +1)*2);
+
+void dd_boardDebug_scroll(signed char movements) {
+ char i;
+ dd_boardDebug_FirstLineIndex+=movements;
+ if ( dd_boardDebug_FirstLineIndex > dd_currentIndicatorsCount - dd_boardDebug_Height_param ) {
+ dd_boardDebug_FirstLineIndex = dd_currentIndicatorsCount - 1 - dd_boardDebug_Height_param;
+ }
+ else if (dd_boardDebug_FirstLineIndex < 0) {
+ dd_boardDebug_FirstLineIndex = 0;
+ }
+ for (i = dd_boardDebug_FirstLineIndex; i < dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param; i++) {
+ dd_currentIndicators[i]->pendingPrintUpdate =  1 ;
  }
 }
 
+void dd_boardDebug_moveSelection(signed char movements) {
+ dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate =  1 ;
+ dd_boardDebug_SelectedLineIndex+=movements;
+ if (dd_boardDebug_SelectedLineIndex >= dd_currentIndicatorsCount) {
+ dd_boardDebug_SelectedLineIndex = dd_currentIndicatorsCount - 1;
+ }
+ else if (dd_boardDebug_SelectedLineIndex < 0) {
+ dd_boardDebug_SelectedLineIndex = 0;
+ }
+ dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate =  1 ;
+ if (dd_boardDebug_SelectedLineIndex >= dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param){
+ dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex - dd_boardDebug_Height_param + 1);
+ }
+ else if (dd_boardDebug_SelectedLineIndex < dd_boardDebug_FirstLineIndex){
+ dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex);
+ }
+}
 
+char dd_boardDebug_isLineSelected(unsigned char lineIndex) {
+ return dd_boardDebug_SelectedLineIndex == lineIndex;
+}
 
- void dd_boardDebug_printRect(unsigned char index){
- dd_boardDebug_drawRect(index);
- dd_boardDebug_writeValue(index);
+unsigned char dd_boardDebugLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
+ unsigned char labelLength;
+ labelLength = dd_currentIndicators[lineIndex]->labelLength;
+ if (labelLength > 0) {
+ return (unsigned char) (dd_boardDebug_Width - labelLength -  1 );
+ } else {
+ return dd_boardDebug_Width;
+ }
+}
+
+unsigned char dd_boardDebugLine_hasToScroll(unsigned char lineIndex) {
+ return dd_boardDebug_isLineSelected(lineIndex) &&
+ dd_currentIndicators[lineIndex]->descriptionLength > dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
+}
+
+void dd_boardDebug_printLine(unsigned char lineIndex) {
+ unsigned char lineNumber, color;
+ char lineText[MAX_BOARD_DEBUG_WIDTH + 1];
+ lineNumber = lineIndex - dd_boardDebug_FirstLineIndex + dd_boardDebug_Y_OFFSET;
+ if (dd_boardDebug_isLineSelected(lineIndex)) {
+ color = WHITE;
+ } else {
+ color = BLACK;
+ }
+ dd_boardDebug_makeLineText(lineText, lineIndex);
+  Glcd_Set_Font( DynamisFont_Terminal6x8, 6 , 8 , 32 ); Glcd_Write_Text(lineText, 0, lineNumber, color); ;
+#line 145 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+ dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
 
 void dd_boardDebug_print() {
- unsigned char index, printIndex;
- if(dd_downMovement || dd_upMovement){
- dd_boardDebug_setStartPrintIndex(dd_printValue);
+ unsigned char i;
+ unsigned char lastLineIndex = dd_boardDebug_FirstLineIndex +
+ (dd_boardDebug_Height_param<=dd_currentIndicatorsCount ? dd_boardDebug_Height_param : dd_currentIndicatorsCount);
+ dd_boardDebug_DescriptionScrollingTicks++;
+ for (i = dd_boardDebug_FirstLineIndex; i < lastLineIndex; i++) {
+ if (dd_Indicator_isRequestingUpdate(i) || dd_boardDebugLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+ dd_boardDebug_printLine(i);
  }
- printIndex = dd_StartPrintIndex;
- for (index = 0; index <  4 ; index++) {
-
- dd_boardDebug_printRect(printIndex);
- printIndex++;
- }
- dd_boardDebug_setPrintValue(printIndex-1);
- if(dd_downMovement || dd_upMovement){
- dd_downMovement =  0 ;
- dd_upMovement =  0 ;
  }
 }
 
-void dd_boardDebug_init(void){
+int dd_boardDebugLine_getScrollingOverflow(unsigned char lineIndex) {
+ return dd_currentIndicators[lineIndex]->descriptionLength +  4 ;
 }
 
+int dd_boardDebugLine_getScrollOffset(unsigned char lineIndex) {
 
-void dd_boardDebug_Move(signed char movement){
- unsigned char value;
- if( dd_downMoves <  3  && movement > 0 ) {
- dd_downMovement =  1 ;
- value = dd_PrintValue+1;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves ++;
- dd_upMoves --;
+ int offset;
+ if (dd_boardDebugLine_hasToScroll(lineIndex)) {
+
+ offset = (int) ( (1.0 / 10 )  * dd_boardDebuG_DescriptionScrollingTicks *  3.5 );
+ if (offset >= dd_boardDebugLine_getScrollingOverflow(lineIndex)) {
+ offset = 0;
+ dd_boardDebug_DescriptionScrollingTicks = 0;
  }
- else if( dd_upMoves <  3  && movement < 0 ) {
- dd_upMovement =  1 ;
- value = dd_PrintValue-7;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves --;
- dd_upMoves ++;
- }
-}
-
-
-void dd_boardDebug_downMovement(){
- unsigned char value;
- if(dd_downMoves <  3 ){
- dd_downMovement =  1 ;
- value = dd_PrintValue-1;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves ++;
- dd_upMoves --;
+ return offset;
+ } else {
+ return 0;
  }
 }
 
-void dd_boardDebug_upMovement(){
- unsigned char value;
- if(dd_upMoves <  3 ){
- dd_upMovement =  1 ;
- value = dd_PrintValue-5;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves --;
- dd_upMoves ++;
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex) {
+ char debug[100];
+
+ int lineCharIndex, i, scrollingOffset, scrollingOverflow;
+ unsigned char descriptionLength, valueWidth, visibleDescriptionWidth;
+ Indicator* item;
+
+ dd_Indicator_parseValueLabel(lineIndex);
+ item = dd_currentIndicators[lineIndex];
+ valueWidth = item->labelLength;
+
+ scrollingOverflow = dd_boardDebugLine_getScrollingOverflow(lineIndex);
+ scrollingOffset = dd_boardDebugLine_getScrollOffset(lineIndex);
+ descriptionLength = item->descriptionLength;
+ visibleDescriptionWidth = dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
+ for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+ i = lineCharIndex + scrollingOffset;
+
+ if (i < descriptionLength) {
+ lineText[lineCharIndex] = (item->description)[i];
  }
+
+
+ else if (i < scrollingOverflow || !dd_boardDebugLine_hasToScroll(lineIndex)) {
+ lineText[lineCharIndex] = ' ';
+ } else {
+ lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
+ }
+ }
+ if (valueWidth > 0) {
+ for (i = 0; i <  1 ; i++) {
+ lineText[lineCharIndex] = ' ';
+ lineCharIndex += 1;
+ }
+ for (i = 0; i < valueWidth; i++) {
+ lineText[lineCharIndex] = (item->label)[i];
+ lineCharIndex += 1;
+ }
+ }
+ lineText[lineCharIndex] = ' ';
 }

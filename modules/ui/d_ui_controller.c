@@ -67,15 +67,13 @@ onTimer1Interrupt{
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+            case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 d_UI_onSettingsChange(movements);
+                 dd_Menu_moveSelection(movements);
                  break;
             case CRUISE_MODE:
             case ACC_MODE:
                  //control EBB
-            case BOARD_DEBUG_MODE:
-                  dd_boardDebug_Move(movements);
-                 break;
             default:
                  return;
      }
@@ -100,16 +98,14 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+              d_UI_onSettingsChange(movements);
+              break;
+            case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                // d_UI_onSettingsChange(movements);
-                 dd_Menu_moveSelection(movements);
-                 break;
+              break;
             case CRUISE_MODE:
             case ACC_MODE:
                  //control TRACTION
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_Move(movements);
-                 break;
             default:
                  return;
      }

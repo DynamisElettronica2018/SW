@@ -9,7 +9,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -321,7 +321,6 @@ extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -338,28 +337,25 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
 extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
-
-
-
-
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 95 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_gcu_temp;
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 128 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;

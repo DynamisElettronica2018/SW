@@ -40,7 +40,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -175,7 +175,6 @@ extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -192,28 +191,25 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
 extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
-
-
-
-
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 95 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_gcu_temp;
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 128 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -297,19 +293,18 @@ int getMinimumAnalogClockConversion(void);
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 69 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
@@ -375,11 +370,13 @@ void dd_Menu_moveSelection(signed char movements);
 
 
 
-void dd_boardDebug_print() ;
 void dd_boardDebug_init(void);
-void dd_boardDebug_Move(signed char movement);
-void dd_boardDebug_downMovement(void);
-void dd_boardDebug_upMovement(void);
+
+void dd_boardDebug_print(void);
+
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
+
+void dd_boardDebug_moveSelection(signed char movements);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
@@ -564,44 +561,40 @@ void printf(char* string);
 void d_controls_onLeftEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
- case DEBUG_MODE:
- d_UI_onSettingsChange(movements);
- break;
- case CRUISE_MODE:
- case ACC_MODE:
-
  case BOARD_DEBUG_MODE:
- dd_boardDebug_Move(movements);
- break;
- default:
- return;
- }
-}
-#line 100 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
-void d_controls_onRightEncoder(signed char movements) {
- switch (d_currentOperatingMode) {
- case SETTINGS_MODE:
  case DEBUG_MODE:
-
  dd_Menu_moveSelection(movements);
  break;
  case CRUISE_MODE:
  case ACC_MODE:
 
- case BOARD_DEBUG_MODE:
- dd_boardDebug_Move(movements);
- break;
  default:
  return;
  }
 }
-#line 135 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 98 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+void d_controls_onRightEncoder(signed char movements) {
+ switch (d_currentOperatingMode) {
+ case SETTINGS_MODE:
+ d_UI_onSettingsChange(movements);
+ break;
+ case BOARD_DEBUG_MODE:
+ case DEBUG_MODE:
+ break;
+ case CRUISE_MODE:
+ case ACC_MODE:
+
+ default:
+ return;
+ }
+}
+#line 131 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_selectorPositionToMode(signed char position){
  if (position >  1  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 143 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 139 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

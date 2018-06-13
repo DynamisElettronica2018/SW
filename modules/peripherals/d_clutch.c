@@ -4,7 +4,6 @@
 
 #include "d_clutch.h"
 #include "d_operating_modes.h"
-#include "d_signalLed.h"
 
 #define GCU_COMMAND_IS_ALIVE 99
 
@@ -28,7 +27,7 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
     if (clutch_check == GCU_COMMAND_IS_ALIVE){
         dClutch_actualValue = value;
         dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
-        dSignalLed_switch(DSIGNAL_LED_GREEN);
+        //dSignalLed_switch(DSIGNAL_LED_GREEN);
         //dd_Indicator_setIntValue(CLUTCH_POSITION, dClutch_value);
        }
 }

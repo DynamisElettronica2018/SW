@@ -60,7 +60,6 @@ extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-//extern FloatIndicator ind_gcu_temp;
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -77,7 +76,6 @@ extern FloatIndicator ind_ebb_motor_curr;
 /*********************************** BOARDS ***********************************/
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
 extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
@@ -86,22 +84,22 @@ extern IntCoupleIndicator ind_dau_r_board;
 
 
 /*********************************** SENSORS **********************************/
-
+/*
 extern IntCoupleIndicator ind_fuel_pump;
 extern IntCoupleIndicator ind_H2O_pump;
 extern IntCoupleIndicator ind_H2O_fans;
 extern IntCoupleIndicator ind_clutch;
 extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
+extern IntCoupleIndicator ind_gear_motor;*/
 
-/*
-extern IntIndicator ind_fuel_pump;
-extern IntIndicator ind_H2O_pump;
-extern IntIndicator ind_H2O_fans;
-extern IntIndicator ind_clutch;
-extern IntIndicator ind_drs;
-extern IntIndicator ind_gear_motor;
-*/
+extern IntegerIndicator ind_gcu_temp;
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+
 
 /**        \name Operating Mode methods
 *        

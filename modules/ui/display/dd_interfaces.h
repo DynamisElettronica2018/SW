@@ -5,14 +5,13 @@
 
 #define MAX_INTERFACE_TITLE_LENGTH 20        //!< Maximum length of interface title.
 #define DEFAULT_INTERFACE DASHBOARD_INTERFACE        
-#define INTERFACES_TOTAL_COUNT 4       //!< Number of interfaces defined in #Interface.
+#define INTERFACES_TOTAL_COUNT 3       //!< Number of interfaces defined in #Interface.
 
 //! Defines all interfaces.
 /// [Interface definitions]
 typedef enum {
         DASHBOARD_INTERFACE, 
         MENU_INTERFACE,
-        BOARD_DEBUG_INTERFACE
 } Interface;
 /// [Interface definitions]
 
