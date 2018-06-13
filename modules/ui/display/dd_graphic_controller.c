@@ -227,31 +227,8 @@ char dd_GraphicController_isColorInversionQueued(void) {               //inutile
 
 int __counter = 0;
 unsigned char clutchvalue = 0;
-void dd_GraphicController_onTimerInterrupt(void) 
-{
-     dRpm_updateLedStripe();
-
-      if (clutchvalue == 0) {
-         Can_writeByte(SW_FIRE_GCU_ID, TRUE);
-         /*if (!dGear_isNeutralSet) {   //non funziona! CONTROLLARE CHE IL MOTORE SIA IN FOLLE PRIMA DI ACCENDERE!!!
-             if (dGear_get() == 1) {
-                 Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
-             } else if (dGear_get() == 2) {
-                 Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
-             }
-         } */
-         clutchvalue++;
-      }
-      
-      if( __counter == 10 ||  __counter == 20 ||  __counter == 30 ||  __counter == 40){
-          dGear_requestGearUp();
-          } else if(  __counter == 50 ||  __counter == 60 ||  __counter == 70 ||  __counter == 80 ) {
-              dGear_requestGearDown();
-           } else if (__counter > 80){
-             __counter = 0;
-          }
-          __counter++;
-
+void dd_GraphicController_onTimerInterrupt(void)  //0.1 s
+    //dRpm_updateLedStripe();
     if(dd_onStartup)
     {
         //UART1_Write_Text("onStartup\n");

@@ -131,9 +131,9 @@ _dd_GraphicController_init:
 ;dd_graphic_controller.c,90 :: 		if (!dHardReset_hasBeenReset()) {
 	CALL	_dHardReset_hasBeenReset
 	CP0.B	W0
-	BRA Z	L__dd_GraphicController_init50
+	BRA Z	L__dd_GraphicController_init30
 	GOTO	L_dd_GraphicController_init0
-L__dd_GraphicController_init50:
+L__dd_GraphicController_init30:
 ;dd_graphic_controller.c,91 :: 		dd_GraphicController_startupLogo();
 	CALL	_dd_GraphicController_startupLogo
 ;dd_graphic_controller.c,92 :: 		}
@@ -173,9 +173,9 @@ _dd_GraphicController_areColorsInverted:
 	MOV.B	[W0], W0
 	CP.B	W0, #0
 	CLR.B	W0
-	BRA NZ	L__dd_GraphicController_areColorsInverted53
+	BRA NZ	L__dd_GraphicController_areColorsInverted33
 	INC.B	W0
-L__dd_GraphicController_areColorsInverted53:
+L__dd_GraphicController_areColorsInverted33:
 ;dd_graphic_controller.c,105 :: 		}
 L_end_dd_GraphicController_areColorsInverted:
 	RETURN
@@ -233,9 +233,9 @@ _dd_GraphicController_setCollectionInterface:
 	MOV	W13, W10
 	CALL	_strlen
 	CP	W0, #20
-	BRA LT	L__dd_GraphicController_setCollectionInterface56
+	BRA LT	L__dd_GraphicController_setCollectionInterface36
 	GOTO	L_dd_GraphicController_setCollectionInterface1
-L__dd_GraphicController_setCollectionInterface56:
+L__dd_GraphicController_setCollectionInterface36:
 ;dd_graphic_controller.c,124 :: 		strcpy(dd_currentInterfaceTitle, title);
 	PUSH	W11
 	MOV	W13, W11
@@ -392,9 +392,9 @@ _dd_GraphicController_handleNotification:
 ;dd_graphic_controller.c,176 :: 		if (dd_notificationTicks > 0) {
 	MOV	_dd_notificationTicks, W0
 	CP	W0, #0
-	BRA GTU	L__dd_GraphicController_handleNotification66
+	BRA GTU	L__dd_GraphicController_handleNotification46
 	GOTO	L_dd_GraphicController_handleNotification2
-L__dd_GraphicController_handleNotification66:
+L__dd_GraphicController_handleNotification46:
 ;dd_graphic_controller.c,177 :: 		dd_notificationTicks -= 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_dd_notificationTicks), W0
@@ -402,9 +402,9 @@ L__dd_GraphicController_handleNotification66:
 ;dd_graphic_controller.c,178 :: 		if (dd_notificationTicks == 0) {
 	MOV	_dd_notificationTicks, W0
 	CP	W0, #0
-	BRA Z	L__dd_GraphicController_handleNotification67
+	BRA Z	L__dd_GraphicController_handleNotification47
 	GOTO	L_dd_GraphicController_handleNotification3
-L__dd_GraphicController_handleNotification67:
+L__dd_GraphicController_handleNotification47:
 ;dd_graphic_controller.c,179 :: 		dd_GraphicController_clearNotification();
 	CALL	_dd_GraphicController_clearNotification
 ;dd_graphic_controller.c,180 :: 		}
@@ -422,9 +422,9 @@ _dd_GraphicController_printFrame:
 ;dd_graphic_controller.c,185 :: 		if (dd_isColorInversionQueued) {
 	MOV	#lo_addr(dd_graphic_controller_dd_isColorInversionQueued), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_printFrame69
+	BRA NZ	L__dd_GraphicController_printFrame49
 	GOTO	L_dd_GraphicController_printFrame4
-L__dd_GraphicController_printFrame69:
+L__dd_GraphicController_printFrame49:
 ;dd_graphic_controller.c,186 :: 		eGlcd_invertColors();
 	CALL	_eGlcd_invertColors
 ;dd_graphic_controller.c,187 :: 		dd_isColorInversionQueued = FALSE;
@@ -436,17 +436,17 @@ L_dd_GraphicController_printFrame4:
 ;dd_graphic_controller.c,189 :: 		if (dd_isInterfaceChangedFromLastFrame || dd_isNextFrameUpdateForced) {
 	MOV	#lo_addr(dd_graphic_controller_dd_isInterfaceChangedFromLastFrame), W0
 	CP0.B	[W0]
-	BRA Z	L__dd_GraphicController_printFrame70
-	GOTO	L__dd_GraphicController_printFrame32
-L__dd_GraphicController_printFrame70:
+	BRA Z	L__dd_GraphicController_printFrame50
+	GOTO	L__dd_GraphicController_printFrame22
+L__dd_GraphicController_printFrame50:
 	MOV	#lo_addr(dd_graphic_controller_dd_isNextFrameUpdateForced), W0
 	CP0.B	[W0]
-	BRA Z	L__dd_GraphicController_printFrame71
-	GOTO	L__dd_GraphicController_printFrame31
-L__dd_GraphicController_printFrame71:
+	BRA Z	L__dd_GraphicController_printFrame51
+	GOTO	L__dd_GraphicController_printFrame21
+L__dd_GraphicController_printFrame51:
 	GOTO	L_dd_GraphicController_printFrame7
-L__dd_GraphicController_printFrame32:
-L__dd_GraphicController_printFrame31:
+L__dd_GraphicController_printFrame22:
+L__dd_GraphicController_printFrame21:
 ;dd_graphic_controller.c,190 :: 		eGlcd_clear();
 	CALL	_eGlcd_clear
 ;dd_graphic_controller.c,191 :: 		dd_GraphicController_forceFullFrameUpdate();
@@ -468,9 +468,9 @@ L_dd_GraphicController_printFrame7:
 ;dd_graphic_controller.c,195 :: 		if (dd_GraphicController_isFrameUpdateForced) {
 	MOV	#lo_addr(_dd_GraphicController_isFrameUpdateForced), W0
 	CP0	W0
-	BRA NZ	L__dd_GraphicController_printFrame72
+	BRA NZ	L__dd_GraphicController_printFrame52
 	GOTO	L_dd_GraphicController_printFrame8
-L__dd_GraphicController_printFrame72:
+L__dd_GraphicController_printFrame52:
 ;dd_graphic_controller.c,196 :: 		dd_isFrameUpdateForced = FALSE;
 	MOV	#lo_addr(dd_graphic_controller_dd_isFrameUpdateForced), W1
 	CLR	W0
@@ -480,9 +480,9 @@ L_dd_GraphicController_printFrame8:
 ;dd_graphic_controller.c,198 :: 		if (dd_isNextFrameUpdateForced) {
 	MOV	#lo_addr(dd_graphic_controller_dd_isNextFrameUpdateForced), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_printFrame73
+	BRA NZ	L__dd_GraphicController_printFrame53
 	GOTO	L_dd_GraphicController_printFrame9
-L__dd_GraphicController_printFrame73:
+L__dd_GraphicController_printFrame53:
 ;dd_graphic_controller.c,199 :: 		dd_isNextFrameUpdateForced = FALSE;
 	MOV	#lo_addr(dd_graphic_controller_dd_isNextFrameUpdateForced), W1
 	CLR	W0
@@ -567,154 +567,49 @@ L_end_dd_GraphicController_isColorInversionQueued:
 _dd_GraphicController_onTimerInterrupt:
 
 ;dd_graphic_controller.c,230 :: 		void dd_GraphicController_onTimerInterrupt(void)
-;dd_graphic_controller.c,232 :: 		dRpm_updateLedStripe();
+;dd_graphic_controller.c,234 :: 		if(dd_onStartup)
 	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	CALL	_dRpm_updateLedStripe
-;dd_graphic_controller.c,234 :: 		if (clutchvalue == 0) {
-	MOV	#lo_addr(_clutchvalue), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #0
-	BRA Z	L__dd_GraphicController_onTimerInterrupt81
-	GOTO	L_dd_GraphicController_onTimerInterrupt10
-L__dd_GraphicController_onTimerInterrupt81:
-;dd_graphic_controller.c,235 :: 		Can_writeByte(SW_FIRE_GCU_ID, TRUE);
-	MOV.B	#1, W12
-	MOV	#516, W10
-	MOV	#0, W11
-	CALL	_Can_writeByte
-;dd_graphic_controller.c,243 :: 		clutchvalue++;
-	MOV.B	#1, W1
-	MOV	#lo_addr(_clutchvalue), W0
-	ADD.B	W1, [W0], [W0]
-;dd_graphic_controller.c,244 :: 		}
-L_dd_GraphicController_onTimerInterrupt10:
-;dd_graphic_controller.c,246 :: 		if( __counter == 10 ||  __counter == 20 ||  __counter == 30 ||  __counter == 40){
-	MOV	___counter, W0
-	CP	W0, #10
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt82
-	GOTO	L__dd_GraphicController_onTimerInterrupt38
-L__dd_GraphicController_onTimerInterrupt82:
-	MOV	___counter, W0
-	CP	W0, #20
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt83
-	GOTO	L__dd_GraphicController_onTimerInterrupt37
-L__dd_GraphicController_onTimerInterrupt83:
-	MOV	___counter, W0
-	CP	W0, #30
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt84
-	GOTO	L__dd_GraphicController_onTimerInterrupt36
-L__dd_GraphicController_onTimerInterrupt84:
-	MOV	#40, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt85
-	GOTO	L__dd_GraphicController_onTimerInterrupt35
-L__dd_GraphicController_onTimerInterrupt85:
-	GOTO	L_dd_GraphicController_onTimerInterrupt13
-L__dd_GraphicController_onTimerInterrupt38:
-L__dd_GraphicController_onTimerInterrupt37:
-L__dd_GraphicController_onTimerInterrupt36:
-L__dd_GraphicController_onTimerInterrupt35:
-;dd_graphic_controller.c,247 :: 		dGear_requestGearUp();
-	CALL	_dGear_requestGearUp
-;dd_graphic_controller.c,248 :: 		} else if(  __counter == 50 ||  __counter == 60 ||  __counter == 70 ||  __counter == 80 ) {
-	GOTO	L_dd_GraphicController_onTimerInterrupt14
-L_dd_GraphicController_onTimerInterrupt13:
-	MOV	#50, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt86
-	GOTO	L__dd_GraphicController_onTimerInterrupt42
-L__dd_GraphicController_onTimerInterrupt86:
-	MOV	#60, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt87
-	GOTO	L__dd_GraphicController_onTimerInterrupt41
-L__dd_GraphicController_onTimerInterrupt87:
-	MOV	#70, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt88
-	GOTO	L__dd_GraphicController_onTimerInterrupt40
-L__dd_GraphicController_onTimerInterrupt88:
-	MOV	#80, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt89
-	GOTO	L__dd_GraphicController_onTimerInterrupt39
-L__dd_GraphicController_onTimerInterrupt89:
-	GOTO	L_dd_GraphicController_onTimerInterrupt17
-L__dd_GraphicController_onTimerInterrupt42:
-L__dd_GraphicController_onTimerInterrupt41:
-L__dd_GraphicController_onTimerInterrupt40:
-L__dd_GraphicController_onTimerInterrupt39:
-;dd_graphic_controller.c,249 :: 		dGear_requestGearDown();
-	CALL	_dGear_requestGearDown
-;dd_graphic_controller.c,250 :: 		} else if (__counter > 80){
-	GOTO	L_dd_GraphicController_onTimerInterrupt18
-L_dd_GraphicController_onTimerInterrupt17:
-	MOV	#80, W1
-	MOV	#lo_addr(___counter), W0
-	CP	W1, [W0]
-	BRA LT	L__dd_GraphicController_onTimerInterrupt90
-	GOTO	L_dd_GraphicController_onTimerInterrupt19
-L__dd_GraphicController_onTimerInterrupt90:
-;dd_graphic_controller.c,251 :: 		__counter = 0;
-	CLR	W0
-	MOV	W0, ___counter
-;dd_graphic_controller.c,252 :: 		}
-L_dd_GraphicController_onTimerInterrupt19:
-L_dd_GraphicController_onTimerInterrupt18:
-L_dd_GraphicController_onTimerInterrupt14:
-;dd_graphic_controller.c,253 :: 		__counter++;
-	MOV	#1, W1
-	MOV	#lo_addr(___counter), W0
-	ADD	W1, [W0], [W0]
-;dd_graphic_controller.c,263 :: 		if(dd_onStartup)
 	MOV	#lo_addr(_dd_onStartup), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt91
-	GOTO	L_dd_GraphicController_onTimerInterrupt20
-L__dd_GraphicController_onTimerInterrupt91:
-;dd_graphic_controller.c,266 :: 		dd_tmr1Counter++;
+	BRA NZ	L__dd_GraphicController_onTimerInterrupt61
+	GOTO	L_dd_GraphicController_onTimerInterrupt10
+L__dd_GraphicController_onTimerInterrupt61:
+;dd_graphic_controller.c,237 :: 		dd_tmr1Counter++;
 	MOV.B	#1, W1
 	MOV	#lo_addr(_dd_tmr1Counter), W0
 	ADD.B	W1, [W0], [W0]
-;dd_graphic_controller.c,267 :: 		if(dd_tmr1Counter  >= dd_onStartupCounterLimit)
+;dd_graphic_controller.c,238 :: 		if(dd_tmr1Counter  >= dd_onStartupCounterLimit)
 	MOV	#lo_addr(_dd_tmr1Counter), W0
 	MOV.B	[W0], W1
 	MOV	#lo_addr(_dd_onStartupCounterLimit), W0
 	CP.B	W1, [W0]
-	BRA GEU	L__dd_GraphicController_onTimerInterrupt92
-	GOTO	L_dd_GraphicController_onTimerInterrupt21
-L__dd_GraphicController_onTimerInterrupt92:
-;dd_graphic_controller.c,269 :: 		dd_onStartup = 0;
+	BRA GEU	L__dd_GraphicController_onTimerInterrupt62
+	GOTO	L_dd_GraphicController_onTimerInterrupt11
+L__dd_GraphicController_onTimerInterrupt62:
+;dd_graphic_controller.c,240 :: 		dd_onStartup = 0;
 	MOV	#lo_addr(_dd_onStartup), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,270 :: 		dd_tmr1Counter = 0;
+;dd_graphic_controller.c,241 :: 		dd_tmr1Counter = 0;
 	MOV	#lo_addr(_dd_tmr1Counter), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,271 :: 		eGlcd_clear();
+;dd_graphic_controller.c,242 :: 		eGlcd_clear();
 	CALL	_eGlcd_clear
-;dd_graphic_controller.c,272 :: 		}
-L_dd_GraphicController_onTimerInterrupt21:
-;dd_graphic_controller.c,273 :: 		}
-	GOTO	L_dd_GraphicController_onTimerInterrupt22
-L_dd_GraphicController_onTimerInterrupt20:
-;dd_graphic_controller.c,276 :: 		if(dd_isInterfaceChangedFromLastFrame)
+;dd_graphic_controller.c,243 :: 		}
+L_dd_GraphicController_onTimerInterrupt11:
+;dd_graphic_controller.c,244 :: 		}
+	GOTO	L_dd_GraphicController_onTimerInterrupt12
+L_dd_GraphicController_onTimerInterrupt10:
+;dd_graphic_controller.c,247 :: 		if(dd_isInterfaceChangedFromLastFrame)
 	MOV	#lo_addr(dd_graphic_controller_dd_isInterfaceChangedFromLastFrame), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt93
-	GOTO	L_dd_GraphicController_onTimerInterrupt23
-L__dd_GraphicController_onTimerInterrupt93:
-;dd_graphic_controller.c,278 :: 		eGlcd_clear();
+	BRA NZ	L__dd_GraphicController_onTimerInterrupt63
+	GOTO	L_dd_GraphicController_onTimerInterrupt13
+L__dd_GraphicController_onTimerInterrupt63:
+;dd_graphic_controller.c,249 :: 		eGlcd_clear();
 	CALL	_eGlcd_clear
-;dd_graphic_controller.c,280 :: 		dd_Interface_print[dd_currentInterface]();
+;dd_graphic_controller.c,251 :: 		dd_Interface_print[dd_currentInterface]();
 	MOV	#lo_addr(dd_graphic_controller_dd_currentInterface), W0
 	ZE	[W0], W0
 	SL	W0, #1, W1
@@ -722,58 +617,58 @@ L__dd_GraphicController_onTimerInterrupt93:
 	ADD	W0, W1, W0
 	MOV	[W0], W0
 	CALL	W0
-;dd_graphic_controller.c,282 :: 		dd_printMessage(dd_currentInterfaceTitle);
+;dd_graphic_controller.c,253 :: 		dd_printMessage(dd_currentInterfaceTitle);
 	MOV	#lo_addr(_dd_currentInterfaceTitle), W10
 	CALL	_dd_printMessage
-;dd_graphic_controller.c,284 :: 		dd_isInterfaceChangedFromLastFrame = 0;
+;dd_graphic_controller.c,255 :: 		dd_isInterfaceChangedFromLastFrame = 0;
 	MOV	#lo_addr(dd_graphic_controller_dd_isInterfaceChangedFromLastFrame), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,285 :: 		}
-	GOTO	L_dd_GraphicController_onTimerInterrupt24
-L_dd_GraphicController_onTimerInterrupt23:
-;dd_graphic_controller.c,286 :: 		else if (dd_notificationFlag) {
+;dd_graphic_controller.c,256 :: 		}
+	GOTO	L_dd_GraphicController_onTimerInterrupt14
+L_dd_GraphicController_onTimerInterrupt13:
+;dd_graphic_controller.c,257 :: 		else if (dd_notificationFlag) {
 	MOV	#lo_addr(dd_graphic_controller_dd_notificationFlag), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt94
-	GOTO	L_dd_GraphicController_onTimerInterrupt25
-L__dd_GraphicController_onTimerInterrupt94:
-;dd_graphic_controller.c,287 :: 		dd_GraphicController_handleNotification();
+	BRA NZ	L__dd_GraphicController_onTimerInterrupt64
+	GOTO	L_dd_GraphicController_onTimerInterrupt15
+L__dd_GraphicController_onTimerInterrupt64:
+;dd_graphic_controller.c,258 :: 		dd_GraphicController_handleNotification();
 	CALL	_dd_GraphicController_handleNotification
-;dd_graphic_controller.c,288 :: 		}
-	GOTO	L_dd_GraphicController_onTimerInterrupt26
-L_dd_GraphicController_onTimerInterrupt25:
-;dd_graphic_controller.c,289 :: 		else if (dd_onInterfaceChange)
+;dd_graphic_controller.c,259 :: 		}
+	GOTO	L_dd_GraphicController_onTimerInterrupt16
+L_dd_GraphicController_onTimerInterrupt15:
+;dd_graphic_controller.c,260 :: 		else if (dd_onInterfaceChange)
 	MOV	#lo_addr(_dd_onInterfaceChange), W0
 	CP0.B	[W0]
-	BRA NZ	L__dd_GraphicController_onTimerInterrupt95
-	GOTO	L_dd_GraphicController_onTimerInterrupt27
-L__dd_GraphicController_onTimerInterrupt95:
-;dd_graphic_controller.c,298 :: 		dd_tmr1Counter++;
+	BRA NZ	L__dd_GraphicController_onTimerInterrupt65
+	GOTO	L_dd_GraphicController_onTimerInterrupt17
+L__dd_GraphicController_onTimerInterrupt65:
+;dd_graphic_controller.c,269 :: 		dd_tmr1Counter++;
 	MOV.B	#1, W1
 	MOV	#lo_addr(_dd_tmr1Counter), W0
 	ADD.B	W1, [W0], [W0]
-;dd_graphic_controller.c,299 :: 		if(dd_tmr1Counter  >= dd_onInterfaceChangeCounterLimit)
+;dd_graphic_controller.c,270 :: 		if(dd_tmr1Counter  >= dd_onInterfaceChangeCounterLimit)
 	MOV	#lo_addr(_dd_tmr1Counter), W0
 	MOV.B	[W0], W1
 	MOV	#lo_addr(_dd_onInterfaceChangeCounterLimit), W0
 	CP.B	W1, [W0]
-	BRA GEU	L__dd_GraphicController_onTimerInterrupt96
-	GOTO	L_dd_GraphicController_onTimerInterrupt28
-L__dd_GraphicController_onTimerInterrupt96:
-;dd_graphic_controller.c,302 :: 		dd_onInterfaceChange = 0;
+	BRA GEU	L__dd_GraphicController_onTimerInterrupt66
+	GOTO	L_dd_GraphicController_onTimerInterrupt18
+L__dd_GraphicController_onTimerInterrupt66:
+;dd_graphic_controller.c,273 :: 		dd_onInterfaceChange = 0;
 	MOV	#lo_addr(_dd_onInterfaceChange), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,303 :: 		dd_tmr1Counter = 0;
+;dd_graphic_controller.c,274 :: 		dd_tmr1Counter = 0;
 	MOV	#lo_addr(_dd_tmr1Counter), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,304 :: 		eGlcd_fill(WHITE);
+;dd_graphic_controller.c,275 :: 		eGlcd_fill(WHITE);
 	MOV	#lo_addr(_WHITE), W0
 	MOV.B	[W0], W10
 	CALL	_eGlcd_fill
-;dd_graphic_controller.c,305 :: 		dd_Interface_print[dd_currentInterface]();
+;dd_graphic_controller.c,276 :: 		dd_Interface_print[dd_currentInterface]();
 	MOV	#lo_addr(dd_graphic_controller_dd_currentInterface), W0
 	ZE	[W0], W0
 	SL	W0, #1, W1
@@ -781,16 +676,16 @@ L__dd_GraphicController_onTimerInterrupt96:
 	ADD	W0, W1, W0
 	MOV	[W0], W0
 	CALL	W0
-;dd_graphic_controller.c,306 :: 		dd_isFrameUpdateForced = FALSE;
+;dd_graphic_controller.c,277 :: 		dd_isFrameUpdateForced = FALSE;
 	MOV	#lo_addr(dd_graphic_controller_dd_isFrameUpdateForced), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,307 :: 		}
-L_dd_GraphicController_onTimerInterrupt28:
-;dd_graphic_controller.c,308 :: 		}
-	GOTO	L_dd_GraphicController_onTimerInterrupt29
-L_dd_GraphicController_onTimerInterrupt27:
-;dd_graphic_controller.c,312 :: 		dd_Interface_print[dd_currentInterface]();
+;dd_graphic_controller.c,278 :: 		}
+L_dd_GraphicController_onTimerInterrupt18:
+;dd_graphic_controller.c,279 :: 		}
+	GOTO	L_dd_GraphicController_onTimerInterrupt19
+L_dd_GraphicController_onTimerInterrupt17:
+;dd_graphic_controller.c,283 :: 		dd_Interface_print[dd_currentInterface]();
 	MOV	#lo_addr(dd_graphic_controller_dd_currentInterface), W0
 	ZE	[W0], W0
 	SL	W0, #1, W1
@@ -798,22 +693,20 @@ L_dd_GraphicController_onTimerInterrupt27:
 	ADD	W0, W1, W0
 	MOV	[W0], W0
 	CALL	W0
-;dd_graphic_controller.c,313 :: 		dd_isFrameUpdateForced = FALSE;
+;dd_graphic_controller.c,284 :: 		dd_isFrameUpdateForced = FALSE;
 	MOV	#lo_addr(dd_graphic_controller_dd_isFrameUpdateForced), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;dd_graphic_controller.c,314 :: 		}
-L_dd_GraphicController_onTimerInterrupt29:
-L_dd_GraphicController_onTimerInterrupt26:
-L_dd_GraphicController_onTimerInterrupt24:
-;dd_graphic_controller.c,318 :: 		}
-L_dd_GraphicController_onTimerInterrupt22:
-;dd_graphic_controller.c,320 :: 		clearTimer1();
+;dd_graphic_controller.c,285 :: 		}
+L_dd_GraphicController_onTimerInterrupt19:
+L_dd_GraphicController_onTimerInterrupt16:
+L_dd_GraphicController_onTimerInterrupt14:
+;dd_graphic_controller.c,289 :: 		}
+L_dd_GraphicController_onTimerInterrupt12:
+;dd_graphic_controller.c,291 :: 		clearTimer1();
 	BCLR	IFS0bits, #3
-;dd_graphic_controller.c,332 :: 		}
+;dd_graphic_controller.c,303 :: 		}
 L_end_dd_GraphicController_onTimerInterrupt:
-	POP	W12
-	POP	W11
 	POP	W10
 	RETURN
 ; end of _dd_GraphicController_onTimerInterrupt

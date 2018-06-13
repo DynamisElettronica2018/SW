@@ -443,25 +443,6 @@ timer2_interrupt
 		Can_writeByte
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dRpm_updateLedStripe
-			ceil
-			I2CExpander_setPort
-				I2C1_Start
-				I2C1_Write
-				I2C1_Stop
-			_Long2Float
-			_Float2Longint
-		Can_writeByte
-		dGear_requestGearUp
-			dGear_canGearUp
-			Can_writeInt
-				Can_resetWritePacket
-				Can_addIntToWritePacket
-					Can_addByteToWritePacket
-				Can_write
-		dGear_requestGearDown
-			dGear_canGearDown
-			Can_writeInt
 		eGlcd_clear
 		dd_printMessage
 		dd_GraphicController_handleNotification
@@ -481,6 +462,14 @@ timer1_interrupt
 external0
 	d_controls_onGearUp
 		dGear_requestGearUp
+			dGear_canGearUp
+			Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+					Can_addByteToWritePacket
+				Can_write
 	d_controls_onGearDown
 		dGear_requestGearDown
+			dGear_canGearDown
+			Can_writeInt
 	clearExternalInterrupt

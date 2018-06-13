@@ -35,7 +35,7 @@ diagnostics: 55	123	Compiled Successfully	d_rio.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 188	123	Compiled Successfully	dd_dashboard.c
 diagnostics: 0	122	Compilation Started	eglcd.h
-diagnostics: 332	123	Compiled Successfully	dd_graphic_controller.c
+diagnostics: 303	123	Compiled Successfully	dd_graphic_controller.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 208	123	Compiled Successfully	dd_indicators.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -66,8 +66,8 @@ diagnostics: 0	122	Compilation Started	d_controls.h
 diagnostics: 143	123	Compiled Successfully	d_ui_controller.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 22	123	Compiled Successfully	d_sensors.c
-diagnostics: 0	127	All files Compiled in 2953 ms	 
+diagnostics: 0	127	All files Compiled in 3203 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 860 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 4032 ms	 
-diagnostics: 0	103	Finished successfully: 13 giu 2018, 16:24:13	DPX.mcpds
+diagnostics: 0	128	Linked in 875 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 4344 ms	 
+diagnostics: 0	103	Finished successfully: 13 giu 2018, 16:38:40	DPX.mcpds
