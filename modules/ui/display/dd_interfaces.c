@@ -30,7 +30,6 @@ void (*dd_Interface_print[INTERFACES_TOTAL_COUNT])(void) = {
      dd_Dashboard_print,
      dd_Interface_printMenu,
      dd_Interface_printBoardDebug
-
 };
 
 void (*dd_Interface_init[INTERFACES_TOTAL_COUNT])(void) = {

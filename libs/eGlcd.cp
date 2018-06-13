@@ -170,13 +170,8 @@ void eGlcd_init() {
 
 
 
-
-
- Glcd_Init();
-
- if ( 80  >  80 ) {
- eGlcd_setupTimer();
- }
+ _Lcd_Init();
+#line 53 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_invertColors(void) {
@@ -191,10 +186,8 @@ void eGlcd_fill(unsigned char color) {
  char hex = 0;
  if (color) hex = 0xFF;
 
-
-
- Glcd_Fill(color);
-
+ _frameBuffer_Fill(color);
+#line 77 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 
@@ -247,10 +240,8 @@ void eGlcd_writeText(char *text, unsigned char x, unsigned char y) {
 void eGlcd_loadImage(const char *image)
 {
 
-
-
- Glcd_Image(image);
-
+ _frameBuffer_LoadImage(image);
+#line 133 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_setupTimer(void) {
@@ -508,9 +499,24 @@ unsigned char _frameBuffer_Read(){
 }
 
 void _UART_DebugFrame(){
-#line 424 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
+ int i = 0;
+ int j=7;
+ char z = 0;
+ char byte;
+
+ for (z=0; z<2; z++)
+ {
+ for (i=0; i<64; i++)
+ {
+ for(j=7; j>=0; j--)
+ {
+ UART1_Write(frameBuffer[i+j*64+z*512]);
+ }
+ }
+ }
+#line 423 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
-#line 434 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
+#line 433 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 void printf(char* string);
 extern char str[100];
 
@@ -553,30 +559,22 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  for(k=startSide; k<=endSide && lastX>0; k++)
  {
 
-
-
- Glcd_Set_Side(k*64);
-
+ _frame_buff_side = k;
+#line 479 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for (i=page; i<page+pageCount && i<8; i++)
  {
 
-
-
-
- Glcd_Set_Page(i);
- Glcd_Set_X(xOffset);
-
+ _frame_buff_page = i;
+ _frame_buff_y = xOffset;
+#line 488 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if(i==page)
  {
  for (j=xOffset; j <= lastX; j++)
  {
  byte = ~(0xFF<<pageOffset);
 
-
-
- Glcd_Read_Data();
- rByte = Glcd_Read_Data();
-
+ rByte = _frameBuffer_Read();
+#line 499 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  byte&=rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -588,18 +586,13 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  if(j>=62)
  {
 
-
-
- Glcd_Set_Page(i);
-
+ _frame_buff_page = i;
+#line 514 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 
-
-
-
- Glcd_Set_X(j);
- Glcd_Write_Data(byte);
-
+ _frame_buff_y = j;
+ _frameBuffer_Write(byte);
+#line 522 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
  else if (i == (page+pageCount-1) && pageOverflow)
@@ -608,11 +601,8 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  {
  byte = (0xFF<<pageOverflow);
 
-
-
- Glcd_Read_Data();
- rByte = Glcd_Read_Data();
-
+ rByte = _frameBuffer_Read();
+#line 535 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  byte &= rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -624,18 +614,13 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  if(j>=61)
  {
 
-
-
- Glcd_Set_Page(i);
-
+ _frame_buff_page = i;
+#line 550 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 
-
-
-
- Glcd_Set_X(j);
- Glcd_Write_Data(byte);
-
+ _frame_buff_y = j;
+ _frameBuffer_Write(byte);
+#line 558 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
  else
@@ -647,10 +632,8 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  else
  byte = 0;
 
-
-
- Glcd_Write_Data(byte);
-
+ _frameBuffer_Write(byte);
+#line 573 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
 
@@ -667,30 +650,23 @@ void eGlcd_fillPage(unsigned char page, char color)
  if (color == BLACK)
  byte = 0xFF;
 
-
-
- Glcd_Set_Page(page);
-
+ _frame_buff_page = page;
+#line 593 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for(k=0; k<=1; k++)
  {
 
-
-
-
- Glcd_Set_Side(k*64);
- Glcd_Set_X(i);
-
+ _frame_buff_side = k;
+ _frame_buff_y = i;
+#line 602 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for(; i<64; i++) {
 
-
-
- Glcd_Write_Data(byte);
-
+ _frameBuffer_Write(byte);
+#line 608 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  i = 0;
  }
 }
-#line 622 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
+#line 621 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset) {
  xGlcdSelFont = ptrFontTbl;
@@ -715,80 +691,52 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
 
  gData = pData << tmpY;
 
-
-
-
-
-
- Glcd_Set_Side(pX);
- Glcd_Set_X(xx);
- Glcd_Set_Page(tmp);
- dataR = Glcd_Read_Data();
- dataR = Glcd_Read_Data();
-
+ _frame_buff_side = pX/64;
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+ dataR = _frameBuffer_Read();
+#line 656 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff >> (8 - tmpY));
  dataR = gData | dataR;
 
 
-
-
- Glcd_Set_X(xx);
- Glcd_Write_Data(dataR);
-
-
+ _frameBuffer_Write(dataR);
+#line 667 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  tmp++;
  if (tmp > 7) return;
 
-
-
-
-
- Glcd_Set_X(xx);
- Glcd_Set_Page(tmp);
- dataR = Glcd_Read_Data();
- dataR = Glcd_Read_Data();
-
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+ dataR = _frameBuffer_Read();
+#line 679 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  gData = pData >> (8 - tmpY);
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff << tmpY);
  dataR = gData | dataR;
 
 
-
-
- Glcd_Set_X(xx);
- Glcd_Write_Data(dataR);
-
+ _frameBuffer_Write(dataR);
+#line 690 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  else {
 
-
-
-
-
- Glcd_Set_Side(pX);
- Glcd_Set_X(xx);
- Glcd_Set_Page(tmp);
-
+ _frame_buff_side = pX/64;
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+#line 701 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if (xGLCD_Transparency) {
 
-
-
- dataR = Glcd_Read_Data();
- dataR = Glcd_Read_Data();
-
+ dataR = _frameBuffer_Read();
+#line 708 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  dataR = pData | dataR;
  }
  else
  dataR = pData;
 
 
-
-
- Glcd_Set_X(xx);
- Glcd_Write_Data(dataR);
-
+ _frameBuffer_Write(dataR);
+#line 719 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 }
 

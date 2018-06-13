@@ -1337,10 +1337,7 @@ void dd_Menu_scroll(signed char movements) {
  dd_currentIndicators[i]->pendingPrintUpdate =  1 ;
  }
 }
-#line 111 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
-extern char str[100];
-
-
+#line 112 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 void dd_Menu_moveSelection(signed char movements) {
 
 
@@ -1350,7 +1347,7 @@ void dd_Menu_moveSelection(signed char movements) {
  dd_Menu_SelectedLineIndex = dd_currentIndicatorsCount - 1;
  }
  else if (dd_Menu_SelectedLineIndex < 0) {
- Debug_UART_Write("SelectedLineIndex = 0\r\n");
+
  dd_Menu_SelectedLineIndex = 0;
  }
  dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate =  1 ;
@@ -1367,7 +1364,7 @@ void dd_Menu_moveSelection(signed char movements) {
 
  }
 }
-#line 166 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 164 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 unsigned char dd_Menu_selectedLine(void) {
  return dd_Menu_SelectedLineIndex;
 }
@@ -1392,17 +1389,11 @@ void dd_printMenuLine(unsigned char lineIndex) {
  eGlcd_fillPage(lineNumber, !color);
  dd_Menu_makeLineText(lineText, lineIndex);
 
-
-
-
- xGlcd_Set_Font( DynamisFont_UniformTerminal6x8, 6 , 8 , 32  );
+ xGlcd_Set_Font( DynamisFont_UniformTerminal6x8, 6 , 8 , 32 );
  xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 
  dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
-
-extern char str[20];
-void printf(char* string);
 
 void dd_printMenu() {
  unsigned char i;
@@ -1415,7 +1406,6 @@ void dd_printMenu() {
  dd_printMenuLine(i);
  }
  }
-
 }
 
 
@@ -1476,7 +1466,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 283 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 274 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
@@ -1491,7 +1481,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
  }
  }
-#line 313 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 304 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  if (valueWidth > 0) {
  for (i = 0; i <  1 ; i++) {
  lineText[lineCharIndex] = ' ';
@@ -1502,9 +1492,9 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineCharIndex += 1;
  }
  }
-#line 327 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 318 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  lineText[lineCharIndex] = ' ';
-#line 333 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 324 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {

@@ -108,8 +108,6 @@ void dd_Menu_scrollUp(void) {
     }
 }*/
 
-extern char str[100];
-
 
 void dd_Menu_moveSelection(signed char movements) {
 //   sprintf(dstr, "Moving selection from: %d to %d.\r\n", dd_Menu_SelectedLineIndex, dd_Menu_SelectedLineIndex+movements);
@@ -120,7 +118,7 @@ void dd_Menu_moveSelection(signed char movements) {
            dd_Menu_SelectedLineIndex = dd_currentIndicatorsCount - 1;
     }
     else if (dd_Menu_SelectedLineIndex < 0) {
-        Debug_UART_Write("SelectedLineIndex = 0\r\n");
+        //Debug_UART_Write("SelectedLineIndex = 0\r\n");
         dd_Menu_SelectedLineIndex = 0;
     }
     dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
@@ -173,7 +171,7 @@ char dd_Menu_isLineSelected(unsigned char lineIndex);
 void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 
 void dd_printMenuLine(unsigned char lineIndex) {
-    unsigned char lineNumber, color;
+     unsigned char lineNumber, color;
     char lineText[MAX_MENU_WIDTH + 1]; //Adding 1 in so we can clean our border char
     //sprintf(str, "printing line number: %d\n", lineIndex);
     //UART1_Write_Text(str);
@@ -186,31 +184,24 @@ void dd_printMenuLine(unsigned char lineIndex) {
     }
     eGlcd_fillPage(lineNumber, !color);
     dd_Menu_makeLineText(lineText, lineIndex);
-    //strncpy(str, lineText, dd_Menu_Width);
-    //UART1_Write_Text(str);
-    //UART1_Write('\n');
 
-          xGlcd_Set_Font(DD_UniformTerminal_Font/*MENU_FONT*/);
-          xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
+    xGlcd_Set_Font(DD_UniformTerminal_Font);
+    xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 
     dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
-
-extern char str[20];
-void printf(char* string);
 
 void dd_printMenu() {
     unsigned char i;
     unsigned char lastLineIndex = dd_Menu_FirstLineIndex + 
                   (dd_Menu_Height_param<=dd_currentIndicatorsCount ? dd_Menu_Height_param : dd_currentIndicatorsCount);
-    //UART1_Write_Text("print menu\n");
+
     dd_Menu_DescriptionScrollingTicks++;
     for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
         if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
            dd_printMenuLine(i);
         }
     }
-    //UART1_Write_Text("end menu print\n");
 }
 
 //Menu line width is priority of the value label, while the remaining available

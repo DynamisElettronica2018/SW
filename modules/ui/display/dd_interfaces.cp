@@ -1269,7 +1269,6 @@ void (*dd_Interface_print[ 4 ])(void) = {
  dd_Dashboard_print,
  dd_Interface_printMenu,
  dd_Interface_printBoardDebug
-
 };
 
 void (*dd_Interface_init[ 4 ])(void) = {
@@ -1302,7 +1301,7 @@ unsigned char dd_Interface_getTitleY(void) {
 
 void dd_Interface_drawTitleContainers(void) {
   Glcd_Rectangle_Round_Edges( 1 , 1 , 128  - 1  * 2, 16  + 3  * 2, 3 , BLACK ); ;
-#line 73 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_interfaces.c"
+#line 72 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_interfaces.c"
 }
 
 void dd_Interface_drawTitle(char *title) {
@@ -1310,7 +1309,7 @@ void dd_Interface_drawTitle(char *title) {
  eGlcd_writeText(title, dd_Interface_getTitleX(title), dd_Interface_getTitleY());
  dd_Interface_drawTitleContainers();
 }
-#line 96 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_interfaces.c"
+#line 95 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_interfaces.c"
 void dd_printMessage(char * title)
 {
  unsigned int width = 0;

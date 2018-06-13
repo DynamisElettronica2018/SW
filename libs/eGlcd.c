@@ -8,12 +8,12 @@
 #include "glcdPins.c"
 #include "../modules/ui/display/dd_global_defines.h"
 
-#if OSC_FREQ_MHZ > OSC_FREQ_THRESHOLD
+/*#if OSC_FREQ_MHZ > OSC_FREQ_THRESHOLD
 
 onTimer4Interrupt{
     //clearTimer4();
 }
-#endif
+#endif*/
 
 static const unsigned char INVERT = PIXEL_INVERT;
 
@@ -47,9 +47,9 @@ void eGlcd_init() {
     #else
             Glcd_Init();
     #endif
-    if (OSC_FREQ_MHZ > OSC_FREQ_THRESHOLD) {
+    /*if (OSC_FREQ_MHZ > OSC_FREQ_THRESHOLD) {
         eGlcd_setupTimer();
-    }
+    } */
 }
 
 void eGlcd_invertColors(void) {
@@ -387,7 +387,6 @@ unsigned char _frameBuffer_Read(){
 }
 
 void _UART_DebugFrame(){
-     #ifdef _DEBUG_
      int i = 0;
      int j=7;
      char z = 0;
@@ -399,7 +398,7 @@ void _UART_DebugFrame(){
          {
             for(j=7; j>=0; j--)
             {
-                Debug_UART_WriteChar(frameBuffer[i+j*64+z*512]);
+                UART1_Write(frameBuffer[i+j*64+z*512]);
             }
          }
      }
@@ -415,12 +414,12 @@ void _UART_DebugFrame(){
                 Glcd_Set_X(i);
                 Glcd_Read_Data();
                 byte =Glcd_Read_Data();
-                Debug_UART_WriteChar(byte);
+                UART1_Write(byte);
             }
         }
      }
      #endif
-     #endif
+     
 }
 
 
@@ -725,7 +724,7 @@ unsigned short xGlcd_Write_Char(unsigned short ch, unsigned short x, unsigned sh
     unsigned short i, j, CharWidth, CharData;
     unsigned long cOffset;
 
-    cOffset = xGlcdSelFontWidth * xGlcdSelFontNbRows + 1; // +1 is to jumo the first byte associated to the char's width
+    cOffset = xGlcdSelFontWidth * xGlcdSelFontNbRows + 1; // +1 is to jump the first byte associated to the char's width
     cOffset = cOffset * (ch - xGlcdSelFontOffset);
     CurCharData = xGlcdSelFont + cOffset;
     CharWidth = *CurCharData;  // retrieves first byte in the char, which stores its width

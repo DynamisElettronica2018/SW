@@ -64,9 +64,9 @@ void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
     //sprintf(str, "%d - %d", startupCounterLimit, startupCounter);
     //printf(str);
-    //dd_printLogoAnimation();
+    dd_printLogoAnimation();
     dd_onStartup = 1;
-    eGlcd_LoadImage(DYNAMIS_LOGO);
+    //eGlcd_LoadImage(DYNAMIS_LOGO);
 }
 
 void dd_GraphicController_turnOnBacklight(void) {
@@ -297,7 +297,6 @@ void dd_GraphicController_onTimerInterrupt(void)
 
     if(dd_onStartup)
     {
-        //UART1_Write_Text("onStartup\n");
         dd_tmr1Counter++;
         if(dd_tmr1Counter  >= dd_onStartupCounterLimit)
         {
@@ -312,11 +311,8 @@ void dd_GraphicController_onTimerInterrupt(void)
         if(dd_isInterfaceChangedFromLastFrame)
         {
             eGlcd_clear();
-            //UART1_Write_Text("interface changed\n");
             dd_Interface_print[dd_currentInterface]();
-            //UART1_Write_Text("interface printed\n");
             dd_printMessage(dd_currentInterfaceTitle);
-            //UART1_Write_Text("title popup printed\n");
             dd_isInterfaceChangedFromLastFrame = 0;
             Lcd_PrintFrame();
         }
@@ -331,11 +327,9 @@ void dd_GraphicController_onTimerInterrupt(void)
              appear on screen since the interrupt routine only increments the tmrcounter..
              we may like that the indicators change under the message, which would require
              redrawing Interface and message on every interrupt... */
-           //UART1_Write_Text("onInterfaceChange\n");
           dd_tmr1Counter++;
            if(dd_tmr1Counter  >= dd_onInterfaceChangeCounterLimit)
            {
-               //resetTimer32();
                dd_onInterfaceChange = 0;
                dd_tmr1Counter = 0;
                eGlcd_fill(WHITE);
@@ -346,7 +340,6 @@ void dd_GraphicController_onTimerInterrupt(void)
         }
         else
         {
-            //UART1_Write_Text("Normal print\n");
             dd_Interface_print[dd_currentInterface]();
             Lcd_PrintFrame();
             dd_isFrameUpdateForced = FALSE;
