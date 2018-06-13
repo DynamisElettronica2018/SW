@@ -76,23 +76,16 @@ extern FloatIndicator ind_ebb_motor_curr;
 /*********************************** BOARDS ***********************************/
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 /*********************************** SENSORS **********************************/
-/*
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;*/
 
-extern IntegerIndicator ind_gcu_temp;
 extern IntegerIndicator ind_fuel_pump;
 extern IntegerIndicator ind_H2O_pump;
 extern IntegerIndicator ind_H2O_fans;

@@ -4006,7 +4006,6 @@ first
 first
 first
 first
-first
 flash_erase32
 flash_read4
 flash_read4_compact
@@ -8279,7 +8278,6 @@ sb_bit
 sclrel
 sclrel
 sclrel_bit
-second
 second
 second
 second

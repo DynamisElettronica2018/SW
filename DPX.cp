@@ -456,6 +456,15 @@ char dStart_isSwitchedOn(void);
 
 void dStart_sendStartMessage(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_paddle.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 10 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+void d_SWTemp_Init(void);
+
+unsigned int d_SWTemp_getTempValue(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 
 
@@ -566,25 +575,28 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
-#line 95 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_sw_board;
 extern IntegerIndicator ind_gcu_temp;
+
+
+
+
 extern IntegerIndicator ind_fuel_pump;
 extern IntegerIndicator ind_H2O_pump;
 extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 128 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 121 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -665,7 +677,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 21 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 22 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0;
 
 
@@ -682,10 +694,6 @@ void main(){
 
  Debug_UART_Write("ON\r\n");
  d_UIController_init();
-
- delay_ms(500);
-
- d_UI_setOperatingMode(BOARD_DEBUG_MODE);
 
  while(1){
 
@@ -715,13 +723,13 @@ void main(){
 
  timer2_counter1 = 0;
  }
-#line 79 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 76 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  if (timer2_counter2 >= 10) {
  dClutch_set(dPaddle_getValue());
  dClutch_send();
  timer2_counter2 = 0;
  }
-#line 91 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 88 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 }
 
 
@@ -732,7 +740,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 107 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 104 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -789,9 +797,9 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
-#line 182 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 179 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
- dd_Indicator_setIntValueP(&ind_ebb_motor_curr.base, (firstInt));
+ dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
  dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
  dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
@@ -800,8 +808,9 @@ void main(){
  dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
  dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+ dd_Indicator_setIntValueP(&ind_sw_board.base, d_SWTemp_getTempValue());
  break;
-#line 196 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 194 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  default:
  break;
  }

@@ -82,7 +82,7 @@ L_end_dGear_requestGearDown:
 
 _dGear_propagate:
 
-;d_gears.c,28 :: 		void dGear_propagate(unsigned int gearCommand) {            //dove viene chiamata???
+;d_gears.c,28 :: 		void dGear_propagate(unsigned int gearCommand) {
 ;d_gears.c,29 :: 		dGear_error = FALSE;
 	MOV	#lo_addr(_dGear_error), W1
 	CLR	W0

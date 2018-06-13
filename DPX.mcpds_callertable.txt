@@ -224,6 +224,10 @@ main
 				startSampling
 			setAnalogPIN
 			turnOnAnalogModule
+		d_SWTemp_Init
+			setupAnalogSampling
+			setAnalogPIN
+			turnOnAnalogModule
 		dSignalLed_init
 			dSignalLed_set
 			dSignalLed_unset
@@ -269,7 +273,6 @@ main
 						_Div_FP
 						_Float2Longint
 			dd_GraphicController_forceFullFrameUpdate
-	d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		dGear_isNeutralSet
@@ -373,6 +376,8 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
+	d_SWTemp_getTempValue
+		getAnalogValue
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -425,9 +430,6 @@ timer2_interrupt
 		_Float2Longint
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
-	dClutch_set
-	dPaddle_getValue
-	dClutch_send
 		Can_writeByte
 			Can_resetWritePacket
 			Can_addByteToWritePacket
@@ -435,6 +437,10 @@ timer2_interrupt
 				CAN1Write
 					CAN1IDToRegs
 				Can_getWriteFlags
+	dClutch_set
+	dPaddle_getValue
+	dClutch_send
+		Can_writeByte
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
 		dRpm_updateLedStripe
@@ -445,8 +451,17 @@ timer1_interrupt
 				I2C1_Stop
 			_Long2Float
 			_Float2Longint
-		dClutch_set
-		dClutch_send
+		Can_writeByte
+		dGear_requestGearUp
+			dGear_canGearUp
+			Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+					Can_addByteToWritePacket
+				Can_write
+		dGear_requestGearDown
+			dGear_canGearDown
+			Can_writeInt
 		eGlcd_clear
 		dd_printMessage
 		dd_GraphicController_handleNotification
@@ -466,14 +481,6 @@ timer1_interrupt
 external0
 	d_controls_onGearUp
 		dGear_requestGearUp
-			dGear_canGearUp
-			Can_writeInt
-				Can_resetWritePacket
-				Can_addIntToWritePacket
-					Can_addByteToWritePacket
-				Can_write
 	d_controls_onGearDown
 		dGear_requestGearDown
-			dGear_canGearDown
-			Can_writeInt
 	clearExternalInterrupt

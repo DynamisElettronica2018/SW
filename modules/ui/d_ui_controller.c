@@ -6,6 +6,7 @@
 #include "input-output/d_controls.h"
 #include "input-output/buzzer.h"
 #include "input-output/d_paddle.h"
+#include "d_sensors.h"
 #include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
@@ -23,6 +24,7 @@ void d_UIController_init() {
     //Buzzer_init();
    // Debug_UART_Write("Buzzer initialized.\r\n");
     dPaddle_init();
+    d_SWTemp_Init();
    // Debug_UART_Write("Paddle initialized.\r\n");
    dSignalLed_init();
    Debug_UART_Write("Signal Leds initialized.\r\n");

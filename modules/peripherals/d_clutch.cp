@@ -325,25 +325,28 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
-#line 95 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_sw_board;
 extern IntegerIndicator ind_gcu_temp;
+
+
+
+
 extern IntegerIndicator ind_fuel_pump;
 extern IntegerIndicator ind_H2O_pump;
 extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 128 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 121 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
 unsigned char dClutch_actualValue = 0, dClutch_value = 0;

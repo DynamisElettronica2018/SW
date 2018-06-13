@@ -191,25 +191,28 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
-#line 95 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_sw_board;
 extern IntegerIndicator ind_gcu_temp;
+
+
+
+
 extern IntegerIndicator ind_fuel_pump;
 extern IntegerIndicator ind_H2O_pump;
 extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 128 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 121 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -461,6 +464,15 @@ void dPaddle_init(void);
 unsigned char dPaddle_getValue(void);
 
 void dPaddle_readSample(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 10 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+void d_SWTemp_Init(void);
+
+unsigned int d_SWTemp_getTempValue(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
@@ -507,7 +519,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
@@ -521,6 +533,7 @@ void d_UIController_init() {
 
 
  dPaddle_init();
+ d_SWTemp_Init();
 
  dSignalLed_init();
  Debug_UART_Write("Signal Leds initialized.\r\n");
@@ -528,7 +541,7 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 38 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 40 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -572,7 +585,7 @@ void d_controls_onLeftEncoder(signed char movements) {
  return;
  }
 }
-#line 98 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 100 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
@@ -588,13 +601,13 @@ void d_controls_onRightEncoder(signed char movements) {
  return;
  }
 }
-#line 131 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 133 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_selectorPositionToMode(signed char position){
  if (position >  1  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 139 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 141 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

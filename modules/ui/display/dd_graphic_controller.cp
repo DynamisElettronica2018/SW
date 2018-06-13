@@ -1275,6 +1275,78 @@ void dd_Menu_setHeight(unsigned char height);
 void dd_Menu_setWidth(unsigned char width);
 #line 33 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_moveSelection(signed char movements);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+void Can_init(void);
+
+unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+void Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
+void dGear_init(void);
+
+void dGear_requestGearUp();
+void dGear_requestGearDown();
+
+char dGear_isNeutralSet();
+
+
+void dGear_propagate(unsigned int gearCommand);
+
+unsigned char dGear_getCurrentGearLetter(void);
+
+void dGear_set(unsigned char gear);
+
+unsigned char dGear_get(void);
+
+void dGear_up(void);
+
+void dGear_down(void);
+
+char dGear_canGearUp(void);
+
+char dGear_canGearDown(void);
+
+char dGear_isShiftingCheckBypassed(void);
+
+void dGear_enableShiftCheck(void);
+
+void dGear_disableShiftCheck(void);
+
+void d_setGearMotorState(int motorState);
+
+unsigned char d_getGearMotorState(void);
+
+char d_canSetGear(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
 
@@ -1385,39 +1457,6 @@ void dRpm_updateLedStripe(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-void Can_init(void);
-
-unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
-
-void Can_writeByte(unsigned long int id, unsigned char dataOut);
-
-void Can_writeInt(unsigned long int id, int dataOut);
-
-void Can_addIntToWritePacket(int dataOut);
-
-void Can_addByteToWritePacket(unsigned char dataOut);
-
-void Can_write(unsigned long int id);
-
-void Can_setWritePriority(unsigned int txPriority);
-
-void Can_resetWritePacket(void);
-
-unsigned int Can_getWriteFlags(void);
-
-unsigned char Can_B0hasBeenReceived(void);
-
-unsigned char Can_B1hasBeenReceived(void);
-
-void Can_clearB0Flag(void);
-
-void Can_clearB1Flag(void);
-
-void Can_clearInterrupt(void);
-
-void Can_initInterrupt(void);
 #line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
 void dPaddle_init(void);
 
@@ -1434,7 +1473,7 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 30 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 31 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[ 20 ] = "";
@@ -1458,7 +1497,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 57 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 58 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1567,7 +1606,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
  dd_GraphicController_setNotificationFlag ();
 }
-#line 169 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 170 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
@@ -1632,12 +1671,21 @@ void dd_GraphicController_onTimerInterrupt(void)
 {
  dRpm_updateLedStripe();
 
- dClutch_set(clutchvalue++);
- dClutch_send();
- if (clutchvalue == 100){
- clutchvalue = 0;
+ if (clutchvalue == 0) {
+ Can_writeByte( 0b01000000100 ,  1 );
+#line 243 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+ clutchvalue++;
  }
-#line 254 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+
+ if( __counter == 10 || __counter == 20 || __counter == 30 || __counter == 40){
+ dGear_requestGearUp();
+ } else if( __counter == 50 || __counter == 60 || __counter == 70 || __counter == 80 ) {
+ dGear_requestGearDown();
+ } else if (__counter > 80){
+ __counter = 0;
+ }
+ __counter++;
+#line 263 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  if(dd_onStartup)
  {
 
@@ -1666,7 +1714,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 289 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 298 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1690,5 +1738,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 323 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 332 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

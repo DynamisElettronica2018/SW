@@ -19,5 +19,5 @@ char dStart_isSwitchedOn(void) {
 }
 
 void dStart_sendStartMessage(void) {
-    //!Can_writeByte(SW_FIRE_GCU_ID, TRUE);
+    Can_writeByte(SW_FIRE_GCU_ID, TRUE);
 }

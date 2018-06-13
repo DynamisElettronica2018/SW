@@ -8,6 +8,7 @@
 #include "modules/ui/input-output/buzzer.h"
 #include "modules/ui/input-output/d_start.h"
 #include "modules/ui/input-output/d_paddle.h"
+#include "d_sensors.h"
 #include "modules/ui/input-output/d_rpm.h"
 #include "modules/ui/input-output/d_hardReset.h"
 #include "modules/ui/display/dd_menu.h"
@@ -34,10 +35,6 @@ void main(){
 
     Debug_UART_Write("ON\r\n");
     d_UIController_init();
-    
-    delay_ms(500);
-
-    d_UI_setOperatingMode(BOARD_DEBUG_MODE);
     
     while(1){
 
@@ -180,7 +177,7 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
            break;  */
        case GCU_DEBUG_1_ID:
-           dd_Indicator_setIntValueP(&ind_ebb_motor_curr.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
            dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt)); //*/
@@ -189,6 +186,7 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt)); // */
+           dd_Indicator_setIntValueP(&ind_sw_board.base, d_SWTemp_getTempValue());
            break;  //*/
       /* case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
