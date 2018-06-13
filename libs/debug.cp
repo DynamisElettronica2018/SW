@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/debug.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/dd_fonts.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/dynamis_logo.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/debug.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/dd_fonts.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/dynamis_logo.h"
 
 
 
@@ -58,8 +58,8 @@ static const unsigned char DYNAMIS_LOGO[1024] = {
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_big.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_big.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_big.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_big.h"
 static const unsigned short DynamisFont_Big32x31[] = {
  0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00,
  0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01,
@@ -214,8 +214,8 @@ static const unsigned short DynamisFont_Big32x31[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_dashboard.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_dashboard.h"
 static const unsigned short DynamisFont_Dashboard16x16[] = {
 
 
@@ -415,8 +415,8 @@ static const unsigned short DynamisFont_Dashboard16x16[] = {
  0x04, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
 static const unsigned short DynamisFont_Gears40x59[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0xFF, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x80, 0xFF,
@@ -635,7 +635,7 @@ static const unsigned short DynamisFont_Gears40x59[] = {
  0x00, 0x7C, 0x00, 0xC0, 0x07, 0x00, 0xF8, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x7C,
  0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00
 };
-#line 243 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
+#line 243 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_gears.h"
 static const unsigned short Arial63x62[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -667,8 +667,8 @@ static const unsigned short Arial63x62[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00,
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_terminal.h"
-#line 14 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_terminal.h"
 static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -767,8 +767,8 @@ static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_xterminal.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/fonts/font_dynamis_xterminal.h"
 static const unsigned short DynamisFont_xTerminal6x8[] = {
  0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x05, 0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -867,9 +867,9 @@ static const unsigned short DynamisFont_xTerminal6x8[] = {
  0x05, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x06, 0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 void unsignedIntToString(unsigned int number, char *text);
@@ -879,7 +879,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 184 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -937,9 +937,9 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/debug.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 5 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 5 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -951,12 +951,12 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern unsigned char BLACK, WHITE;
-#line 63 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 63 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_init(void);
 
 void eGlcd_invertColors(void);
@@ -982,9 +982,9 @@ void eGlcd_setupTimer(void);
 void eGlcd_setTimerCoefficient(float coefficient);
 
 unsigned int eGlcd_getTextPixelLength(char *text);
-#line 97 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 97 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
-#line 108 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 108 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -999,9 +999,9 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/glcdpins.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/glcdpins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
@@ -1034,7 +1034,7 @@ void xGLCD_Set_Transparency(char active);
  sbit GLCD_RW_Direction at TRISC2_bit;
  sbit GLCD_RS_Direction at TRISC1_bit;
  sbit GLCD_EN_Direction at TRISG15_bit;
-#line 10 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/debug.c"
+#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/debug.c"
 char dstr[100] = "";
 
 void Debug_UART_Init()

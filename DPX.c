@@ -95,15 +95,14 @@ onCanInterrupt{
     char dataBuffer[8];
     unsigned int dataLen = 0, flags = 0;
      // Debug_UART_Write("in can interrupt\r\n");
-    if(C1INTFbits.ERRIF == 1){
-        dSignalLed_switch(DSIGNAL_LED_GREEN);
-    }
-   //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
-    IEC1BITS.C1IE = 0;
-    Can_clearInterrupt();
+    /*if(C1INTFbits.ERRIF == 1){
+        dSignalLed_set(DSIGNAL_LED_GREEN);
+    }   */
+    //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
+    //IEC1BITS.C1IE = 0;
+    Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
     dSignalLed_switch(DSIGNAL_LED_RED);
     Can_read(&id, dataBuffer, &dataLen, &flags);
-
 
      //  Buzzer_bip();
 
@@ -151,11 +150,11 @@ onCanInterrupt{
             dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt); //è un flag
             break;//*/
        case EFI_PRESSURES_LAMBDA_SMOT_ID:
-          // dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
+           dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
            break;
-      /* case GCU_CLUTCH_FB_SW_ID:
-           dClutch_injectActualValue((unsigned char)firstInt);
+       case GCU_CLUTCH_FB_SW_ID:
+           dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
            break;
       /*case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
@@ -175,18 +174,25 @@ onCanInterrupt{
        case EBB_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
            dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
-           break;
-       case GCU_DEBUG_1_ID:
-           dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (firstInt)); //c'è una conversione da fare??    il firstint è gcu temp
-        /*   dd_Indicator_setFloatValueP(&ind_H2O_fans.base, (secondInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_H2O_pump.base, (thirdInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_fuel_pump.base, (fourthInt)); //c'è una conversione da fare??  */
-          // break;
-      // case GCU_DEBUG_2_ID:
-        /*   dd_Indicator_setFloatValueP(&ind_gear_motor.base, (firstInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_clutch.base, (secondInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_drs.base, (thirdInt)); //c'è una conversione da fare?? */
-        //   break;
+           break;  */
+       /*case GCU_DEBUG_1_ID:
+           dd_Indicator_setIntCoupleValueP(&ind_gcu_board.base, (firstInt), 0);
+           dd_Indicator_setIntCoupleValueP(&ind_H2O_fans.base, 0,(secondInt));
+           dd_Indicator_setIntCoupleValueP(&ind_H2O_pump.base, 0, (thirdInt));
+           dd_Indicator_setIntCoupleValueP(&ind_fuel_pump.base, 0, (fourthInt));
+           /*dd_Indicator_setIntValueP(&ind_ebb_motor_curr.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
+           dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt)); */
+         //  break; //*/
+      /* case GCU_DEBUG_2_ID:
+           dd_Indicator_setIntCoupleValueP(&ind_gear_motor.base, 0,(firstInt));
+           dd_Indicator_setIntCoupleValueP(&ind_clutch.base, 0, (secondInt));
+           dd_Indicator_setIntCoupleValueP(&ind_drs.base, 0,(thirdInt));
+           /*dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
+           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));  */
+          // break;  //*/
       /* case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;     */
@@ -195,5 +201,5 @@ onCanInterrupt{
     }
 
    //INTERRUPT_PROTECT(IEC1BITS.C1IE = 1);
-    IEC1BITS.C1IE = 1;
+   // IEC1BITS.C1IE = 1;
 }

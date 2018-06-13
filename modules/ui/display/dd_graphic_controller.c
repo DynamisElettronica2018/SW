@@ -19,6 +19,7 @@
 #include"../input-output/d_controls.h"
 #include "../libs/debug.h"
 #include "../input-output/d_rpm.h"
+#include "d_clutch.h"
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -224,20 +225,18 @@ char dd_GraphicController_isColorInversionQueued(void) {               //inutile
 }
 
 int __counter = 0;
+unsigned char clutchvalue = 0;
 void dd_GraphicController_onTimerInterrupt(void) 
 {
      dRpm_updateLedStripe();
-    /*if ( __counter == 10 )
-    {
 
-    } /*
-    if (__counter == 20)
-    {
-       dSignalLed_unset(DSIGNAL_LED_RED);
-     __counter = 0;
-    }
+       dClutch_set(clutchvalue++);
+       dClutch_send();
+       if (clutchvalue == 100){
+          clutchvalue = 0;
+       }
 
-   __counter++;   */
+      //*/
     /*if(counter == 40){
           dd_boardDebug_Move(1);
     } else if (counter == 60) {

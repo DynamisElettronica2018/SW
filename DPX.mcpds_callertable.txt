@@ -329,8 +329,8 @@ external3
 		dStart_switchOff
 	clearExternalInterrupt
 CAN_Interrupt
-	dSignalLed_switch
 	Can_clearInterrupt
+	dSignalLed_switch
 	Can_read
 		Can_B0hasBeenReceived
 		Can_clearB0Flag
@@ -387,6 +387,9 @@ CAN_Interrupt
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
+	dClutch_injectActualValue
+		dd_Indicator_setIntValueP
+		dSignalLed_switch
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -462,6 +465,8 @@ timer1_interrupt
 				I2C1_Stop
 			_Long2Float
 			_Float2Longint
+		dClutch_set
+		dClutch_send
 		eGlcd_clear
 		dd_printMessage
 		dd_GraphicController_handleNotification

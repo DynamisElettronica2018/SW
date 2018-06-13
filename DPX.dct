@@ -1799,6 +1799,7 @@ cl_yellow
 clearanaloginterrupt
 clearexternalinterrupt
 cleartimer
+clutchvalue
 cn_interrupt
 cn0ie
 cn0ie

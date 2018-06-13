@@ -7,8 +7,6 @@ _d_UIController_init:
 	CALL	_dControls_init
 ;d_ui_controller.c,20 :: 		Can_init();
 	CALL	_Can_init
-;d_ui_controller.c,21 :: 		C1INTEbits.ERRIE = 1;
-	BSET.B	C1INTEbits, #5
 ;d_ui_controller.c,22 :: 		Debug_UART_Write("can initialized.\r\n");
 	MOV	#lo_addr(?lstr1_d_ui_controller), W10
 	CALL	_Debug_UART_Write

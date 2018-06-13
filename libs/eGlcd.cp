@@ -1,4 +1,4 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
 
@@ -24,12 +24,12 @@ char * strpbrk(char * s1, char * s2);
 char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern unsigned char BLACK, WHITE;
-#line 63 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 63 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_init(void);
 
 void eGlcd_invertColors(void);
@@ -55,9 +55,9 @@ void eGlcd_setupTimer(void);
 void eGlcd_setTimerCoefficient(float coefficient);
 
 unsigned int eGlcd_getTextPixelLength(char *text);
-#line 97 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 97 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
-#line 108 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 108 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -72,8 +72,8 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 void unsignedIntToString(unsigned int number, char *text);
@@ -83,9 +83,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 184 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -143,7 +143,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/glcdpins.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/glcdpins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
@@ -203,7 +203,7 @@ double pow(double x, double y);
 double sinh(double x);
 double cosh(double x);
 double tanh(double x);
-#line 17 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 static const unsigned char INVERT =  2 ;
 
 static const unsigned short xColorClear = 0;
@@ -318,7 +318,7 @@ unsigned int eGlcd_getTextPixelLength(char *text) {
  }
  return textPixelLength;
 }
-#line 139 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 139 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 void printf(char* string);
 extern char str[100];
 
@@ -424,7 +424,7 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  xOffset=0;
  }
 }
-#line 253 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 253 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset) {
  xGlcdSelFont = ptrFontTbl;
@@ -449,33 +449,33 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
 
  gData = pData << tmpY;
   Glcd_Set_Side(pX); Glcd_Set_X(xx); Glcd_Set_Page(tmp); dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); ;
-#line 281 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 281 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff >> (8 - tmpY));
  dataR = gData | dataR;
   Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 287 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 287 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  tmp++;
  if (tmp > 7) return;
   Glcd_Set_X(xx); Glcd_Set_Page(tmp); gData = pData >> (8 - tmpY); dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); ;
-#line 294 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 294 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff << tmpY);
  dataR = gData | dataR;
   Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 299 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 299 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  else {
   Glcd_Set_Side(pX); Glcd_Set_X(xx); Glcd_Set_Page(tmp); ;
-#line 304 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 304 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  if (xGLCD_Transparency) {
   dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); dataR = pData | dataR; ;
-#line 308 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 308 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  else
  dataR = pData;
   Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 313 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 313 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
 }
 

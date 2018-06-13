@@ -18,7 +18,7 @@ void d_UIController_init() {
      //printf("ui contr. init");
     dControls_init();
     Can_init();
-    C1INTEbits.ERRIE = 1;
+   // C1INTEbits.ERRIE = 1;
     Debug_UART_Write("can initialized.\r\n");
     //Buzzer_init();
    // Debug_UART_Write("Buzzer initialized.\r\n");

@@ -11,7 +11,7 @@
 
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned char value);
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 
 unsigned char dClutch_get(void);
 
