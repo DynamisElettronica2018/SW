@@ -58,12 +58,15 @@ unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
    return (unsigned char) floor(period/1000.0*FRAME_RATE);
 }
 
+void dd_printLogoAnimation();
+
 void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
     //sprintf(str, "%d - %d", startupCounterLimit, startupCounter);
     //printf(str);
+    //dd_printLogoAnimation();
     dd_onStartup = 1;
-    eGlcd(Glcd_Image(DYNAMIS_LOGO));
+    eGlcd_LoadImage(DYNAMIS_LOGO);
 }
 
 void dd_GraphicController_turnOnBacklight(void) {
@@ -223,21 +226,61 @@ char dd_GraphicController_isColorInversionQueued(void) {               //inutile
     return dd_isColorInversionQueued;
 }
 
+void dd_printLogoAnimation() {
+     char page = 0;
+     int i =0, j=0, k=0;
+    signed char new_y = 0;
+    signed char old_y = 0;
+    int y_center = 19;
+    double cos_angle;
+    signed char new_y_border = 0;
+    
+    eGlcd_LoadImage(DYNAMIS_LOGO);
+    //_Lcd_PrintFrame();
+    //delay_ms(200);
+
+    for (k=5; k<=120; k++){
+        resetTimer32();
+        cos_angle = cos(0.10466*k);
+        new_y_border = round((cos_angle*17));
+        if (new_y_border<0) new_y_border = -new_y_border;
+        for (i=0; i<=17-new_y_border; i++)
+        {
+            for (j=0; j<8; j++)
+            {
+                frameBuff[j*64+i] = 0xFF;
+                frameBuff[j*64+i+y_center+new_y_border] = 0xFF;
+            }
+        }
+        for (new_y=-new_y_border; new_y<=new_y_border; new_y++)
+        {
+            old_y = round(new_y/cos_angle);
+            for (page = 0; page<8; page++)
+            {
+              i = page*2*64+old_y+y_center;
+              j = page*64+new_y+y_center;
+              frameBuff[j] = DYNAMIS_LOGO[i];
+             }
+         }
+         Lcd_PrintFrame();
+         Delay_Cyc(floor(pow(k*8,2)/30000+new_y_border/10), k*700);
+     }
+}
+
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void) 
 {
-     dRpm_updateLedStripe();
-    /*if ( __counter == 10 )
+    if ( __counter == 10 )
     {
-
-    } /*
+       dSignalLed_set(DSIGNAL_LED_RED);
+    }
     if (__counter == 20)
     {
        dSignalLed_unset(DSIGNAL_LED_RED);
      __counter = 0;
     }
 
-   __counter++;   */
+   __counter++;
     /*if(counter == 40){
           dd_boardDebug_Move(1);
     } else if (counter == 60) {
@@ -261,6 +304,7 @@ void dd_GraphicController_onTimerInterrupt(void)
             dd_onStartup = 0;
             dd_tmr1Counter = 0;
             eGlcd_clear();
+            Lcd_PrintFrame();
         }
     }
     else {
@@ -274,6 +318,7 @@ void dd_GraphicController_onTimerInterrupt(void)
             dd_printMessage(dd_currentInterfaceTitle);
             //UART1_Write_Text("title popup printed\n");
             dd_isInterfaceChangedFromLastFrame = 0;
+            Lcd_PrintFrame();
         }
         else if (dd_notificationFlag) {
             dd_GraphicController_handleNotification();
@@ -295,6 +340,7 @@ void dd_GraphicController_onTimerInterrupt(void)
                dd_tmr1Counter = 0;
                eGlcd_fill(WHITE);
                dd_Interface_print[dd_currentInterface]();
+               Lcd_PrintFrame();
                dd_isFrameUpdateForced = FALSE;
            }
         }
@@ -302,6 +348,7 @@ void dd_GraphicController_onTimerInterrupt(void)
         {
             //UART1_Write_Text("Normal print\n");
             dd_Interface_print[dd_currentInterface]();
+            Lcd_PrintFrame();
             dd_isFrameUpdateForced = FALSE;
         }
         //time = getExecTime();

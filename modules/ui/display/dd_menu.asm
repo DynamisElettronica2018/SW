@@ -338,40 +338,50 @@ _dd_printMenuLine:
 	GOTO	L_dd_printMenuLine14
 L__dd_printMenuLine75:
 ;dd_menu.c,183 :: 		color = WHITE;
-	MOV	#lo_addr(_WHITE), W0
-	MOV.B	[W0], W0
+	MOV.B	#_WHITE, W0
 	MOV.B	W0, [W14+1]
 ;dd_menu.c,184 :: 		} else {
 	GOTO	L_dd_printMenuLine15
 L_dd_printMenuLine14:
 ;dd_menu.c,185 :: 		color = BLACK;
-	MOV	#lo_addr(_BLACK), W0
-	MOV.B	[W0], W0
+	MOV.B	#_BLACK, W0
 	MOV.B	W0, [W14+1]
 ;dd_menu.c,186 :: 		}
 L_dd_printMenuLine15:
-;dd_menu.c,187 :: 		dd_Menu_makeLineText(lineText, lineIndex);
+;dd_menu.c,187 :: 		eGlcd_fillPage(lineNumber, !color);
+	MOV.B	[W14+1], W0
+	CP0.B	W0
+	CLR.B	W0
+	BRA NZ	L__dd_printMenuLine76
+	INC.B	W0
+L__dd_printMenuLine76:
+	PUSH	W10
+	MOV.B	W0, W11
+	MOV.B	[W14+0], W10
+	CALL	_eGlcd_fillPage
+	POP	W10
+;dd_menu.c,188 :: 		dd_Menu_makeLineText(lineText, lineIndex);
 	ADD	W14, #2, W0
 	PUSH	W10
 	MOV.B	W10, W11
 	MOV	W0, W10
 	CALL	_dd_Menu_makeLineText
-;dd_menu.c,191 :: 		eGlcd(
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV.B	#8, W13
-	MOV.B	#6, W12
-	MOV	#lo_addr(dd_menu_DynamisFont_Terminal6x8), W10
-	MOV	W0, W11
-	MOV	#32, W0
-	PUSH	W0
-	CALL	_Glcd_Set_Font
-	SUB	#2, W15
+;dd_menu.c,193 :: 		xGlcd_Set_Font(DD_UniformTerminal_Font/*MENU_FONT*/);
+	MOV	#32, W13
+	MOV.B	#8, W12
+	MOV.B	#6, W11
+	MOV	#lo_addr(dd_menu_DynamisFont_UniformTerminal6x8), W10
+	CALL	_xGlcd_Set_Font
+;dd_menu.c,194 :: 		xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
+	ADD	W14, #0, W0
+	ZE	[W0], W0
+	SL	W0, #3, W1
 	ADD	W14, #2, W0
 	MOV.B	[W14+1], W13
-	MOV.B	[W14+0], W12
+	MOV.B	W1, W12
 	CLR	W11
 	MOV	W0, W10
-	CALL	_Glcd_Write_Text
+	CALL	_xGlcd_Write_Text
 	POP	W10
 ;dd_menu.c,196 :: 		dd_Indicator_clearPrintUpdateRequest(lineIndex);
 	CALL	_dd_Indicator_clearPrintUpdateRequest
@@ -394,25 +404,25 @@ _dd_printMenu:
 	MOV.B	[W0], W1
 	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
 	CP.B	W1, [W0]
-	BRA LEU	L__dd_printMenu77
+	BRA LEU	L__dd_printMenu78
 	GOTO	L_dd_printMenu16
-L__dd_printMenu77:
+L__dd_printMenu78:
 	MOV	#lo_addr(dd_menu_dd_Menu_Height_param), W0
-; ?FLOC___dd_printMenu?T58 start address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 start address is: 4 (W2)
 	MOV.B	[W0], W2
-; ?FLOC___dd_printMenu?T58 end address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 end address is: 4 (W2)
 	GOTO	L_dd_printMenu17
 L_dd_printMenu16:
 	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
-; ?FLOC___dd_printMenu?T58 start address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 start address is: 4 (W2)
 	MOV.B	[W0], W2
-; ?FLOC___dd_printMenu?T58 end address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 end address is: 4 (W2)
 L_dd_printMenu17:
-; ?FLOC___dd_printMenu?T58 start address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 start address is: 4 (W2)
 	MOV	#lo_addr(dd_menu_dd_Menu_FirstLineIndex), W0
 	SE	[W0], W1
 	ZE	W2, W0
-; ?FLOC___dd_printMenu?T58 end address is: 4 (W2)
+; ?FLOC___dd_printMenu?T60 end address is: 4 (W2)
 	ADD	W1, W0, W0
 	MOV.B	W0, [W14+1]
 ;dd_menu.c,207 :: 		dd_Menu_DescriptionScrollingTicks++;
@@ -427,27 +437,27 @@ L_dd_printMenu18:
 	MOV.B	[W14+0], W1
 	ADD	W14, #1, W0
 	CP.B	W1, [W0]
-	BRA LTU	L__dd_printMenu78
+	BRA LTU	L__dd_printMenu79
 	GOTO	L_dd_printMenu19
-L__dd_printMenu78:
+L__dd_printMenu79:
 ;dd_menu.c,209 :: 		if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
 	MOV.B	[W14+0], W10
 	CALL	_dd_Indicator_isRequestingUpdate
 	CP0.B	W0
-	BRA Z	L__dd_printMenu79
+	BRA Z	L__dd_printMenu80
 	GOTO	L__dd_printMenu55
-L__dd_printMenu79:
+L__dd_printMenu80:
 	MOV.B	[W14+0], W10
 	CALL	_dd_MenuLine_hasToScroll
 	CP0.B	W0
-	BRA Z	L__dd_printMenu80
+	BRA Z	L__dd_printMenu81
 	GOTO	L__dd_printMenu54
-L__dd_printMenu80:
+L__dd_printMenu81:
 	CALL	_dd_GraphicController_isFrameUpdateForced
 	CP0.B	W0
-	BRA Z	L__dd_printMenu81
+	BRA Z	L__dd_printMenu82
 	GOTO	L__dd_printMenu53
-L__dd_printMenu81:
+L__dd_printMenu82:
 	GOTO	L_dd_printMenu23
 L__dd_printMenu55:
 L__dd_printMenu54:
@@ -486,9 +496,9 @@ _dd_MenuLine_getVisibleDescriptionWidth:
 ;dd_menu.c,222 :: 		if (labelLength > 0) {
 	MOV.B	[W0], W0
 	CP.B	W0, #0
-	BRA GTU	L__dd_MenuLine_getVisibleDescriptionWidth83
+	BRA GTU	L__dd_MenuLine_getVisibleDescriptionWidth84
 	GOTO	L_dd_MenuLine_getVisibleDescriptionWidth24
-L__dd_MenuLine_getVisibleDescriptionWidth83:
+L__dd_MenuLine_getVisibleDescriptionWidth84:
 ;dd_menu.c,223 :: 		return (unsigned char) (dd_Menu_Width - labelLength - MENU_DESCRIPTION_VALUE_SPACING);
 	MOV	#lo_addr(dd_menu_dd_Menu_Width), W0
 	ZE	[W0], W1
@@ -515,9 +525,9 @@ _dd_MenuLine_hasToScroll:
 	CALL	_dd_Menu_isLineSelected
 ;dd_menu.c,233 :: 		dd_currentIndicators[lineIndex]->descriptionLength > dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
 	CP0.B	W0
-	BRA NZ	L__dd_MenuLine_hasToScroll85
+	BRA NZ	L__dd_MenuLine_hasToScroll86
 	GOTO	L_dd_MenuLine_hasToScroll27
-L__dd_MenuLine_hasToScroll85:
+L__dd_MenuLine_hasToScroll86:
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
@@ -528,9 +538,9 @@ L__dd_MenuLine_hasToScroll85:
 	CALL	_dd_MenuLine_getVisibleDescriptionWidth
 	MOV	[W14+0], W1
 	CP.B	W0, [W1]
-	BRA LTU	L__dd_MenuLine_hasToScroll86
+	BRA LTU	L__dd_MenuLine_hasToScroll87
 	GOTO	L_dd_MenuLine_hasToScroll27
-L__dd_MenuLine_hasToScroll86:
+L__dd_MenuLine_hasToScroll87:
 	MOV.B	#1, W0
 	GOTO	L_dd_MenuLine_hasToScroll26
 L_dd_MenuLine_hasToScroll27:
@@ -565,9 +575,9 @@ _dd_MenuLine_getScrollOffset:
 ;dd_menu.c,246 :: 		if (dd_MenuLine_hasToScroll(lineIndex)) {
 	CALL	_dd_MenuLine_hasToScroll
 	CP0.B	W0
-	BRA NZ	L__dd_MenuLine_getScrollOffset89
+	BRA NZ	L__dd_MenuLine_getScrollOffset90
 	GOTO	L_dd_MenuLine_getScrollOffset28
-L__dd_MenuLine_getScrollOffset89:
+L__dd_MenuLine_getScrollOffset90:
 ;dd_menu.c,248 :: 		offset = (int) (FRAME_PERIOD * dd_Menu_DescriptionScrollingTicks * DESCRIPTION_SCROLLING_SPEED);
 	PUSH	W10
 	MOV	dd_menu_dd_Menu_DescriptionScrollingTicks, W0
@@ -587,9 +597,9 @@ L__dd_MenuLine_getScrollOffset89:
 ;dd_menu.c,249 :: 		if (offset >= dd_MenuLine_getScrollingOverflow(lineIndex)) {
 	CALL	_dd_MenuLine_getScrollingOverflow
 	CP	W2, W0
-	BRA GE	L__dd_MenuLine_getScrollOffset90
+	BRA GE	L__dd_MenuLine_getScrollOffset91
 	GOTO	L__dd_MenuLine_getScrollOffset47
-L__dd_MenuLine_getScrollOffset90:
+L__dd_MenuLine_getScrollOffset91:
 ; offset end address is: 4 (W2)
 ;dd_menu.c,250 :: 		offset = 0;
 ; offset start address is: 2 (W1)
@@ -681,9 +691,9 @@ L_dd_Menu_makeLineText31:
 ; scrollingOffset end address is: 14 (W7)
 	ZE	W4, W0
 	CP	W5, W0
-	BRA LT	L__dd_Menu_makeLineText92
+	BRA LT	L__dd_Menu_makeLineText93
 	GOTO	L_dd_Menu_makeLineText32
-L__dd_Menu_makeLineText92:
+L__dd_Menu_makeLineText93:
 ; descriptionLength end address is: 12 (W6)
 ; scrollingOffset end address is: 14 (W7)
 ;dd_menu.c,284 :: 		i = lineCharIndex + scrollingOffset;
@@ -694,9 +704,9 @@ L__dd_Menu_makeLineText92:
 ;dd_menu.c,286 :: 		if (i < descriptionLength) {
 	ZE	W6, W0
 	CP	W1, W0
-	BRA LT	L__dd_Menu_makeLineText93
+	BRA LT	L__dd_Menu_makeLineText94
 	GOTO	L_dd_Menu_makeLineText34
-L__dd_Menu_makeLineText93:
+L__dd_Menu_makeLineText94:
 ;dd_menu.c,287 :: 		lineText[lineCharIndex] = (item->description)[i];
 	ADD	W10, W5, W2
 	MOV	[W14+6], W0
@@ -712,17 +722,17 @@ L_dd_Menu_makeLineText34:
 	MOV	[W14+0], W1
 	ADD	W14, #2, W0
 	CP	W1, [W0]
-	BRA GE	L__dd_Menu_makeLineText94
+	BRA GE	L__dd_Menu_makeLineText95
 	GOTO	L__dd_Menu_makeLineText50
-L__dd_Menu_makeLineText94:
+L__dd_Menu_makeLineText95:
 	PUSH	W10
 	MOV.B	W11, W10
 	CALL	_dd_MenuLine_hasToScroll
 	POP	W10
 	CP0.B	W0
-	BRA NZ	L__dd_Menu_makeLineText95
+	BRA NZ	L__dd_Menu_makeLineText96
 	GOTO	L__dd_Menu_makeLineText49
-L__dd_Menu_makeLineText95:
+L__dd_Menu_makeLineText96:
 	GOTO	L_dd_Menu_makeLineText38
 L__dd_Menu_makeLineText50:
 L__dd_Menu_makeLineText49:
@@ -761,9 +771,9 @@ L_dd_Menu_makeLineText32:
 ; lineCharIndex start address is: 10 (W5)
 	MOV.B	[W14+4], W0
 	CP.B	W0, #0
-	BRA GTU	L__dd_Menu_makeLineText96
+	BRA GTU	L__dd_Menu_makeLineText97
 	GOTO	L__dd_Menu_makeLineText51
-L__dd_Menu_makeLineText96:
+L__dd_Menu_makeLineText97:
 ;dd_menu.c,314 :: 		for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
 	CLR	W0
 	MOV	W0, [W14+0]
@@ -772,9 +782,9 @@ L_dd_Menu_makeLineText41:
 ; lineCharIndex start address is: 10 (W5)
 	MOV	[W14+0], W0
 	CP	W0, #1
-	BRA LT	L__dd_Menu_makeLineText97
+	BRA LT	L__dd_Menu_makeLineText98
 	GOTO	L_dd_Menu_makeLineText42
-L__dd_Menu_makeLineText97:
+L__dd_Menu_makeLineText98:
 ;dd_menu.c,315 :: 		lineText[lineCharIndex] = ' ';
 	ADD	W10, W5, W1
 	MOV.B	#32, W0
@@ -804,9 +814,9 @@ L_dd_Menu_makeLineText44:
 	ZE	[W0], W1
 	ADD	W14, #0, W0
 	CP	W1, [W0]
-	BRA GT	L__dd_Menu_makeLineText98
+	BRA GT	L__dd_Menu_makeLineText99
 	GOTO	L_dd_Menu_makeLineText45
-L__dd_Menu_makeLineText98:
+L__dd_Menu_makeLineText99:
 ;dd_menu.c,319 :: 		lineText[lineCharIndex] = (item->label)[i];
 	ADD	W10, W3, W2
 	MOV	[W14+6], W0
@@ -858,9 +868,9 @@ _dd_Menu_isLineSelected:
 	ZE	W10, W0
 	CP	W1, W0
 	CLR.B	W0
-	BRA NZ	L__dd_Menu_isLineSelected100
+	BRA NZ	L__dd_Menu_isLineSelected101
 	INC.B	W0
-L__dd_Menu_isLineSelected100:
+L__dd_Menu_isLineSelected101:
 ;dd_menu.c,337 :: 		}
 L_end_dd_Menu_isLineSelected:
 	RETURN

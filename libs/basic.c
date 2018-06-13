@@ -21,6 +21,13 @@ char log2(unsigned char byte) {
     return result;
 }
 
+int round(double number){
+    int a = floor(number);
+    if( number - a < 0.5 )
+        return a;
+    else return ceil(number);
+}
+
 void unsignedIntToString(unsigned int number, char *text) {
     emptyString(text);
     sprintf(text, "%u", number);

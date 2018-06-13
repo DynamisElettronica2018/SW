@@ -1,17 +1,8 @@
 main
 	setAllPinAsDigital
 	Debug_UART_Init
-		UART2_Init
-			Get_Fosc_kHz
-			Get_Fosc_Per_Cyc
-			Delay_100ms
-			_Multiply_32x32
-			_Modulus_32x32
-			_Divide_32x32
 	dHardReset_hasBeenReset
 	Debug_UART_Write
-		UART2_Write_Text
-			UART2_Write
 	d_UIController_init
 		dControls_init
 			I2C1_Init
@@ -143,6 +134,11 @@ main
 						dd_GraphicController_isFrameUpdateForced
 						dd_printMenuLine
 							dd_Menu_isLineSelected
+							eGlcd_fillPage
+								Glcd_Set_Page
+								Glcd_Set_Side
+								Glcd_Set_X
+								Glcd_Write_Data
 							dd_Menu_makeLineText
 								dd_Indicator_parseValueLabel
 								dd_MenuLine_getScrollingOverflow
@@ -154,14 +150,8 @@ main
 									_Float2Longint
 								dd_MenuLine_getVisibleDescriptionWidth
 								dd_MenuLine_hasToScroll
-							Glcd_Set_Font
-							Glcd_Write_Text
-								Glcd_Write_Char
-									Glcd_Set_X
-									Glcd_Set_Page
-									Glcd_Set_Side
-									Glcd_Read_Data
-									Glcd_Write_Data
+							xGlcd_Set_Font
+							xGlcd_Write_Text
 							dd_Indicator_clearPrintUpdateRequest
 				dd_Interface_printBoardDebug
 					dd_boardDebug_print
@@ -268,12 +258,13 @@ main
 			dHardReset_hasBeenReset
 			dd_GraphicController_startupLogo
 				dd_GraphicController_getTmrCounterLimit
-				Glcd_Image
-					Glcd_Set_Side
-					Glcd_Set_Page
-					Glcd_Set_X
-					Glcd_Write_Data
-					__AddToFarPointer
+				eGlcd_loadImage
+					Glcd_Image
+						Glcd_Set_Side
+						Glcd_Set_Page
+						Glcd_Set_X
+						Glcd_Write_Data
+						__AddToFarPointer
 			dd_GraphicController_timerSetup
 				setInterruptPriority
 				setTimer
@@ -454,15 +445,20 @@ timer2_interrupt
 				Can_getWriteFlags
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dRpm_updateLedStripe
-			ceil
-			I2CExpander_setPort
-				I2C1_Start
-				I2C1_Write
-				I2C1_Stop
-			_Long2Float
-			_Float2Longint
+		dSignalLed_set
+		dSignalLed_unset
 		eGlcd_clear
+		Lcd_PrintFrame
+			_Lcd_Init
+				_Lcd_Toggle_Enable
+			_Lcd_ResetYAddr
+				_Lcd_Toggle_Enable
+			_Lcd_SetPage
+				_Lcd_SetDataPort
+					_Lcd_Toggle_Enable
+			_Lcd_WriteData
+				_Lcd_SetDataPort
+			_Lcd_Change_Side
 		dd_printMessage
 		dd_GraphicController_handleNotification
 			dd_GraphicController_clearNotification

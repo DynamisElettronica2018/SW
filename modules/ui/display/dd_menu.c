@@ -13,9 +13,9 @@
 
 //spacing between description and value labels
 #define MENU_DESCRIPTION_VALUE_SPACING  1
-#define MENU_FONT                       DD_Terminal_Font
-#define MENU_FONT_WIDTH                 DynamisFont_Terminal_WIDTH
-#define MENU_FONT_HEIGHT                DynamisFont_Terminal_HEIGHT
+#define MENU_FONT                       DD_UniformTerminal_Font
+#define MENU_FONT_WIDTH                 DynamisFont_UniformTerminal_WIDTH
+#define MENU_FONT_HEIGHT                DynamisFont_UniformTerminal_HEIGHT
 #define MENU_FONT_SPACING               1
 
 //horizontal description label scrolling
@@ -184,15 +184,15 @@ void dd_printMenuLine(unsigned char lineIndex) {
     } else {
        color = BLACK;
     }
+    eGlcd_fillPage(lineNumber, !color);
     dd_Menu_makeLineText(lineText, lineIndex);
     //strncpy(str, lineText, dd_Menu_Width);
     //UART1_Write_Text(str);
     //UART1_Write('\n');
-    eGlcd(
-          Glcd_Set_Font(MENU_FONT);
-          // lineNumber is also the Y-page number because font height is exactly page height
-          Glcd_Write_Text(lineText, 0, lineNumber, color);
-    );
+
+          xGlcd_Set_Font(DD_UniformTerminal_Font/*MENU_FONT*/);
+          xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
+
     dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
 

@@ -34,8 +34,7 @@ _dd_Interface_drawTitleContainers:
 	MOV.B	#126, W12
 	MOV.B	#1, W11
 	MOV.B	#1, W10
-	MOV	#lo_addr(_BLACK), W0
-	ZE	[W0], W0
+	MOV	#_BLACK, W0
 	PUSH	W0
 	MOV	#3, W0
 	PUSH	W0
