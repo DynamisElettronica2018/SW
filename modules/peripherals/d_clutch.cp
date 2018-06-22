@@ -83,7 +83,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -252,12 +252,105 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned char value);
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 8 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_clutch.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux1(void);
+
+void d_controls_onAux2(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE
+} OperatingMode;
+
+
+
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_th2o;
+extern FloatIndicator ind_vbat;
+extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern BooleanIndicator ind_rio_acq;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_oil_temp_out;
+extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 5 ])(void);
+#line 121 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose();
+void d_UI_setOperatingMode(OperatingMode mode);
+#line 130 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 10 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_clutch.c"
 unsigned char dClutch_actualValue = 0, dClutch_value = 0;
 
 int i = 0;
@@ -274,10 +367,13 @@ void dClutch_set(unsigned char value) {
  dClutch_value = value;
 }
 
-void dClutch_injectActualValue(unsigned char value) {
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
+ if (clutch_check ==  99 ){
  dClutch_actualValue = value;
- dd_Indicator_setIntValue(CLUTCH_POSITION, dClutch_actualValue);
+ dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
 
+
+ }
 }
 
 unsigned char dClutch_get(void) {

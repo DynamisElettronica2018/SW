@@ -41,7 +41,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -274,7 +274,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned char value);
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 
 unsigned char dClutch_get(void);
 

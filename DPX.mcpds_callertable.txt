@@ -135,27 +135,9 @@ main
 							xGlcd_Set_Font
 							xGlcd_Write_Text
 							dd_Indicator_clearPrintUpdateRequest
-				dd_Interface_printBoardDebug
-					dd_boardDebug_print
-						dd_boardDebug_setStartPrintIndex
-						dd_boardDebug_printRect
-							dd_boardDebug_drawRect
-								dd_boardDebug_getPrintPosition
-								eGlcd_drawRect
-							dd_boardDebug_writeValue
-								xGlcd_Set_Font
-								dd_boardDebug_getPrintPosition
-								eGlcd_getTextPixelLength
-									strlen
-									xGlcd_Char_Width
-										_Multiply_32x32
-								eGlcd_writeText
-								dd_Indicator_parseValueLabel
-						dd_boardDebug_setPrintValue
 				dd_Dashboard_init
 				dd_Menu_init
 					dd_Menu_reset
-				dd_boardDebug_init
 				d_UI_BoardDebugModeInit
 					dd_GraphicController_setCollectionInterface
 						dd_GraphicController_setInterface
@@ -174,10 +156,8 @@ main
 						strcpy
 						dd_Dashboard_print
 						dd_Interface_printMenu
-						dd_Interface_printBoardDebug
 						dd_Dashboard_init
 						dd_Menu_init
-						dd_boardDebug_init
 						d_UI_BoardDebugModeInit | Recursion.
 				d_UI_SettingsModeInit
 					d_DashboardSetting_updateValue
@@ -214,6 +194,10 @@ main
 				unsetAnalogInterrupt
 					clearAnalogInterrupt
 				startSampling
+			setAnalogPIN
+			turnOnAnalogModule
+		d_SWTemp_Init
+			setupAnalogSampling
 			setAnalogPIN
 			turnOnAnalogModule
 		dSignalLed_init
@@ -340,6 +324,9 @@ external4
 					dd_printMessage
 						xGlcd_Set_Font
 						eGlcd_getTextPixelLength
+							strlen
+							xGlcd_Char_Width
+								_Multiply_32x32
 						eGlcd_drawRect
 						eGlcd_writeText
 					dd_GraphicController_setNotificationFlag
@@ -357,8 +344,8 @@ external3
 		dStart_switchOff
 	clearExternalInterrupt
 CAN_Interrupt
-	dSignalLed_switch
 	Can_clearInterrupt
+	dSignalLed_switch
 	Can_read
 		Can_B0hasBeenReceived
 		Can_clearB0Flag
@@ -415,6 +402,10 @@ CAN_Interrupt
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
+	dClutch_injectActualValue
+		dd_Indicator_setIntValueP
+	d_SWTemp_getTempValue
+		getAnalogValue
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -430,6 +421,10 @@ external1
 	clearExternalInterrupt
 cn_interrupt
 	d_controls_onLeftEncoder
+		dd_Menu_moveSelection
+			dd_Menu_scroll
+				Debug_UART_Write
+	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -443,13 +438,6 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
-		dd_boardDebug_Move
-			dd_boardDebug_setPrintValue
-	d_controls_onRightEncoder
-		dd_Menu_moveSelection
-			dd_Menu_scroll
-				Debug_UART_Write
-		dd_boardDebug_Move
 	clearExternalInterrupt
 timer2_interrupt
 	Buttons_tick
@@ -469,9 +457,6 @@ timer2_interrupt
 		_Float2Longint
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
-	dClutch_set
-	dPaddle_getValue
-	dClutch_send
 		Can_writeByte
 			Can_resetWritePacket
 			Can_addByteToWritePacket
@@ -479,6 +464,10 @@ timer2_interrupt
 				CAN1Write
 					CAN1IDToRegs
 				Can_getWriteFlags
+	dClutch_set
+	dPaddle_getValue
+	dClutch_send
+		Can_writeByte
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
 		dSignalLed_set
@@ -493,10 +482,8 @@ timer1_interrupt
 		eGlcd_fill
 		dd_Dashboard_print
 		dd_Interface_printMenu
-		dd_Interface_printBoardDebug
 		dd_Dashboard_init
 		dd_Menu_init
-		dd_boardDebug_init
 		d_UI_BoardDebugModeInit
 		d_UI_SettingsModeInit
 		d_UI_DebugModeInit

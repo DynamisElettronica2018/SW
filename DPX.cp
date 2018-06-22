@@ -7,7 +7,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -375,7 +375,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned char value);
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 
 unsigned char dClutch_get(void);
 
@@ -458,6 +458,15 @@ char dStart_isSwitchedOn(void);
 
 void dStart_sendStartMessage(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_paddle.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 10 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+void d_SWTemp_Init(void);
+
+unsigned int d_SWTemp_getTempValue(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 
 
@@ -548,11 +557,10 @@ extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
-extern FloatIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -569,28 +577,28 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 
 
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 121 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -602,19 +610,18 @@ OperatingMode d_selectorPositionToMode(signed char position);
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
@@ -673,7 +680,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 21 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 22 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0;
 
 
@@ -719,13 +726,13 @@ void main(){
 
  timer2_counter1 = 0;
  }
-#line 75 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 76 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  if (timer2_counter2 >= 10) {
  dClutch_set(dPaddle_getValue());
  dClutch_send();
  timer2_counter2 = 0;
  }
-#line 87 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 88 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
 }
 
 
@@ -736,16 +743,10 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-
- if(C1INTFbits.ERRIF == 1){
- dSignalLed_switch( 0 );
- }
-
- IEC1BITS.C1IE = 0;
+#line 104 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
-
 
 
 
@@ -793,14 +794,30 @@ void main(){
  dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt);
  break;
  case  0b01100000111 :
-
+ dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
  break;
-#line 193 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+ case  0b01100010000 :
+ dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+ break;
+#line 179 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+ case  0b01100010110 :
+ dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
+ dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
+ dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+ dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
+ break;
+ case  0b01100010111 :
+ dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+ dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
+ dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+ dd_Indicator_setIntValueP(&ind_sw_board.base, d_SWTemp_getTempValue());
+ break;
+#line 194 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  default:
  break;
  }
 
 
- IEC1BITS.C1IE = 1;
+
 }

@@ -24,18 +24,15 @@
 #define PARAMETER_TOP_MARGIN 3
 
 void dd_Interface_printMenu();
-void dd_Interface_printBoardDebug();
 
 void (*dd_Interface_print[INTERFACES_TOTAL_COUNT])(void) = {
      dd_Dashboard_print,
-     dd_Interface_printMenu,
-     dd_Interface_printBoardDebug
+     dd_Interface_printMenu
 };
 
 void (*dd_Interface_init[INTERFACES_TOTAL_COUNT])(void) = {
      dd_Dashboard_init,
-     dd_Menu_init,
-     dd_boardDebug_init
+     dd_Menu_init
 } ;
 
 const char dd_notificationTitles[NOTIFICATION_TYPES_COUNT][MAX_INTERFACE_TITLE_LENGTH] = {
@@ -106,14 +103,9 @@ void dd_printMessage(char * title)
     eGlcd_writeText(title, x_origin, y_origin);
 }
 
-void dd_Interface_printBoardDebug(){
-     dd_boardDebug_print();
-}
-
 void dd_Interface_printMenu() {
     dd_printMenu();
 }
-
 
 
 /*void dd_Interface_printParameterPage(unsigned char parameter) {

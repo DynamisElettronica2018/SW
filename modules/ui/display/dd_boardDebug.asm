@@ -1,640 +1,848 @@
 
-_dd_boardDebug_setPrintValue:
+_dd_boardDebug_reset:
 
-;dd_boardDebug.c,51 :: 		void dd_boardDebug_setPrintValue(unsigned char index){
-;dd_boardDebug.c,52 :: 		dd_PrintValue = index;
-	MOV	#lo_addr(_dd_PrintValue), W0
-	MOV.B	W10, [W0]
+;dd_boardDebug.c,46 :: 		void dd_boardDebug_reset(void) {
+;dd_boardDebug.c,47 :: 		dd_boardDebug_SelectedLineIndex = 0;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W1
+	CLR	W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,48 :: 		dd_boardDebug_FirstLineIndex = 0;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W1
+	CLR	W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,49 :: 		}
+L_end_dd_boardDebug_reset:
+	RETURN
+; end of _dd_boardDebug_reset
+
+_dd_boardDebug_init:
+
+;dd_boardDebug.c,51 :: 		void dd_boardDebug_init() {
+;dd_boardDebug.c,52 :: 		dd_boardDebug_reset();
+	CALL	_dd_boardDebug_reset
 ;dd_boardDebug.c,53 :: 		}
-L_end_dd_boardDebug_setPrintValue:
+L_end_dd_boardDebug_init:
 	RETURN
-; end of _dd_boardDebug_setPrintValue
+; end of _dd_boardDebug_init
 
-_dd_boardDebug_setStartPrintIndex:
+_dd_boardDebug_setY_OFFSET:
 
-;dd_boardDebug.c,55 :: 		void dd_boardDebug_setStartPrintIndex(unsigned char index){
-;dd_boardDebug.c,56 :: 		dd_StartPrintIndex = index;
-	MOV	#lo_addr(_dd_StartPrintIndex), W0
+;dd_boardDebug.c,55 :: 		void dd_boardDebug_setY_OFFSET(unsigned char y) {
+;dd_boardDebug.c,56 :: 		dd_boardDebug_Y_OFFSET = y;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Y_OFFSET), W0
 	MOV.B	W10, [W0]
-;dd_boardDebug.c,57 :: 		}
-L_end_dd_boardDebug_setStartPrintIndex:
+;dd_boardDebug.c,57 :: 		dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height), W0
+	ADD.B	W10, [W1], [W0]
+;dd_boardDebug.c,58 :: 		}
+L_end_dd_boardDebug_setY_OFFSET:
 	RETURN
-; end of _dd_boardDebug_setStartPrintIndex
+; end of _dd_boardDebug_setY_OFFSET
 
-_dd_boardDebug_getPrintPosition:
+_dd_boardDebug_setX_OFFSET:
 
-;dd_boardDebug.c,59 :: 		unsigned char dd_boardDebug_getPrintPosition(unsigned char index){
-;dd_boardDebug.c,60 :: 		if(dd_upMoves!=MAX_MOVES || dd_downMoves!=0){
-	MOV	_dd_upMoves, W0
-	CP	W0, #3
-	BRA Z	L__dd_boardDebug_getPrintPosition48
-	GOTO	L__dd_boardDebug_getPrintPosition29
-L__dd_boardDebug_getPrintPosition48:
-	MOV	_dd_downMoves, W0
-	CP	W0, #0
-	BRA Z	L__dd_boardDebug_getPrintPosition49
-	GOTO	L__dd_boardDebug_getPrintPosition28
-L__dd_boardDebug_getPrintPosition49:
-	GOTO	L_dd_boardDebug_getPrintPosition2
-L__dd_boardDebug_getPrintPosition29:
-L__dd_boardDebug_getPrintPosition28:
-;dd_boardDebug.c,61 :: 		return index - /*2*/4*(dd_downMoves);
-	MOV	_dd_downMoves, W0
-	SL	W0, #2, W1
-	ZE	W10, W0
-	SUB	W0, W1, W0
-	GOTO	L_end_dd_boardDebug_getPrintPosition
+;dd_boardDebug.c,60 :: 		void dd_boardDebug_setX_OFFSET(unsigned char x) {
+;dd_boardDebug.c,61 :: 		dd_boardDebug_X_OFFSET = x;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_X_OFFSET), W0
+	MOV.B	W10, [W0]
 ;dd_boardDebug.c,62 :: 		}
-L_dd_boardDebug_getPrintPosition2:
-;dd_boardDebug.c,63 :: 		else return index;
-	MOV.B	W10, W0
-;dd_boardDebug.c,64 :: 		}
-L_end_dd_boardDebug_getPrintPosition:
+L_end_dd_boardDebug_setX_OFFSET:
 	RETURN
-; end of _dd_boardDebug_getPrintPosition
+; end of _dd_boardDebug_setX_OFFSET
 
-_dd_boardDebug_drawRect:
+_dd_boardDebug_setHeight:
 
-;dd_boardDebug.c,66 :: 		void dd_boardDebug_drawRect(unsigned char index) {
-;dd_boardDebug.c,68 :: 		index = dd_boardDebug_getPrintPosition(index);
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	PUSH	W13
-	CALL	_dd_boardDebug_getPrintPosition
-	MOV.B	W0, W10
-;dd_boardDebug.c,69 :: 		x = BOARD_POSITION_COORDINATES[index][0];
-	ZE	W0, W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W2
-;dd_boardDebug.c,70 :: 		y = BOARD_POSITION_COORDINATES[index][1];
-	INC	W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-;dd_boardDebug.c,72 :: 		eGlcd(eGlcd_drawRect(
-	ZE	W0, W0
-	ADD	W0, #1, W1
+;dd_boardDebug.c,64 :: 		void dd_boardDebug_setHeight(unsigned char height) {
+;dd_boardDebug.c,65 :: 		if (height > MAX_BOARD_DEBUG_HEIGHT) {
+	CP.B	W10, #8
+	BRA GTU	L__dd_boardDebug_setHeight61
+	GOTO	L_dd_boardDebug_setHeight0
+L__dd_boardDebug_setHeight61:
+;dd_boardDebug.c,66 :: 		height = MAX_BOARD_DEBUG_HEIGHT;
+	MOV.B	#8, W10
+;dd_boardDebug.c,67 :: 		}
+L_dd_boardDebug_setHeight0:
+;dd_boardDebug.c,68 :: 		dd_boardDebug_Height_param = height;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	MOV.B	W10, [W0]
+;dd_boardDebug.c,69 :: 		dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Y_OFFSET), W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height), W0
+	ADD.B	W10, [W1], [W0]
+;dd_boardDebug.c,70 :: 		}
+L_end_dd_boardDebug_setHeight:
+	RETURN
+; end of _dd_boardDebug_setHeight
+
+_dd_boardDebug_setWidth:
+
+;dd_boardDebug.c,72 :: 		void dd_boardDebug_setWidth(unsigned char width) {
+;dd_boardDebug.c,73 :: 		if (width > MAX_BOARD_DEBUG_WIDTH) {
+	CP.B	W10, #18
+	BRA GTU	L__dd_boardDebug_setWidth63
+	GOTO	L_dd_boardDebug_setWidth1
+L__dd_boardDebug_setWidth63:
+;dd_boardDebug.c,74 :: 		width = MAX_BOARD_DEBUG_WIDTH;
+	MOV.B	#18, W10
+;dd_boardDebug.c,75 :: 		}
+L_dd_boardDebug_setWidth1:
+;dd_boardDebug.c,76 :: 		dd_boardDebug_Width = width;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Width), W0
+	MOV.B	W10, [W0]
+;dd_boardDebug.c,77 :: 		}
+L_end_dd_boardDebug_setWidth:
+	RETURN
+; end of _dd_boardDebug_setWidth
+
+_dd_boardDebug_scroll:
+
+;dd_boardDebug.c,80 :: 		void dd_boardDebug_scroll(signed char movements) {
+;dd_boardDebug.c,82 :: 		dd_boardDebug_FirstLineIndex+=movements;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W1
+	SE	W10, W0
+	ADD	W1, W0, W2
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	MOV.B	W2, [W0]
+;dd_boardDebug.c,83 :: 		if ( dd_boardDebug_FirstLineIndex > dd_currentIndicatorsCount - dd_boardDebug_Height_param ) {
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+	ZE	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	ZE	[W0], W0
+	SUB	W1, W0, W0
+	CP	W2, W0
+	BRA GTU	L__dd_boardDebug_scroll65
+	GOTO	L_dd_boardDebug_scroll2
+L__dd_boardDebug_scroll65:
+;dd_boardDebug.c,84 :: 		dd_boardDebug_FirstLineIndex = dd_currentIndicatorsCount - 1 - dd_boardDebug_Height_param;
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+	ZE	[W0], W0
+	SUB	W0, #1, W2
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SUB.B	W2, [W1], [W0]
+;dd_boardDebug.c,85 :: 		}
+	GOTO	L_dd_boardDebug_scroll3
+L_dd_boardDebug_scroll2:
+;dd_boardDebug.c,86 :: 		else if (dd_boardDebug_FirstLineIndex < 0) {
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #0
+	BRA LT	L__dd_boardDebug_scroll66
+	GOTO	L_dd_boardDebug_scroll4
+L__dd_boardDebug_scroll66:
+;dd_boardDebug.c,87 :: 		dd_boardDebug_FirstLineIndex = 0;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W1
+	CLR	W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,88 :: 		}
+L_dd_boardDebug_scroll4:
+L_dd_boardDebug_scroll3:
+;dd_boardDebug.c,89 :: 		for (i = dd_boardDebug_FirstLineIndex; i < dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param; i++) {
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+; i start address is: 4 (W2)
+	MOV.B	[W0], W2
+; i end address is: 4 (W2)
+L_dd_boardDebug_scroll5:
+; i start address is: 4 (W2)
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	ZE	[W0], W0
+	ADD	W1, W0, W1
 	ZE	W2, W0
+	CP	W0, W1
+	BRA LT	L__dd_boardDebug_scroll67
+	GOTO	L_dd_boardDebug_scroll6
+L__dd_boardDebug_scroll67:
+;dd_boardDebug.c,90 :: 		dd_currentIndicators[i]->pendingPrintUpdate = TRUE;
+	ZE	W2, W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	ADD	W0, #8, W1
+	MOV.B	[W1], W0
+	XOR.B	W0, #1, W0
+	AND.B	W0, #3, W0
+	XOR.B	W0, [W1], W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,89 :: 		for (i = dd_boardDebug_FirstLineIndex; i < dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param; i++) {
+	INC.B	W2
+;dd_boardDebug.c,91 :: 		}
+; i end address is: 4 (W2)
+	GOTO	L_dd_boardDebug_scroll5
+L_dd_boardDebug_scroll6:
+;dd_boardDebug.c,92 :: 		}
+L_end_dd_boardDebug_scroll:
+	RETURN
+; end of _dd_boardDebug_scroll
+
+_dd_boardDebug_moveSelection:
+
+;dd_boardDebug.c,94 :: 		void dd_boardDebug_moveSelection(signed char movements) {
+;dd_boardDebug.c,95 :: 		dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate = TRUE;
+	PUSH	W10
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	ADD	W0, #8, W1
+	MOV.B	[W1], W0
+	XOR.B	W0, #1, W0
+	AND.B	W0, #3, W0
+	XOR.B	W0, [W1], W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,96 :: 		dd_boardDebug_SelectedLineIndex+=movements;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W1
+	SE	W10, W0
+	ADD	W1, W0, W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	MOV.B	W1, [W0]
+;dd_boardDebug.c,97 :: 		if (dd_boardDebug_SelectedLineIndex >= dd_currentIndicatorsCount) {
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+	ZE	[W0], W0
+	CP	W1, W0
+	BRA GE	L__dd_boardDebug_moveSelection69
+	GOTO	L_dd_boardDebug_moveSelection8
+L__dd_boardDebug_moveSelection69:
+;dd_boardDebug.c,98 :: 		dd_boardDebug_SelectedLineIndex = dd_currentIndicatorsCount - 1;
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+	MOV.B	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SUB.B	W1, #1, [W0]
+;dd_boardDebug.c,99 :: 		}
+	GOTO	L_dd_boardDebug_moveSelection9
+L_dd_boardDebug_moveSelection8:
+;dd_boardDebug.c,100 :: 		else if (dd_boardDebug_SelectedLineIndex < 0) {
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #0
+	BRA LT	L__dd_boardDebug_moveSelection70
+	GOTO	L_dd_boardDebug_moveSelection10
+L__dd_boardDebug_moveSelection70:
+;dd_boardDebug.c,101 :: 		dd_boardDebug_SelectedLineIndex = 0;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W1
+	CLR	W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,102 :: 		}
+L_dd_boardDebug_moveSelection10:
+L_dd_boardDebug_moveSelection9:
+;dd_boardDebug.c,103 :: 		dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate = TRUE;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	ADD	W0, #8, W1
+	MOV.B	[W1], W0
+	XOR.B	W0, #1, W0
+	AND.B	W0, #3, W0
+	XOR.B	W0, [W1], W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,104 :: 		if (dd_boardDebug_SelectedLineIndex >= dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param){
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	ZE	[W0], W0
+	ADD	W1, W0, W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W0
+	CP	W0, W1
+	BRA GE	L__dd_boardDebug_moveSelection71
+	GOTO	L_dd_boardDebug_moveSelection11
+L__dd_boardDebug_moveSelection71:
+;dd_boardDebug.c,105 :: 		dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex - dd_boardDebug_Height_param + 1);
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W0
+	SUB	W1, W0, W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	ZE	[W0], W0
+	SUB	W1, W0, W0
 	INC	W0
-	MOV.B	#28, W13
-	MOV.B	#61, W12
-	MOV.B	W1, W11
 	MOV.B	W0, W10
-	CALL	_eGlcd_drawRect
-;dd_boardDebug.c,78 :: 		}
-L_end_dd_boardDebug_drawRect:
-	POP	W13
-	POP	W12
-	POP	W11
+	CALL	_dd_boardDebug_scroll
+;dd_boardDebug.c,106 :: 		}
+	GOTO	L_dd_boardDebug_moveSelection12
+L_dd_boardDebug_moveSelection11:
+;dd_boardDebug.c,107 :: 		else if (dd_boardDebug_SelectedLineIndex < dd_boardDebug_FirstLineIndex){
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	MOV.B	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	CP.B	W1, [W0]
+	BRA LT	L__dd_boardDebug_moveSelection72
+	GOTO	L_dd_boardDebug_moveSelection13
+L__dd_boardDebug_moveSelection72:
+;dd_boardDebug.c,108 :: 		dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex);
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W0
+	SUB	W1, W0, W0
+	MOV.B	W0, W10
+	CALL	_dd_boardDebug_scroll
+;dd_boardDebug.c,109 :: 		}
+L_dd_boardDebug_moveSelection13:
+L_dd_boardDebug_moveSelection12:
+;dd_boardDebug.c,110 :: 		}
+L_end_dd_boardDebug_moveSelection:
 	POP	W10
 	RETURN
-; end of _dd_boardDebug_drawRect
+; end of _dd_boardDebug_moveSelection
 
-_dd_boardDebug_writeValue:
-	LNK	#4
+_dd_boardDebug_isLineSelected:
 
-;dd_boardDebug.c,80 :: 		void dd_boardDebug_writeValue(unsigned char index){
-;dd_boardDebug.c,81 :: 		Indicator* indicator = dd_currentIndicators[index+BOARDS_OFFSET];
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	PUSH	W13
+;dd_boardDebug.c,112 :: 		char dd_boardDebug_isLineSelected(unsigned char lineIndex) {
+;dd_boardDebug.c,113 :: 		return dd_boardDebug_SelectedLineIndex == lineIndex;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_SelectedLineIndex), W0
+	SE	[W0], W1
+	ZE	W10, W0
+	CP	W1, W0
+	CLR.B	W0
+	BRA NZ	L__dd_boardDebug_isLineSelected74
+	INC.B	W0
+L__dd_boardDebug_isLineSelected74:
+;dd_boardDebug.c,114 :: 		}
+L_end_dd_boardDebug_isLineSelected:
+	RETURN
+; end of _dd_boardDebug_isLineSelected
+
+_dd_boardDebugLine_getVisibleDescriptionWidth:
+
+;dd_boardDebug.c,116 :: 		unsigned char dd_boardDebugLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
+;dd_boardDebug.c,118 :: 		labelLength = dd_currentIndicators[lineIndex]->labelLength;
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
 	ADD	W1, [W0], W0
 	MOV	[W0], W0
+	ADD	W0, #9, W0
+; labelLength start address is: 4 (W2)
+	MOV.B	[W0], W2
+;dd_boardDebug.c,119 :: 		if (labelLength > 0) {
+	MOV.B	[W0], W0
+	CP.B	W0, #0
+	BRA GTU	L__dd_boardDebugLine_getVisibleDescriptionWidth76
+	GOTO	L_dd_boardDebugLine_getVisibleDescriptionWidth14
+L__dd_boardDebugLine_getVisibleDescriptionWidth76:
+;dd_boardDebug.c,120 :: 		return (unsigned char) (dd_boardDebug_Width - labelLength - BOARD_DEBUG_DESCRIPTION_VALUE_SPACING);
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Width), W0
+	ZE	[W0], W1
+	ZE	W2, W0
+; labelLength end address is: 4 (W2)
+	SUB	W1, W0, W0
+	DEC	W0
+	GOTO	L_end_dd_boardDebugLine_getVisibleDescriptionWidth
+;dd_boardDebug.c,121 :: 		} else {
+L_dd_boardDebugLine_getVisibleDescriptionWidth14:
+;dd_boardDebug.c,122 :: 		return dd_boardDebug_Width;
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Width), W0
+	MOV.B	[W0], W0
+;dd_boardDebug.c,124 :: 		}
+L_end_dd_boardDebugLine_getVisibleDescriptionWidth:
+	RETURN
+; end of _dd_boardDebugLine_getVisibleDescriptionWidth
+
+_dd_boardDebugLine_hasToScroll:
+	LNK	#2
+
+;dd_boardDebug.c,126 :: 		unsigned char dd_boardDebugLine_hasToScroll(unsigned char lineIndex) {
+;dd_boardDebug.c,127 :: 		return dd_boardDebug_isLineSelected(lineIndex) &&
+	CALL	_dd_boardDebug_isLineSelected
+;dd_boardDebug.c,128 :: 		dd_currentIndicators[lineIndex]->descriptionLength > dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
+	CP0.B	W0
+	BRA NZ	L__dd_boardDebugLine_hasToScroll78
+	GOTO	L_dd_boardDebugLine_hasToScroll17
+L__dd_boardDebugLine_hasToScroll78:
+	ZE	W10, W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	ADD	W0, #7, W0
 	MOV	W0, [W14+0]
-;dd_boardDebug.c,83 :: 		unsigned char title_letters = 0;
-;dd_boardDebug.c,84 :: 		eGlcd_setFont(DD_xTerminal_Font);
+	CALL	_dd_boardDebugLine_getVisibleDescriptionWidth
+	MOV	[W14+0], W1
+	CP.B	W0, [W1]
+	BRA LTU	L__dd_boardDebugLine_hasToScroll79
+	GOTO	L_dd_boardDebugLine_hasToScroll17
+L__dd_boardDebugLine_hasToScroll79:
+	MOV.B	#1, W0
+	GOTO	L_dd_boardDebugLine_hasToScroll16
+L_dd_boardDebugLine_hasToScroll17:
+	CLR	W0
+L_dd_boardDebugLine_hasToScroll16:
+;dd_boardDebug.c,129 :: 		}
+L_end_dd_boardDebugLine_hasToScroll:
+	ULNK
+	RETURN
+; end of _dd_boardDebugLine_hasToScroll
+
+_dd_boardDebug_printLine:
+	LNK	#22
+
+;dd_boardDebug.c,131 :: 		void  dd_boardDebug_printLine(unsigned char lineIndex) {
+;dd_boardDebug.c,134 :: 		lineNumber = lineIndex - dd_boardDebug_FirstLineIndex + dd_boardDebug_Y_OFFSET;
+	PUSH	W11
+	PUSH	W12
+	PUSH	W13
+	ZE	W10, W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W0
+	SUB	W1, W0, W2
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Y_OFFSET), W1
+	ADD	W14, #0, W0
+	ADD.B	W2, [W1], [W0]
+;dd_boardDebug.c,135 :: 		if (dd_boardDebug_isLineSelected(lineIndex)) {
+	CALL	_dd_boardDebug_isLineSelected
+	CP0.B	W0
+	BRA NZ	L__dd_boardDebug_printLine81
+	GOTO	L_dd_boardDebug_printLine18
+L__dd_boardDebug_printLine81:
+;dd_boardDebug.c,136 :: 		color = WHITE;
+	MOV	#lo_addr(_WHITE), W0
+	MOV.B	[W0], W0
+	MOV.B	W0, [W14+1]
+;dd_boardDebug.c,137 :: 		} else {
+	GOTO	L_dd_boardDebug_printLine19
+L_dd_boardDebug_printLine18:
+;dd_boardDebug.c,138 :: 		color = BLACK;
+	MOV	#lo_addr(_BLACK), W0
+	MOV.B	[W0], W0
+	MOV.B	W0, [W14+1]
+;dd_boardDebug.c,139 :: 		}
+L_dd_boardDebug_printLine19:
+;dd_boardDebug.c,140 :: 		dd_boardDebug_makeLineText(lineText, lineIndex);
+	ADD	W14, #2, W0
 	PUSH	W10
-	MOV	#32, W13
-	MOV.B	#8, W12
-	MOV.B	#6, W11
-	MOV	#lo_addr(dd_boardDebug_DynamisFont_xTerminal6x8), W10
-	CALL	_xGlcd_Set_Font
-	POP	W10
-;dd_boardDebug.c,85 :: 		print_position = dd_boardDebug_getPrintPosition(index);
-	CALL	_dd_boardDebug_getPrintPosition
-	MOV.B	W0, [W14+2]
-;dd_boardDebug.c,86 :: 		if(index + BOARDS_OFFSET < CAR_BOARDS ){
-	ZE	W10, W0
-	CP	W0, #7
-	BRA LT	L__dd_boardDebug_writeValue52
-	GOTO	L_dd_boardDebug_writeValue4
-L__dd_boardDebug_writeValue52:
-;dd_boardDebug.c,87 :: 		title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
-	MOV	[W14+0], W0
-	INC2	W0
-	PUSH	W10
-	MOV	[W0], W10
-	CALL	_eGlcd_getTextPixelLength
-	LSR	W0, #1, W4
-;dd_boardDebug.c,88 :: 		eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] + TITLE_X - title_letters, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN + TITLE_Y);
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	INC	W0
-	ADD	W0, #2, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W0
-	ADD	W0, #30, W1
-	ZE	W4, W0
-	SUB	W1, W0, W1
-	MOV	[W14+0], W0
-	INC2	W0
-	MOV.B	W2, W12
-	MOV.B	W1, W11
-	MOV	[W0], W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,89 :: 		eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] + TITLE_X/2 - FONT_WIDTH/2, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*3 + (FONT_HEIGHT+1));
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W2
-	ADD	W2, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	ADD	W0, #3, W0
-	ADD	W0, #9, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W2], W0
-	ZE	W0, W0
-	ADD	W0, #15, W0
-	SUB	W0, #3, W0
-	MOV.B	W1, W12
-	MOV.B	W0, W11
-	MOV	#lo_addr(?lstr1_dd_boardDebug), W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,90 :: 		eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3*TITLE_X/2 - FONT_WIDTH/2, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*3 + (FONT_HEIGHT+1));
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	ADD	W0, #3, W0
-	ADD	W0, #9, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W1
-	MOV	#45, W0
-	ADD	W1, W0, W0
-	SUB	W0, #3, W0
-	MOV.B	W2, W12
-	MOV.B	W0, W11
-	MOV	#lo_addr(?lstr2_dd_boardDebug), W10
-	CALL	_eGlcd_writeText
-	POP	W10
-;dd_boardDebug.c,91 :: 		dd_Indicator_parseValueLabel(index+ BOARDS_OFFSET );
-	ZE	W10, W0
-	MOV.B	W0, W10
-	CALL	_dd_Indicator_parseValueLabel
-;dd_boardDebug.c,92 :: 		eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4*RECT_MARGIN , BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*2 + (FONT_HEIGHT+1)*2);
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	INC2	W0
-	ADD	W0, #18, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W0
-	ADD	W0, #4, W1
-	MOV	[W14+0], W0
-	ADD	W0, #10, W0
-	MOV.B	W2, W12
-	MOV.B	W1, W11
+	MOV.B	W10, W11
 	MOV	W0, W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,93 :: 		} else if(index < CAR_BOARDS + CAR_SENSORS && index + BOARDS_OFFSET >= CAR_BOARDS  ){
-	GOTO	L_dd_boardDebug_writeValue5
-L_dd_boardDebug_writeValue4:
-	CP.B	W10, #13
-	BRA LTU	L__dd_boardDebug_writeValue53
-	GOTO	L__dd_boardDebug_writeValue32
-L__dd_boardDebug_writeValue53:
-	ZE	W10, W0
-	CP	W0, #7
-	BRA GE	L__dd_boardDebug_writeValue54
-	GOTO	L__dd_boardDebug_writeValue31
-L__dd_boardDebug_writeValue54:
-L__dd_boardDebug_writeValue30:
-;dd_boardDebug.c,94 :: 		title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
-	MOV	[W14+0], W0
-	INC2	W0
-	PUSH	W10
-	MOV	[W0], W10
-	CALL	_eGlcd_getTextPixelLength
-	LSR	W0, #1, W4
-;dd_boardDebug.c,95 :: 		eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] + TITLE_X - title_letters, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN + TITLE_Y);
+	CALL	_dd_boardDebug_makeLineText
+;dd_boardDebug.c,141 :: 		eGlcd(
+	MOV	#___Lib_System_DefaultPage, W0
+	MOV.B	#8, W13
+	MOV.B	#6, W12
+	MOV	#lo_addr(dd_boardDebug_DynamisFont_Terminal6x8), W10
+	MOV	W0, W11
+	MOV	#32, W0
+	PUSH	W0
+	CALL	_Glcd_Set_Font
+	SUB	#2, W15
 	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	INC	W0
-	ADD	W0, #2, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W0
-	ADD	W0, #30, W1
-	ZE	W4, W0
-	SUB	W1, W0, W1
-	MOV	[W14+0], W0
-	INC2	W0
-	MOV.B	W2, W12
-	MOV.B	W1, W11
-	MOV	[W0], W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,96 :: 		eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] + TITLE_X/2 - FONT_WIDTH/2, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*3 + (FONT_HEIGHT+1));
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W2
-	ADD	W2, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	ADD	W0, #3, W0
-	ADD	W0, #9, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W2], W0
-	ZE	W0, W0
-	ADD	W0, #15, W0
-	SUB	W0, #3, W0
-	MOV.B	W1, W12
-	MOV.B	W0, W11
-	MOV	#lo_addr(?lstr3_dd_boardDebug), W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,97 :: 		eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3*TITLE_X/2 - FONT_WIDTH/2, BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*3 + (FONT_HEIGHT+1));
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	ADD	W0, #3, W0
-	ADD	W0, #9, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W1
-	MOV	#45, W0
-	ADD	W1, W0, W0
-	SUB	W0, #3, W0
-	MOV.B	W2, W12
-	MOV.B	W0, W11
-	MOV	#lo_addr(?lstr4_dd_boardDebug), W10
-	CALL	_eGlcd_writeText
-	POP	W10
-;dd_boardDebug.c,98 :: 		dd_Indicator_parseValueLabel(index+ BOARDS_OFFSET );
-	ZE	W10, W0
-	MOV.B	W0, W10
-	CALL	_dd_Indicator_parseValueLabel
-;dd_boardDebug.c,99 :: 		eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4*RECT_MARGIN , BOARD_POSITION_COORDINATES[print_position][1] + RECT_MARGIN*2 + (FONT_HEIGHT+1)*2);
-	ADD	W14, #2, W0
-	ZE	[W0], W0
-	SL	W0, #1, W1
-	MOV	#lo_addr(dd_boardDebug_BOARD_POSITION_COORDINATES), W0
-	ADD	W0, W1, W3
-	ADD	W3, #1, W1
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W1], W0
-	ZE	W0, W0
-	INC2	W0
-	ADD	W0, #18, W2
-	MOV	#___Lib_System_DefaultPage, W0
-	MOV	WREG, 52
-	MOV.B	[W3], W0
-	ZE	W0, W0
-	ADD	W0, #4, W1
-	MOV	[W14+0], W0
-	ADD	W0, #10, W0
-	MOV.B	W2, W12
-	MOV.B	W1, W11
+	MOV.B	[W14+1], W13
+	MOV.B	[W14+0], W12
+	CLR	W11
 	MOV	W0, W10
-	CALL	_eGlcd_writeText
-;dd_boardDebug.c,93 :: 		} else if(index < CAR_BOARDS + CAR_SENSORS && index + BOARDS_OFFSET >= CAR_BOARDS  ){
-L__dd_boardDebug_writeValue32:
-L__dd_boardDebug_writeValue31:
-;dd_boardDebug.c,100 :: 		}
-L_dd_boardDebug_writeValue5:
-;dd_boardDebug.c,101 :: 		}
-L_end_dd_boardDebug_writeValue:
+	CALL	_Glcd_Write_Text
+	POP	W10
+;dd_boardDebug.c,145 :: 		dd_Indicator_clearPrintUpdateRequest(lineIndex);
+	CALL	_dd_Indicator_clearPrintUpdateRequest
+;dd_boardDebug.c,146 :: 		}
+L_end_dd_boardDebug_printLine:
 	POP	W13
 	POP	W12
 	POP	W11
+	ULNK
+	RETURN
+; end of _dd_boardDebug_printLine
+
+_dd_boardDebug_print:
+	LNK	#2
+
+;dd_boardDebug.c,148 :: 		void dd_boardDebug_print() {
+;dd_boardDebug.c,151 :: 		(dd_boardDebug_Height_param<=dd_currentIndicatorsCount ? dd_boardDebug_Height_param : dd_currentIndicatorsCount);
+	PUSH	W10
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+	MOV.B	[W0], W1
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+	CP.B	W1, [W0]
+	BRA LEU	L__dd_boardDebug_print83
+	GOTO	L_dd_boardDebug_print20
+L__dd_boardDebug_print83:
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_Height_param), W0
+; ?FLOC___dd_boardDebug_print?T77 start address is: 4 (W2)
+	MOV.B	[W0], W2
+; ?FLOC___dd_boardDebug_print?T77 end address is: 4 (W2)
+	GOTO	L_dd_boardDebug_print21
+L_dd_boardDebug_print20:
+	MOV	#lo_addr(_dd_currentIndicatorsCount), W0
+; ?FLOC___dd_boardDebug_print?T77 start address is: 4 (W2)
+	MOV.B	[W0], W2
+; ?FLOC___dd_boardDebug_print?T77 end address is: 4 (W2)
+L_dd_boardDebug_print21:
+; ?FLOC___dd_boardDebug_print?T77 start address is: 4 (W2)
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	SE	[W0], W1
+	ZE	W2, W0
+; ?FLOC___dd_boardDebug_print?T77 end address is: 4 (W2)
+	ADD	W1, W0, W0
+	MOV.B	W0, [W14+1]
+;dd_boardDebug.c,152 :: 		dd_boardDebug_DescriptionScrollingTicks++;
+	MOV	#1, W1
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_DescriptionScrollingTicks), W0
+	ADD	W1, [W0], [W0]
+;dd_boardDebug.c,153 :: 		for (i = dd_boardDebug_FirstLineIndex; i < lastLineIndex; i++) {
+	MOV	#lo_addr(dd_boardDebug_dd_boardDebug_FirstLineIndex), W0
+	MOV.B	[W0], W0
+	MOV.B	W0, [W14+0]
+L_dd_boardDebug_print22:
+	MOV.B	[W14+0], W1
+	ADD	W14, #1, W0
+	CP.B	W1, [W0]
+	BRA LTU	L__dd_boardDebug_print84
+	GOTO	L_dd_boardDebug_print23
+L__dd_boardDebug_print84:
+;dd_boardDebug.c,154 :: 		if (dd_Indicator_isRequestingUpdate(i) || dd_boardDebugLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+	MOV.B	[W14+0], W10
+	CALL	_dd_Indicator_isRequestingUpdate
+	CP0.B	W0
+	BRA Z	L__dd_boardDebug_print85
+	GOTO	L__dd_boardDebug_print55
+L__dd_boardDebug_print85:
+	MOV.B	[W14+0], W10
+	CALL	_dd_boardDebugLine_hasToScroll
+	CP0.B	W0
+	BRA Z	L__dd_boardDebug_print86
+	GOTO	L__dd_boardDebug_print54
+L__dd_boardDebug_print86:
+	CALL	_dd_GraphicController_isFrameUpdateForced
+	CP0.B	W0
+	BRA Z	L__dd_boardDebug_print87
+	GOTO	L__dd_boardDebug_print53
+L__dd_boardDebug_print87:
+	GOTO	L_dd_boardDebug_print27
+L__dd_boardDebug_print55:
+L__dd_boardDebug_print54:
+L__dd_boardDebug_print53:
+;dd_boardDebug.c,155 :: 		dd_boardDebug_printLine(i);
+	MOV.B	[W14+0], W10
+	CALL	_dd_boardDebug_printLine
+;dd_boardDebug.c,156 :: 		}
+L_dd_boardDebug_print27:
+;dd_boardDebug.c,153 :: 		for (i = dd_boardDebug_FirstLineIndex; i < lastLineIndex; i++) {
+	MOV.B	[W14+0], W1
+	ADD	W14, #0, W0
+	ADD.B	W1, #1, [W0]
+;dd_boardDebug.c,157 :: 		}
+	GOTO	L_dd_boardDebug_print22
+L_dd_boardDebug_print23:
+;dd_boardDebug.c,158 :: 		}
+L_end_dd_boardDebug_print:
 	POP	W10
 	ULNK
 	RETURN
-; end of _dd_boardDebug_writeValue
-
-_dd_boardDebug_printRect:
-
-;dd_boardDebug.c,105 :: 		void dd_boardDebug_printRect(unsigned char index){
-;dd_boardDebug.c,106 :: 		dd_boardDebug_drawRect(index);
-	PUSH	W10
-	CALL	_dd_boardDebug_drawRect
-	POP	W10
-;dd_boardDebug.c,107 :: 		dd_boardDebug_writeValue(index);
-	CALL	_dd_boardDebug_writeValue
-;dd_boardDebug.c,108 :: 		}
-L_end_dd_boardDebug_printRect:
-	RETURN
-; end of _dd_boardDebug_printRect
-
-_dd_boardDebug_print:
-
-;dd_boardDebug.c,110 :: 		void dd_boardDebug_print() {
-;dd_boardDebug.c,112 :: 		if(dd_downMovement || dd_upMovement){
-	PUSH	W10
-	MOV	#lo_addr(_dd_downMovement), W0
-	CP0.B	[W0]
-	BRA Z	L__dd_boardDebug_print57
-	GOTO	L__dd_boardDebug_print36
-L__dd_boardDebug_print57:
-	MOV	#lo_addr(_dd_upMovement), W0
-	CP0.B	[W0]
-	BRA Z	L__dd_boardDebug_print58
-	GOTO	L__dd_boardDebug_print35
-L__dd_boardDebug_print58:
-	GOTO	L_dd_boardDebug_print11
-L__dd_boardDebug_print36:
-L__dd_boardDebug_print35:
-;dd_boardDebug.c,113 :: 		dd_boardDebug_setStartPrintIndex(dd_printValue);
-	MOV	#lo_addr(_dd_PrintValue), W0
-	MOV.B	[W0], W10
-	CALL	_dd_boardDebug_setStartPrintIndex
-;dd_boardDebug.c,114 :: 		}
-L_dd_boardDebug_print11:
-;dd_boardDebug.c,115 :: 		printIndex = dd_StartPrintIndex;
-	MOV	#lo_addr(_dd_StartPrintIndex), W0
-; printIndex start address is: 2 (W1)
-	MOV.B	[W0], W1
-;dd_boardDebug.c,116 :: 		for (index = 0; index < BOARD_RECT_COUNT; index++) {
-; index start address is: 0 (W0)
-	CLR	W0
-; printIndex end address is: 2 (W1)
-; index end address is: 0 (W0)
-L_dd_boardDebug_print12:
-; index start address is: 0 (W0)
-; printIndex start address is: 2 (W1)
-	CP.B	W0, #4
-	BRA LTU	L__dd_boardDebug_print59
-	GOTO	L_dd_boardDebug_print13
-L__dd_boardDebug_print59:
-;dd_boardDebug.c,118 :: 		dd_boardDebug_printRect(printIndex);
-	PUSH.D	W0
-	MOV.B	W1, W10
-	CALL	_dd_boardDebug_printRect
-	POP.D	W0
-;dd_boardDebug.c,119 :: 		printIndex++;
-	INC.B	W1
-;dd_boardDebug.c,116 :: 		for (index = 0; index < BOARD_RECT_COUNT; index++) {
-	INC.B	W0
-;dd_boardDebug.c,120 :: 		}
-; index end address is: 0 (W0)
-	GOTO	L_dd_boardDebug_print12
-L_dd_boardDebug_print13:
-;dd_boardDebug.c,121 :: 		dd_boardDebug_setPrintValue(printIndex-1);
-	ZE	W1, W0
-; printIndex end address is: 2 (W1)
-	DEC	W0
-	MOV.B	W0, W10
-	CALL	_dd_boardDebug_setPrintValue
-;dd_boardDebug.c,122 :: 		if(dd_downMovement || dd_upMovement){
-	MOV	#lo_addr(_dd_downMovement), W0
-	CP0.B	[W0]
-	BRA Z	L__dd_boardDebug_print60
-	GOTO	L__dd_boardDebug_print38
-L__dd_boardDebug_print60:
-	MOV	#lo_addr(_dd_upMovement), W0
-	CP0.B	[W0]
-	BRA Z	L__dd_boardDebug_print61
-	GOTO	L__dd_boardDebug_print37
-L__dd_boardDebug_print61:
-	GOTO	L_dd_boardDebug_print17
-L__dd_boardDebug_print38:
-L__dd_boardDebug_print37:
-;dd_boardDebug.c,123 :: 		dd_downMovement = FALSE;
-	MOV	#lo_addr(_dd_downMovement), W1
-	CLR	W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,124 :: 		dd_upMovement = FALSE;
-	MOV	#lo_addr(_dd_upMovement), W1
-	CLR	W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,125 :: 		}
-L_dd_boardDebug_print17:
-;dd_boardDebug.c,126 :: 		}
-L_end_dd_boardDebug_print:
-	POP	W10
-	RETURN
 ; end of _dd_boardDebug_print
 
-_dd_boardDebug_init:
+_dd_boardDebugLine_getScrollingOverflow:
 
-;dd_boardDebug.c,128 :: 		void dd_boardDebug_init(void){
-;dd_boardDebug.c,129 :: 		}
-L_end_dd_boardDebug_init:
+;dd_boardDebug.c,160 :: 		int dd_boardDebugLine_getScrollingOverflow(unsigned char lineIndex) {
+;dd_boardDebug.c,161 :: 		return dd_currentIndicators[lineIndex]->descriptionLength + BOARD_DEBUG_DESCRIPTION_SCROLLING_SPACING;
+	ZE	W10, W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	ADD	W0, #7, W0
+	ZE	[W0], W0
+	ADD	W0, #4, W0
+;dd_boardDebug.c,162 :: 		}
+L_end_dd_boardDebugLine_getScrollingOverflow:
 	RETURN
-; end of _dd_boardDebug_init
+; end of _dd_boardDebugLine_getScrollingOverflow
 
-_dd_boardDebug_Move:
+_dd_boardDebugLine_getScrollOffset:
 
-;dd_boardDebug.c,132 :: 		void dd_boardDebug_Move(signed char movement){
-;dd_boardDebug.c,134 :: 		if( dd_downMoves < MAX_MOVES && movement > 0 ) {
+;dd_boardDebug.c,164 :: 		int dd_boardDebugLine_getScrollOffset(unsigned char lineIndex) {
+;dd_boardDebug.c,167 :: 		if (dd_boardDebugLine_hasToScroll(lineIndex)) {
+	CALL	_dd_boardDebugLine_hasToScroll
+	CP0.B	W0
+	BRA NZ	L__dd_boardDebugLine_getScrollOffset90
+	GOTO	L_dd_boardDebugLine_getScrollOffset28
+L__dd_boardDebugLine_getScrollOffset90:
+;dd_boardDebug.c,169 :: 		offset = (int) (FRAME_PERIOD * dd_boardDebuG_DescriptionScrollingTicks * BOARD_DEBUG_DESCRIPTION_SCROLLING_SPEED);
 	PUSH	W10
-	MOV	_dd_downMoves, W0
-	CP	W0, #3
-	BRA LT	L__dd_boardDebug_Move64
-	GOTO	L__dd_boardDebug_Move42
-L__dd_boardDebug_Move64:
-	CP.B	W10, #0
-	BRA GT	L__dd_boardDebug_Move65
-	GOTO	L__dd_boardDebug_Move41
-L__dd_boardDebug_Move65:
-L__dd_boardDebug_Move40:
-;dd_boardDebug.c,135 :: 		dd_downMovement = TRUE;
-	MOV	#lo_addr(_dd_downMovement), W1
-	MOV.B	#1, W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,136 :: 		value = dd_PrintValue+1;
-	MOV	#lo_addr(_dd_PrintValue), W0
-	ZE	[W0], W0
-	INC	W0
-;dd_boardDebug.c,137 :: 		dd_boardDebug_setPrintValue(value);
-	MOV.B	W0, W10
-	CALL	_dd_boardDebug_setPrintValue
-;dd_boardDebug.c,138 :: 		dd_downMoves ++;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_downMoves), W0
-	ADD	W1, [W0], [W0]
-;dd_boardDebug.c,139 :: 		dd_upMoves --;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_upMoves), W0
-	SUBR	W1, [W0], [W0]
-;dd_boardDebug.c,140 :: 		}
-	GOTO	L_dd_boardDebug_Move21
-;dd_boardDebug.c,134 :: 		if( dd_downMoves < MAX_MOVES && movement > 0 ) {
-L__dd_boardDebug_Move42:
-L__dd_boardDebug_Move41:
-;dd_boardDebug.c,141 :: 		else if( dd_upMoves < MAX_MOVES && movement < 0 ) {
-	MOV	_dd_upMoves, W0
-	CP	W0, #3
-	BRA LT	L__dd_boardDebug_Move66
-	GOTO	L__dd_boardDebug_Move44
-L__dd_boardDebug_Move66:
-	CP.B	W10, #0
-	BRA LT	L__dd_boardDebug_Move67
-	GOTO	L__dd_boardDebug_Move43
-L__dd_boardDebug_Move67:
-L__dd_boardDebug_Move39:
-;dd_boardDebug.c,142 :: 		dd_upMovement = TRUE;
-	MOV	#lo_addr(_dd_upMovement), W1
-	MOV.B	#1, W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,143 :: 		value = dd_PrintValue-7;
-	MOV	#lo_addr(_dd_PrintValue), W0
-	ZE	[W0], W0
-	SUB	W0, #7, W0
-;dd_boardDebug.c,144 :: 		dd_boardDebug_setPrintValue(value);
-	MOV.B	W0, W10
-	CALL	_dd_boardDebug_setPrintValue
-;dd_boardDebug.c,145 :: 		dd_downMoves --;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_downMoves), W0
-	SUBR	W1, [W0], [W0]
-;dd_boardDebug.c,146 :: 		dd_upMoves ++;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_upMoves), W0
-	ADD	W1, [W0], [W0]
-;dd_boardDebug.c,141 :: 		else if( dd_upMoves < MAX_MOVES && movement < 0 ) {
-L__dd_boardDebug_Move44:
-L__dd_boardDebug_Move43:
-;dd_boardDebug.c,147 :: 		}
-L_dd_boardDebug_Move21:
-;dd_boardDebug.c,148 :: 		}
-L_end_dd_boardDebug_Move:
+	MOV	dd_boardDebug_dd_boardDebug_DescriptionScrollingTicks, W0
+	ASR	W0, #15, W1
+	SETM	W2
+	CALL	__Long2Float
+	MOV	#52429, W2
+	MOV	#15820, W3
+	CALL	__Mul_FP
+	MOV	#0, W2
+	MOV	#16480, W3
+	CALL	__Mul_FP
+	CALL	__Float2Longint
 	POP	W10
+; offset start address is: 4 (W2)
+	MOV	W0, W2
+;dd_boardDebug.c,170 :: 		if (offset >= dd_boardDebugLine_getScrollingOverflow(lineIndex)) {
+	CALL	_dd_boardDebugLine_getScrollingOverflow
+	CP	W2, W0
+	BRA GE	L__dd_boardDebugLine_getScrollOffset91
+	GOTO	L__dd_boardDebugLine_getScrollOffset47
+L__dd_boardDebugLine_getScrollOffset91:
+; offset end address is: 4 (W2)
+;dd_boardDebug.c,171 :: 		offset = 0;
+; offset start address is: 2 (W1)
+	CLR	W1
+;dd_boardDebug.c,172 :: 		dd_boardDebug_DescriptionScrollingTicks = 0;
+	CLR	W0
+	MOV	W0, dd_boardDebug_dd_boardDebug_DescriptionScrollingTicks
+; offset end address is: 2 (W1)
+;dd_boardDebug.c,173 :: 		}
+	GOTO	L_dd_boardDebugLine_getScrollOffset29
+L__dd_boardDebugLine_getScrollOffset47:
+;dd_boardDebug.c,170 :: 		if (offset >= dd_boardDebugLine_getScrollingOverflow(lineIndex)) {
+	MOV	W2, W1
+;dd_boardDebug.c,173 :: 		}
+L_dd_boardDebugLine_getScrollOffset29:
+;dd_boardDebug.c,174 :: 		return offset;
+; offset start address is: 2 (W1)
+	MOV	W1, W0
+; offset end address is: 2 (W1)
+	GOTO	L_end_dd_boardDebugLine_getScrollOffset
+;dd_boardDebug.c,175 :: 		} else {
+L_dd_boardDebugLine_getScrollOffset28:
+;dd_boardDebug.c,176 :: 		return 0;
+	CLR	W0
+;dd_boardDebug.c,178 :: 		}
+L_end_dd_boardDebugLine_getScrollOffset:
 	RETURN
-; end of _dd_boardDebug_Move
+; end of _dd_boardDebugLine_getScrollOffset
 
-_dd_boardDebug_downMovement:
+_dd_boardDebug_makeLineText:
+	LNK	#8
 
-;dd_boardDebug.c,151 :: 		void dd_boardDebug_downMovement(){
-;dd_boardDebug.c,153 :: 		if(dd_downMoves < MAX_MOVES){
+;dd_boardDebug.c,180 :: 		void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex) {
+;dd_boardDebug.c,187 :: 		dd_Indicator_parseValueLabel(lineIndex);  //Too much overkill, find another strategy.
+	PUSH.D	W10
+	MOV.B	W11, W10
+	CALL	_dd_Indicator_parseValueLabel
+	POP.D	W10
+;dd_boardDebug.c,188 :: 		item = dd_currentIndicators[lineIndex];
+	ZE	W11, W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_currentIndicators), W0
+	ADD	W1, [W0], W0
+	MOV	[W0], W0
+	MOV	W0, [W14+6]
+;dd_boardDebug.c,189 :: 		valueWidth = item->labelLength;
+	ADD	W0, #9, W0
+	MOV.B	[W0], W0
+	MOV.B	W0, [W14+4]
+;dd_boardDebug.c,191 :: 		scrollingOverflow = dd_boardDebugLine_getScrollingOverflow(lineIndex);
 	PUSH	W10
-	MOV	_dd_downMoves, W0
-	CP	W0, #3
-	BRA LT	L__dd_boardDebug_downMovement69
-	GOTO	L_dd_boardDebug_downMovement25
-L__dd_boardDebug_downMovement69:
-;dd_boardDebug.c,154 :: 		dd_downMovement = TRUE;
-	MOV	#lo_addr(_dd_downMovement), W1
-	MOV.B	#1, W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,155 :: 		value = dd_PrintValue-1;
-	MOV	#lo_addr(_dd_PrintValue), W0
-	ZE	[W0], W0
-	DEC	W0
-;dd_boardDebug.c,156 :: 		dd_boardDebug_setPrintValue(value);
-	MOV.B	W0, W10
-	CALL	_dd_boardDebug_setPrintValue
-;dd_boardDebug.c,157 :: 		dd_downMoves ++;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_downMoves), W0
-	ADD	W1, [W0], [W0]
-;dd_boardDebug.c,158 :: 		dd_upMoves --;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_upMoves), W0
-	SUBR	W1, [W0], [W0]
-;dd_boardDebug.c,159 :: 		}
-L_dd_boardDebug_downMovement25:
-;dd_boardDebug.c,160 :: 		}
-L_end_dd_boardDebug_downMovement:
+	MOV.B	W11, W10
+	CALL	_dd_boardDebugLine_getScrollingOverflow
 	POP	W10
-	RETURN
-; end of _dd_boardDebug_downMovement
-
-_dd_boardDebug_upMovement:
-
-;dd_boardDebug.c,162 :: 		void dd_boardDebug_upMovement(){
-;dd_boardDebug.c,164 :: 		if(dd_upMoves < MAX_MOVES){
+	MOV	W0, [W14+2]
+;dd_boardDebug.c,192 :: 		scrollingOffset = dd_boardDebugLine_getScrollOffset(lineIndex);
+	PUSH.D	W10
+	MOV.B	W11, W10
+	CALL	_dd_boardDebugLine_getScrollOffset
+	POP.D	W10
+; scrollingOffset start address is: 6 (W3)
+	MOV	W0, W3
+;dd_boardDebug.c,193 :: 		descriptionLength = item->descriptionLength;
+	MOV	[W14+6], W0
+	ADD	W0, #7, W0
+; descriptionLength start address is: 12 (W6)
+	MOV.B	[W0], W6
+;dd_boardDebug.c,194 :: 		visibleDescriptionWidth = dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
 	PUSH	W10
-	MOV	_dd_upMoves, W0
-	CP	W0, #3
-	BRA LT	L__dd_boardDebug_upMovement71
-	GOTO	L_dd_boardDebug_upMovement26
-L__dd_boardDebug_upMovement71:
-;dd_boardDebug.c,165 :: 		dd_upMovement = TRUE;
-	MOV	#lo_addr(_dd_upMovement), W1
-	MOV.B	#1, W0
-	MOV.B	W0, [W1]
-;dd_boardDebug.c,166 :: 		value = dd_PrintValue-5;
-	MOV	#lo_addr(_dd_PrintValue), W0
-	ZE	[W0], W0
-	SUB	W0, #5, W0
-;dd_boardDebug.c,167 :: 		dd_boardDebug_setPrintValue(value);
-	MOV.B	W0, W10
-	CALL	_dd_boardDebug_setPrintValue
-;dd_boardDebug.c,168 :: 		dd_downMoves --;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_downMoves), W0
-	SUBR	W1, [W0], [W0]
-;dd_boardDebug.c,169 :: 		dd_upMoves ++;
-	MOV	#1, W1
-	MOV	#lo_addr(_dd_upMoves), W0
-	ADD	W1, [W0], [W0]
-;dd_boardDebug.c,170 :: 		}
-L_dd_boardDebug_upMovement26:
-;dd_boardDebug.c,171 :: 		}
-L_end_dd_boardDebug_upMovement:
+	MOV.B	W11, W10
+	CALL	_dd_boardDebugLine_getVisibleDescriptionWidth
 	POP	W10
+; visibleDescriptionWidth start address is: 8 (W4)
+	MOV.B	W0, W4
+;dd_boardDebug.c,195 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+; lineCharIndex start address is: 10 (W5)
+	CLR	W5
+; scrollingOffset end address is: 6 (W3)
+; visibleDescriptionWidth end address is: 8 (W4)
+; lineCharIndex end address is: 10 (W5)
+	MOV	W3, W7
+L_dd_boardDebug_makeLineText31:
+; lineCharIndex start address is: 10 (W5)
+; scrollingOffset start address is: 14 (W7)
+; visibleDescriptionWidth start address is: 8 (W4)
+; descriptionLength start address is: 12 (W6)
+; descriptionLength end address is: 12 (W6)
+; scrollingOffset start address is: 14 (W7)
+; scrollingOffset end address is: 14 (W7)
+	ZE	W4, W0
+	CP	W5, W0
+	BRA LT	L__dd_boardDebug_makeLineText93
+	GOTO	L_dd_boardDebug_makeLineText32
+L__dd_boardDebug_makeLineText93:
+; descriptionLength end address is: 12 (W6)
+; scrollingOffset end address is: 14 (W7)
+;dd_boardDebug.c,196 :: 		i = lineCharIndex + scrollingOffset;
+; scrollingOffset start address is: 14 (W7)
+; descriptionLength start address is: 12 (W6)
+	ADD	W5, W7, W1
+	MOV	W1, [W14+0]
+;dd_boardDebug.c,198 :: 		if (i < descriptionLength) {
+	ZE	W6, W0
+	CP	W1, W0
+	BRA LT	L__dd_boardDebug_makeLineText94
+	GOTO	L_dd_boardDebug_makeLineText34
+L__dd_boardDebug_makeLineText94:
+;dd_boardDebug.c,199 :: 		lineText[lineCharIndex] = (item->description)[i];
+	ADD	W10, W5, W2
+	MOV	[W14+6], W0
+	ADD	W0, #4, W0
+	MOV	[W0], W1
+	ADD	W14, #0, W0
+	ADD	W1, [W0], W0
+	MOV.B	[W0], [W2]
+;dd_boardDebug.c,200 :: 		}
+	GOTO	L_dd_boardDebug_makeLineText35
+L_dd_boardDebug_makeLineText34:
+;dd_boardDebug.c,203 :: 		else if (i < scrollingOverflow || !dd_boardDebugLine_hasToScroll(lineIndex)) {
+	MOV	[W14+0], W1
+	ADD	W14, #2, W0
+	CP	W1, [W0]
+	BRA GE	L__dd_boardDebug_makeLineText95
+	GOTO	L__dd_boardDebug_makeLineText50
+L__dd_boardDebug_makeLineText95:
+	PUSH	W10
+	MOV.B	W11, W10
+	CALL	_dd_boardDebugLine_hasToScroll
+	POP	W10
+	CP0.B	W0
+	BRA NZ	L__dd_boardDebug_makeLineText96
+	GOTO	L__dd_boardDebug_makeLineText49
+L__dd_boardDebug_makeLineText96:
+	GOTO	L_dd_boardDebug_makeLineText38
+L__dd_boardDebug_makeLineText50:
+L__dd_boardDebug_makeLineText49:
+;dd_boardDebug.c,204 :: 		lineText[lineCharIndex] = ' ';
+	ADD	W10, W5, W1
+	MOV.B	#32, W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,205 :: 		} else {
+	GOTO	L_dd_boardDebug_makeLineText39
+L_dd_boardDebug_makeLineText38:
+;dd_boardDebug.c,206 :: 		lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
+	ADD	W10, W5, W3
+	MOV	[W14+6], W0
+	ADD	W0, #4, W2
+	MOV	[W14+0], W1
+	ADD	W14, #2, W0
+	SUB	W1, [W0], W0
+	ADD	W0, [W2], W0
+	MOV.B	[W0], [W3]
+;dd_boardDebug.c,207 :: 		}
+L_dd_boardDebug_makeLineText39:
+L_dd_boardDebug_makeLineText35:
+;dd_boardDebug.c,195 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+; lineCharIndex start address is: 0 (W0)
+	ADD	W5, #1, W0
+; lineCharIndex end address is: 10 (W5)
+;dd_boardDebug.c,208 :: 		}
+; visibleDescriptionWidth end address is: 8 (W4)
+; descriptionLength end address is: 12 (W6)
+; scrollingOffset end address is: 14 (W7)
+; lineCharIndex end address is: 0 (W0)
+	MOV	W0, W5
+	GOTO	L_dd_boardDebug_makeLineText31
+L_dd_boardDebug_makeLineText32:
+;dd_boardDebug.c,209 :: 		if (valueWidth > 0) {
+; lineCharIndex start address is: 10 (W5)
+	MOV.B	[W14+4], W0
+	CP.B	W0, #0
+	BRA GTU	L__dd_boardDebug_makeLineText97
+	GOTO	L__dd_boardDebug_makeLineText51
+L__dd_boardDebug_makeLineText97:
+;dd_boardDebug.c,210 :: 		for (i = 0; i < BOARD_DEBUG_DESCRIPTION_VALUE_SPACING; i++) {
+	CLR	W0
+	MOV	W0, [W14+0]
+; lineCharIndex end address is: 10 (W5)
+L_dd_boardDebug_makeLineText41:
+; lineCharIndex start address is: 10 (W5)
+	MOV	[W14+0], W0
+	CP	W0, #1
+	BRA LT	L__dd_boardDebug_makeLineText98
+	GOTO	L_dd_boardDebug_makeLineText42
+L__dd_boardDebug_makeLineText98:
+;dd_boardDebug.c,211 :: 		lineText[lineCharIndex] = ' ';
+	ADD	W10, W5, W1
+	MOV.B	#32, W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,212 :: 		lineCharIndex += 1;
+; lineCharIndex start address is: 4 (W2)
+	ADD	W5, #1, W2
+; lineCharIndex end address is: 10 (W5)
+;dd_boardDebug.c,210 :: 		for (i = 0; i < BOARD_DEBUG_DESCRIPTION_VALUE_SPACING; i++) {
+	MOV	[W14+0], W1
+	ADD	W14, #0, W0
+	ADD	W1, #1, [W0]
+;dd_boardDebug.c,213 :: 		}
+	MOV	W2, W5
+; lineCharIndex end address is: 4 (W2)
+	GOTO	L_dd_boardDebug_makeLineText41
+L_dd_boardDebug_makeLineText42:
+;dd_boardDebug.c,214 :: 		for (i = 0; i < valueWidth; i++) {
+; lineCharIndex start address is: 10 (W5)
+	CLR	W0
+	MOV	W0, [W14+0]
+; lineCharIndex end address is: 10 (W5)
+	MOV	W5, W3
+L_dd_boardDebug_makeLineText44:
+; lineCharIndex start address is: 6 (W3)
+	ADD	W14, #4, W0
+	ZE	[W0], W1
+	ADD	W14, #0, W0
+	CP	W1, [W0]
+	BRA GT	L__dd_boardDebug_makeLineText99
+	GOTO	L_dd_boardDebug_makeLineText45
+L__dd_boardDebug_makeLineText99:
+;dd_boardDebug.c,215 :: 		lineText[lineCharIndex] = (item->label)[i];
+	ADD	W10, W3, W2
+	MOV	[W14+6], W0
+	ADD	W0, #10, W1
+	ADD	W14, #0, W0
+	ADD	W1, [W0], W0
+	MOV.B	[W0], [W2]
+;dd_boardDebug.c,216 :: 		lineCharIndex += 1;
+; lineCharIndex start address is: 10 (W5)
+	ADD	W3, #1, W5
+; lineCharIndex end address is: 6 (W3)
+;dd_boardDebug.c,214 :: 		for (i = 0; i < valueWidth; i++) {
+	MOV	[W14+0], W1
+	ADD	W14, #0, W0
+	ADD	W1, #1, [W0]
+;dd_boardDebug.c,217 :: 		}
+	MOV	W5, W3
+; lineCharIndex end address is: 10 (W5)
+	GOTO	L_dd_boardDebug_makeLineText44
+L_dd_boardDebug_makeLineText45:
+;dd_boardDebug.c,218 :: 		}
+; lineCharIndex start address is: 6 (W3)
+	MOV	W3, W0
+	GOTO	L_dd_boardDebug_makeLineText40
+; lineCharIndex end address is: 6 (W3)
+L__dd_boardDebug_makeLineText51:
+;dd_boardDebug.c,209 :: 		if (valueWidth > 0) {
+	MOV	W5, W0
+;dd_boardDebug.c,218 :: 		}
+L_dd_boardDebug_makeLineText40:
+;dd_boardDebug.c,219 :: 		lineText[lineCharIndex] = ' ';
+; lineCharIndex start address is: 0 (W0)
+	ADD	W10, W0, W1
+; lineCharIndex end address is: 0 (W0)
+	MOV.B	#32, W0
+	MOV.B	W0, [W1]
+;dd_boardDebug.c,220 :: 		}
+L_end_dd_boardDebug_makeLineText:
+	ULNK
 	RETURN
-; end of _dd_boardDebug_upMovement
+; end of _dd_boardDebug_makeLineText

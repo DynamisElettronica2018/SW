@@ -6,6 +6,7 @@
 #include "input-output/d_controls.h"
 #include "input-output/buzzer.h"
 #include "input-output/d_paddle.h"
+#include "d_sensors.h"
 #include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
@@ -18,11 +19,12 @@ void d_UIController_init() {
      //printf("ui contr. init");
     dControls_init();
     Can_init();
-    C1INTEbits.ERRIE = 1;
+   // C1INTEbits.ERRIE = 1;
     Debug_UART_Write("can initialized.\r\n");
     //Buzzer_init();
    // Debug_UART_Write("Buzzer initialized.\r\n");
     dPaddle_init();
+    d_SWTemp_Init();
    // Debug_UART_Write("Paddle initialized.\r\n");
    dSignalLed_init();
    Debug_UART_Write("Signal Leds initialized.\r\n");
@@ -67,15 +69,13 @@ onTimer1Interrupt{
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+            case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 d_UI_onSettingsChange(movements);
+                 dd_Menu_moveSelection(movements);
                  break;
             case CRUISE_MODE:
             case ACC_MODE:
                  //control EBB
-            case BOARD_DEBUG_MODE:
-                  dd_boardDebug_Move(movements);
-                 break;
             default:
                  return;
      }
@@ -100,16 +100,14 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+              d_UI_onSettingsChange(movements);
+              break;
+            case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                // d_UI_onSettingsChange(movements);
-                 dd_Menu_moveSelection(movements);
-                 break;
+              break;
             case CRUISE_MODE:
             case ACC_MODE:
                  //control TRACTION
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_Move(movements);
-                 break;
             default:
                  return;
      }

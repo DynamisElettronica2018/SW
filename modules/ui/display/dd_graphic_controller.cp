@@ -65,7 +65,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -197,19 +197,18 @@ void emptyString(char* myString);
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
@@ -258,11 +257,13 @@ void dd_GraphicController_onTimerInterrupt(void);
 
 
 
-void dd_boardDebug_print() ;
 void dd_boardDebug_init(void);
-void dd_boardDebug_Move(signed char movement);
-void dd_boardDebug_downMovement(void);
-void dd_boardDebug_upMovement(void);
+
+void dd_boardDebug_print(void);
+
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
+
+void dd_boardDebug_moveSelection(signed char movements);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../input-output/d_hardreset.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../input-output/../../../libs/eeprom.h"
 
@@ -1291,6 +1292,78 @@ void dd_Menu_setHeight(unsigned char height);
 void dd_Menu_setWidth(unsigned char width);
 #line 33 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_moveSelection(signed char movements);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_gears.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+void Can_init(void);
+
+unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+void Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
+#line 30 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_gears.h"
+void dGear_init(void);
+
+void dGear_requestGearUp();
+void dGear_requestGearDown();
+
+char dGear_isNeutralSet();
+
+
+void dGear_propagate(unsigned int gearCommand);
+
+unsigned char dGear_getCurrentGearLetter(void);
+
+void dGear_set(unsigned char gear);
+
+unsigned char dGear_get(void);
+
+void dGear_up(void);
+
+void dGear_down(void);
+
+char dGear_canGearUp(void);
+
+char dGear_canGearDown(void);
+
+char dGear_isShiftingCheckBypassed(void);
+
+void dGear_enableShiftCheck(void);
+
+void dGear_disableShiftCheck(void);
+
+void d_setGearMotorState(int motorState);
+
+unsigned char d_getGearMotorState(void);
+
+char d_canSetGear(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
 
@@ -1455,7 +1528,29 @@ void dRpm_disableLedStripeOutput(void);
 void dRpm_enableLedStripeOutput(void);
 
 void dRpm_updateLedStripe(void);
-#line 29 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_clutch.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
+void dPaddle_init(void);
+
+unsigned char dPaddle_getValue(void);
+
+void dPaddle_readSample(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_clutch.h"
+void dClutch_set(unsigned char value);
+
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+
+unsigned char dClutch_get(void);
+
+void dClutch_send(void);
+#line 31 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[ 20 ] = "";
@@ -1479,7 +1574,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 56 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 58 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1591,7 +1686,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
  dd_GraphicController_setNotificationFlag ();
 }
-#line 171 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 173 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
@@ -1705,7 +1800,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
  __counter++;
-#line 298 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+
  if(dd_onStartup)
  {
  dd_tmr1Counter++;
@@ -1732,7 +1827,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 330 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 319 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1756,5 +1851,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 364 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 353 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }

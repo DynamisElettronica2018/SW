@@ -25,7 +25,7 @@ void dGear_requestGearDown() {
     }
 }
 
-void dGear_propagate(unsigned int gearCommand) {            //dove viene chiamata???
+void dGear_propagate(unsigned int gearCommand) {
     dGear_error = FALSE;
     if (gearCommand == EFI_GEAR_COMMAND_NEUTRAL) {
         d_isNeutralSet = TRUE;

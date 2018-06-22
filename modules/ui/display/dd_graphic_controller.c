@@ -14,11 +14,13 @@
 #include "dd_interfaces.h"
 #include "dd_dashboard.h"
 #include "dd_menu.h"
+#include "d_gears.h"
 #include <math.h>
 #include "../input-output/d_signalLed.h"
 #include"../input-output/d_controls.h"
 #include "../libs/debug.h"
 #include "../input-output/d_rpm.h"
+#include "d_clutch.h"
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -281,19 +283,6 @@ void dd_GraphicController_onTimerInterrupt(void)
     }
 
    __counter++;
-    /*if(counter == 40){
-          dd_boardDebug_Move(1);
-    } else if (counter == 60) {
-          dd_boardDebug_Move(1);
-    }else if (counter == 80) {
-          dd_boardDebug_Move(1);
-    }else if (counter == 100) {
-          dd_boardDebug_Move(1);
-    }else if (counter == 120) {
-          dd_boardDebug_Move(-1);
-    }else if (counter == 140) {
-          dd_boardDebug_Move(-1);
-    }  */
 
     if(dd_onStartup)
     {

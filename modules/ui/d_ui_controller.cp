@@ -40,7 +40,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -171,11 +171,10 @@ extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
-extern FloatIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -192,28 +191,28 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 
 
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 121 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -299,19 +298,18 @@ int getMinimumAnalogClockConversion(void);
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
@@ -377,11 +375,13 @@ void dd_Menu_moveSelection(signed char movements);
 
 
 
-void dd_boardDebug_print() ;
 void dd_boardDebug_init(void);
-void dd_boardDebug_Move(signed char movement);
-void dd_boardDebug_downMovement(void);
-void dd_boardDebug_upMovement(void);
+
+void dd_boardDebug_print(void);
+
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
+
+void dd_boardDebug_moveSelection(signed char movements);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
@@ -466,6 +466,15 @@ void dPaddle_init(void);
 unsigned char dPaddle_getValue(void);
 
 void dPaddle_readSample(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 10 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+void d_SWTemp_Init(void);
+
+unsigned int d_SWTemp_getTempValue(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
@@ -513,7 +522,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 13 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 14 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
@@ -522,11 +531,12 @@ void d_UIController_init() {
 
  dControls_init();
  Can_init();
- C1INTEbits.ERRIE = 1;
+
  Debug_UART_Write("can initialized.\r\n");
 
 
  dPaddle_init();
+ d_SWTemp_Init();
 
  dSignalLed_init();
  Debug_UART_Write("Signal Leds initialized.\r\n");
@@ -534,7 +544,7 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 38 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 40 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -567,15 +577,13 @@ void printf(char* string);
 void d_controls_onLeftEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
+ case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
- d_UI_onSettingsChange(movements);
+ dd_Menu_moveSelection(movements);
  break;
  case CRUISE_MODE:
  case ACC_MODE:
 
- case BOARD_DEBUG_MODE:
- dd_boardDebug_Move(movements);
- break;
  default:
  return;
  }
@@ -584,27 +592,25 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
+ d_UI_onSettingsChange(movements);
+ break;
+ case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
-
- dd_Menu_moveSelection(movements);
  break;
  case CRUISE_MODE:
  case ACC_MODE:
 
- case BOARD_DEBUG_MODE:
- dd_boardDebug_Move(movements);
- break;
  default:
  return;
  }
 }
-#line 135 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 133 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_selectorPositionToMode(signed char position){
  if (position >  1  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 143 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 141 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }
