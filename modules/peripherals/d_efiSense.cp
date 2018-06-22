@@ -371,7 +371,7 @@ void dEfiSense_heartbeat(void) {
  dEfiSense_dead =  0 ;
  dEfiSense_ticks =  1000 ;
  dd_Indicator_setBoolValueP(&ind_efi_status.base, !dEfiSense_isDead());
- dSignalLed_set( 0 );
+ dSignalLed_set( 3 );
 }
 
 void dEfiSense_tick(void) {
@@ -389,7 +389,7 @@ void dEfiSense_tick(void) {
 void dEfiSense_die(void) {
  dEfiSense_dead =  1 ;
  dd_Indicator_setBoolValue(EFI_STATUS, !dEfiSense_isDead());
- dSignalLed_unset( 0 );
+ dSignalLed_unset( 3 );
 }
 
 char dEfiSense_isDead(void) {

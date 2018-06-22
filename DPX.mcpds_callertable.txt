@@ -1,8 +1,17 @@
 main
 	setAllPinAsDigital
 	Debug_UART_Init
+		UART2_Init
+			Get_Fosc_kHz
+			Get_Fosc_Per_Cyc
+			Delay_100ms
+			_Multiply_32x32
+			_Modulus_32x32
+			_Divide_32x32
 	dHardReset_hasBeenReset
 	Debug_UART_Write
+		UART2_Write_Text
+			UART2_Write
 	d_UIController_init
 		dControls_init
 			I2C1_Init
@@ -303,9 +312,11 @@ main
 			dd_GraphicController_forceFullFrameUpdate
 external4
 	d_controls_onNeutral
+		Debug_UART_Write
 		dGear_isNeutralSet
 		dGear_get
 	d_controls_onReset
+		Debug_UART_Write
 		dHardReset_reset
 			dHardReset_setFlag
 				EEPROM_writeInt
@@ -332,12 +343,15 @@ external4
 					dd_GraphicController_setNotificationFlag
 			dSignalLed_set
 	d_controls_onAux1
+		Debug_UART_Write
 	d_controls_onAux2
+		Debug_UART_Write
 	clearExternalInterrupt
 external3
 	d_controls_onStart
 		getExternalInterruptEdge
 		dSignalLed_set
+		Debug_UART_Write
 		dStart_switchOn
 		switchExternalInterruptEdge
 		dSignalLed_unset
@@ -409,6 +423,7 @@ CAN_Interrupt
 	_Long2Float
 external2
 	d_controls_onDRS
+		Debug_UART_Write
 	clearExternalInterrupt
 external1
 	I2CExpander_readPort
@@ -500,6 +515,7 @@ timer1_interrupt
 		d_UI_AccModeInit
 external0
 	d_controls_onGearUp
+		Debug_UART_Write
 		dGear_requestGearUp
 			dGear_canGearUp
 			Can_writeInt
@@ -508,6 +524,7 @@ external0
 					Can_addByteToWritePacket
 				Can_write
 	d_controls_onGearDown
+		Debug_UART_Write
 		dGear_requestGearDown
 			dGear_canGearDown
 			Can_writeInt

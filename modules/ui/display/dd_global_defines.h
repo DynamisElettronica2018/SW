@@ -21,7 +21,7 @@
 #define FRAME_PERIOD    (1.0 / FRAME_RATE)
 
 #define FRAME_BUFFER_ENABLED
-//#define _DEBUG_
+#define _DEBUG_
 
 #define TRUE 1
 #define FALSE 0

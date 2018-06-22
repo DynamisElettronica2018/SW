@@ -324,10 +324,10 @@ void dEbb_calibrateSwitch(void) {
  if (dEbb_isCalibrateing() ==  1 ){
  dEbb_calibrateStop();
  calibrationState =  0 ;
- dSignalLed_switch( 0 );
+ dSignalLed_switch( 3 );
  } else if (dEbb_isCalibrateing() ==  0 ) {
  calibrationState =  1 ;
- dSignalLed_switch( 0 );
+ dSignalLed_switch( 3 );
  }
 }
 

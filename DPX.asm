@@ -166,7 +166,7 @@ _CAN_Interrupt:
 	MOV	W0, [W14+22]
 ;DPX.c,104 :: 		Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
 	CALL	_Can_clearInterrupt
-;DPX.c,105 :: 		dSignalLed_switch(DSIGNAL_LED_RED);
+;DPX.c,105 :: 		dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
 	MOV.B	#1, W10
 	CALL	_dSignalLed_switch
 ;DPX.c,106 :: 		Can_read(&id, dataBuffer, &dataLen, &flags);

@@ -670,6 +670,7 @@ void dControls_init(void) {
 #line 141 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
+ setExternalInterrupt( 7 ,  1 );
  setExternalInterrupt( 4 ,  1 );
  setExternalInterrupt( 5 ,  1 );
  setExternalInterrupt( 6 ,  1 );
@@ -687,7 +688,7 @@ void dControls_init(void) {
  }
  clearExternalInterrupt( 4 );
 }
-#line 166 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 167 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -753,9 +754,9 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 259 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 260 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 }
-#line 280 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 281 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -813,26 +814,31 @@ void dControls_init(void) {
 
 
 void d_controls_onGearUp() {
+ Debug_UART_Write("Request gear up\r\n");
  dGear_requestGearUp();
 }
 
 void d_controls_onGearDown() {
+ Debug_UART_Write("Request gear down\r\n");
  dGear_requestGearDown();
 }
 
 void d_controls_onStart() {
  if (getExternalInterruptEdge( 7 ) ==  1 ) {
  dSignalLed_set( 2 );
+ Debug_UART_Write("On Start\r\n");
  dStart_switchOn();
  switchExternalInterruptEdge( 7 );
  } else {
  dSignalLed_unset( 2 );
+ Debug_UART_Write("On start off\r\n");
  dStart_switchOff();
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 416 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 421 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
+ Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
  if (dGear_get() == 1) {
 
@@ -843,17 +849,18 @@ void d_controls_onNeutral() {
 }
 
 void d_controls_onReset() {
+ Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 452 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 459 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
-
+ Debug_UART_Write("On DRS\r\n");
 }
 
 void d_controls_onAux1(void) {
-
+ Debug_UART_Write("On aux 1\r\n");
 }
 
 void d_controls_onAux2(void) {
-
+ Debug_UART_Write("On aux 2\r\n");
 }

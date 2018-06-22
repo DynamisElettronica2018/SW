@@ -140,6 +140,7 @@ void dControls_init(void) {
    Debug_UART_Write(dstr);*/
    d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
+   setExternalInterrupt(START_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(GEAR_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(ROTARY_SWITCH_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(DRS_INTERRUPT, INTERRUPT_EDGE);
@@ -334,20 +335,24 @@ onGeneralButtonInterrupt{
 //////////////////////////////////////////////////////
 
 void d_controls_onGearUp() {
+     Debug_UART_Write("Request gear up\r\n");
     dGear_requestGearUp();
 }
 
 void d_controls_onGearDown() {
+    Debug_UART_Write("Request gear down\r\n");
     dGear_requestGearDown();
 }
 
 void d_controls_onStart() {
     if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
         dSignalLed_set(DSIGNAL_LED_2);
+        Debug_UART_Write("On Start\r\n");
         dStart_switchOn();
         switchExternalInterruptEdge(START_INTERRUPT);
     } else {
         dSignalLed_unset(DSIGNAL_LED_2);
+        Debug_UART_Write("On start off\r\n");
         dStart_switchOff();
         switchExternalInterruptEdge(START_INTERRUPT);
     }
@@ -414,6 +419,7 @@ void button_onMenuRight() {
 }*/
 
 void d_controls_onNeutral() {
+     Debug_UART_Write("On neutral\r\n");
     if (!dGear_isNeutralSet()) {
         if (dGear_get() == 1) {
     // !       Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
@@ -424,6 +430,7 @@ void d_controls_onNeutral() {
 }
 
 void d_controls_onReset() {
+     Debug_UART_Write("On reset\r\n");
         dHardReset_reset();
 }
 
@@ -450,15 +457,15 @@ void d_controls_onReset() {
 ////////////////// DA DEFINIRE
 
 void d_controls_onDRS() {
-
+    Debug_UART_Write("On DRS\r\n");
 }
 
 void d_controls_onAux1(void) {
-
+     Debug_UART_Write("On aux 1\r\n");
 }
 
 void d_controls_onAux2(void) {
-
+     Debug_UART_Write("On aux 2\r\n");
 }
 
 //////////////////////////////

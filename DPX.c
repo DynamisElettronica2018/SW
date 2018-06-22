@@ -102,7 +102,7 @@ onCanInterrupt{
     //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
     //IEC1BITS.C1IE = 0;
     Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
-    dSignalLed_switch(DSIGNAL_LED_RED);
+    dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
     Can_read(&id, dataBuffer, &dataLen, &flags);
 
      //  Buzzer_bip();

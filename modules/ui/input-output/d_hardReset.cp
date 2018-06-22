@@ -309,8 +309,8 @@ void dHardReset_reset(void) {
  dHardReset_setFlag();
  dd_GraphicController_fireTimedNotification( 1000 , "RESET", WARNING);
  dSignalLed_set( 1 );
+ dSignalLed_set( 3 );
  dSignalLed_set( 0 );
- dSignalLed_set( 2 );
  asm {
  reset
  }

@@ -81,21 +81,21 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 7 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_signalLed.c"
+#line 12 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_signalLed.c"
 void dSignalLed_init(void) {
   TRISB9_bit  =  0 ;
   TRISB10_bit  =  0 ;
   TRISB11_bit  =  0 ;
   TRISB13_bit  =  0 ;
  dSignalLed_set( 1 );
- dSignalLed_set( 2 );
  dSignalLed_set( 0 );
  dSignalLed_set( 3 );
+ dSignalLed_set( 2 );
  delay_ms(100);
+ dSignalLed_unset( 3 );
+ dSignalLed_unset( 0 );
  dSignalLed_unset( 1 );
  dSignalLed_unset( 2 );
- dSignalLed_unset( 0 );
- dSignalLed_unset( 3 );
 }
 
 void dSignalLed_switch(unsigned char led) {

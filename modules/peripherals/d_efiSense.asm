@@ -26,7 +26,7 @@ L__dEfiSense_heartbeat4:
 	MOV	#lo_addr(_ind_efi_status), W10
 	CALL	_dd_Indicator_setBoolValueP
 ;d_efiSense.c,16 :: 		dSignalLed_set(DSIGNAL_LED_GREEN);
-	CLR	W10
+	MOV.B	#3, W10
 	CALL	_dSignalLed_set
 ;d_efiSense.c,17 :: 		}
 L_end_dEfiSense_heartbeat:
@@ -95,7 +95,7 @@ L__dEfiSense_die10:
 	MOV.B	#9, W10
 	CALL	_dd_Indicator_setBoolValue
 ;d_efiSense.c,34 :: 		dSignalLed_unset(DSIGNAL_LED_GREEN);
-	CLR	W10
+	MOV.B	#3, W10
 	CALL	_dSignalLed_unset
 ;d_efiSense.c,35 :: 		}
 L_end_dEfiSense_die:

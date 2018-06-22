@@ -1116,48 +1116,93 @@ char dstr[100] = "";
 
 void Debug_UART_Init()
 {
-#line 16 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ UART2_Init(9600);
+ delay_ms(100);
+
 }
 
 void Debug_Timer4_Init(){
-#line 22 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ setTimer( 3 , 0.001);
+
 }
 
 void Debug_UART_Write(char* text){
-#line 28 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ UART2_Write_Text(text);
+
 }
 
 void Debug_UART_WriteChar(char c)
 {
-#line 35 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ UART2_Write(c);
+
 }
 
 void printf(char* string) {
-#line 45 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ delay_ms(500);
+  xGlcd_Set_Font ( DynamisFont_Dashboard16x16, 16 , 16 , 32 ) ;
+ eGlcd_drawRect(0, 43, 127, 20);
+  eGlcd_writeText(string, 0, 45) ;
+ delay_ms(500);
+
 }
 
 
 void initTimer32(){
-#line 61 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ PR2 = 0xFFFF;
+ PR3 = 0xFFFF;
+ T2CONbits.T32 = 1;
+ T2CONbits.TCS = 0;
+ T2CONbits.TGATE = 0;
+ T2CONbits.TCKPS = 2;
+
+
+
+
+
 }
 
 void resetTimer32()
 {
-#line 71 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ T2CONbits.TON = 0;
+ TMR3HLD = 0;
+ TMR2 = 0;
+ T2CONbits.TON = 1;
+
 }
 
 
 double getExecTime()
 {
-#line 87 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ unsigned long a=0;
+ unsigned int b=0;
+ double c = 0;
+ b = TMR2;
+ a = TMR3HLD;
+ a = a<<16;
+ a += b;
+ c = a*3.2e-6;
+ return c;
+
 }
 
 void stopTimer32()
 {
-#line 94 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ T2CONbits.TON = 0;
+
 }
 
 void startTimer32()
 {
-#line 101 "C:/Users/utente/Desktop/git Repo/SW/libs/debug.c"
+
+ T2CONbits.TON = 1;
+
 }

@@ -829,7 +829,7 @@ _dd_GraphicController_onTimerInterrupt:
 	BRA Z	L__dd_GraphicController_onTimerInterrupt86
 	GOTO	L_dd_GraphicController_onTimerInterrupt26
 L__dd_GraphicController_onTimerInterrupt86:
-;dd_graphic_controller.c,280 :: 		dSignalLed_set(DSIGNAL_LED_RED);
+;dd_graphic_controller.c,280 :: 		dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
 	MOV.B	#1, W10
 	CALL	_dSignalLed_set
 ;dd_graphic_controller.c,281 :: 		}
@@ -840,7 +840,7 @@ L_dd_GraphicController_onTimerInterrupt26:
 	BRA Z	L__dd_GraphicController_onTimerInterrupt87
 	GOTO	L_dd_GraphicController_onTimerInterrupt27
 L__dd_GraphicController_onTimerInterrupt87:
-;dd_graphic_controller.c,284 :: 		dSignalLed_unset(DSIGNAL_LED_RED);
+;dd_graphic_controller.c,284 :: 		dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
 	MOV.B	#1, W10
 	CALL	_dSignalLed_unset
 ;dd_graphic_controller.c,285 :: 		__counter = 0;

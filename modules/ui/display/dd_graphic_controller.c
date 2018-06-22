@@ -277,11 +277,11 @@ void dd_GraphicController_onTimerInterrupt(void)
 
     if ( __counter == 10 )
     {
-       dSignalLed_set(DSIGNAL_LED_RED);
+       dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
     }
     if (__counter == 20)
     {
-       dSignalLed_unset(DSIGNAL_LED_RED);
+       dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
      __counter = 0;
     }
 
