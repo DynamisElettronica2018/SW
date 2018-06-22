@@ -81,22 +81,6 @@ void d_controls_onLeftEncoder(signed char movements) {
      }
 }
 
-/*void d_controls_onLeftEncoderDown() {
-     switch (d_currentOperatingMode) {
-            case SETTINGS_MODE:
-                 d_UI_onSettingsChange(MOVEMENT_DOWN);
-                 break;
-            case CRUISE_MODE:
-            case ACC_MODE:
-                 //control EBB
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_downMovement();
-                 break;
-            default:
-                 return;
-     }
-} */
-
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
@@ -112,23 +96,6 @@ void d_controls_onRightEncoder(signed char movements) {
                  return;
      }
 }
-
-/*void d_controls_onRightEncoderDown() {
-     switch (d_currentOperatingMode) {
-            case SETTINGS_MODE:
-            case DEBUG_MODE:
-                 dd_Menu_selectDown();
-                 break;
-            case CRUISE_MODE:
-            case ACC_MODE:
-                 //control TRACTION
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_downMovement();
-                 break;
-            default:
-                 return;
-     }
-}  */
 
 OperatingMode d_selectorPositionToMode(signed char position){
      if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )

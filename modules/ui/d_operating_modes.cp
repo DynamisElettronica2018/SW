@@ -415,16 +415,16 @@ IntegerIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6,  0 ,  
 BooleanIndicator ind_rio_acq = {RIO_ACQUISITION, "RIO", "Rio", 3, 3,  0 ,  0 ,  1 ,  3 , 1, "?", 0};
 BooleanIndicator ind_efi_status = {EFI_STATUS, "EFION", "Efi On", 5, 6,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 IntegerIndicator ind_efi_crash_counter = {EFI_CRASH_COUNTER, "C.EFI", "EFI Crash Counter", 5, 17,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH20 L IN", "H20 Temp. left in", 9, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_sx_out = {TH2O_SX_OUT, "TH20 L OUT", "H20 Temp. left out", 10, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH20 R IN", "H20 Temp. right in", 9, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH20 R OUT", "H20 Temp. right out", 10, 19,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "T. OIL IN", "Oil Temp. In", 9, 12,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "T. OIL OUT", "Oil Temp. Out", 10, 13,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP TARGET", "Slip Target", 11, 11,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAUNCH CONTROL", "Launch Control", 13, 13,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUEL PUMP", "Fuel Pump Press.", 9, 16,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I EBB MOTOR", "Ebb Motor Current", 10, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH2LI", "H20 Temp. Left In", 5, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_sx_out = {TH2O_SX_OUT, "TH2LO", "H20 Temp. Left Out", 5, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH2RI", "H20 Temp. Right In", 5, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH2RO", "H20 Temp. Right Out", 5, 19,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "TOILO", "Oil Temp. Out", 5, 13,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAU.C", "Launch Control", 5, 14,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
+FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUELP", "Fuel Pump Press.", 5, 16,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Current", 5, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
 
 
 IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
@@ -555,7 +555,7 @@ void d_UI_SettingsModeInit() {
 }
 #line 201 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_operating_modes.c"
 void d_UI_onSettingsChange(signed char movements) {
- int dashboardIndicatorIndex;
+ signed int dashboardIndicatorIndex;
  unsigned char position;
  Indicator* settingIndicator = dd_settings[dd_Menu_selectedLine()];
 

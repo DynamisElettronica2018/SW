@@ -588,7 +588,7 @@ void d_controls_onLeftEncoder(signed char movements) {
  return;
  }
 }
-#line 100 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
@@ -604,13 +604,13 @@ void d_controls_onRightEncoder(signed char movements) {
  return;
  }
 }
-#line 133 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+
 OperatingMode d_selectorPositionToMode(signed char position){
  if (position >  1  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 141 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 108 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

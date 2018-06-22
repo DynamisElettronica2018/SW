@@ -1789,6 +1789,9 @@ void dd_printLogoAnimation() {
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void)
 {
+ dRpm_set(8000);
+ dRpm_updateLedStripe();
+
  if ( __counter == 10 )
  {
  dSignalLed_set( 1 );
@@ -1827,7 +1830,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 319 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 322 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1851,5 +1854,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 353 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 356 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }
