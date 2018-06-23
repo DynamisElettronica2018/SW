@@ -10,7 +10,7 @@
 #include "../display/dd_dashboard.h"
 #include "../../peripherals/d_can.h"
 
-#define CLUTCH_MAX_ANALOG_VALUE 3800
+#define CLUTCH_MAX_ANALOG_VALUE 800 // 3800
 
 void dPaddle_init(void);
 

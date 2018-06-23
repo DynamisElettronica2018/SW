@@ -197,6 +197,7 @@ main
 		Debug_UART_Write
 		dDCU_init
 		dPaddle_init
+		d_SWTemp_Init
 			setupAnalogSampling
 				getMinimumAnalogClockConversion
 				setAutomaticSampling
@@ -204,10 +205,6 @@ main
 				unsetAnalogInterrupt
 					clearAnalogInterrupt
 				startSampling
-			setAnalogPIN
-			turnOnAnalogModule
-		d_SWTemp_Init
-			setupAnalogSampling
 			setAnalogPIN
 			turnOnAnalogModule
 		dSignalLed_init
@@ -478,7 +475,9 @@ cn_interrupt
 	clearExternalInterrupt
 timer2_interrupt
 	dPaddle_readSample
-		getAnalogValue
+		ADC1_Read
+			ADC1_Init
+			ADC1_Get_Sample
 		_Long2Float
 		_Mul_FP
 		_AddSub_FP
@@ -490,6 +489,7 @@ timer2_interrupt
 			Can_resetWritePacket
 			Can_addByteToWritePacket
 			Can_write
+		dd_Indicator_setIntValueP
 	dStart_isSwitchedOn
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe

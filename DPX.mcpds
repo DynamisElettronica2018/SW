@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=modules\peripherals\d_clutch.c
+Value=modules\ui\input-output\d_paddle.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -60,19 +60,13 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=12
+Count=6
 File0=DPX.c
-File1=modules\ui\input-output\d_controls.h
-File2=modules\ui\input-output\d_controls.c
-File3=modules\ui\d_ui_controller.c
-File4=modules\peripherals\d_dcu.c
-File5=modules\peripherals\d_dcu.h
-File6=modules\ui\display\dd_graphic_controller.c
-File7=modules\ui\display\dd_interfaces.c
-File8=modules\ui\display\dd_dashboard.c
-File9=modules\ui\input-output\d_paddle.c
-File10=modules\peripherals\d_can.h
-File11=modules\peripherals\d_clutch.c
+File1=modules\ui\input-output\d_paddle.c
+File2=modules\peripherals\d_clutch.c
+File3=modules\ui\input-output\d_paddle.h
+File4=libs\dsPIC.c
+File5=libs\dsPIC.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -80,24 +74,37 @@ Count=0
 [OTHER_FILES]
 Count=0
 [SEARCH_PATH]
-Count=9
+Count=16
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\utente\Desktop\git Repo\SW\
-Path3=C:\Users\utente\Desktop\git Repo\SW\libs\
-Path4=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
-Path5=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\
-Path6=C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\
-Path7=C:\Users\utente\Desktop\git Repo\SW\modules\ui\
-Path8=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\
+Path2=C:\Users\sofia\Desktop\GIT REPO\SW\
+Path3=C:\Users\utente\Desktop\git Repo\SW\
+Path4=C:\Users\utente\Desktop\git Repo\SW\libs\
+Path5=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
+Path6=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\
+Path7=C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\
+Path8=C:\Users\utente\Desktop\git Repo\SW\modules\ui\
+Path9=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\
+Path10=C:\Users\sofia\Desktop\GIT REPO\SW\libs\
+Path11=C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\
+Path12=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\
+Path13=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\
+Path14=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\
+Path15=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\
 [HEADER_PATH]
-Count=6
+Count=12
 Path0=C:\Users\utente\Desktop\git Repo\SW\libs\
 Path1=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
 Path2=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\
 Path3=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\
 Path4=C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\
 Path5=C:\Users\utente\Desktop\git Repo\SW\modules\ui\
+Path6=C:\Users\sofia\Desktop\GIT REPO\SW\libs\
+Path7=C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\
+Path8=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\
+Path9=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\
+Path10=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\
+Path11=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\
 [HEADERS]
 Count=40
 File0=libs\basic.h

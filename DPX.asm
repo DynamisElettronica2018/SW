@@ -78,7 +78,7 @@ _timer2_interrupt:
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter5), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,59 :: 		if (timer2_counter0 >= 5) {
+;DPX.c,59 :: 		if (timer2_counter0 >= 5 ) {
 	MOV	_timer2_counter0, W0
 	CP	W0, #5
 	BRA GE	L__timer2_interrupt36

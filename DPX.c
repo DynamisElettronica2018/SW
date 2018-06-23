@@ -56,7 +56,7 @@ onTimer2Interrupt{
     timer2_counter5 += 1;
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
-    if (timer2_counter0 >= 5) {
+    if (timer2_counter0 >= 5 ) {
         dPaddle_readSample();
         timer2_counter0 = 0;
     }

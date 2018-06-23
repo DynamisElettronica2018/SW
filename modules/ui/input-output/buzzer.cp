@@ -1,7 +1,7 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/buzzer.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -73,10 +73,10 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
-#line 11 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 11 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
 char Music_hasToMakeSound(void);
 
 void Music_tick(void);
@@ -92,15 +92,15 @@ void Music_playNote(unsigned char note, unsigned char duration);
 float Music_getActualNoteDuration(unsigned char duration);
 
 float Music_getNoteFrequency(unsigned char note);
-#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
 
 void Buzzer_bip(void);
-#line 7 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/buzzer.c"
+#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
 unsigned int buzzer_ticks = 0, buzzer_bipTicks;
-#line 21 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/buzzer.c"
+#line 21 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
 void Buzzer_init(void) {
   TRISD0_bit  =  0 ;
   RD0_bit  = 0;
