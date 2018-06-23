@@ -73,9 +73,8 @@ void Can_init() {
  CAN1SetFilter(_CAN_FILTER_B1_F1,  0b01100000000 , _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F2,  0b11100000000 , _CAN_CONFIG_STD_MSG);
 #line 59 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
- CAN1SetMask(_CAN_MASK_B2,  0b11111100000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
- CAN1SetFilter(_CAN_FILTER_B2_F1,  0b01100000000 , _CAN_CONFIG_STD_MSG);
- CAN1SetFilter(_CAN_FILTER_B2_F2,  0b11100000000 , _CAN_CONFIG_STD_MSG);
+ CAN1SetMask(_CAN_MASK_B2,  0b11111110000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
+ CAN1SetFilter(_CAN_FILTER_B2_F1,  0b11111110000 , _CAN_CONFIG_STD_MSG);
 
  CAN1SetOperationMode(_CAN_MODE_NORMAL, 0xFF);
 
@@ -166,7 +165,7 @@ void Can_clearInterrupt(void) {
 }
 
 void Can_initInterrupt(void) {
-#line 158 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
+#line 157 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
  IEC1BITS.C1IE = 1;
  C1INTEBITS.RXB0IE = 1;
  C1INTEBITS.RXB1IE = 1;

@@ -742,13 +742,13 @@ void main(){
 
 
  if (timer2_counter0 >= 5) {
-
+ dPaddle_readSample();
  timer2_counter0 = 0;
  }
 
  if (timer2_counter2 >= 10) {
-
-
+ dClutch_set(dPaddle_getValue());
+ dClutch_send();
  timer2_counter2 = 0;
  }
 
@@ -827,7 +827,7 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
  break;
  case  0b01100001101 :
- Debug_UART_Write("EFI sent MESSAGE\r\n");
+
  dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
  dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
@@ -851,6 +851,10 @@ void main(){
  Debug_UART_Write("DCU sent MESSAGE\r\n");
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
+ break;
+#line 181 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+ case  0b01100010001 :
+ dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
 #line 194 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  case  0b01100010110 :

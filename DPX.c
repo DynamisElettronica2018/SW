@@ -57,13 +57,13 @@ onTimer2Interrupt{
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
-        //dPaddle_readSample();
+        dPaddle_readSample();
         timer2_counter0 = 0;
     }
     // TIMER_2_PERIOD*10 = 10ms (100Hz)
     if (timer2_counter2 >= 10) {
-        //dClutch_set(dPaddle_getValue());
-        //dClutch_send();
+        dClutch_set(dPaddle_getValue());
+        dClutch_send();
         timer2_counter2 = 0;
     }
     // TIMER_2_PERIOD*25 = 25ms (40Hz)
@@ -147,7 +147,7 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
            break;//*/
         case EFI_OIL_T_ENGINE_BAT_ID:
-           Debug_UART_Write("EFI sent MESSAGE\r\n");
+           //Debug_UART_Write("EFI sent MESSAGE\r\n");
            dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
            dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
@@ -168,7 +168,7 @@ onCanInterrupt{
            dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
            break;
        case DCU_AUX_ID:
-            Debug_UART_Write("DCU sent MESSAGE\r\n");
+           Debug_UART_Write("DCU sent MESSAGE\r\n");
            if(firstInt == COMMAND_DCU_IS_ACQUIRING)
                 dDCU_sentAcquiringSignal();
            break;
@@ -177,11 +177,11 @@ onCanInterrupt{
            dEbb_propagateEbbChange();
            dEbb_calibrationState(secondInt);
            dEbb_error(thirdInt);
-           break;
+           break;   */
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
            break;
-       case DAU_FL_DEBUG_ID:
+      /* case DAU_FL_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
            break;
        case DAU_REAR_DEBUG_ID:

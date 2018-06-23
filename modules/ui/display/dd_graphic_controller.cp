@@ -1567,7 +1567,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
-signed int dd_notificationTimeoutCounter = 0;
+unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
  setInterruptPriority( 1 ,  5 );
@@ -1671,7 +1671,7 @@ void dd_GraphicController_unsetNotificationFlag (void){
 }
 
 void dd_GraphicController_clearNotification(void) {
-
+ eGlcd_clear();
  dd_isFrameUpdateForced =  1 ;
  dd_GraphicController_unsetNotificationFlag();
 }
@@ -1690,12 +1690,15 @@ void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, N
 void dd_GraphicController_handleNotification(void) {
  if (dd_notificationTimeoutCounter > 0) {
  dd_notificationTimeoutCounter--;
- if (dd_notificationTimeoutCounter <= 0) {
+ if (dd_notificationTimeoutCounter == 0) {
  dd_GraphicController_clearNotification();
+
  }
  }
+
+
 }
-#line 202 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 205 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1802,7 +1805,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 314 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 317 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1819,13 +1822,9 @@ void dd_GraphicController_onTimerInterrupt(void)
  if (dd_notificationFlag) {
  dd_GraphicController_handleNotification();
  }
- if(dd_isFrameUpdateForced)
- {
- eGlcd_clear();
- dd_isFrameUpdateForced =  0 ;
- }
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
+ dd_isFrameUpdateForced =  0 ;
  }
 
 
@@ -1833,5 +1832,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 355 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 354 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }

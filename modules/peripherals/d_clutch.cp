@@ -364,7 +364,8 @@ void dClutch_set(unsigned char value) {
  if (value > 100) {
  value = 100;
  }
- dClutch_value = value;
+
+
 }
 
 void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {

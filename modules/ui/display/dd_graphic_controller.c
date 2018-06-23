@@ -151,7 +151,7 @@ void dd_GraphicController_unsetNotificationFlag (void){
 }
 
 void dd_GraphicController_clearNotification(void) {
-     //eGlcd_clear();
+     eGlcd_clear();
      dd_isFrameUpdateForced = TRUE;
      dd_GraphicController_unsetNotificationFlag();
 }
@@ -173,10 +173,13 @@ void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, N
 void dd_GraphicController_handleNotification(void) {
     if (dd_notificationTimeoutCounter > 0) {
         dd_notificationTimeoutCounter--;
-        if (dd_notificationTimeoutCounter <= 0) {
+        if (dd_notificationTimeoutCounter == 0) {
             dd_GraphicController_clearNotification();
+            //Debug_UART_Write("Clearing notification\r\n");
         }
     }
+    //sprintf(dstr, "Handling notification: %d\r\n", dd_notificationTimeoutCounter);
+    //Debug_UART_Write(dstr);
 }
 
 /*void dd_GraphicController_printFrame(void) {
@@ -327,13 +330,9 @@ void dd_GraphicController_onTimerInterrupt(void)
             if (dd_notificationFlag) {
                dd_GraphicController_handleNotification();
             }
-            if(dd_isFrameUpdateForced)
-            {
-                eGlcd_clear();
-                dd_isFrameUpdateForced = FALSE;
-            }
             dd_Interface_print[dd_currentInterface]();
             Lcd_PrintFrame();
+            dd_isFrameUpdateForced = FALSE;
         }
         //time = getExecTime();
         //sprintf(str, "%f", time);

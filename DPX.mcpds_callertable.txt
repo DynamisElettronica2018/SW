@@ -403,7 +403,6 @@ CAN_Interrupt
 		_Sub_FP
 		_Float2Longint
 		_Div_FP
-	Debug_UART_Write
 	dEfiSense_calculateOilInTemperature
 		_Long2Float
 		_Mul_FP
@@ -435,9 +434,12 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
+	Debug_UART_Write
 	dDCU_sentAcquiringSignal
 		Debug_UART_Write
 		dSignalLed_switch
+	dd_Indicator_setIntCoupleValueP
+		dd_Indicator_requestPrintUpdateP
 	d_SWTemp_getTempValue
 		getAnalogValue
 	_Long2Float
@@ -475,6 +477,19 @@ cn_interrupt
 			d_DashboardSetting_updateValue
 	clearExternalInterrupt
 timer2_interrupt
+	dPaddle_readSample
+		getAnalogValue
+		_Long2Float
+		_Mul_FP
+		_AddSub_FP
+		_Float2Longint
+	dClutch_set
+	dPaddle_getValue
+	dClutch_send
+		Can_writeByte
+			Can_resetWritePacket
+			Can_addByteToWritePacket
+			Can_write
 	dStart_isSwitchedOn
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe
@@ -501,6 +516,7 @@ timer1_interrupt
 		eGlcd_fill
 		dd_GraphicController_handleNotification
 			dd_GraphicController_clearNotification
+				eGlcd_clear
 				dd_GraphicController_unsetNotificationFlag
 		dd_Dashboard_print
 		dd_Interface_printMenu

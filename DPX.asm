@@ -17,9 +17,9 @@ _main:
 ;DPX.c,32 :: 		if (!dHardReset_hasBeenReset())
 	CALL	_dHardReset_hasBeenReset
 	CP0.B	W0
-	BRA Z	L__main32
+	BRA Z	L__main33
 	GOTO	L_main0
-L__main32:
+L__main33:
 ;DPX.c,34 :: 		delay_ms(250);
 	MOV	#26, W8
 	MOV	#28274, W7
@@ -81,9 +81,11 @@ _timer2_interrupt:
 ;DPX.c,59 :: 		if (timer2_counter0 >= 5) {
 	MOV	_timer2_counter0, W0
 	CP	W0, #5
-	BRA GE	L__timer2_interrupt35
+	BRA GE	L__timer2_interrupt36
 	GOTO	L_timer2_interrupt5
-L__timer2_interrupt35:
+L__timer2_interrupt36:
+;DPX.c,60 :: 		dPaddle_readSample();
+	CALL	_dPaddle_readSample
 ;DPX.c,61 :: 		timer2_counter0 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter0
@@ -92,9 +94,15 @@ L_timer2_interrupt5:
 ;DPX.c,64 :: 		if (timer2_counter2 >= 10) {
 	MOV	_timer2_counter2, W0
 	CP	W0, #10
-	BRA GE	L__timer2_interrupt36
+	BRA GE	L__timer2_interrupt37
 	GOTO	L_timer2_interrupt6
-L__timer2_interrupt36:
+L__timer2_interrupt37:
+;DPX.c,65 :: 		dClutch_set(dPaddle_getValue());
+	CALL	_dPaddle_getValue
+	MOV.B	W0, W10
+	CALL	_dClutch_set
+;DPX.c,66 :: 		dClutch_send();
+	CALL	_dClutch_send
 ;DPX.c,67 :: 		timer2_counter2 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter2
@@ -103,15 +111,15 @@ L_timer2_interrupt6:
 ;DPX.c,70 :: 		if (timer2_counter1 >= 25) {
 	MOV	_timer2_counter1, W0
 	CP	W0, #25
-	BRA GE	L__timer2_interrupt37
+	BRA GE	L__timer2_interrupt38
 	GOTO	L_timer2_interrupt7
-L__timer2_interrupt37:
+L__timer2_interrupt38:
 ;DPX.c,71 :: 		if (dStart_isSwitchedOn()) {
 	CALL	_dStart_isSwitchedOn
 	CP0.B	W0
-	BRA NZ	L__timer2_interrupt38
+	BRA NZ	L__timer2_interrupt39
 	GOTO	L_timer2_interrupt8
-L__timer2_interrupt38:
+L__timer2_interrupt39:
 ;DPX.c,73 :: 		}
 L_timer2_interrupt8:
 ;DPX.c,74 :: 		timer2_counter1 = 0;
@@ -123,15 +131,15 @@ L_timer2_interrupt7:
 	MOV	#100, W1
 	MOV	#lo_addr(_timer2_counter3), W0
 	CP	W1, [W0]
-	BRA LE	L__timer2_interrupt39
+	BRA LE	L__timer2_interrupt40
 	GOTO	L_timer2_interrupt9
-L__timer2_interrupt39:
+L__timer2_interrupt40:
 ;DPX.c,78 :: 		if (dRpm_canUpdateLedStripe()) {
 	CALL	_dRpm_canUpdateLedStripe
 	CP0.B	W0
-	BRA NZ	L__timer2_interrupt40
+	BRA NZ	L__timer2_interrupt41
 	GOTO	L_timer2_interrupt10
-L__timer2_interrupt40:
+L__timer2_interrupt41:
 ;DPX.c,79 :: 		dRpm_updateLedStripe();
 	CALL	_dRpm_updateLedStripe
 ;DPX.c,80 :: 		}
@@ -145,15 +153,15 @@ L_timer2_interrupt9:
 	MOV	_timer2_counter5, W1
 	MOV	#1000, W0
 	CP	W1, W0
-	BRA GE	L__timer2_interrupt41
+	BRA GE	L__timer2_interrupt42
 	GOTO	L_timer2_interrupt11
-L__timer2_interrupt41:
+L__timer2_interrupt42:
 ;DPX.c,89 :: 		if(dDCU_isAcquiring())
 	CALL	_dDCU_isAcquiring
 	CP0.B	W0
-	BRA NZ	L__timer2_interrupt42
+	BRA NZ	L__timer2_interrupt43
 	GOTO	L_timer2_interrupt12
-L__timer2_interrupt42:
+L__timer2_interrupt43:
 ;DPX.c,91 :: 		Debug_UART_Write("DCU Tick\r\n");
 	MOV	#lo_addr(?lstr2_DPX), W10
 	CALL	_Debug_UART_Write
@@ -215,9 +223,9 @@ _CAN_Interrupt:
 ;DPX.c,124 :: 		if (dataLen >= 2) {
 	MOV	[W14+20], W0
 	CP	W0, #2
-	BRA GEU	L__CAN_Interrupt44
+	BRA GEU	L__CAN_Interrupt45
 	GOTO	L_CAN_Interrupt13
-L__CAN_Interrupt44:
+L__CAN_Interrupt45:
 ;DPX.c,125 :: 		firstInt = (unsigned int) ((dataBuffer[0] << 8) | (dataBuffer[1] & 0xFF));
 	ADD	W14, #12, W1
 	MOV.B	[W1], W0
@@ -234,9 +242,9 @@ L_CAN_Interrupt13:
 ;DPX.c,127 :: 		if (dataLen >= 4) {
 	MOV	[W14+20], W0
 	CP	W0, #4
-	BRA GEU	L__CAN_Interrupt45
+	BRA GEU	L__CAN_Interrupt46
 	GOTO	L_CAN_Interrupt14
-L__CAN_Interrupt45:
+L__CAN_Interrupt46:
 ;DPX.c,128 :: 		secondInt = (unsigned int) ((dataBuffer[2] << 8) | (dataBuffer[3] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #2, W0
@@ -254,9 +262,9 @@ L_CAN_Interrupt14:
 ;DPX.c,130 :: 		if (dataLen >= 6) {
 	MOV	[W14+20], W0
 	CP	W0, #6
-	BRA GEU	L__CAN_Interrupt46
+	BRA GEU	L__CAN_Interrupt47
 	GOTO	L_CAN_Interrupt15
-L__CAN_Interrupt46:
+L__CAN_Interrupt47:
 ;DPX.c,131 :: 		thirdInt = (unsigned int) ((dataBuffer[4] << 8) | (dataBuffer[5] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #4, W0
@@ -274,9 +282,9 @@ L_CAN_Interrupt15:
 ;DPX.c,133 :: 		if (dataLen >= 8) {
 	MOV	[W14+20], W0
 	CP	W0, #8
-	BRA GEU	L__CAN_Interrupt47
+	BRA GEU	L__CAN_Interrupt48
 	GOTO	L_CAN_Interrupt16
-L__CAN_Interrupt47:
+L__CAN_Interrupt48:
 ;DPX.c,134 :: 		fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #6, W0
@@ -342,9 +350,6 @@ L_CAN_Interrupt20:
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,149 :: 		case EFI_OIL_T_ENGINE_BAT_ID:
 L_CAN_Interrupt21:
-;DPX.c,150 :: 		Debug_UART_Write("EFI sent MESSAGE\r\n");
-	MOV	#lo_addr(?lstr3_DPX), W10
-	CALL	_Debug_UART_Write
 ;DPX.c,151 :: 		dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
 	MOV	[W14+0], W10
 	CALL	_dEfiSense_calculateOilInTemperature
@@ -426,21 +431,30 @@ L_CAN_Interrupt25:
 ;DPX.c,170 :: 		case DCU_AUX_ID:
 L_CAN_Interrupt26:
 ;DPX.c,171 :: 		Debug_UART_Write("DCU sent MESSAGE\r\n");
-	MOV	#lo_addr(?lstr4_DPX), W10
+	MOV	#lo_addr(?lstr3_DPX), W10
 	CALL	_Debug_UART_Write
 ;DPX.c,172 :: 		if(firstInt == COMMAND_DCU_IS_ACQUIRING)
 	MOV	[W14+0], W0
 	CP	W0, #1
-	BRA Z	L__CAN_Interrupt48
+	BRA Z	L__CAN_Interrupt49
 	GOTO	L_CAN_Interrupt27
-L__CAN_Interrupt48:
+L__CAN_Interrupt49:
 ;DPX.c,173 :: 		dDCU_sentAcquiringSignal();
 	CALL	_dDCU_sentAcquiringSignal
 L_CAN_Interrupt27:
 ;DPX.c,174 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,194 :: 		case GCU_DEBUG_1_ID:
+;DPX.c,181 :: 		case DAU_FR_DEBUG_ID:
 L_CAN_Interrupt28:
+;DPX.c,182 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
+	MOV	[W14+2], W12
+	MOV	[W14+0], W11
+	MOV	#lo_addr(_ind_dau_fr_board), W10
+	CALL	_dd_Indicator_setIntCoupleValueP
+;DPX.c,183 :: 		break;
+	GOTO	L_CAN_Interrupt18
+;DPX.c,194 :: 		case GCU_DEBUG_1_ID:
+L_CAN_Interrupt29:
 ;DPX.c,195 :: 		dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gcu_temp), W10
@@ -460,7 +474,7 @@ L_CAN_Interrupt28:
 ;DPX.c,199 :: 		break; //*/
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,200 :: 		case GCU_DEBUG_2_ID:
-L_CAN_Interrupt29:
+L_CAN_Interrupt30:
 ;DPX.c,201 :: 		dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gear_motor), W10
@@ -481,7 +495,7 @@ L_CAN_Interrupt29:
 ;DPX.c,205 :: 		break;  //*/
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,209 :: 		default:
-L_CAN_Interrupt30:
+L_CAN_Interrupt31:
 ;DPX.c,210 :: 		break;
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,211 :: 		}
@@ -491,82 +505,90 @@ L_CAN_Interrupt17:
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt49
+	BRA NZ	L__CAN_Interrupt50
 	GOTO	L_CAN_Interrupt19
-L__CAN_Interrupt49:
+L__CAN_Interrupt50:
 	MOV	#780, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt50
+	BRA NZ	L__CAN_Interrupt51
 	GOTO	L_CAN_Interrupt20
-L__CAN_Interrupt50:
+L__CAN_Interrupt51:
 	MOV	#781, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt51
+	BRA NZ	L__CAN_Interrupt52
 	GOTO	L_CAN_Interrupt21
-L__CAN_Interrupt51:
+L__CAN_Interrupt52:
 	MOV	#774, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt52
+	BRA NZ	L__CAN_Interrupt53
 	GOTO	L_CAN_Interrupt22
-L__CAN_Interrupt52:
+L__CAN_Interrupt53:
 	MOV	#782, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt53
+	BRA NZ	L__CAN_Interrupt54
 	GOTO	L_CAN_Interrupt23
-L__CAN_Interrupt53:
+L__CAN_Interrupt54:
 	MOV	#775, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt54
+	BRA NZ	L__CAN_Interrupt55
 	GOTO	L_CAN_Interrupt24
-L__CAN_Interrupt54:
+L__CAN_Interrupt55:
 	MOV	#784, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt55
+	BRA NZ	L__CAN_Interrupt56
 	GOTO	L_CAN_Interrupt25
-L__CAN_Interrupt55:
+L__CAN_Interrupt56:
 	MOV	#2039, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
-	BRA NZ	L__CAN_Interrupt56
-	GOTO	L_CAN_Interrupt26
-L__CAN_Interrupt56:
-	MOV	#790, W1
-	MOV	#0, W2
-	ADD	W14, #8, W0
-	CP	W1, [W0++]
-	CPB	W2, [W0--]
 	BRA NZ	L__CAN_Interrupt57
-	GOTO	L_CAN_Interrupt28
+	GOTO	L_CAN_Interrupt26
 L__CAN_Interrupt57:
-	MOV	#791, W1
+	MOV	#785, W1
 	MOV	#0, W2
 	ADD	W14, #8, W0
 	CP	W1, [W0++]
 	CPB	W2, [W0--]
 	BRA NZ	L__CAN_Interrupt58
-	GOTO	L_CAN_Interrupt29
+	GOTO	L_CAN_Interrupt28
 L__CAN_Interrupt58:
+	MOV	#790, W1
+	MOV	#0, W2
+	ADD	W14, #8, W0
+	CP	W1, [W0++]
+	CPB	W2, [W0--]
+	BRA NZ	L__CAN_Interrupt59
+	GOTO	L_CAN_Interrupt29
+L__CAN_Interrupt59:
+	MOV	#791, W1
+	MOV	#0, W2
+	ADD	W14, #8, W0
+	CP	W1, [W0++]
+	CPB	W2, [W0--]
+	BRA NZ	L__CAN_Interrupt60
 	GOTO	L_CAN_Interrupt30
+L__CAN_Interrupt60:
+	GOTO	L_CAN_Interrupt31
 L_CAN_Interrupt18:
 ;DPX.c,215 :: 		}
 L_end_CAN_Interrupt:

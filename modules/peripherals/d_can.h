@@ -83,7 +83,7 @@
 #define DAU_FL_AUX_ID                   0b11111110100 //2036
 #define DAU_REAR_AUX_ID                 0b11111110101 //2037
 #define IMU_AUX_ID                      0b11111110110 //2038
-#define DCU_AUX_ID                      0b11111110111 //2039      first int (second byte) used for DCU acquiring signal
+#define DCU_AUX_ID                      0b11111110111 //2039       first int (second byte) used for DCU acquiring signal
 
 
 /******************* MASKS & FILTERS **********************/

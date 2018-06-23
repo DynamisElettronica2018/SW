@@ -36,7 +36,7 @@ void dDCU_startAcquisition(void) {
 }
 
 void dDCU_stopAcquisition(void) {
-     d_DCU_isAcquiring = FALSE;
+    d_DCU_isAcquiring = FALSE;
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stopped ACQ.", MESSAGE);
     Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
 }

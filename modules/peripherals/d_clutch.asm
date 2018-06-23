@@ -32,34 +32,31 @@ L__dClutch_set4:
 	MOV.B	#100, W10
 ;d_clutch.c,22 :: 		}
 L_dClutch_set0:
-;d_clutch.c,23 :: 		dClutch_value = value;
-	MOV	#lo_addr(_dClutch_value), W0
-	MOV.B	W10, [W0]
-;d_clutch.c,24 :: 		}
+;d_clutch.c,25 :: 		}
 L_end_dClutch_set:
 	RETURN
 ; end of _dClutch_set
 
 _dClutch_injectActualValue:
 
-;d_clutch.c,26 :: 		void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
-;d_clutch.c,27 :: 		if (clutch_check == GCU_COMMAND_IS_ALIVE){
+;d_clutch.c,27 :: 		void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
+;d_clutch.c,28 :: 		if (clutch_check == GCU_COMMAND_IS_ALIVE){
 	PUSH	W10
 	MOV	#99, W0
 	CP	W10, W0
 	BRA Z	L__dClutch_injectActualValue6
 	GOTO	L_dClutch_injectActualValue1
 L__dClutch_injectActualValue6:
-;d_clutch.c,28 :: 		dClutch_actualValue = value;
+;d_clutch.c,29 :: 		dClutch_actualValue = value;
 	MOV	#lo_addr(_dClutch_actualValue), W0
 	MOV.B	W11, [W0]
-;d_clutch.c,29 :: 		dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
+;d_clutch.c,30 :: 		dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
 	ZE	W11, W11
 	MOV	#lo_addr(_ind_clutch_pos), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_clutch.c,32 :: 		}
-L_dClutch_injectActualValue1:
 ;d_clutch.c,33 :: 		}
+L_dClutch_injectActualValue1:
+;d_clutch.c,34 :: 		}
 L_end_dClutch_injectActualValue:
 	POP	W10
 	RETURN
@@ -67,11 +64,11 @@ L_end_dClutch_injectActualValue:
 
 _dClutch_get:
 
-;d_clutch.c,35 :: 		unsigned char dClutch_get(void) {
-;d_clutch.c,36 :: 		return dClutch_actualValue;
+;d_clutch.c,36 :: 		unsigned char dClutch_get(void) {
+;d_clutch.c,37 :: 		return dClutch_actualValue;
 	MOV	#lo_addr(_dClutch_actualValue), W0
 	MOV.B	[W0], W0
-;d_clutch.c,37 :: 		}
+;d_clutch.c,38 :: 		}
 L_end_dClutch_get:
 	RETURN
 ; end of _dClutch_get
