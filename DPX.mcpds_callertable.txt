@@ -195,6 +195,7 @@ main
 			Can_initInterrupt
 			Can_setWritePriority
 		Debug_UART_Write
+		dDCU_init
 		dPaddle_init
 			setupAnalogSampling
 				getMinimumAnalogClockConversion
@@ -310,6 +311,7 @@ main
 						_Div_FP
 						_Float2Longint
 			dd_GraphicController_forceFullFrameUpdate
+		setTimer
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
@@ -344,7 +346,21 @@ external4
 			dSignalLed_set
 	d_controls_onAux1
 		Debug_UART_Write
-	d_controls_onAux2
+	d_controls_onStartAcquisition
+		dDCU_switchAcquisition
+			dDCU_stopAcquisition
+				dd_GraphicController_fireTimedNotification
+				Can_writeInt
+					Can_resetWritePacket
+					Can_addIntToWritePacket
+						Can_addByteToWritePacket
+					Can_write
+						CAN1Write
+							CAN1IDToRegs
+						Can_getWriteFlags
+			dDCU_startAcquisition
+				dd_GraphicController_fireTimedNotification
+				Can_writeInt
 		Debug_UART_Write
 	clearExternalInterrupt
 external3
@@ -387,6 +403,7 @@ CAN_Interrupt
 		_Sub_FP
 		_Float2Longint
 		_Div_FP
+	Debug_UART_Write
 	dEfiSense_calculateOilInTemperature
 		_Long2Float
 		_Mul_FP
@@ -418,6 +435,9 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
+	dDCU_sentAcquiringSignal
+		Debug_UART_Write
+		dSignalLed_switch
 	d_SWTemp_getTempValue
 		getAnalogValue
 	_Long2Float
@@ -455,55 +475,33 @@ cn_interrupt
 			d_DashboardSetting_updateValue
 	clearExternalInterrupt
 timer2_interrupt
-	Buttons_tick
-	dEfiSense_tick
-		dEfiSense_die
-			dd_Indicator_setBoolValue
-				dd_getIndicatorIndex
-				dd_Indicator_requestPrintUpdate
-			dEfiSense_isDead
-			dSignalLed_unset
-		dHardReset_reset
-	dPaddle_readSample
-		getAnalogValue
-		_Long2Float
-		_Mul_FP
-		_AddSub_FP
-		_Float2Longint
 	dStart_isSwitchedOn
-	dStart_sendStartMessage
-		Can_writeByte
-			Can_resetWritePacket
-			Can_addByteToWritePacket
-			Can_write
-				CAN1Write
-					CAN1IDToRegs
-				Can_getWriteFlags
-	dClutch_set
-	dPaddle_getValue
-	dClutch_send
-		Can_writeByte
+	dRpm_canUpdateLedStripe
+	dRpm_updateLedStripe
+		ceil
+		I2CExpander_setPort
+			I2C1_Start
+			I2C1_Write
+			I2C1_Stop
+		_Long2Float
+		_Float2Longint
+	dDCU_isAcquiring
+	Debug_UART_Write
+	dDCU_tick
+		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
 		dRpm_set
 		dRpm_updateLedStripe
-			ceil
-			I2CExpander_setPort
-				I2C1_Start
-				I2C1_Write
-				I2C1_Stop
-			_Long2Float
-			_Float2Longint
 		dSignalLed_set
 		dSignalLed_unset
 		eGlcd_clear
 		Lcd_PrintFrame
 		dd_printMessage
+		eGlcd_fill
 		dd_GraphicController_handleNotification
 			dd_GraphicController_clearNotification
-				eGlcd_clear
 				dd_GraphicController_unsetNotificationFlag
-		eGlcd_fill
 		dd_Dashboard_print
 		dd_Interface_printMenu
 		dd_Dashboard_init
@@ -519,10 +517,6 @@ external0
 		dGear_requestGearUp
 			dGear_canGearUp
 			Can_writeInt
-				Can_resetWritePacket
-				Can_addIntToWritePacket
-					Can_addByteToWritePacket
-				Can_write
 	d_controls_onGearDown
 		Debug_UART_Write
 		dGear_requestGearDown

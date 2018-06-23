@@ -10,6 +10,9 @@
 #include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
+#include "d_dcu.h"
+
+#define TIMER_2_PERIOD 0.001 //seconds
 
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
@@ -23,6 +26,7 @@ void d_UIController_init() {
     Debug_UART_Write("can initialized.\r\n");
     //Buzzer_init();
    // Debug_UART_Write("Buzzer initialized.\r\n");
+    dDCU_init();
     dPaddle_init();
     d_SWTemp_Init();
    // Debug_UART_Write("Paddle initialized.\r\n");
@@ -31,6 +35,8 @@ void d_UIController_init() {
    dRpm_init();
    Debug_UART_Write("rpm initialized.\r\n");
    dd_GraphicController_init();
+   Debug_UART_Write("graphic controller initialized.\r\n");
+   setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
    Debug_UART_Write("graphic controller initialized.\r\n");
    /* Debug_UART_Write("Signal Leds initialized.\r\n");
     Debug_UART_Write("RPM initialized.\r\n"); */

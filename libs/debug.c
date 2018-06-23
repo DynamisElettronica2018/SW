@@ -9,7 +9,7 @@ char dstr[100] = "";
 
 void Debug_UART_Init()
 {
-	#ifdef _DEBUG_
+        #ifdef _DEBUG_
      UART2_Init(9600);
      delay_ms(100);
      #endif
@@ -23,15 +23,15 @@ void Debug_Timer4_Init(){
 
 void Debug_UART_Write(char* text){
      #ifdef _DEBUG_
-	UART2_Write_Text(text);
-	#endif
+        UART2_Write_Text(text);
+        #endif
 }
 
 void Debug_UART_WriteChar(char c)
 {
-	 #ifdef _DEBUG_
-	UART2_Write(c);
-	#endif
+         #ifdef _DEBUG_
+        UART2_Write(c);
+        #endif
 }
 
 void printf(char* string) {

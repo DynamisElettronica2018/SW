@@ -284,7 +284,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 

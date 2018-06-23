@@ -76,14 +76,14 @@
 
 
 /************************** AUX ***************************/
-#define SW_AUX_ID                       0b11111110000 //2032
+#define SW_AUX_ID                       0b11111110000 //2032       first int (second byte) used for acquisition start=1, stop=0
 #define GCU_AUX_ID                      0b11111110001 //2033
 #define EBB_AUX_ID                      0b11111110010 //2034
 #define DAU_FR_AUX_ID                   0b11111110011 //2035
 #define DAU_FL_AUX_ID                   0b11111110100 //2036
 #define DAU_REAR_AUX_ID                 0b11111110101 //2037
 #define IMU_AUX_ID                      0b11111110110 //2038
-#define DCU_AUX_ID                      0b11111110111 //2039
+#define DCU_AUX_ID                      0b11111110111 //2039      first int (second byte) used for DCU acquiring signal
 
 
 /******************* MASKS & FILTERS **********************/
@@ -113,9 +113,9 @@
 
 /*********************** ACQUISITION ***********************/
 
-#define COMMAND_RIO_START_ACQUISITION 1
-#define COMMAND_RIO_STOP_ACQUISITION 2
-#define COMMAND_RIO_ZERO_ACQUISITION 3
+#define COMMAND_DCU_START_ACQUISITION 1
+#define COMMAND_DCU_STOP_ACQUISITION 2
+#define COMMAND_DCU_IS_ACQUIRING 1
 
 
 #endif //DD_CAN_H

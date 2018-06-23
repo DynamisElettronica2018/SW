@@ -9,7 +9,7 @@
 #include "../display/dd_graphic_controller.h"
 #include "d_start.h"
 #include "../display/dd_global_defines.h"
-#include "../../peripherals/d_rio.h"
+#include "d_dcu.h"
 #include "d_hardReset.h"
 #include "../d_acceleration.h"
 #include "../../peripherals/d_ebb.h"
@@ -36,12 +36,6 @@
 #define ENCODER_RIGHT_PIN0    RD5_bit
 #define ENCODER_RIGHT_PIN1    RD4_bit
 #define ENCODER_RIGHT_PIN2    RD3_bit
-/*#define ENCODER_RIGHT_PIN0     RD6_bit
-#define ENCODER_RIGHT_PIN1     RD7_bit
-#define ENCODER_RIGHT_PIN2     RG1_bit
-#define ENCODER_LEFT_PIN0    RD5_bit
-#define ENCODER_LEFT_PIN1    RD4_bit
-#define ENCODER_LEFT_PIN2    RD3_bit  */
 
 #define START_BUTTON_DIRECTION            TRISD10_bit
 #define GEAR_UP_BUTTON_DIRECTION          TRISF2_bit
@@ -57,12 +51,6 @@
 #define ENCODER_RIGHT_PIN0_DIRECTION      TRISD5_bit
 #define ENCODER_RIGHT_PIN1_DIRECTION      TRISD4_bit
 #define ENCODER_RIGHT_PIN2_DIRECTION      TRISD3_bit
-/*#define ENCODER_RIGHT_PIN0_DIRECTION       TRISD6_bit
-#define ENCODER_RIGHT_PIN1_DIRECTION       TRISD7_bit
-#define ENCODER_RIGHT_PIN2_DIRECTION       TRISG1_bit
-#define ENCODER_LEFT_PIN0_DIRECTION      TRISD5_bit
-#define ENCODER_LEFT_PIN1_DIRECTION      TRISD4_bit
-#define ENCODER_LEFT_PIN2_DIRECTION      TRISD3_bit*/
 
 #define onStartInterrupt                  onExternal3Interrupt
 #define onDRSInterrupt                    onExternal2Interrupt
@@ -325,7 +313,7 @@ onGeneralButtonInterrupt{
        d_controls_onAux1();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onAux2();
+       d_controls_onStartAcquisition();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
@@ -431,7 +419,7 @@ void d_controls_onNeutral() {
 
 void d_controls_onReset() {
      Debug_UART_Write("On reset\r\n");
-        dHardReset_reset();
+     dHardReset_reset();
 }
 
 /*void button_onMenuDown() {
@@ -464,8 +452,9 @@ void d_controls_onAux1(void) {
      Debug_UART_Write("On aux 1\r\n");
 }
 
-void d_controls_onAux2(void) {
-     Debug_UART_Write("On aux 2\r\n");
+void d_controls_onStartAcquisition(void) {
+     dDCU_switchAcquisition();
+     Debug_UART_Write("Start acquisition\r\n");
 }
 
 //////////////////////////////

@@ -44,7 +44,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
-unsigned int dd_notificationTicks = 0;
+unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
     setInterruptPriority(TIMER1_DEVICE, LOW_PRIORITY);
@@ -142,11 +142,6 @@ void dd_GraphicController_saveCurrentInterface(void) {
     dd_lastInterface = dd_currentInterface;
 }
 
-//notifications are timed as display frame rate, by timer1
-void dd_GraphicController_setNotificationTimeout(float time) {
-    dd_notificationTicks = (unsigned int) ((time / FRAME_PERIOD) + 0.5);
-}
-
 void dd_GraphicController_setNotificationFlag (void){
      dd_notificationFlag = TRUE;
 }
@@ -156,7 +151,7 @@ void dd_GraphicController_unsetNotificationFlag (void){
 }
 
 void dd_GraphicController_clearNotification(void) {
-     eGlcd_clear();
+     //eGlcd_clear();
      dd_isFrameUpdateForced = TRUE;
      dd_GraphicController_unsetNotificationFlag();
 }
@@ -164,27 +159,27 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     strcpy(dd_notificationText, text);
     dd_printMessage(dd_notificationText);
-    dd_GraphicController_setNotificationFlag ();
+    dd_GraphicController_setNotificationFlag();
 }
 
 /**
     \param time Time in milliseconds.
 */
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
-    dd_GraphicController_getTmrCounterLimit(time);
+    dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
     dd_GraphicController_fireNotification(text, type);
 }
 
 void dd_GraphicController_handleNotification(void) {
-    if (dd_notificationTicks > 0) {
-        dd_notificationTicks -= 1;
-        if (dd_notificationTicks == 0) {
+    if (dd_notificationTimeoutCounter > 0) {
+        dd_notificationTimeoutCounter--;
+        if (dd_notificationTimeoutCounter <= 0) {
             dd_GraphicController_clearNotification();
         }
     }
 }
 
-void dd_GraphicController_printFrame(void) {
+/*void dd_GraphicController_printFrame(void) {
     if (dd_isColorInversionQueued) {
         eGlcd_invertColors();
         dd_isColorInversionQueued = FALSE;
@@ -201,7 +196,7 @@ void dd_GraphicController_printFrame(void) {
     if (dd_isNextFrameUpdateForced) {
         dd_isNextFrameUpdateForced = FALSE;
     }
-}
+} */
 // sono tutte inutili
 
 void dd_GraphicController_forceFullFrameUpdate(void) {              //inutile
@@ -308,9 +303,6 @@ void dd_GraphicController_onTimerInterrupt(void)
             dd_isInterfaceChangedFromLastFrame = 0;
             Lcd_PrintFrame();
         }
-        else if (dd_notificationFlag) {
-            dd_GraphicController_handleNotification();
-        }
         else if (dd_onInterfaceChange)
         {
              /* right now if we are in this situation, with the popup on screen
@@ -319,7 +311,7 @@ void dd_GraphicController_onTimerInterrupt(void)
              appear on screen since the interrupt routine only increments the tmrcounter..
              we may like that the indicators change under the message, which would require
              redrawing Interface and message on every interrupt... */
-          dd_tmr1Counter++;
+           dd_tmr1Counter++;
            if(dd_tmr1Counter  >= dd_onInterfaceChangeCounterLimit)
            {
                dd_onInterfaceChange = 0;
@@ -332,13 +324,20 @@ void dd_GraphicController_onTimerInterrupt(void)
         }
         else
         {
+            if (dd_notificationFlag) {
+               dd_GraphicController_handleNotification();
+            }
+            if(dd_isFrameUpdateForced)
+            {
+                eGlcd_clear();
+                dd_isFrameUpdateForced = FALSE;
+            }
             dd_Interface_print[dd_currentInterface]();
             Lcd_PrintFrame();
-            dd_isFrameUpdateForced = FALSE;
         }
         //time = getExecTime();
         //sprintf(str, "%f", time);
-        //printf(str);
+       //printf(str);
     }
 
     clearTimer1();

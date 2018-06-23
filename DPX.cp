@@ -208,6 +208,30 @@ void Buttons_tick(void);
 char Buttons_isPressureProtracted(void);
 
 void Buttons_clearPressureProtraction(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_dcu.h"
+
+
+
+
+
+
+
+
+
+
+void dDCU_init();
+
+void dDCU_switchAcquisition(void);
+
+void dDCU_startAcquisition(void);
+
+void dDCU_stopAcquisition(void);
+
+char dDCU_isAcquiring(void);
+
+void dDCU_sentAcquiringSignal(void);
+
+void dDCU_tick(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
@@ -522,7 +546,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -680,7 +704,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 22 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 23 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0;
 
 
@@ -703,11 +727,12 @@ void main(){
  }
 }
 
+
+
  void timer2_interrupt() iv IVT_ADDR_T2INTERRUPT ics ICS_AUTO {
   IFS0bits.T2IF  = 0 ;
- Buttons_tick();
 
- dEfiSense_tick();
+
  timer2_counter0 += 1;
  timer2_counter1 += 1;
  timer2_counter2 += 1;
@@ -715,24 +740,45 @@ void main(){
 
  timer2_counter5 += 1;
 
+
  if (timer2_counter0 >= 5) {
- dPaddle_readSample();
+
  timer2_counter0 = 0;
  }
- if (timer2_counter1 >= 25) {
- if (dStart_isSwitchedOn()) {
- dStart_sendStartMessage();
- }
 
- timer2_counter1 = 0;
- }
-#line 76 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  if (timer2_counter2 >= 10) {
- dClutch_set(dPaddle_getValue());
- dClutch_send();
+
+
  timer2_counter2 = 0;
  }
-#line 88 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+
+ if (timer2_counter1 >= 25) {
+ if (dStart_isSwitchedOn()) {
+
+ }
+ timer2_counter1 = 0;
+ }
+
+ if (timer2_counter3 >= 100) {
+ if (dRpm_canUpdateLedStripe()) {
+ dRpm_updateLedStripe();
+ }
+
+ timer2_counter3 = 0;
+ }
+
+ if (timer2_counter5 >= 1000) {
+
+
+
+ if(dDCU_isAcquiring())
+ {
+ Debug_UART_Write("DCU Tick\r\n");
+ dDCU_tick();
+ }
+
+ timer2_counter5 = 0;
+ }
 }
 
 
@@ -743,7 +789,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 104 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 113 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -781,6 +827,7 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
  break;
  case  0b01100001101 :
+ Debug_UART_Write("EFI sent MESSAGE\r\n");
  dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
  dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
@@ -800,7 +847,12 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
-#line 179 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+ case  0b11111110111 :
+ Debug_UART_Write("DCU sent MESSAGE\r\n");
+ if(firstInt ==  1 )
+ dDCU_sentAcquiringSignal();
+ break;
+#line 194 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -813,7 +865,7 @@ void main(){
  dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
  dd_Indicator_setIntValueP(&ind_sw_board.base, d_SWTemp_getTempValue());
  break;
-#line 194 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
+#line 209 "C:/Users/utente/Desktop/git Repo/SW/DPX.c"
  default:
  break;
  }

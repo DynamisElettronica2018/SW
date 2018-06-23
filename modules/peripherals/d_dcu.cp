@@ -1,5 +1,5 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_rio.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_rio.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_dcu.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_dcu.h"
 
 
 
@@ -10,17 +10,19 @@
 
 
 
-void d_DCU_switchAcquisition(void);
+void dDCU_init();
 
-void d_DCU_startAcquisition(void);
+void dDCU_switchAcquisition(void);
 
-void d_DCU_stopAcquisition(void);
+void dDCU_startAcquisition(void);
 
-void d_DCU_isAcquiring(void);
+void dDCU_stopAcquisition(void);
 
-void d_DCU_sentAcquiringSignal(void);
+char dDCU_isAcquiring(void);
 
-void d_DCU_tick(void);
+void dDCU_sentAcquiringSignal(void);
+
+void dDCU_tick(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
@@ -259,46 +261,139 @@ char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
-#line 13 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_rio.c"
-char d_DCU_isAcquiring =  0 ;
-unsigned int d_DCU_isAliveCounter = 0;
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
+#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+void setAllPinAsDigital(void);
 
-void d_DCU_switchAcquisition(void) {
+void setInterruptPriority(unsigned char device, unsigned char priority);
+
+void setExternalInterrupt(unsigned char device, char edge);
+
+void switchExternalInterruptEdge(unsigned char);
+
+char getExternalInterruptEdge(unsigned char);
+
+void clearExternalInterrupt(unsigned char);
+
+void setTimer(unsigned char device, double timePeriod);
+
+void clearTimer(unsigned char device);
+
+void turnOnTimer(unsigned char device);
+
+void turnOffTimer(unsigned char device);
+
+unsigned int getTimerPeriod(double timePeriod, unsigned char prescalerIndex);
+
+unsigned char getTimerPrescaler(double timePeriod);
+
+double getExactTimerPrescaler(double timePeriod);
+
+void setupAnalogSampling(void);
+
+void turnOnAnalogModule();
+
+void turnOffAnalogModule();
+
+void startSampling(void);
+
+unsigned int getAnalogValue(void);
+
+void setAnalogPIN(unsigned char pin);
+
+void unsetAnalogPIN(unsigned char pin);
+
+void setAnalogInterrupt(void);
+
+void unsetAnalogInterrupt(void);
+
+void clearAnalogInterrupt(void);
+
+
+void setAutomaticSampling(void);
+
+void unsetAutomaticSampling(void);
+
+
+void setAnalogVoltageReference(unsigned char mode);
+
+void setAnalogDataOutputFormat(unsigned char adof);
+
+int getMinimumAnalogClockConversion(void);
+#line 34 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+void dSignalLed_init(void);
+
+void dSignalLed_switch(unsigned char led);
+
+void dSignalLed_set(unsigned char led);
+
+void dSignalLed_unset(unsigned char led);
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
+extern char dstr[100];
+
+void Debug_UART_Init();
+void Debug_Timer4_Init();
+void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
+void printf(char* string);
+void initTimer32(void);
+void resetTimer32(void);
+double getExecTime(void);
+void stopTimer32();
+void startTimer32();
+#line 15 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_dcu.c"
+static char d_DCU_isAcquiring =  0 ;
+static unsigned int d_DCU_isAliveCounter = 0;
+
+void dDCU_init(){
+ d_DCU_isAcquiring =  0 ;
+ d_DCU_isAliveCounter = 0;
+}
+
+void dDCU_switchAcquisition(void) {
  if (d_DCU_isAcquiring) {
- d_DCU_stopAcquisition();
+ dDCU_stopAcquisition();
  } else {
- d_DCU_startAcquisition();
+ dDCU_startAcquisition();
  }
 }
 
-void d_DCU_startAcquisition(void) {
+void dDCU_startAcquisition(void) {
  d_DCU_isAliveCounter = 0;
- d_DCU_isAcquiring = 1;
- dd_GraphicController_fireTimedNotification( 1.5 , "Started ACQ.", MESSAGE);
- Can_writeInt( 0b11111110111 ,  1 );
+ d_DCU_isAcquiring =  1 ;
+ dd_GraphicController_fireTimedNotification( 1500 , "Started ACQ.", MESSAGE);
+ Can_writeInt( 0b11111110000 ,  1 );
 }
 
-void d_DCU_stopAcquisition(void) {
- dd_GraphicController_fireTimedNotification( 1.5 , "Stopped ACQ.", MESSAGE);
- Can_writeInt( 0b11111110111 ,  2 );
+void dDCU_stopAcquisition(void) {
+ d_DCU_isAcquiring =  0 ;
+ dd_GraphicController_fireTimedNotification( 1500 , "Stopped ACQ.", MESSAGE);
+ Can_writeInt( 0b11111110000 ,  2 );
 }
 
-void d_DCU_tick(){
+void dDCU_tick(void){
  d_DCU_isAliveCounter +=  1000 ;
  if(d_DCU_isAliveCounter >=  5000 )
  {
 
- dd_GraphicController_fireTimedNotification( 1.5 , "Stopped ACQ.", MESSAGE);
+ dd_GraphicController_fireTimedNotification( 1500 , "DCU IS DEAD", ERROR);
  d_DCU_isAcquiring = 0;
+ d_DCU_isAliveCounter = 0;
  }
-};
+}
 
-void d_DCU_isAcquiring()
+char dDCU_isAcquiring()
 {
  return d_DCU_isAcquiring;
 }
 
-void d_DCU_sentAcquiringSignal(){
+void dDCU_sentAcquiringSignal(){
+ Debug_UART_Write("DCU sent acquiring signal.\r\n");
+ dSignalLed_switch( 3 );
  d_DCU_isAliveCounter = 0;
-
 }

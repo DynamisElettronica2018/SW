@@ -40,7 +40,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -294,7 +294,7 @@ char dStart_isSwitchedOn(void);
 
 void dStart_sendStartMessage(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../display/dd_global_defines.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_rio.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_dcu.h"
 
 
 
@@ -305,19 +305,19 @@ void dStart_sendStartMessage(void);
 
 
 
-void dRio_switchAcquisition(void);
+void dDCU_init();
 
-void dRio_zeroAcquisition(void);
+void dDCU_switchAcquisition(void);
 
-void dRio_startAcquisition(void);
+void dDCU_startAcquisition(void);
 
-void dRio_stopAcquisition(void);
+void dDCU_stopAcquisition(void);
 
-void dRio_heartBeat(void);
+char dDCU_isAcquiring(void);
 
-void dRio_die(void);
+void dDCU_sentAcquiringSignal(void);
 
-void dRio_tick(void);
+void dDCU_tick(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
 
@@ -615,7 +615,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 88 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 76 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 static unsigned char old_encoder_left_pin0 = 0;
 static unsigned char old_encoder_left_pin1 = 0;
 static unsigned char old_encoder_left_pin2 = 0;
@@ -667,7 +667,7 @@ void dControls_init(void) {
  if (expanderPort == 0) position =  0 ;
  else
  position = log2(expanderPort) -  3 ;
-#line 141 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 129 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
  setExternalInterrupt( 7 ,  1 );
@@ -688,7 +688,7 @@ void dControls_init(void) {
  }
  clearExternalInterrupt( 4 );
 }
-#line 167 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 155 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -754,9 +754,9 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 260 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 248 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 }
-#line 281 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 269 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -804,7 +804,7 @@ void dControls_init(void) {
  d_controls_onAux1();
  }
  else if ( RB15_bit  ==  0 ) {
- d_controls_onAux2();
+ d_controls_onStartAcquisition();
  }
  clearExternalInterrupt( 8 );
 }
@@ -836,7 +836,7 @@ void d_controls_onStart() {
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 421 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 409 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
  Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
@@ -852,7 +852,7 @@ void d_controls_onReset() {
  Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 459 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 447 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
  Debug_UART_Write("On DRS\r\n");
 }
@@ -861,6 +861,7 @@ void d_controls_onAux1(void) {
  Debug_UART_Write("On aux 1\r\n");
 }
 
-void d_controls_onAux2(void) {
- Debug_UART_Write("On aux 2\r\n");
+void d_controls_onStartAcquisition(void) {
+ dDCU_switchAcquisition();
+ Debug_UART_Write("Start acquisition\r\n");
 }

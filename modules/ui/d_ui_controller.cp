@@ -15,7 +15,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -522,7 +522,31 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 14 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_dcu.h"
+
+
+
+
+
+
+
+
+
+
+void dDCU_init();
+
+void dDCU_switchAcquisition(void);
+
+void dDCU_startAcquisition(void);
+
+void dDCU_stopAcquisition(void);
+
+char dDCU_isAcquiring(void);
+
+void dDCU_sentAcquiringSignal(void);
+
+void dDCU_tick(void);
+#line 17 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
@@ -535,6 +559,7 @@ void d_UIController_init() {
  Debug_UART_Write("can initialized.\r\n");
 
 
+ dDCU_init();
  dPaddle_init();
  d_SWTemp_Init();
 
@@ -544,7 +569,9 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 40 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+ setTimer( 2 ,  0.001 );
+ Debug_UART_Write("graphic controller initialized.\r\n");
+#line 46 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -610,7 +637,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 108 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 114 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

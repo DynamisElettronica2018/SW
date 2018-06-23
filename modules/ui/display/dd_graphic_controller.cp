@@ -1475,7 +1475,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -1567,7 +1567,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
-unsigned int dd_notificationTicks = 0;
+signed int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
  setInterruptPriority( 1 ,  5 );
@@ -1662,11 +1662,6 @@ void dd_GraphicController_saveCurrentInterface(void) {
  dd_lastInterface = dd_currentInterface;
 }
 
-
-void dd_GraphicController_setNotificationTimeout(float time) {
- dd_notificationTicks = (unsigned int) ((time /  (1.0 / 10 ) ) + 0.5);
-}
-
 void dd_GraphicController_setNotificationFlag (void){
  dd_notificationFlag =  1 ;
 }
@@ -1676,7 +1671,7 @@ void dd_GraphicController_unsetNotificationFlag (void){
 }
 
 void dd_GraphicController_clearNotification(void) {
- eGlcd_clear();
+
  dd_isFrameUpdateForced =  1 ;
  dd_GraphicController_unsetNotificationFlag();
 }
@@ -1684,43 +1679,23 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
  dd_printMessage(dd_notificationText);
- dd_GraphicController_setNotificationFlag ();
+ dd_GraphicController_setNotificationFlag();
 }
-#line 173 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 168 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
- dd_GraphicController_getTmrCounterLimit(time);
+ dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
 }
 
 void dd_GraphicController_handleNotification(void) {
- if (dd_notificationTicks > 0) {
- dd_notificationTicks -= 1;
- if (dd_notificationTicks == 0) {
+ if (dd_notificationTimeoutCounter > 0) {
+ dd_notificationTimeoutCounter--;
+ if (dd_notificationTimeoutCounter <= 0) {
  dd_GraphicController_clearNotification();
  }
  }
 }
-
-void dd_GraphicController_printFrame(void) {
- if (dd_isColorInversionQueued) {
- eGlcd_invertColors();
- dd_isColorInversionQueued =  0 ;
- }
- if (dd_isInterfaceChangedFromLastFrame || dd_isNextFrameUpdateForced) {
- eGlcd_clear();
- dd_GraphicController_forceFullFrameUpdate();
- dd_isInterfaceChangedFromLastFrame =  0 ;
- }
- dd_Interface_print[dd_currentInterface]();
- if (dd_GraphicController_isFrameUpdateForced) {
- dd_isFrameUpdateForced =  0 ;
- }
- if (dd_isNextFrameUpdateForced) {
- dd_isNextFrameUpdateForced =  0 ;
- }
-}
-
-
+#line 202 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1825,12 +1800,9 @@ void dd_GraphicController_onTimerInterrupt(void)
  dd_isInterfaceChangedFromLastFrame = 0;
  Lcd_PrintFrame();
  }
- else if (dd_notificationFlag) {
- dd_GraphicController_handleNotification();
- }
  else if (dd_onInterfaceChange)
  {
-#line 322 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 314 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1844,9 +1816,16 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else
  {
+ if (dd_notificationFlag) {
+ dd_GraphicController_handleNotification();
+ }
+ if(dd_isFrameUpdateForced)
+ {
+ eGlcd_clear();
+ dd_isFrameUpdateForced =  0 ;
+ }
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
- dd_isFrameUpdateForced =  0 ;
  }
 
 
@@ -1854,5 +1833,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 356 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 355 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }
