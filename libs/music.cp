@@ -1,7 +1,7 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/music.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/music.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/music.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -73,7 +73,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 11 "c:/users/utente/desktop/git repo/sw/libs/music.h"
+#line 11 "c:/users/sofia/desktop/git repo/sw/libs/music.h"
 char Music_hasToMakeSound(void);
 
 void Music_tick(void);
@@ -89,9 +89,9 @@ void Music_playNote(unsigned char note, unsigned char duration);
 float Music_getActualNoteDuration(unsigned char duration);
 
 float Music_getNoteFrequency(unsigned char note);
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/songs/amourtoujour.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/songs/../music.h"
-#line 10 "c:/users/utente/desktop/git repo/sw/libs/songs/amourtoujour.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/songs/amourtoujour.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/songs/../music.h"
+#line 10 "c:/users/sofia/desktop/git repo/sw/libs/songs/amourtoujour.h"
 static const unsigned int AMOR_TOUJOUR_TEMPO = 120;
 static const unsigned char AMOR_TOUJOUR_SONG[] = {
   19 ,  8 ,
@@ -108,7 +108,7 @@ static const unsigned char AMOR_TOUJOUR_SONG[] = {
   200 ,  8 
 };
 static const unsigned int AMOR_TOUJOUR_LENGTH = sizeof(AMOR_TOUJOUR_SONG);
-#line 8 "C:/Users/utente/Desktop/git Repo/SW/libs/music.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/music.c"
 char music_isPlaying =  0 ;
 char music_isPlayingNote =  0 ;
 unsigned char *music_song;
@@ -173,7 +173,7 @@ void Music_playNote(unsigned char note, unsigned char duration) {
  }
  music_tickCounter = (unsigned int) (Music_getActualNoteDuration(duration) / timerPeriod);
  music_trentaduesimoTicks = (unsigned int) (Music_getActualNoteDuration( 1 ) / timerPeriod);
- setTimer( 3 , timerPeriod);
+
 }
 
 float Music_getActualNoteDuration(unsigned char duration) {

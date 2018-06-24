@@ -12,26 +12,35 @@ _d_UIController_init:
 ;d_ui_controller.c,26 :: 		Debug_UART_Write("can initialized.\r\n");
 	MOV	#lo_addr(?lstr1_d_ui_controller), W10
 	CALL	_Debug_UART_Write
-;d_ui_controller.c,29 :: 		dDCU_init();
+;d_ui_controller.c,27 :: 		dDCU_init();
 	CALL	_dDCU_init
-;d_ui_controller.c,30 :: 		dPaddle_init();
+;d_ui_controller.c,28 :: 		Debug_UART_Write("DCU initialized.\r\n");
+	MOV	#lo_addr(?lstr2_d_ui_controller), W10
+	CALL	_Debug_UART_Write
+;d_ui_controller.c,29 :: 		dPaddle_init();
 	CALL	_dPaddle_init
-;d_ui_controller.c,31 :: 		d_SWTemp_Init();
-	CALL	_d_SWTemp_Init
+;d_ui_controller.c,30 :: 		Debug_UART_Write("Paddle initialized.\r\n");
+	MOV	#lo_addr(?lstr3_d_ui_controller), W10
+	CALL	_Debug_UART_Write
+;d_ui_controller.c,31 :: 		Buzzer_init();
+	CALL	_Buzzer_init
+;d_ui_controller.c,32 :: 		Debug_UART_Write("Buzzer initialized.\r\n");
+	MOV	#lo_addr(?lstr4_d_ui_controller), W10
+	CALL	_Debug_UART_Write
 ;d_ui_controller.c,33 :: 		dSignalLed_init();
 	CALL	_dSignalLed_init
 ;d_ui_controller.c,34 :: 		Debug_UART_Write("Signal Leds initialized.\r\n");
-	MOV	#lo_addr(?lstr2_d_ui_controller), W10
+	MOV	#lo_addr(?lstr5_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,35 :: 		dRpm_init();
 	CALL	_dRpm_init
 ;d_ui_controller.c,36 :: 		Debug_UART_Write("rpm initialized.\r\n");
-	MOV	#lo_addr(?lstr3_d_ui_controller), W10
+	MOV	#lo_addr(?lstr6_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,37 :: 		dd_GraphicController_init();
 	CALL	_dd_GraphicController_init
 ;d_ui_controller.c,38 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
-	MOV	#lo_addr(?lstr4_d_ui_controller), W10
+	MOV	#lo_addr(?lstr7_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,39 :: 		setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
 	MOV	#4719, W11
@@ -39,7 +48,7 @@ _d_UIController_init:
 	MOV.B	#2, W10
 	CALL	_setTimer
 ;d_ui_controller.c,40 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
-	MOV	#lo_addr(?lstr5_d_ui_controller), W10
+	MOV	#lo_addr(?lstr8_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,46 :: 		}
 L_end_d_UIController_init:

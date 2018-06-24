@@ -50,7 +50,7 @@ _dDCU_startAcquisition:
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_dcu.c,34 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Started ACQ.", MESSAGE);
+;d_dcu.c,34 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Start ACQ.", MESSAGE);
 	CLR	W12
 	MOV	#lo_addr(?lstr1_d_dcu), W11
 	MOV	#1500, W10
@@ -78,7 +78,7 @@ _dDCU_stopAcquisition:
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_dcu.c,40 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stopped ACQ.", MESSAGE);
+;d_dcu.c,40 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
 	CLR	W12
 	MOV	#lo_addr(?lstr2_d_dcu), W11
 	MOV	#1500, W10

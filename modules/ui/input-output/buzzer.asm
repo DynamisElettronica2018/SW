@@ -1,4 +1,28 @@
 
+_timer4_interrupt:
+	PUSH	52
+	PUSH	RCOUNT
+	PUSH	W0
+	MOV	#2, W0
+	REPEAT	#12
+	PUSH	[W0++]
+
+;buzzer.c,9 :: 		onTimer4Interrupt{
+;buzzer.c,10 :: 		clearTimer4();
+	BCLR	IFS1bits, #5
+;buzzer.c,11 :: 		Buzzer_tick();
+	CALL	_Buzzer_tick
+;buzzer.c,19 :: 		}
+L_end_timer4_interrupt:
+	MOV	#26, W0
+	REPEAT	#12
+	POP	[W0--]
+	POP	W0
+	POP	RCOUNT
+	POP	52
+	RETFIE
+; end of _timer4_interrupt
+
 _Buzzer_init:
 
 ;buzzer.c,21 :: 		void Buzzer_init(void) {
@@ -35,9 +59,9 @@ _Buzzer_tick:
 ;buzzer.c,30 :: 		if (buzzer_ticks > 0) {
 	MOV	_buzzer_ticks, W0
 	CP	W0, #0
-	BRA GTU	L__Buzzer_tick3
+	BRA GTU	L__Buzzer_tick4
 	GOTO	L_Buzzer_tick0
-L__Buzzer_tick3:
+L__Buzzer_tick4:
 ;buzzer.c,31 :: 		buzzer_ticks -= 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_buzzer_ticks), W0

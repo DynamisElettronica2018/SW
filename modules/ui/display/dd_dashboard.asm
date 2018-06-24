@@ -31,17 +31,17 @@ _dd_Dashboard_printGearLetter:
 ;dd_dashboard.c,68 :: 		if (newLetter!=dd_lastPrintedGearLetter || dd_GraphicController_isFrameUpdateForced()) {
 	MOV	#lo_addr(dd_dashboard_dd_lastPrintedGearLetter), W1
 	CP.B	W0, [W1]
-	BRA Z	L__dd_Dashboard_printGearLetter25
-	GOTO	L__dd_Dashboard_printGearLetter15
-L__dd_Dashboard_printGearLetter25:
+	BRA Z	L__dd_Dashboard_printGearLetter19
+	GOTO	L__dd_Dashboard_printGearLetter12
+L__dd_Dashboard_printGearLetter19:
 	CALL	_dd_GraphicController_isFrameUpdateForced
 	CP0.B	W0
-	BRA Z	L__dd_Dashboard_printGearLetter26
-	GOTO	L__dd_Dashboard_printGearLetter14
-L__dd_Dashboard_printGearLetter26:
+	BRA Z	L__dd_Dashboard_printGearLetter20
+	GOTO	L__dd_Dashboard_printGearLetter11
+L__dd_Dashboard_printGearLetter20:
 	GOTO	L_dd_Dashboard_printGearLetter2
-L__dd_Dashboard_printGearLetter15:
-L__dd_Dashboard_printGearLetter14:
+L__dd_Dashboard_printGearLetter12:
+L__dd_Dashboard_printGearLetter11:
 ;dd_dashboard.c,69 :: 		eGlcd_setFont(DD_Gears_Font);
 	MOV	#48, W13
 	MOV.B	#59, W12
@@ -227,25 +227,6 @@ dd_dashboard_dd_Dashboard_printIndicator:
 	ADD	W1, [W0], W0
 	MOV	[W0], W0
 	MOV	W0, [W14+0]
-;dd_dashboard.c,123 :: 		if (dd_GraphicController_isFrameUpdateForced() ||
-	PUSH	W10
-	CALL	_dd_GraphicController_isFrameUpdateForced
-	POP	W10
-;dd_dashboard.c,124 :: 		dd_Indicator_isRequestingFullUpdate(indicatorIndex)) {
-	CP0.B	W0
-	BRA Z	L_dd_dashboard_dd_Dashboard_printIndicator33
-	GOTO	L_dd_dashboard_dd_Dashboard_printIndicator18
-L_dd_dashboard_dd_Dashboard_printIndicator33:
-	PUSH	W10
-	CALL	_dd_Indicator_isRequestingFullUpdate
-	POP	W10
-	CP0.B	W0
-	BRA Z	L_dd_dashboard_dd_Dashboard_printIndicator34
-	GOTO	L_dd_dashboard_dd_Dashboard_printIndicator17
-L_dd_dashboard_dd_Dashboard_printIndicator34:
-	GOTO	L_dd_dashboard_dd_Dashboard_printIndicator5
-L_dd_dashboard_dd_Dashboard_printIndicator18:
-L_dd_dashboard_dd_Dashboard_printIndicator17:
 ;dd_dashboard.c,125 :: 		dd_Indicator_drawContainers(indicatorIndex);
 	PUSH	W10
 	CALL	_dd_Indicator_drawContainers
@@ -271,16 +252,12 @@ L_dd_dashboard_dd_Dashboard_printIndicator17:
 	MOV	[W0], W11
 	MOV	[W0], W10
 	CALL	_eGlcd_overwriteText
-	POP	W10
-;dd_dashboard.c,131 :: 		}
-L_dd_dashboard_dd_Dashboard_printIndicator5:
 ;dd_dashboard.c,133 :: 		oldLabelLength = indicator->labelLength;
 	MOV	[W14+0], W0
 	ADD	W0, #9, W0
 	MOV.B	[W0], W0
 	MOV.B	W0, [W14+4]
 ;dd_dashboard.c,134 :: 		eGlcd_setFont(DD_Dashboard_Font);
-	PUSH	W10
 	MOV	#32, W13
 	MOV.B	#16, W12
 	MOV.B	#16, W11
@@ -311,14 +288,14 @@ L_dd_dashboard_dd_Dashboard_printIndicator5:
 	ADD	W0, #9, W1
 	MOV.B	[W14+4], W0
 	CP.B	W0, [W1]
-	BRA NZ	L_dd_dashboard_dd_Dashboard_printIndicator35
-	GOTO	L_dd_dashboard_dd_Dashboard_printIndicator6
-L_dd_dashboard_dd_Dashboard_printIndicator35:
+	BRA NZ	L_dd_dashboard_dd_Dashboard_printIndicator27
+	GOTO	L_dd_dashboard_dd_Dashboard_printIndicator3
+L_dd_dashboard_dd_Dashboard_printIndicator27:
 ;dd_dashboard.c,144 :: 		x = dd_Indicator_getLabelXCoord(indicatorIndex);
 	CALL	_dd_Indicator_getLabelXCoord
 	MOV.B	W0, [W14+2]
 ;dd_dashboard.c,145 :: 		}
-L_dd_dashboard_dd_Dashboard_printIndicator6:
+L_dd_dashboard_dd_Dashboard_printIndicator3:
 ;dd_dashboard.c,146 :: 		eGlcd_writeText(indicator->label, x, y);
 	MOV	[W14+0], W0
 	ADD	W0, #10, W0
@@ -347,40 +324,40 @@ _dd_Dashboard_printIndicators:
 	PUSH	W10
 	CLR	W0
 	MOV.B	W0, [W14+0]
-L_dd_Dashboard_printIndicators7:
+L_dd_Dashboard_printIndicators4:
 	MOV.B	[W14+0], W0
 	CP.B	W0, #4
-	BRA LTU	L__dd_Dashboard_printIndicators37
-	GOTO	L_dd_Dashboard_printIndicators8
-L__dd_Dashboard_printIndicators37:
+	BRA LTU	L__dd_Dashboard_printIndicators29
+	GOTO	L_dd_Dashboard_printIndicators5
+L__dd_Dashboard_printIndicators29:
 ;dd_dashboard.c,162 :: 		if (dd_Indicator_isRequestingUpdate(index) ||
 	MOV.B	[W14+0], W10
 	CALL	_dd_Indicator_isRequestingUpdate
 ;dd_dashboard.c,163 :: 		dd_GraphicController_isFrameUpdateForced()) {
 	CP0.B	W0
-	BRA Z	L__dd_Dashboard_printIndicators38
-	GOTO	L__dd_Dashboard_printIndicators21
-L__dd_Dashboard_printIndicators38:
+	BRA Z	L__dd_Dashboard_printIndicators30
+	GOTO	L__dd_Dashboard_printIndicators15
+L__dd_Dashboard_printIndicators30:
 	CALL	_dd_GraphicController_isFrameUpdateForced
 	CP0.B	W0
-	BRA Z	L__dd_Dashboard_printIndicators39
-	GOTO	L__dd_Dashboard_printIndicators20
-L__dd_Dashboard_printIndicators39:
-	GOTO	L_dd_Dashboard_printIndicators12
-L__dd_Dashboard_printIndicators21:
-L__dd_Dashboard_printIndicators20:
+	BRA Z	L__dd_Dashboard_printIndicators31
+	GOTO	L__dd_Dashboard_printIndicators14
+L__dd_Dashboard_printIndicators31:
+	GOTO	L_dd_Dashboard_printIndicators9
+L__dd_Dashboard_printIndicators15:
+L__dd_Dashboard_printIndicators14:
 ;dd_dashboard.c,165 :: 		dd_Dashboard_printIndicator(index);
 	MOV.B	[W14+0], W10
 	CALL	dd_dashboard_dd_Dashboard_printIndicator
 ;dd_dashboard.c,168 :: 		}
-L_dd_Dashboard_printIndicators12:
+L_dd_Dashboard_printIndicators9:
 ;dd_dashboard.c,161 :: 		for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
 	MOV.B	[W14+0], W1
 	ADD	W14, #0, W0
 	ADD.B	W1, #1, [W0]
 ;dd_dashboard.c,169 :: 		}
-	GOTO	L_dd_Dashboard_printIndicators7
-L_dd_Dashboard_printIndicators8:
+	GOTO	L_dd_Dashboard_printIndicators4
+L_dd_Dashboard_printIndicators5:
 ;dd_dashboard.c,174 :: 		}
 L_end_dd_Dashboard_printIndicators:
 	POP	W10

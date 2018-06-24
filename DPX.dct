@@ -2222,7 +2222,9 @@ d_isneutralset
 d_not_a
 d_operatingmode_init
 d_selectorpositiontomode
+d_sensors_sendswtemp
 d_setgearmotorstate
+d_swtemp_gettempvalue
 d_ui_accmodeinit
 d_ui_applysettings
 d_ui_boarddebugmodeinit
@@ -9857,6 +9859,7 @@ timer2_counter3
 timer2_counter4
 timer2_counter5
 timer2_interrupt
+timer4_interrupt
 tmode
 tmode
 tmode_bit

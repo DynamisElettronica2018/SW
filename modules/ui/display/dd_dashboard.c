@@ -119,17 +119,17 @@ void printf(char * string);
 static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
     Indicator* indicator = dd_currentIndicators[indicatorIndex];
     unsigned char x, y, oldLabelLength;
-    
-    if (dd_GraphicController_isFrameUpdateForced() ||
-        dd_Indicator_isRequestingFullUpdate(indicatorIndex)) {
+
+   // if (dd_GraphicController_isFrameUpdateForced() ||
+   //     dd_Indicator_isRequestingFullUpdate(indicatorIndex)) {
         dd_Indicator_drawContainers(indicatorIndex);
         x = dd_Indicator_getNameXCoord(indicatorIndex);
         y = dd_Indicator_getNameYCoord(indicatorIndex);
         eGlcd_setFont(DD_xTerminal_Font);
         //che senso ha?
         eGlcd_overwriteText(indicator->name, indicator->name, x, y);
-    }
-    
+  //  }
+
     oldLabelLength = indicator->labelLength;
     eGlcd_setFont(DD_Dashboard_Font);
     //Make coordinates

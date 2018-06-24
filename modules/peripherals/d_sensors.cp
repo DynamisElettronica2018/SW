@@ -1,7 +1,7 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/d_sensors.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -73,9 +73,8 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
@@ -101,7 +100,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -196,19 +195,9 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
-typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
-extern void dd_Dashboard_init();
-extern void dd_Dashboard_print(void);
-#line 39 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_dashboard.h"
-unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
-
-
-void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -240,22 +229,117 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 10 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
-void d_SWTemp_Init(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
+
+
+
+
+
+
+void dControls_init(void);
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux1(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE
+} OperatingMode;
+
+
+
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_th2o;
+extern FloatIndicator ind_vbat;
+extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern BooleanIndicator ind_rio_acq;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_oil_temp_out;
+extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 5 ])(void);
+#line 121 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose();
+void d_UI_setOperatingMode(OperatingMode mode);
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 19 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
 unsigned int d_SWTemp_getTempValue(void);
-#line 9 "C:/Users/utente/Desktop/git Repo/SW/libs/d_sensors.c"
-unsigned int d_SWTemp_value = 0;
 
-void d_SWTemp_Init(void) {
- setupAnalogSampling();
- setAnalogPIN( 12 );
- turnOnAnalogModule();
+void d_sensors_sendSWTemp(void);
+#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
+unsigned int d_SWTemp_getTempValue(){
+ unsigned int analogValue, voltage, temp;
+ analogValue = ADC1_Read( 12 );
+ voltage = ( (float)( analogValue *  5  ) /  (4095.0f)  ) * 1000.0;
+ temp = (unsigned int)((voltage -  100 )* (0.1f)  -  40 );
+ return temp;
 }
 
-unsigned int d_SWTemp_getTempValue(void){
- unsigned int voltageValue, tempValue;
- voltageValue = getAnalogValue();
- tempValue = (unsigned int)((voltageValue -  500 )/ 10 );
- return tempValue;
+
+void d_sensors_sendSWTemp(void){
+ unsigned int temp;
+ temp = d_SWTemp_getTempValue();
+ Can_writeInt( 0b01100010100 , temp);
+ dd_Indicator_setIntValueP(&ind_sw_board.base, (int)temp);
 }

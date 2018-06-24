@@ -9,13 +9,13 @@
 #include "modules/ui/input-output/buzzer.h"
 #include "modules/ui/input-output/d_start.h"
 #include "modules/ui/input-output/d_paddle.h"
-#include "d_sensors.h"
 #include "modules/ui/input-output/d_rpm.h"
 #include "modules/ui/input-output/d_hardReset.h"
 #include "modules/ui/display/dd_menu.h"
 #include "modules/ui/d_ui_controller.h"
 #include "modules/ui/display/dd_interfaces.h"
 #include "modules/ui/d_operating_modes.h"
+#include "d_sensors.h"
 #include "libs/debug.h"
 
 #include <stdlib.h>
@@ -83,9 +83,7 @@ onTimer2Interrupt{
     }
     // TIMER_2_PERIOD*1000 = 1s (1Hz)
     if (timer2_counter5 >= 1000) {
-        //Debug_UART_Write("Counter 2: 1Hz\r\n");
-        //sprintf(dstr, "Is DCU acquiring: %d\r\n", dDCU_isAcquiring());
-        //Debug_UART_Write(dstr);
+        d_sensors_sendSWTemp();
         if(dDCU_isAcquiring())
         {
            Debug_UART_Write("DCU Tick\r\n");
@@ -114,7 +112,7 @@ onCanInterrupt{
     dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
     Can_read(&id, dataBuffer, &dataLen, &flags);
 
-     //  Buzzer_bip();
+    Buzzer_bip();
 
     //Can_clearB0Flag();
     //Can_clearB1Flag();
@@ -195,14 +193,13 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
-           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt)); //*/
+           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
            break; //*/
        case GCU_DEBUG_2_ID:
            dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
-           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt)); // */
-           dd_Indicator_setIntValueP(&ind_sw_board.base, d_SWTemp_getTempValue());
-           break;  //*/
+           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+           break;
       /* case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;     */

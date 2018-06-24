@@ -31,13 +31,13 @@ void dDCU_switchAcquisition(void) {
 void dDCU_startAcquisition(void) {
     d_DCU_isAliveCounter = 0;
     d_DCU_isAcquiring = TRUE;
-    dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Started ACQ.", MESSAGE);
+    dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Start ACQ.", MESSAGE);
     Can_writeInt(SW_AUX_ID, COMMAND_DCU_START_ACQUISITION);
 }
 
 void dDCU_stopAcquisition(void) {
     d_DCU_isAcquiring = FALSE;
-    dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stopped ACQ.", MESSAGE);
+    dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
     Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
 }
 

@@ -85,8 +85,6 @@ main
 						dd_Indicator_isRequestingUpdate
 						dd_GraphicController_isFrameUpdateForced
 						dd_Dashboard_printIndicator
-							dd_GraphicController_isFrameUpdateForced
-							dd_Indicator_isRequestingFullUpdate
 							dd_Indicator_drawContainers
 								eGlcd_drawRect
 									ceil
@@ -206,10 +204,20 @@ main
 				startSampling
 			setAnalogPIN
 			turnOnAnalogModule
-		d_SWTemp_Init
-			setupAnalogSampling
-			setAnalogPIN
-			turnOnAnalogModule
+		Buzzer_init
+			setTimer
+				setInterruptPriority
+				getTimerPrescaler
+					getExactTimerPrescaler
+						_Mul_FP
+						_Div_FP
+					_Float2Longint
+				getTimerPeriod
+					_Mul_FP
+					_Long2Float
+					_Div_FP
+					_Float2Longint
+			setInterruptPriority
 		dSignalLed_init
 			dSignalLed_set
 			dSignalLed_unset
@@ -299,17 +307,6 @@ main
 			dd_GraphicController_timerSetup
 				setInterruptPriority
 				setTimer
-					setInterruptPriority
-					getTimerPrescaler
-						getExactTimerPrescaler
-							_Mul_FP
-							_Div_FP
-						_Float2Longint
-					getTimerPeriod
-						_Mul_FP
-						_Long2Float
-						_Div_FP
-						_Float2Longint
 			dd_GraphicController_forceFullFrameUpdate
 		setTimer
 external4
@@ -383,6 +380,7 @@ CAN_Interrupt
 			RegsToCAN1ID
 		Can_B1hasBeenReceived
 		Can_clearB1Flag
+	Buzzer_bip
 	dRpm_set
 		dd_Indicator_setFloatValueP
 			dd_Indicator_requestPrintUpdateP
@@ -440,13 +438,13 @@ CAN_Interrupt
 		dSignalLed_switch
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
-	d_SWTemp_getTempValue
-		getAnalogValue
 	_Long2Float
 external2
 	d_controls_onDRS
 		Debug_UART_Write
 	clearExternalInterrupt
+timer4_interrupt
+	Buzzer_tick
 external1
 	I2CExpander_readPort
 	sprintf
@@ -500,6 +498,18 @@ timer2_interrupt
 			I2C1_Stop
 		_Long2Float
 		_Float2Longint
+	d_sensors_sendSWTemp
+		d_SWTemp_getTempValue
+			ADC1_Read
+				ADC1_Init
+				ADC1_Get_Sample
+			_Long2Float
+			_Div_FP
+			_Mul_FP
+			_Float2Longint
+			_Sub_FP
+		Can_writeInt
+		dd_Indicator_setIntValueP
 	dDCU_isAcquiring
 	Debug_UART_Write
 	dDCU_tick

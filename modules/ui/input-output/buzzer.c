@@ -6,7 +6,7 @@
 
 unsigned int buzzer_ticks = 0, buzzer_bipTicks;
 
-/*onTimer4Interrupt{
+onTimer4Interrupt{
     clearTimer4();
     Buzzer_tick();
     /*
@@ -16,7 +16,7 @@ unsigned int buzzer_ticks = 0, buzzer_bipTicks;
         }
         Music_tick();
     }//*/
-//}
+}
 
 void Buzzer_init(void) {
     BUZZER_Direction = OUTPUT;

@@ -69,7 +69,7 @@ void Music_playNote(unsigned char note, unsigned char duration) {
     }
     music_tickCounter = (unsigned int) (Music_getActualNoteDuration(duration) / timerPeriod);
     music_trentaduesimoTicks = (unsigned int) (Music_getActualNoteDuration(TRENTADUESIMO) / timerPeriod);
-    setTimer(TIMER4_DEVICE, timerPeriod);
+   // setTimer(TIMER4_DEVICE, timerPeriod);
 }
 
 float Music_getActualNoteDuration(unsigned char duration) {
