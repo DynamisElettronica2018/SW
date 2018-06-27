@@ -372,8 +372,10 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_ebb.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_move(signed char movements);
 
 void dEbb_calibrateSwitch(void);
 
@@ -391,10 +393,6 @@ void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
 
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
-
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
@@ -402,8 +400,6 @@ void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
 void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"

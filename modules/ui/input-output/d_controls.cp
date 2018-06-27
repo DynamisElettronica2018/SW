@@ -452,8 +452,10 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_move(signed char movements);
 
 void dEbb_calibrateSwitch(void);
 
@@ -471,10 +473,6 @@ void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
 
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
-
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
@@ -482,8 +480,6 @@ void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
 void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_gears.h"
@@ -556,7 +552,7 @@ extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -709,18 +705,19 @@ void dControls_init(void) {
  old_port_sx = a + (b << 1) + (c << 2);
  old_port_dx = d + (e << 1) + (f << 2);
 
- new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
  new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+ new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
 
  movement_dx = new_port_dx - old_port_dx;
- movement_sx = new_port_sx - old_port_sx;
 
+ movement_sx = - new_port_sx + old_port_sx;
 
-
-
-
-
-
+ sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
+ Debug_UART_Write(dstr);
 
  if (movement_dx>4)
  {
@@ -754,21 +751,21 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 248 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 249 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 }
-#line 269 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 270 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
  delay_ms(30);
  Delay_ms( 1 );
  expanderPort = ~I2CExpander_readPort( 0b01000010 );
- sprintf(dstr, "Port: %d\r\n", expanderPort);
- Debug_UART_Write(dstr);
+
+
  if (expanderPort == 0) {
  position =  0 ;
- sprintf(dstr, "Position: %d\r\n", position);
- Debug_UART_Write(dstr);
+
+
  }
  else
  position = log2(expanderPort) -  3 ;
@@ -836,14 +833,14 @@ void d_controls_onStart() {
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 409 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 410 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
  Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
  if (dGear_get() == 1) {
-
+ Can_writeInt( 0b01000000000 ,  50 );
  } else if (dGear_get() == 2) {
-
+ Can_writeInt( 0b01000000000 ,  100 );
  }
  }
 }
@@ -852,7 +849,7 @@ void d_controls_onReset() {
  Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 447 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 448 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
  Debug_UART_Write("On DRS\r\n");
 }

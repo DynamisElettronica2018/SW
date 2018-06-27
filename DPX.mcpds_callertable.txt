@@ -308,12 +308,31 @@ main
 				setInterruptPriority
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
+		d_traction_control_init
+			Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+					Can_addByteToWritePacket
+				Can_write
+					CAN1Write
+						CAN1IDToRegs
+					Can_getWriteFlags
+			dd_Indicator_setIntValueP
+				dd_Indicator_requestPrintUpdateP
+			sprintf
+			Debug_UART_Write
+		dEbb_init
+			Can_writeInt
+			dd_Indicator_setIntValueP
+			sprintf
+			Debug_UART_Write
 		setTimer
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
 		dGear_isNeutralSet
 		dGear_get
+		Can_writeInt
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -348,13 +367,6 @@ external4
 			dDCU_stopAcquisition
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
-					Can_resetWritePacket
-					Can_addIntToWritePacket
-						Can_addByteToWritePacket
-					Can_write
-						CAN1Write
-							CAN1IDToRegs
-						Can_getWriteFlags
 			dDCU_startAcquisition
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
@@ -380,7 +392,6 @@ CAN_Interrupt
 			RegsToCAN1ID
 		Can_B1hasBeenReceived
 		Can_clearB1Flag
-	Buzzer_bip
 	dRpm_set
 		dd_Indicator_setFloatValueP
 			dd_Indicator_requestPrintUpdateP
@@ -426,7 +437,6 @@ CAN_Interrupt
 		_Float2Longint
 		_Div_FP
 	dd_Indicator_setIntValueP
-		dd_Indicator_requestPrintUpdateP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
@@ -447,19 +457,15 @@ timer4_interrupt
 	Buzzer_tick
 external1
 	I2CExpander_readPort
-	sprintf
-	Debug_UART_Write
 	log2
 	d_controls_onSelectorSwitched
 		d_UI_setOperatingMode
 		d_selectorPositionToMode
 	clearExternalInterrupt
 cn_interrupt
+	sprintf
+	Debug_UART_Write
 	d_controls_onLeftEncoder
-		dd_Menu_moveSelection
-			dd_Menu_scroll
-				Debug_UART_Write
-	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -473,6 +479,25 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
+		d_traction_control_move
+			d_traction_control_propagateValue
+				Can_writeInt
+				dd_Indicator_setIntValueP
+				d_traction_control_printNotification
+					dd_GraphicController_fireTimedNotification
+	d_controls_onRightEncoder
+		dd_Menu_moveSelection
+			dd_Menu_scroll
+				Debug_UART_Write
+		dEbb_move
+			dEbb_propagateValue
+				Can_writeInt
+				dEbb_propagateEbbChange
+					dd_Indicator_setStringValue
+						dd_getIndicatorIndex
+						strcpy
+						dd_Indicator_requestPrintUpdate
+					dd_Indicator_setIntValueP
 	clearExternalInterrupt
 timer2_interrupt
 	dPaddle_readSample

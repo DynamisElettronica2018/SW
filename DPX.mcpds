@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=modules\ui\input-output\d_paddle.c
+Value=DPX.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -20,7 +20,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=33
+Count=34
 File0=DPX.c
 File1=libs\basic.c
 File2=libs\buttons.c
@@ -54,26 +54,24 @@ File29=modules\ui\d_operating_modes.c
 File30=modules\ui\d_ui_controller.c
 File31=modules\peripherals\d_sensors.c
 File32=modules\peripherals\d_dcu.c
+File33=modules\ui\d_traction_control.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=13
-File0=DPX.c
-File1=modules\ui\d_ui_controller.c
-File2=modules\ui\input-output\d_paddle.c
-File3=modules\peripherals\d_can.h
-File4=modules\peripherals\d_clutch.c
-File5=modules\peripherals\d_sensors.h
-File6=modules\peripherals\d_sensors.c
-File7=libs\can.c
-File8=modules\ui\display\dd_dashboard.c
-File9=libs\eGlcd.c
-File10=modules\peripherals\d_dcu.c
-File11=modules\ui\input-output\d_controls.c
-File12=modules\ui\input-output\d_paddle.h
+Count=10
+File0=modules\ui\d_traction_control.c
+File1=modules\ui\d_traction_control.h
+File2=modules\ui\input-output\d_controls.c
+File3=modules\ui\d_ui_controller.c
+File4=modules\ui\d_operating_modes.c
+File5=modules\ui\d_operating_modes.h
+File6=DPX.c
+File7=modules\peripherals\d_ebb.c
+File8=modules\peripherals\d_ebb.h
+File9=modules\ui\display\dd_dashboard.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -113,7 +111,7 @@ Path9=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\
 Path10=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\
 Path11=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\
 [HEADERS]
-Count=40
+Count=41
 File0=libs\basic.h
 File1=libs\buttons.h
 File2=libs\can.h
@@ -154,6 +152,7 @@ File36=modules\ui\d_operating_modes.h
 File37=modules\ui\d_ui_controller.h
 File38=modules\peripherals\d_sensors.h
 File39=modules\peripherals\d_dcu.h
+File40=modules\ui\d_traction_control.h
 [PLDS]
 Count=0
 [Useses]

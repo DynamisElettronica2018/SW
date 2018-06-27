@@ -2,7 +2,7 @@
 _d_UI_CruiseModeInit:
 
 ;d_operating_modes.c,107 :: 		void d_UI_CruiseModeInit() {
-;d_operating_modes.c,109 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Drive");
+;d_operating_modes.c,109 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12

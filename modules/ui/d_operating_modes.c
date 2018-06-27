@@ -40,7 +40,7 @@ FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH2RI", "H20 Temp. Right In", 5, 1
 FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH2RO", "H20 Temp. Right Out", 5, 19, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "TOILO", "Oil Temp. Out", 5, 13, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
-FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
+IntegerIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11, TRUE, TRUE, TRUE, INT, 1, "?", 0};
 IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAU.C", "Launch Control", 5, 14, TRUE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUELP", "Fuel Pump Press.", 5, 16, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Current", 5, 17, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
@@ -106,7 +106,7 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
 
 void d_UI_CruiseModeInit() {
      //printf("cruise mode init");
-     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Drive");
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
 }
 
 void d_UI_AccModeInit(){

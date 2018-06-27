@@ -11,6 +11,8 @@
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
 #include "d_dcu.h"
+#include "d_traction_control.h"
+#include "d_ebb.h"
 
 #define TIMER_2_PERIOD 0.001 //seconds
 
@@ -36,6 +38,10 @@ void d_UIController_init() {
     Debug_UART_Write("rpm initialized.\r\n");
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
+    d_traction_control_init(); 
+    Debug_UART_Write("traction control initialized.\r\n");
+    dEbb_init();
+    Debug_UART_Write("ebb initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
     Debug_UART_Write("graphic controller initialized.\r\n");
    /* Debug_UART_Write("Signal Leds initialized.\r\n");
@@ -75,13 +81,15 @@ onTimer1Interrupt{
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+                 d_UI_onSettingsChange(movements);
+                 break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 dd_Menu_moveSelection(movements);
+                 //dd_Menu_moveSelection(movements);
                  break;
             case CRUISE_MODE:
+                 d_traction_control_move(movements);
             case ACC_MODE:
-                 //control EBB
             default:
                  return;
      }
@@ -90,14 +98,16 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
-              d_UI_onSettingsChange(movements);
-              break;
+              //d_UI_onSettingsChange(movements);
+              //break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
+                dd_Menu_moveSelection(movements);
               break;
             case CRUISE_MODE:
+                dEbb_move(movements);
             case ACC_MODE:
-                 //control TRACTION
+              break;
             default:
                  return;
      }

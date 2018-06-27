@@ -33,8 +33,11 @@
 #define EBB_CALIBRATION 100
 #define EBB_CALIBRATE_DOWN 99
 #define EBB_CALIBRATE_UP 101
+#define EBB_NOTIFICATION_TIME 1000
 
 void dEbb_init(void);
+
+void dEbb_move(signed char movements);
 
 void dEbb_calibrateSwitch(void);
 
@@ -52,10 +55,6 @@ void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
 
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
-
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
@@ -63,8 +62,6 @@ void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
 void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 

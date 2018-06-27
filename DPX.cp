@@ -408,8 +408,10 @@ void dClutch_send(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_move(signed char movements);
 
 void dEbb_calibrateSwitch(void);
 
@@ -427,10 +429,6 @@ void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
 
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
-
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
@@ -438,8 +436,6 @@ void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
 void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
@@ -582,7 +578,7 @@ extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -794,7 +790,7 @@ void main(){
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
 
- Buzzer_bip();
+
 
 
 
@@ -856,6 +852,12 @@ void main(){
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
+ case  0b01100010010 :
+ dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
+ break;
+ case  0b01100010011 :
+ dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
+ break;
 #line 192 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
@@ -868,7 +870,9 @@ void main(){
  dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
  dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
  break;
-#line 206 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+ case  0b01100011000 :
+ dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+ break;
  default:
  break;
  }

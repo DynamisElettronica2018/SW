@@ -172,18 +172,19 @@ onCNInterrupt{
    old_port_sx = a + (b << 1) + (c << 2);
    old_port_dx = d + (e << 1) + (f << 2);
 
-   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
    new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
 
    movement_dx = new_port_dx - old_port_dx;
-   movement_sx = new_port_sx - old_port_sx;
+  // movement_sx = new_port_sx - old_port_sx;
+   movement_sx = - new_port_sx + old_port_sx;
    
-//   sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
-//   Debug_UART_Write(dstr);
-//   sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
-//   Debug_UART_Write(dstr);
-//   sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
-//   Debug_UART_Write(dstr);
+   sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
+   Debug_UART_Write(dstr);
+   sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
+   Debug_UART_Write(dstr);
+   sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
+   Debug_UART_Write(dstr);
    
    if (movement_dx>4)
    {
@@ -272,12 +273,12 @@ onRotarySwitchInterrupt{
     delay_ms(30);
     Delay_ms(STRANGE_BUTTON_DELAY);
     expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
-    sprintf(dstr, "Port: %d\r\n", expanderPort);
-    Debug_UART_Write(dstr);
+    //sprintf(dstr, "Port: %d\r\n", expanderPort);
+    //Debug_UART_Write(dstr);
     if (expanderPort == 0) {
        position = CRUISE_MODE_POSITION;
-       sprintf(dstr, "Position: %d\r\n", position);
-       Debug_UART_Write(dstr);
+    //   sprintf(dstr, "Position: %d\r\n", position);
+    //   Debug_UART_Write(dstr);
     }
     else
         position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
@@ -410,9 +411,9 @@ void d_controls_onNeutral() {
      Debug_UART_Write("On neutral\r\n");
     if (!dGear_isNeutralSet()) {
         if (dGear_get() == 1) {
-    // !       Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
         } else if (dGear_get() == 2) {
-    // !      Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
         }
     }
 }

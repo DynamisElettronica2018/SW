@@ -181,7 +181,7 @@ extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -548,7 +548,52 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
-#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_traction_control.h"
+
+
+
+
+
+
+
+void d_traction_control_move(signed char movements);
+
+void d_traction_control_init(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+void dEbb_init(void);
+
+void dEbb_move(signed char movements);
+
+void dEbb_calibrateSwitch(void);
+
+void dEbb_calibrationState(int value);
+
+void dEbb_error(int value);
+
+int dEbb_isCalibrateing(void);
+
+void dEbb_calibrateUp(void);
+
+void dEbb_calibrateDown(void);
+
+void dEbb_calibratePause(void);
+
+void dEbb_calibrateStop(void);
+
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
+
+void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+#line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
@@ -571,9 +616,13 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
+ d_traction_control_init();
+ Debug_UART_Write("traction control initialized.\r\n");
+ dEbb_init();
+ Debug_UART_Write("ebb initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 46 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 52 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -606,13 +655,15 @@ void printf(char* string);
 void d_controls_onLeftEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
+ d_UI_onSettingsChange(movements);
+ break;
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
- dd_Menu_moveSelection(movements);
+
  break;
  case CRUISE_MODE:
+ d_traction_control_move(movements);
  case ACC_MODE:
-
  default:
  return;
  }
@@ -621,14 +672,16 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
- d_UI_onSettingsChange(movements);
- break;
+
+
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
+ dd_Menu_moveSelection(movements);
  break;
  case CRUISE_MODE:
+ dEbb_move(movements);
  case ACC_MODE:
-
+ break;
  default:
  return;
  }
@@ -639,7 +692,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 114 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 124 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

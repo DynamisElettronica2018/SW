@@ -329,7 +329,7 @@ extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
