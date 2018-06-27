@@ -69,7 +69,7 @@ onTimer2Interrupt{
     // TIMER_2_PERIOD*25 = 25ms (40Hz)
     if (timer2_counter1 >= 25) {
         if (dStart_isSwitchedOn()) {
-            //dStart_sendStartMessage();
+              dStart_sendStartMessage();
         }
         timer2_counter1 = 0;
     }
@@ -112,7 +112,7 @@ onCanInterrupt{
     dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
     Can_read(&id, dataBuffer, &dataLen, &flags);
 
-    Buzzer_bip();
+    //Buzzer_bip();
 
     //Can_clearB0Flag();
     //Can_clearB1Flag();
@@ -179,13 +179,13 @@ onCanInterrupt{
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
            break;
-      /* case DAU_FL_DEBUG_ID:
+       case DAU_FL_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
            break;
        case DAU_REAR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
            break;
-       case EBB_DEBUG_ID:
+      /* case EBB_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
            dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
            break;  */
@@ -200,9 +200,9 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
            break;
-      /* case DCU_DEBUG_ID:
+       case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
-           break;     */
+           break;
        default:
            break;
     }

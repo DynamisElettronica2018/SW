@@ -723,13 +723,8 @@ L_end_dd_printLogoAnimation:
 _dd_GraphicController_onTimerInterrupt:
 
 ;dd_graphic_controller.c,271 :: 		void dd_GraphicController_onTimerInterrupt(void)
-;dd_graphic_controller.c,273 :: 		dRpm_set(8000);
-	PUSH	W10
-	MOV	#8000, W10
-	CALL	_dRpm_set
-;dd_graphic_controller.c,274 :: 		dRpm_updateLedStripe();
-	CALL	_dRpm_updateLedStripe
 ;dd_graphic_controller.c,276 :: 		if ( __counter == 10 )
+	PUSH	W10
 	MOV	___counter, W0
 	CP	W0, #10
 	BRA Z	L__dd_GraphicController_onTimerInterrupt69

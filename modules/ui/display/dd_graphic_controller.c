@@ -270,8 +270,8 @@ void dd_printLogoAnimation() {
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void) 
 {
-     dRpm_set(8000);
-     dRpm_updateLedStripe();
+     //dRpm_set(8000);
+     //dRpm_updateLedStripe();
 
     if ( __counter == 10 )
     {

@@ -314,6 +314,14 @@ external4
 		Debug_UART_Write
 		dGear_isNeutralSet
 		dGear_get
+		Can_writeInt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+				Can_addByteToWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -348,13 +356,6 @@ external4
 			dDCU_stopAcquisition
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
-					Can_resetWritePacket
-					Can_addIntToWritePacket
-						Can_addByteToWritePacket
-					Can_write
-						CAN1Write
-							CAN1IDToRegs
-						Can_getWriteFlags
 			dDCU_startAcquisition
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
@@ -380,7 +381,6 @@ CAN_Interrupt
 			RegsToCAN1ID
 		Can_B1hasBeenReceived
 		Can_clearB1Flag
-	Buzzer_bip
 	dRpm_set
 		dd_Indicator_setFloatValueP
 			dd_Indicator_requestPrintUpdateP
@@ -491,6 +491,8 @@ timer2_interrupt
 			Can_addByteToWritePacket
 			Can_write
 	dStart_isSwitchedOn
+	dStart_sendStartMessage
+		Can_writeByte
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe
 		ceil
@@ -516,8 +518,6 @@ timer2_interrupt
 		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dRpm_set
-		dRpm_updateLedStripe
 		dSignalLed_set
 		dSignalLed_unset
 		eGlcd_clear

@@ -410,9 +410,9 @@ void d_controls_onNeutral() {
      Debug_UART_Write("On neutral\r\n");
     if (!dGear_isNeutralSet()) {
         if (dGear_get() == 1) {
-    // !       Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
         } else if (dGear_get() == 2) {
-    // !      Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
         }
     }
 }

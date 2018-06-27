@@ -756,7 +756,7 @@ void main(){
 
  if (timer2_counter1 >= 25) {
  if (dStart_isSwitchedOn()) {
-
+ dStart_sendStartMessage();
  }
  timer2_counter1 = 0;
  }
@@ -794,7 +794,7 @@ void main(){
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
 
- Buzzer_bip();
+
 
 
 
@@ -856,6 +856,12 @@ void main(){
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
+ case  0b01100010010 :
+ dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
+ break;
+ case  0b01100010011 :
+ dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
+ break;
 #line 192 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
@@ -868,7 +874,9 @@ void main(){
  dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
  dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
  break;
-#line 206 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+ case  0b01100011000 :
+ dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+ break;
  default:
  break;
  }

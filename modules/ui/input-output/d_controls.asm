@@ -779,6 +779,8 @@ _d_controls_onNeutral:
 ;d_controls.c,409 :: 		void d_controls_onNeutral() {
 ;d_controls.c,410 :: 		Debug_UART_Write("On neutral\r\n");
 	PUSH	W10
+	PUSH	W11
+	PUSH	W12
 	MOV	#lo_addr(?lstr9_d_controls), W10
 	CALL	_Debug_UART_Write
 ;d_controls.c,411 :: 		if (!dGear_isNeutralSet()) {
@@ -793,6 +795,11 @@ L__d_controls_onNeutral79:
 	BRA Z	L__d_controls_onNeutral80
 	GOTO	L_d_controls_onNeutral46
 L__d_controls_onNeutral80:
+;d_controls.c,413 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
+	MOV	#50, W12
+	MOV	#512, W10
+	MOV	#0, W11
+	CALL	_Can_writeInt
 ;d_controls.c,414 :: 		} else if (dGear_get() == 2) {
 	GOTO	L_d_controls_onNeutral47
 L_d_controls_onNeutral46:
@@ -801,6 +808,11 @@ L_d_controls_onNeutral46:
 	BRA Z	L__d_controls_onNeutral81
 	GOTO	L_d_controls_onNeutral48
 L__d_controls_onNeutral81:
+;d_controls.c,415 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
+	MOV	#100, W12
+	MOV	#512, W10
+	MOV	#0, W11
+	CALL	_Can_writeInt
 ;d_controls.c,416 :: 		}
 L_d_controls_onNeutral48:
 L_d_controls_onNeutral47:
@@ -808,6 +820,8 @@ L_d_controls_onNeutral47:
 L_d_controls_onNeutral45:
 ;d_controls.c,418 :: 		}
 L_end_d_controls_onNeutral:
+	POP	W12
+	POP	W11
 	POP	W10
 	RETURN
 ; end of _d_controls_onNeutral
