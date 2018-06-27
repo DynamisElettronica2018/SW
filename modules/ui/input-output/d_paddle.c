@@ -4,7 +4,7 @@
 
 #include "d_paddle.h"
 
-#define CLUTCH_PADDLE_PIN AN14
+#define CLUTCH_PADDLE_PIN 14
 
 unsigned int dPaddle_value = 0;
 
@@ -21,7 +21,7 @@ unsigned char dPaddle_getValue(void) {
 
 void dPaddle_readSample(void) {
     unsigned int analogValue;
-    analogValue = getAnalogValue();
+    analogValue = ADC1_Read(CLUTCH_PADDLE_PIN) /*getAnalogValue()*/;
     if (analogValue <= 0) {
         dPaddle_value = 0;
     } else if (analogValue > CLUTCH_MAX_ANALOG_VALUE) {

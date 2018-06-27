@@ -33,8 +33,10 @@ _dPaddle_readSample:
 	LNK	#4
 
 ;d_paddle.c,22 :: 		void dPaddle_readSample(void) {
-;d_paddle.c,24 :: 		analogValue = getAnalogValue();
-	CALL	_getAnalogValue
+;d_paddle.c,24 :: 		analogValue = ADC1_Read(CLUTCH_PADDLE_PIN) /*getAnalogValue()*/;
+	PUSH	W10
+	MOV	#14, W10
+	CALL	_ADC1_Read
 ; analogValue start address is: 4 (W2)
 	MOV	W0, W2
 ;d_paddle.c,25 :: 		if (analogValue <= 0) {
@@ -89,6 +91,7 @@ L_dPaddle_readSample3:
 L_dPaddle_readSample1:
 ;d_paddle.c,34 :: 		}
 L_end_dPaddle_readSample:
+	POP	W10
 	ULNK
 	RETURN
 ; end of _dPaddle_readSample

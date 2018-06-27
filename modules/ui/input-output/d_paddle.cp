@@ -262,7 +262,7 @@ unsigned char dPaddle_getValue(void) {
 
 void dPaddle_readSample(void) {
  unsigned int analogValue;
- analogValue = getAnalogValue();
+ analogValue = ADC1_Read( 14 ) ;
  if (analogValue <= 0) {
  dPaddle_value = 0;
  } else if (analogValue >  3800 ) {
