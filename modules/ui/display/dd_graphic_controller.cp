@@ -1670,7 +1670,6 @@ unsigned char clutchvalue = 0;
 void dd_GraphicController_onTimerInterrupt(void)
 {
 
-
  if(dd_onStartup)
  {
 
@@ -1699,7 +1698,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 269 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 268 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1723,5 +1722,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 303 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 302 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

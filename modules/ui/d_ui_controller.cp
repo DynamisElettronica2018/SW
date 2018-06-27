@@ -537,8 +537,8 @@ void d_UIController_init() {
 
  dSignalLed_init();
  Debug_UART_Write("Signal Leds initialized.\r\n");
- dRpm_init();
- Debug_UART_Write("rpm initialized.\r\n");
+
+
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
 #line 40 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"

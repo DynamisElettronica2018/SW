@@ -752,13 +752,19 @@ void dControls_init(void) {
  clearExternalInterrupt( 9 );
 #line 259 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 }
-#line 280 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 279 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+ unsigned char counter = 0;
+
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
  delay_ms(30);
  Delay_ms( 1 );
+ counter ++;
+ if (counter != 8) {
  expanderPort = ~I2CExpander_readPort( 0b01000010 );
+ } else
+ expanderPort = 128;
  sprintf(dstr, "Port: %d\r\n", expanderPort);
  Debug_UART_Write(dstr);
  if (expanderPort == 0) {
@@ -828,7 +834,7 @@ void d_controls_onStart() {
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 416 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 421 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
  if (!dGear_isNeutralSet()) {
  if (dGear_get() == 1) {
@@ -842,7 +848,7 @@ void d_controls_onNeutral() {
 void d_controls_onReset() {
  dHardReset_reset();
 }
-#line 452 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 457 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
 
 }

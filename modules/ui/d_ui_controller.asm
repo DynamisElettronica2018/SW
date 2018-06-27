@@ -19,15 +19,10 @@ _d_UIController_init:
 ;d_ui_controller.c,30 :: 		Debug_UART_Write("Signal Leds initialized.\r\n");
 	MOV	#lo_addr(?lstr2_d_ui_controller), W10
 	CALL	_Debug_UART_Write
-;d_ui_controller.c,31 :: 		dRpm_init();
-	CALL	_dRpm_init
-;d_ui_controller.c,32 :: 		Debug_UART_Write("rpm initialized.\r\n");
-	MOV	#lo_addr(?lstr3_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,33 :: 		dd_GraphicController_init();
 	CALL	_dd_GraphicController_init
 ;d_ui_controller.c,34 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
-	MOV	#lo_addr(?lstr4_d_ui_controller), W10
+	MOV	#lo_addr(?lstr3_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,40 :: 		}
 L_end_d_UIController_init:

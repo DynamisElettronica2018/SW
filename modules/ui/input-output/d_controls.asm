@@ -95,9 +95,9 @@ _dControls_init:
 	POP	W1
 ;d_controls.c,136 :: 		if (expanderPort == 0) position = CRUISE_MODE_POSITION;
 	CP.B	W1, #0
-	BRA Z	L__dControls_init56
+	BRA Z	L__dControls_init58
 	GOTO	L_dControls_init0
-L__dControls_init56:
+L__dControls_init58:
 ; expanderPort end address is: 2 (W1)
 ; position start address is: 0 (W0)
 	CLR	W0
@@ -317,9 +317,9 @@ _cn_interrupt:
 	SUB.B	W2, W4, W2
 ;d_controls.c,199 :: 		if (movement_dx>4)
 	CP.B	W0, #4
-	BRA GT	L__cn_interrupt59
+	BRA GT	L__cn_interrupt61
 	GOTO	L_cn_interrupt7
-L__cn_interrupt59:
+L__cn_interrupt61:
 ;d_controls.c,201 :: 		movement_dx -= 8;
 ; movement_dx start address is: 2 (W1)
 	SUB.B	W1, #8, W1
@@ -330,9 +330,9 @@ L_cn_interrupt7:
 ;d_controls.c,203 :: 		else if (movement_dx<-4)
 	MOV.B	#252, W0
 	CP.B	W1, W0
-	BRA LT	L__cn_interrupt60
+	BRA LT	L__cn_interrupt62
 	GOTO	L_cn_interrupt9
-L__cn_interrupt60:
+L__cn_interrupt62:
 ;d_controls.c,205 :: 		movement_dx += 8;
 ; movement_dx start address is: 0 (W0)
 	ADD.B	W1, #8, W0
@@ -345,19 +345,19 @@ L_cn_interrupt9:
 ;d_controls.c,207 :: 		else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 ; movement_dx start address is: 2 (W1)
 	CP.B	W1, #4
-	BRA NZ	L__cn_interrupt61
-	GOTO	L__cn_interrupt52
-L__cn_interrupt61:
+	BRA NZ	L__cn_interrupt63
+	GOTO	L__cn_interrupt54
+L__cn_interrupt63:
 	MOV.B	#252, W0
 	CP.B	W1, W0
-	BRA NZ	L__cn_interrupt62
-	GOTO	L__cn_interrupt51
-L__cn_interrupt62:
+	BRA NZ	L__cn_interrupt64
+	GOTO	L__cn_interrupt53
+L__cn_interrupt64:
 	GOTO	L_cn_interrupt13
 ; movement_sx end address is: 4 (W2)
 ; movement_dx end address is: 2 (W1)
-L__cn_interrupt52:
-L__cn_interrupt51:
+L__cn_interrupt54:
+L__cn_interrupt53:
 	GOTO	___cn_interrupt__CLEAR_CN_LABEL
 L_cn_interrupt13:
 ; movement_dx start address is: 2 (W1)
@@ -370,9 +370,9 @@ L_cn_interrupt8:
 ;d_controls.c,209 :: 		if (movement_sx>4)
 ; movement_dx start address is: 2 (W1)
 	CP.B	W2, #4
-	BRA GT	L__cn_interrupt63
+	BRA GT	L__cn_interrupt65
 	GOTO	L_cn_interrupt14
-L__cn_interrupt63:
+L__cn_interrupt65:
 ;d_controls.c,211 :: 		movement_sx -= 8;
 ; movement_sx start address is: 0 (W0)
 	SUB.B	W2, #8, W0
@@ -385,9 +385,9 @@ L_cn_interrupt14:
 ; movement_sx start address is: 4 (W2)
 	MOV.B	#252, W0
 	CP.B	W2, W0
-	BRA LT	L__cn_interrupt64
+	BRA LT	L__cn_interrupt66
 	GOTO	L_cn_interrupt16
-L__cn_interrupt64:
+L__cn_interrupt66:
 ;d_controls.c,215 :: 		movement_sx += 8;
 ; movement_sx start address is: 0 (W0)
 	ADD.B	W2, #8, W0
@@ -399,19 +399,19 @@ L_cn_interrupt16:
 ;d_controls.c,217 :: 		else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 ; movement_sx start address is: 4 (W2)
 	CP.B	W1, #4
-	BRA NZ	L__cn_interrupt65
-	GOTO	L__cn_interrupt54
-L__cn_interrupt65:
+	BRA NZ	L__cn_interrupt67
+	GOTO	L__cn_interrupt56
+L__cn_interrupt67:
 	MOV.B	#252, W0
 	CP.B	W1, W0
-	BRA NZ	L__cn_interrupt66
-	GOTO	L__cn_interrupt53
-L__cn_interrupt66:
+	BRA NZ	L__cn_interrupt68
+	GOTO	L__cn_interrupt55
+L__cn_interrupt68:
 	GOTO	L_cn_interrupt20
 ; movement_sx end address is: 4 (W2)
 ; movement_dx end address is: 2 (W1)
-L__cn_interrupt54:
-L__cn_interrupt53:
+L__cn_interrupt56:
+L__cn_interrupt55:
 	GOTO	___cn_interrupt__CLEAR_CN_LABEL
 L_cn_interrupt20:
 ; movement_dx start address is: 2 (W1)
@@ -425,9 +425,9 @@ L_cn_interrupt15:
 ;d_controls.c,222 :: 		if(movement_sx){
 ; movement_sx start address is: 0 (W0)
 	CP0.B	W0
-	BRA NZ	L__cn_interrupt67
+	BRA NZ	L__cn_interrupt69
 	GOTO	L_cn_interrupt21
-L__cn_interrupt67:
+L__cn_interrupt69:
 ;d_controls.c,223 :: 		d_controls_onLeftEncoder(movement_sx);
 	PUSH	W1
 ; movement_sx end address is: 0 (W0)
@@ -438,9 +438,9 @@ L__cn_interrupt67:
 L_cn_interrupt21:
 ;d_controls.c,225 :: 		if(movement_dx){
 	CP0.B	W1
-	BRA NZ	L__cn_interrupt68
+	BRA NZ	L__cn_interrupt70
 	GOTO	L_cn_interrupt22
-L__cn_interrupt68:
+L__cn_interrupt70:
 ;d_controls.c,226 :: 		d_controls_onRightEncoder(movement_dx);
 	MOV.B	W1, W10
 ; movement_dx end address is: 2 (W1)
@@ -473,10 +473,10 @@ _external1:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;d_controls.c,280 :: 		onRotarySwitchInterrupt{
-;d_controls.c,281 :: 		signed char position = 0;
+;d_controls.c,281 :: 		onRotarySwitchInterrupt{
+;d_controls.c,282 :: 		signed char position = 0;
 	PUSH	W10
-;d_controls.c,283 :: 		delay_ms(30);
+;d_controls.c,284 :: 		delay_ms(30);
 	MOV	#4, W8
 	MOV	#3392, W7
 L_external123:
@@ -484,20 +484,39 @@ L_external123:
 	BRA NZ	L_external123
 	DEC	W8
 	BRA NZ	L_external123
-;d_controls.c,284 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
+;d_controls.c,285 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
 	MOV	#6666, W7
 L_external125:
 	DEC	W7
 	BRA NZ	L_external125
 	NOP
 	NOP
-;d_controls.c,285 :: 		expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
+;d_controls.c,286 :: 		counter ++;
+	MOV.B	#1, W1
+	MOV	#lo_addr(_counter), W0
+	ADD.B	W1, [W0], [W0]
+;d_controls.c,287 :: 		if (counter != 8) {
+	MOV	#lo_addr(_counter), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #8
+	BRA NZ	L__external172
+	GOTO	L_external127
+L__external172:
+;d_controls.c,288 :: 		expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
 	MOV.B	#66, W10
 	CALL	_I2CExpander_readPort
-	COM.B	W0
+	ADD	W14, #0, W1
+	COM.B	W0, [W1]
+;d_controls.c,289 :: 		}  else
+	GOTO	L_external128
+L_external127:
+;d_controls.c,290 :: 		expanderPort = 128;
+	MOV.B	#128, W0
 	MOV.B	W0, [W14+0]
-;d_controls.c,286 :: 		sprintf(dstr, "Port: %d\r\n", expanderPort);
-	ZE	W0, W0
+L_external128:
+;d_controls.c,291 :: 		sprintf(dstr, "Port: %d\r\n", expanderPort);
+	ADD	W14, #0, W0
+	ZE	[W0], W0
 	PUSH	W0
 	MOV	#lo_addr(?lstr_3_d_controls), W0
 	PUSH	W0
@@ -505,19 +524,19 @@ L_external125:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_controls.c,287 :: 		Debug_UART_Write(dstr);
+;d_controls.c,292 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,288 :: 		if (expanderPort == 0) {
+;d_controls.c,293 :: 		if (expanderPort == 0) {
 	MOV.B	[W14+0], W0
 	CP.B	W0, #0
-	BRA Z	L__external170
-	GOTO	L_external127
-L__external170:
-;d_controls.c,289 :: 		position = CRUISE_MODE_POSITION;
+	BRA Z	L__external173
+	GOTO	L_external129
+L__external173:
+;d_controls.c,294 :: 		position = CRUISE_MODE_POSITION;
 	CLR	W0
 	MOV.B	W0, [W14+1]
-;d_controls.c,290 :: 		sprintf(dstr, "Position: %d\r\n", position);
+;d_controls.c,295 :: 		sprintf(dstr, "Position: %d\r\n", position);
 	CLR	W0
 	PUSH	W0
 	MOV	#lo_addr(?lstr_4_d_controls), W0
@@ -526,25 +545,25 @@ L__external170:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_controls.c,291 :: 		Debug_UART_Write(dstr);
+;d_controls.c,296 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,292 :: 		}
-	GOTO	L_external128
-L_external127:
-;d_controls.c,294 :: 		position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
+;d_controls.c,297 :: 		}
+	GOTO	L_external130
+L_external129:
+;d_controls.c,299 :: 		position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
 	MOV.B	[W14+0], W10
 	CALL	_log2
 	ADD	W14, #1, W1
 	SUB.B	W0, #3, [W1]
-L_external128:
-;d_controls.c,297 :: 		d_controls_onSelectorSwitched(position);
+L_external130:
+;d_controls.c,302 :: 		d_controls_onSelectorSwitched(position);
 	MOV.B	[W14+1], W10
 	CALL	_d_controls_onSelectorSwitched
-;d_controls.c,298 :: 		clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
+;d_controls.c,303 :: 		clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
 	MOV.B	#5, W10
 	CALL	_clearExternalInterrupt
-;d_controls.c,299 :: 		}
+;d_controls.c,304 :: 		}
 L_end_external1:
 	POP	W10
 	MOV	#26, W0
@@ -565,21 +584,21 @@ _external3:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;d_controls.c,301 :: 		onStartInterrupt{
-;d_controls.c,302 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
+;d_controls.c,306 :: 		onStartInterrupt{
+;d_controls.c,307 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
 	PUSH	W10
 	MOV	#6666, W7
-L_external329:
+L_external331:
 	DEC	W7
-	BRA NZ	L_external329
+	BRA NZ	L_external331
 	NOP
 	NOP
-;d_controls.c,303 :: 		d_controls_onStart();
+;d_controls.c,308 :: 		d_controls_onStart();
 	CALL	_d_controls_onStart
-;d_controls.c,304 :: 		clearExternalInterrupt(START_INTERRUPT);
+;d_controls.c,309 :: 		clearExternalInterrupt(START_INTERRUPT);
 	MOV.B	#7, W10
 	CALL	_clearExternalInterrupt
-;d_controls.c,305 :: 		}
+;d_controls.c,310 :: 		}
 L_end_external3:
 	POP	W10
 	MOV	#26, W0
@@ -599,26 +618,26 @@ _external2:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;d_controls.c,307 :: 		onDRSInterrupt{
-;d_controls.c,308 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
+;d_controls.c,312 :: 		onDRSInterrupt{
+;d_controls.c,313 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
 	PUSH	W10
 	MOV	#6666, W7
-L_external231:
-	DEC	W7
-	BRA NZ	L_external231
-	NOP
-	NOP
-;d_controls.c,309 :: 		if (DRS_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-	BTSC	RD9_bit, BitPos(RD9_bit+0)
-	GOTO	L_external233
-;d_controls.c,310 :: 		d_controls_onDRS();
-	CALL	_d_controls_onDRS
-;d_controls.c,311 :: 		}
 L_external233:
-;d_controls.c,312 :: 		clearExternalInterrupt(DRS_INTERRUPT);
+	DEC	W7
+	BRA NZ	L_external233
+	NOP
+	NOP
+;d_controls.c,314 :: 		if (DRS_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
+	BTSC	RD9_bit, BitPos(RD9_bit+0)
+	GOTO	L_external235
+;d_controls.c,315 :: 		d_controls_onDRS();
+	CALL	_d_controls_onDRS
+;d_controls.c,316 :: 		}
+L_external235:
+;d_controls.c,317 :: 		clearExternalInterrupt(DRS_INTERRUPT);
 	MOV.B	#6, W10
 	CALL	_clearExternalInterrupt
-;d_controls.c,313 :: 		}
+;d_controls.c,318 :: 		}
 L_end_external2:
 	POP	W10
 	MOV	#26, W0
@@ -638,53 +657,53 @@ _external4:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;d_controls.c,315 :: 		onGeneralButtonInterrupt{
-;d_controls.c,316 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
+;d_controls.c,320 :: 		onGeneralButtonInterrupt{
+;d_controls.c,321 :: 		Delay_ms(STRANGE_BUTTON_DELAY);
 	PUSH	W10
 	MOV	#6666, W7
-L_external434:
-	DEC	W7
-	BRA NZ	L_external434
-	NOP
-	NOP
-;d_controls.c,317 :: 		if (NEUTRAL_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-	BTSC	RC13_bit, BitPos(RC13_bit+0)
-	GOTO	L_external436
-;d_controls.c,318 :: 		d_controls_onNeutral();
-	CALL	_d_controls_onNeutral
-;d_controls.c,319 :: 		}
-	GOTO	L_external437
 L_external436:
-;d_controls.c,320 :: 		else if (RESET_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-	BTSC	RC14_bit, BitPos(RC14_bit+0)
+	DEC	W7
+	BRA NZ	L_external436
+	NOP
+	NOP
+;d_controls.c,322 :: 		if (NEUTRAL_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
+	BTSC	RC13_bit, BitPos(RC13_bit+0)
 	GOTO	L_external438
-;d_controls.c,321 :: 		d_controls_onReset();
-	CALL	_d_controls_onReset
-;d_controls.c,322 :: 		}
+;d_controls.c,323 :: 		d_controls_onNeutral();
+	CALL	_d_controls_onNeutral
+;d_controls.c,324 :: 		}
 	GOTO	L_external439
 L_external438:
-;d_controls.c,323 :: 		else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-	BTSC	RD1_bit, BitPos(RD1_bit+0)
+;d_controls.c,325 :: 		else if (RESET_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
+	BTSC	RC14_bit, BitPos(RC14_bit+0)
 	GOTO	L_external440
-;d_controls.c,324 :: 		d_controls_onAux1();
-	CALL	_d_controls_onAux1
-;d_controls.c,325 :: 		}
+;d_controls.c,326 :: 		d_controls_onReset();
+	CALL	_d_controls_onReset
+;d_controls.c,327 :: 		}
 	GOTO	L_external441
 L_external440:
-;d_controls.c,326 :: 		else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-	BTSC	RB15_bit, BitPos(RB15_bit+0)
+;d_controls.c,328 :: 		else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
+	BTSC	RD1_bit, BitPos(RD1_bit+0)
 	GOTO	L_external442
-;d_controls.c,327 :: 		d_controls_onAux2();
-	CALL	_d_controls_onAux2
-;d_controls.c,328 :: 		}
+;d_controls.c,329 :: 		d_controls_onAux1();
+	CALL	_d_controls_onAux1
+;d_controls.c,330 :: 		}
+	GOTO	L_external443
 L_external442:
+;d_controls.c,331 :: 		else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
+	BTSC	RB15_bit, BitPos(RB15_bit+0)
+	GOTO	L_external444
+;d_controls.c,332 :: 		d_controls_onAux2();
+	CALL	_d_controls_onAux2
+;d_controls.c,333 :: 		}
+L_external444:
+L_external443:
 L_external441:
 L_external439:
-L_external437:
-;d_controls.c,329 :: 		clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
+;d_controls.c,334 :: 		clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 	MOV.B	#8, W10
 	CALL	_clearExternalInterrupt
-;d_controls.c,330 :: 		}
+;d_controls.c,335 :: 		}
 L_end_external4:
 	POP	W10
 	MOV	#26, W0
@@ -698,57 +717,57 @@ L_end_external4:
 
 _d_controls_onGearUp:
 
-;d_controls.c,336 :: 		void d_controls_onGearUp() {
-;d_controls.c,337 :: 		dGear_requestGearUp();
+;d_controls.c,341 :: 		void d_controls_onGearUp() {
+;d_controls.c,342 :: 		dGear_requestGearUp();
 	CALL	_dGear_requestGearUp
-;d_controls.c,338 :: 		}
+;d_controls.c,343 :: 		}
 L_end_d_controls_onGearUp:
 	RETURN
 ; end of _d_controls_onGearUp
 
 _d_controls_onGearDown:
 
-;d_controls.c,340 :: 		void d_controls_onGearDown() {
-;d_controls.c,341 :: 		dGear_requestGearDown();
+;d_controls.c,345 :: 		void d_controls_onGearDown() {
+;d_controls.c,346 :: 		dGear_requestGearDown();
 	CALL	_dGear_requestGearDown
-;d_controls.c,342 :: 		}
+;d_controls.c,347 :: 		}
 L_end_d_controls_onGearDown:
 	RETURN
 ; end of _d_controls_onGearDown
 
 _d_controls_onStart:
 
-;d_controls.c,344 :: 		void d_controls_onStart() {
-;d_controls.c,345 :: 		if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
+;d_controls.c,349 :: 		void d_controls_onStart() {
+;d_controls.c,350 :: 		if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
 	PUSH	W10
 	MOV.B	#7, W10
 	CALL	_getExternalInterruptEdge
 	CP.B	W0, #1
-	BRA Z	L__d_controls_onStart77
-	GOTO	L_d_controls_onStart43
-L__d_controls_onStart77:
-;d_controls.c,346 :: 		dSignalLed_set(DSIGNAL_LED_2);
+	BRA Z	L__d_controls_onStart80
+	GOTO	L_d_controls_onStart45
+L__d_controls_onStart80:
+;d_controls.c,351 :: 		dSignalLed_set(DSIGNAL_LED_2);
 	MOV.B	#2, W10
 	CALL	_dSignalLed_set
-;d_controls.c,347 :: 		dStart_switchOn();
+;d_controls.c,352 :: 		dStart_switchOn();
 	CALL	_dStart_switchOn
-;d_controls.c,348 :: 		switchExternalInterruptEdge(START_INTERRUPT);
+;d_controls.c,353 :: 		switchExternalInterruptEdge(START_INTERRUPT);
 	MOV.B	#7, W10
 	CALL	_switchExternalInterruptEdge
-;d_controls.c,349 :: 		} else {
-	GOTO	L_d_controls_onStart44
-L_d_controls_onStart43:
-;d_controls.c,350 :: 		dSignalLed_unset(DSIGNAL_LED_2);
+;d_controls.c,354 :: 		} else {
+	GOTO	L_d_controls_onStart46
+L_d_controls_onStart45:
+;d_controls.c,355 :: 		dSignalLed_unset(DSIGNAL_LED_2);
 	MOV.B	#2, W10
 	CALL	_dSignalLed_unset
-;d_controls.c,351 :: 		dStart_switchOff();
+;d_controls.c,356 :: 		dStart_switchOff();
 	CALL	_dStart_switchOff
-;d_controls.c,352 :: 		switchExternalInterruptEdge(START_INTERRUPT);
+;d_controls.c,357 :: 		switchExternalInterruptEdge(START_INTERRUPT);
 	MOV.B	#7, W10
 	CALL	_switchExternalInterruptEdge
-;d_controls.c,353 :: 		}
-L_d_controls_onStart44:
-;d_controls.c,354 :: 		}
+;d_controls.c,358 :: 		}
+L_d_controls_onStart46:
+;d_controls.c,359 :: 		}
 L_end_d_controls_onStart:
 	POP	W10
 	RETURN
@@ -756,67 +775,67 @@ L_end_d_controls_onStart:
 
 _d_controls_onNeutral:
 
-;d_controls.c,416 :: 		void d_controls_onNeutral() {
-;d_controls.c,417 :: 		if (!dGear_isNeutralSet()) {
+;d_controls.c,421 :: 		void d_controls_onNeutral() {
+;d_controls.c,422 :: 		if (!dGear_isNeutralSet()) {
 	CALL	_dGear_isNeutralSet
 	CP0.B	W0
-	BRA Z	L__d_controls_onNeutral79
-	GOTO	L_d_controls_onNeutral45
-L__d_controls_onNeutral79:
-;d_controls.c,418 :: 		if (dGear_get() == 1) {
+	BRA Z	L__d_controls_onNeutral82
+	GOTO	L_d_controls_onNeutral47
+L__d_controls_onNeutral82:
+;d_controls.c,423 :: 		if (dGear_get() == 1) {
 	CALL	_dGear_get
 	CP.B	W0, #1
-	BRA Z	L__d_controls_onNeutral80
-	GOTO	L_d_controls_onNeutral46
-L__d_controls_onNeutral80:
-;d_controls.c,420 :: 		} else if (dGear_get() == 2) {
-	GOTO	L_d_controls_onNeutral47
-L_d_controls_onNeutral46:
+	BRA Z	L__d_controls_onNeutral83
+	GOTO	L_d_controls_onNeutral48
+L__d_controls_onNeutral83:
+;d_controls.c,425 :: 		} else if (dGear_get() == 2) {
+	GOTO	L_d_controls_onNeutral49
+L_d_controls_onNeutral48:
 	CALL	_dGear_get
 	CP.B	W0, #2
-	BRA Z	L__d_controls_onNeutral81
-	GOTO	L_d_controls_onNeutral48
-L__d_controls_onNeutral81:
-;d_controls.c,422 :: 		}
-L_d_controls_onNeutral48:
+	BRA Z	L__d_controls_onNeutral84
+	GOTO	L_d_controls_onNeutral50
+L__d_controls_onNeutral84:
+;d_controls.c,427 :: 		}
+L_d_controls_onNeutral50:
+L_d_controls_onNeutral49:
+;d_controls.c,428 :: 		}
 L_d_controls_onNeutral47:
-;d_controls.c,423 :: 		}
-L_d_controls_onNeutral45:
-;d_controls.c,424 :: 		}
+;d_controls.c,429 :: 		}
 L_end_d_controls_onNeutral:
 	RETURN
 ; end of _d_controls_onNeutral
 
 _d_controls_onReset:
 
-;d_controls.c,426 :: 		void d_controls_onReset() {
-;d_controls.c,427 :: 		dHardReset_reset();
+;d_controls.c,431 :: 		void d_controls_onReset() {
+;d_controls.c,432 :: 		dHardReset_reset();
 	CALL	_dHardReset_reset
-;d_controls.c,428 :: 		}
+;d_controls.c,433 :: 		}
 L_end_d_controls_onReset:
 	RETURN
 ; end of _d_controls_onReset
 
 _d_controls_onDRS:
 
-;d_controls.c,452 :: 		void d_controls_onDRS() {
-;d_controls.c,454 :: 		}
+;d_controls.c,457 :: 		void d_controls_onDRS() {
+;d_controls.c,459 :: 		}
 L_end_d_controls_onDRS:
 	RETURN
 ; end of _d_controls_onDRS
 
 _d_controls_onAux1:
 
-;d_controls.c,456 :: 		void d_controls_onAux1(void) {
-;d_controls.c,458 :: 		}
+;d_controls.c,461 :: 		void d_controls_onAux1(void) {
+;d_controls.c,463 :: 		}
 L_end_d_controls_onAux1:
 	RETURN
 ; end of _d_controls_onAux1
 
 _d_controls_onAux2:
 
-;d_controls.c,460 :: 		void d_controls_onAux2(void) {
-;d_controls.c,462 :: 		}
+;d_controls.c,465 :: 		void d_controls_onAux2(void) {
+;d_controls.c,467 :: 		}
 L_end_d_controls_onAux2:
 	RETURN
 ; end of _d_controls_onAux2

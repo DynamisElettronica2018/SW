@@ -228,6 +228,7 @@ char dd_GraphicController_isColorInversionQueued(void) {               //inutile
 int __counter = 0;
 unsigned char clutchvalue = 0;
 void dd_GraphicController_onTimerInterrupt(void)  //0.1 s
+{
     //dRpm_updateLedStripe();
     if(dd_onStartup)
     {

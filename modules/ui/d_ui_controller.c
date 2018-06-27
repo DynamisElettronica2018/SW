@@ -28,8 +28,8 @@ void d_UIController_init() {
    // Debug_UART_Write("Paddle initialized.\r\n");
    dSignalLed_init();
    Debug_UART_Write("Signal Leds initialized.\r\n");
-   dRpm_init();
-   Debug_UART_Write("rpm initialized.\r\n");
+  // dRpm_init();
+  // Debug_UART_Write("rpm initialized.\r\n");
    dd_GraphicController_init();
    Debug_UART_Write("graphic controller initialized.\r\n");
    /* Debug_UART_Write("Signal Leds initialized.\r\n");

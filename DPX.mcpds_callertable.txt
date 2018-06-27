@@ -231,10 +231,6 @@ main
 		dSignalLed_init
 			dSignalLed_set
 			dSignalLed_unset
-		dRpm_init
-			I2CExpander_init
-			Debug_UART_Write
-			dRpm_enableLedStripeOutput
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init

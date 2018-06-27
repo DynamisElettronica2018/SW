@@ -276,13 +276,18 @@ onCNInterrupt{
     around 0.
 */
 
-
+ unsigned char counter = 0;
+ 
 onRotarySwitchInterrupt{
     signed char position = 0;
     unsigned char expanderPort;
     delay_ms(30);
     Delay_ms(STRANGE_BUTTON_DELAY);
-    expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
+    counter ++;
+    if (counter != 8) {
+       expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
+    }  else
+       expanderPort = 128;
     sprintf(dstr, "Port: %d\r\n", expanderPort);
     Debug_UART_Write(dstr);
     if (expanderPort == 0) {
