@@ -308,7 +308,7 @@ extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
-extern BooleanIndicator ind_rio_acq;
+extern IntegerIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;
@@ -364,8 +364,8 @@ void dClutch_set(unsigned char value) {
  if (value > 100) {
  value = 100;
  }
-
-
+ dClutch_value = value;
+ dd_Indicator_setIntValueP(&ind_rio_acq.base, dClutch_value);
 }
 
 void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {

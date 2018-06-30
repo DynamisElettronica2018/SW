@@ -23,6 +23,8 @@ _dClutch_set:
 
 ;d_clutch.c,19 :: 		void dClutch_set(unsigned char value) {
 ;d_clutch.c,20 :: 		if (value > 100) {
+	PUSH	W10
+	PUSH	W11
 	MOV.B	#100, W0
 	CP.B	W10, W0
 	BRA GTU	L__dClutch_set4
@@ -32,8 +34,17 @@ L__dClutch_set4:
 	MOV.B	#100, W10
 ;d_clutch.c,22 :: 		}
 L_dClutch_set0:
+;d_clutch.c,23 :: 		dClutch_value = value;
+	MOV	#lo_addr(_dClutch_value), W0
+	MOV.B	W10, [W0]
+;d_clutch.c,24 :: 		dd_Indicator_setIntValueP(&ind_rio_acq.base, dClutch_value);
+	ZE	W10, W11
+	MOV	#lo_addr(_ind_rio_acq), W10
+	CALL	_dd_Indicator_setIntValueP
 ;d_clutch.c,25 :: 		}
 L_end_dClutch_set:
+	POP	W11
+	POP	W10
 	RETURN
 ; end of _dClutch_set
 

@@ -573,7 +573,7 @@ extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
-extern BooleanIndicator ind_rio_acq;
+extern IntegerIndicator ind_rio_acq;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;
@@ -743,6 +743,8 @@ void main(){
  timer2_counter5 += 1;
 
 
+
+
  if (timer2_counter0 >= 5) {
  dPaddle_readSample();
  timer2_counter0 = 0;
@@ -789,7 +791,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 111 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 113 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -852,7 +854,7 @@ void main(){
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
  break;
-#line 179 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 181 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -862,7 +864,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 192 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 194 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));

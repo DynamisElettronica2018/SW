@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=modules\ui\input-output\d_start.c
+Value=modules\peripherals\d_gears.h
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -60,22 +60,18 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=15
+Count=11
 File0=DPX.c
-File1=modules\ui\d_ui_controller.c
-File2=modules\ui\input-output\d_paddle.c
-File3=modules\peripherals\d_can.h
-File4=modules\peripherals\d_clutch.c
-File5=modules\peripherals\d_sensors.h
-File6=modules\peripherals\d_sensors.c
-File7=libs\can.c
-File8=modules\ui\display\dd_dashboard.c
-File9=libs\eGlcd.c
-File10=modules\peripherals\d_dcu.c
-File11=modules\ui\input-output\d_controls.c
-File12=modules\ui\input-output\d_paddle.h
-File13=modules\ui\display\dd_graphic_controller.c
-File14=modules\ui\input-output\d_start.c
+File1=modules\ui\input-output\d_controls.c
+File2=modules\ui\display\dd_graphic_controller.c
+File3=modules\ui\input-output\d_start.c
+File4=modules\ui\d_ui_controller.c
+File5=modules\peripherals\d_clutch.c
+File6=modules\ui\d_operating_modes.h
+File7=modules\ui\input-output\d_paddle.c
+File8=modules\peripherals\d_can.h
+File9=modules\peripherals\d_gears.c
+File10=modules\peripherals\d_gears.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

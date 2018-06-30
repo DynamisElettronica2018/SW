@@ -3,15 +3,16 @@
 //
 
 #include "d_paddle.h"
+#include "d_clutch.h"
 
 #define CLUTCH_PADDLE_PIN 14
 
 unsigned int dPaddle_value = 0;
 
 void dPaddle_init(void) {
-    setupAnalogSampling();
+    /*setupAnalogSampling();
     setAnalogPIN(CLUTCH_PADDLE_PIN);
-    turnOnAnalogModule();
+    turnOnAnalogModule();*/
 }
 
 //Value is 0-100

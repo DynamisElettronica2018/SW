@@ -246,13 +246,23 @@ void dPaddle_init(void);
 unsigned char dPaddle_getValue(void);
 
 void dPaddle_readSample(void);
-#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
+void dClutch_set(unsigned char value);
+
+void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+
+unsigned char dClutch_get(void);
+
+void dClutch_send(void);
+#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 unsigned int dPaddle_value = 0;
 
 void dPaddle_init(void) {
- setupAnalogSampling();
- setAnalogPIN( 14 );
- turnOnAnalogModule();
+#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 }
 
 

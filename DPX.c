@@ -54,6 +54,8 @@ onTimer2Interrupt{
     timer2_counter3 += 1;
     //timer2_counter4 += 1;
     timer2_counter5 += 1;
+    
+    //Buzzer_bip();
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {

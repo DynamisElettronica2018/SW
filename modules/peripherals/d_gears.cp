@@ -134,8 +134,8 @@ unsigned char dGear_getCurrentGearLetter(void) {
 }
 
 void dGear_set(unsigned char gear) {
- if (gear >  4 ) {
- gear =  4 ;
+ if (gear >  5 ) {
+ gear =  5 ;
  } else if (gear <  1 ) {
  gear =  1 ;
  }
@@ -159,7 +159,7 @@ void dGear_down(void) {
 }
 
 char dGear_canGearUp(void){
- return d_currentGear <  4  || dGear_bypassShiftCheck;
+ return d_currentGear <  5  || dGear_bypassShiftCheck;
 }
 
 char dGear_canGearDown(void){

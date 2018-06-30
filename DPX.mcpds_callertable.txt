@@ -195,15 +195,6 @@ main
 		Debug_UART_Write
 		dDCU_init
 		dPaddle_init
-			setupAnalogSampling
-				getMinimumAnalogClockConversion
-				setAutomaticSampling
-				setAnalogVoltageReference
-				unsetAnalogInterrupt
-					clearAnalogInterrupt
-				startSampling
-			setAnalogPIN
-			turnOnAnalogModule
 		Buzzer_init
 			setTimer
 				setInterruptPriority
@@ -484,6 +475,7 @@ timer2_interrupt
 		_AddSub_FP
 		_Float2Longint
 	dClutch_set
+		dd_Indicator_setIntValueP
 	dPaddle_getValue
 	dClutch_send
 		Can_writeByte
