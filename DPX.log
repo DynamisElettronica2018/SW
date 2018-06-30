@@ -43,7 +43,7 @@ diagnostics: 328	123	Compiled Successfully	dd_menu.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 38	123	Compiled Successfully	buzzer.c
 diagnostics: 0	122	Compilation Started	math.h
-diagnostics: 458	123	Compiled Successfully	d_controls.c
+diagnostics: 459	123	Compiled Successfully	d_controls.c
 diagnostics: 0	122	Compilation Started	eeprom.h
 diagnostics: 50	123	Compiled Successfully	d_hardReset.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -66,8 +66,8 @@ diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 21	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 64	123	Compiled Successfully	d_dcu.c
-diagnostics: 0	127	All files Compiled in 3953 ms	 
+diagnostics: 0	127	All files Compiled in 3859 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 953 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 5219 ms	 
-diagnostics: 0	103	Finished successfully: 30 giu 2018, 22:22:17	DPX.mcpds
+diagnostics: 0	128	Linked in 938 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 5110 ms	 
+diagnostics: 0	103	Finished successfully: 30 giu 2018, 22:58:34	DPX.mcpds

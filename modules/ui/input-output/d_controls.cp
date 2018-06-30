@@ -713,7 +713,8 @@ void dControls_init(void) {
  new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
 
  movement_dx = new_port_dx - old_port_dx;
- movement_sx = new_port_sx - old_port_sx;
+
+ movement_sx = - new_port_sx + old_port_sx;
 
 
 
@@ -754,9 +755,9 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 248 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 249 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 }
-#line 269 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 270 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -836,7 +837,7 @@ void d_controls_onStart() {
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 409 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 410 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
  Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
@@ -852,7 +853,7 @@ void d_controls_onReset() {
  Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 447 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 448 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
  Debug_UART_Write("On DRS\r\n");
 }
