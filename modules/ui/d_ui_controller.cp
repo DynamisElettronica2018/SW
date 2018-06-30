@@ -37,7 +37,7 @@ void d_controls_onSelectorSwitched(signed char position);
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
+ CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -172,7 +172,7 @@ extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
-extern IntegerIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;

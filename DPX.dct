@@ -5017,6 +5017,7 @@ ilr2
 ilr3
 imagefileasarray
 ind_clutch
+ind_clutch_fb
 ind_clutch_pos
 ind_dau_fl_board
 ind_dau_fr_board
@@ -5039,7 +5040,6 @@ ind_launch_control
 ind_oil_press
 ind_oil_temp_in
 ind_oil_temp_out
-ind_rio_acq
 ind_rpm
 ind_sw_board
 ind_th2o

@@ -80,7 +80,7 @@ int getMinimumAnalogClockConversion(void);
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
+ CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -308,7 +308,7 @@ extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
-extern IntegerIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;
@@ -365,7 +365,7 @@ void dClutch_set(unsigned char value) {
  value = 100;
  }
  dClutch_value = value;
- dd_Indicator_setIntValueP(&ind_rio_acq.base, dClutch_value);
+ dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_value);
 }
 
 void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {

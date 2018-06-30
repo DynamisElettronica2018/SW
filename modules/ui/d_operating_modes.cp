@@ -36,7 +36,7 @@ void d_controls_onSelectorSwitched(signed char position);
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
+ CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -171,7 +171,7 @@ extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
-extern IntegerIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;
@@ -412,7 +412,7 @@ FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13,  0 ,  1 ,  1 ,
 FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
 IntegerIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
-IntegerIndicator ind_rio_acq = {RIO_ACQUISITION, "RIO", "Rio", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
+IntegerIndicator ind_clutch_fb = {CLUTCH_FEEDBACK, "CL FB", "Clutch Fb", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
 BooleanIndicator ind_efi_status = {EFI_STATUS, "EFION", "Efi On", 5, 6,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 IntegerIndicator ind_efi_crash_counter = {EFI_CRASH_COUNTER, "C.EFI", "EFI Crash Counter", 5, 17,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
 FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH2LI", "H20 Temp. Left In", 5, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
@@ -452,7 +452,7 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_oil_press,
  (Indicator*)&ind_rpm,
  (Indicator*)&ind_clutch_pos,
- (Indicator*)&ind_rio_acq,
+ (Indicator*)&ind_clutch_fb,
  (Indicator*)&ind_efi_status,
  (Indicator*)&ind_efi_crash_counter,
  (Indicator*)&ind_oil_temp_in,

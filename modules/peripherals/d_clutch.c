@@ -21,7 +21,7 @@ void dClutch_set(unsigned char value) {
        value = 100;
     }
     dClutch_value = value;
-    dd_Indicator_setIntValueP(&ind_rio_acq.base, dClutch_value);
+    dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_value);
 }
 
 void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
