@@ -389,8 +389,7 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
  Can_writeInt( 0b01000000011 , (int) value);
- dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
- d_traction_control_printNotification();
+#line 60 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
 }
 
 void d_traction_control_move(signed char movements){
@@ -405,10 +404,18 @@ void d_traction_control_move(signed char movements){
  d_traction_control_propagateValue(value);
 }
 
+void d_traction_control_setValueFromCAN(unsigned int value){
+ d_tractionValue = (signed char)value;
+ dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+ d_traction_control_printNotification();
+ return;
+}
+
 void d_traction_control_init(void){
  Can_writeInt( 0b01000000011 , (int) d_tractionValue);
  dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
  sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
  Debug_UART_Write(dstr);
+
 
 }

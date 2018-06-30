@@ -459,35 +459,7 @@ char textMessage;
 
 
 signed char d_ebb = 0;
-
-void dEbb_printNotification(void){
- switch (dEbb_value){
- case -3:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB -3", MESSAGE);
- break;
- case -2:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB -2", MESSAGE);
- break;
- case -1:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB -1", MESSAGE);
- break;
- case 0:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB 0", MESSAGE);
- break;
- case 1:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB 1", MESSAGE);
- break;
- case 2:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB 2", MESSAGE);
- break;
- case 3:
- dd_GraphicController_fireTimedNotification( 1000 , "EBB 3", MESSAGE);
- break;
- default:
- break;
- }
-}
-
+#line 53 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_propagateValue(signed char value){
  Can_writeInt( 0b10000000000 , (int)(value +  4 ));
  dEbb_propagateEbbChange();
@@ -586,6 +558,7 @@ void dEbb_setEbbValueFromCAN(unsigned int value) {
  dEbb_localValue = dEbb_value;
  break;
  }
+ dEbb_propagateEbbChange();
 }
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
@@ -618,5 +591,5 @@ void dEbb_propagateEbbChange(void) {
 }
 
 void dEbb_tick(void) {
-#line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 210 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

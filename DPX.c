@@ -203,6 +203,9 @@ onCanInterrupt{
        case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;
+       /*case ID_DA_CUI_RICEVIAMO_LA_POSIZIONE_DEL_TRACTION:
+          d_traction_control_setValueFromCAN(firstInt);
+          break;*/
        default:
            break;
     }

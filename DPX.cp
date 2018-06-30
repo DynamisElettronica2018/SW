@@ -848,7 +848,12 @@ void main(){
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
  break;
-#line 179 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+ case  0b11100001101 :
+ dEbb_setEbbValueFromCAN(firstInt);
+
+ dEbb_calibrationState(secondInt);
+ dEbb_error(thirdInt);
+ break;
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -873,6 +878,7 @@ void main(){
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
  break;
+#line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  default:
  break;
  }

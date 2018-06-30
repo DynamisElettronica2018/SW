@@ -196,20 +196,11 @@ _d_traction_control_propagateValue:
 	PUSH	W11
 	PUSH	W12
 	SE	W10, W0
-	PUSH	W10
 	MOV	W0, W12
 	MOV	#515, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-	POP	W10
-;d_traction_control.c,56 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
-	SE	W10, W0
-	MOV	W0, W11
-	MOV	#lo_addr(_ind_efi_slip), W10
-	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,57 :: 		d_traction_control_printNotification();
-	CALL	_d_traction_control_printNotification
-;d_traction_control.c,58 :: 		}
+;d_traction_control.c,60 :: 		}
 L_end_d_traction_control_propagateValue:
 	POP	W12
 	POP	W11
@@ -219,8 +210,8 @@ L_end_d_traction_control_propagateValue:
 
 _d_traction_control_move:
 
-;d_traction_control.c,60 :: 		void d_traction_control_move(signed char movements){
-;d_traction_control.c,62 :: 		value = d_tractionValue - movements;
+;d_traction_control.c,62 :: 		void d_traction_control_move(signed char movements){
+;d_traction_control.c,64 :: 		value = d_tractionValue - movements;
 	PUSH	W10
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W1
@@ -228,14 +219,14 @@ _d_traction_control_move:
 	SUB	W1, W0, W0
 ; value start address is: 2 (W1)
 	MOV.B	W0, W1
-;d_traction_control.c,63 :: 		if(value > TRACTION_MAX_VALUE){
+;d_traction_control.c,65 :: 		if(value > TRACTION_MAX_VALUE){
 	CP.B	W0, #10
 	BRA GT	L__d_traction_control_move32
 	GOTO	L_d_traction_control_move14
 L__d_traction_control_move32:
-;d_traction_control.c,64 :: 		value = TRACTION_MAX_VALUE;
+;d_traction_control.c,66 :: 		value = TRACTION_MAX_VALUE;
 	MOV.B	#10, W1
-;d_traction_control.c,65 :: 		} else if(value < TRACTION_MIN_VALUE){
+;d_traction_control.c,67 :: 		} else if(value < TRACTION_MIN_VALUE){
 	GOTO	L_d_traction_control_move15
 L_d_traction_control_move14:
 	CP.B	W1, #0
@@ -243,38 +234,61 @@ L_d_traction_control_move14:
 	GOTO	L__d_traction_control_move17
 L__d_traction_control_move33:
 ; value end address is: 2 (W1)
-;d_traction_control.c,66 :: 		value = TRACTION_MIN_VALUE;
+;d_traction_control.c,68 :: 		value = TRACTION_MIN_VALUE;
 ; value start address is: 0 (W0)
 	CLR	W0
 ; value end address is: 0 (W0)
 	MOV.B	W0, W1
-;d_traction_control.c,67 :: 		}
+;d_traction_control.c,69 :: 		}
 	GOTO	L_d_traction_control_move16
 L__d_traction_control_move17:
-;d_traction_control.c,65 :: 		} else if(value < TRACTION_MIN_VALUE){
-;d_traction_control.c,67 :: 		}
+;d_traction_control.c,67 :: 		} else if(value < TRACTION_MIN_VALUE){
+;d_traction_control.c,69 :: 		}
 L_d_traction_control_move16:
 ; value start address is: 2 (W1)
 ; value end address is: 2 (W1)
 L_d_traction_control_move15:
-;d_traction_control.c,68 :: 		d_tractionValue = value;
+;d_traction_control.c,70 :: 		d_tractionValue = value;
 ; value start address is: 2 (W1)
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	W1, [W0]
-;d_traction_control.c,69 :: 		d_traction_control_propagateValue(value);
+;d_traction_control.c,71 :: 		d_traction_control_propagateValue(value);
 	MOV.B	W1, W10
 ; value end address is: 2 (W1)
 	CALL	_d_traction_control_propagateValue
-;d_traction_control.c,70 :: 		}
+;d_traction_control.c,72 :: 		}
 L_end_d_traction_control_move:
 	POP	W10
 	RETURN
 ; end of _d_traction_control_move
 
+_d_traction_control_setValueFromCAN:
+
+;d_traction_control.c,74 :: 		void d_traction_control_setValueFromCAN(unsigned int value){
+;d_traction_control.c,75 :: 		d_tractionValue = (signed char)value;              //controllare questo cast
+	PUSH	W10
+	PUSH	W11
+	MOV	#lo_addr(_d_tractionValue), W0
+	MOV.B	W10, [W0]
+;d_traction_control.c,76 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+	MOV	W10, W11
+	MOV	#lo_addr(_ind_efi_slip), W10
+	CALL	_dd_Indicator_setIntValueP
+;d_traction_control.c,77 :: 		d_traction_control_printNotification();
+	CALL	_d_traction_control_printNotification
+;d_traction_control.c,79 :: 		}
+;d_traction_control.c,78 :: 		return;
+;d_traction_control.c,79 :: 		}
+L_end_d_traction_control_setValueFromCAN:
+	POP	W11
+	POP	W10
+	RETURN
+; end of _d_traction_control_setValueFromCAN
+
 _d_traction_control_init:
 
-;d_traction_control.c,72 :: 		void d_traction_control_init(void){
-;d_traction_control.c,73 :: 		Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) d_tractionValue);      //se si vuole partire sempre da zero
+;d_traction_control.c,81 :: 		void d_traction_control_init(void){
+;d_traction_control.c,82 :: 		Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) d_tractionValue);      //se si vuole partire sempre da zero
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -284,13 +298,13 @@ _d_traction_control_init:
 	MOV	#515, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_traction_control.c,74 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
+;d_traction_control.c,83 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_efi_slip), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,75 :: 		sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
+;d_traction_control.c,84 :: 		sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W0
 	PUSH	W0
@@ -300,10 +314,10 @@ _d_traction_control_init:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_traction_control.c,76 :: 		Debug_UART_Write(dstr);
+;d_traction_control.c,85 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_traction_control.c,78 :: 		}
+;d_traction_control.c,88 :: 		}
 L_end_d_traction_control_init:
 	POP	W12
 	POP	W11

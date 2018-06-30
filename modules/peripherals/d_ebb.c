@@ -22,7 +22,7 @@ char textMessage;
 
 signed char d_ebb = 0;
 /*      non serve perchè c'è già l'indicator sulla dashboard  */
-void dEbb_printNotification(void){
+/*void dEbb_printNotification(void){
      switch (dEbb_value){
            case -3:
                  dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -3", MESSAGE);

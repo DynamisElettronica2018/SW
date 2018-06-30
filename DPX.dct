@@ -2230,6 +2230,7 @@ d_traction_control_init
 d_traction_control_move
 d_traction_control_printnotification
 d_traction_control_propagatevalue
+d_traction_control_setvaluefromcan
 d_tractionvalue
 d_ui_accmodeinit
 d_ui_applysettings
@@ -2450,7 +2451,6 @@ debb_localvalue
 debb_motorsense
 debb_motorstate
 debb_move
-debb_printnotification
 debb_propagateebbchange
 debb_propagatevalue
 debb_setebbmotorsensefromcan

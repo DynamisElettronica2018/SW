@@ -1,136 +1,4 @@
 
-_dEbb_printNotification:
-
-;d_ebb.c,25 :: 		void dEbb_printNotification(void){
-;d_ebb.c,26 :: 		switch (dEbb_value){
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	GOTO	L_dEbb_printNotification0
-;d_ebb.c,27 :: 		case -3:
-L_dEbb_printNotification2:
-;d_ebb.c,28 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -3", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr1_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,29 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,30 :: 		case -2:
-L_dEbb_printNotification3:
-;d_ebb.c,31 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -2", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr2_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,32 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,33 :: 		case -1:
-L_dEbb_printNotification4:
-;d_ebb.c,34 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -1", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr3_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,35 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,36 :: 		case 0:
-L_dEbb_printNotification5:
-;d_ebb.c,37 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 0", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr4_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,38 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,39 :: 		case 1:
-L_dEbb_printNotification6:
-;d_ebb.c,40 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 1", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr5_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,41 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,42 :: 		case 2:
-L_dEbb_printNotification7:
-;d_ebb.c,43 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 2", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr6_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,44 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,45 :: 		case 3:
-L_dEbb_printNotification8:
-;d_ebb.c,46 :: 		dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 3", MESSAGE);
-	CLR	W12
-	MOV	#lo_addr(?lstr7_d_ebb), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,47 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,48 :: 		default:
-L_dEbb_printNotification9:
-;d_ebb.c,49 :: 		break;
-	GOTO	L_dEbb_printNotification1
-;d_ebb.c,50 :: 		}
-L_dEbb_printNotification0:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W1
-	MOV.B	#253, W0
-	CP.B	W1, W0
-	BRA NZ	L__dEbb_printNotification47
-	GOTO	L_dEbb_printNotification2
-L__dEbb_printNotification47:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W1
-	MOV.B	#254, W0
-	CP.B	W1, W0
-	BRA NZ	L__dEbb_printNotification48
-	GOTO	L_dEbb_printNotification3
-L__dEbb_printNotification48:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W1
-	MOV.B	#255, W0
-	CP.B	W1, W0
-	BRA NZ	L__dEbb_printNotification49
-	GOTO	L_dEbb_printNotification4
-L__dEbb_printNotification49:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #0
-	BRA NZ	L__dEbb_printNotification50
-	GOTO	L_dEbb_printNotification5
-L__dEbb_printNotification50:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #1
-	BRA NZ	L__dEbb_printNotification51
-	GOTO	L_dEbb_printNotification6
-L__dEbb_printNotification51:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #2
-	BRA NZ	L__dEbb_printNotification52
-	GOTO	L_dEbb_printNotification7
-L__dEbb_printNotification52:
-	MOV	#lo_addr(_dEbb_value), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #3
-	BRA NZ	L__dEbb_printNotification53
-	GOTO	L_dEbb_printNotification8
-L__dEbb_printNotification53:
-	GOTO	L_dEbb_printNotification9
-L_dEbb_printNotification1:
-;d_ebb.c,51 :: 		} //*/
-L_end_dEbb_printNotification:
-	POP	W12
-	POP	W11
-	POP	W10
-	RETURN
-; end of _dEbb_printNotification
-
 _dEbb_propagateValue:
 
 ;d_ebb.c,53 :: 		void dEbb_propagateValue(signed char value){
@@ -167,19 +35,19 @@ _dEbb_move:
 	MOV.B	W0, W1
 ;d_ebb.c,61 :: 		if(value > EBB_MAX_VALUE){
 	CP.B	W0, #3
-	BRA GT	L__dEbb_move56
-	GOTO	L_dEbb_move10
-L__dEbb_move56:
+	BRA GT	L__dEbb_move38
+	GOTO	L_dEbb_move0
+L__dEbb_move38:
 ;d_ebb.c,62 :: 		value = EBB_MAX_VALUE;
 	MOV.B	#3, W1
 ;d_ebb.c,63 :: 		} else if(value < EBB_MIN_VALUE){
-	GOTO	L_dEbb_move11
-L_dEbb_move10:
+	GOTO	L_dEbb_move1
+L_dEbb_move0:
 	MOV.B	#253, W0
 	CP.B	W1, W0
-	BRA LT	L__dEbb_move57
-	GOTO	L__dEbb_move39
-L__dEbb_move57:
+	BRA LT	L__dEbb_move39
+	GOTO	L__dEbb_move29
+L__dEbb_move39:
 ; value end address is: 2 (W1)
 ;d_ebb.c,64 :: 		value = EBB_MIN_VALUE;
 ; value start address is: 0 (W0)
@@ -187,14 +55,14 @@ L__dEbb_move57:
 ; value end address is: 0 (W0)
 	MOV.B	W0, W1
 ;d_ebb.c,65 :: 		}
-	GOTO	L_dEbb_move12
-L__dEbb_move39:
+	GOTO	L_dEbb_move2
+L__dEbb_move29:
 ;d_ebb.c,63 :: 		} else if(value < EBB_MIN_VALUE){
 ;d_ebb.c,65 :: 		}
-L_dEbb_move12:
+L_dEbb_move2:
 ; value start address is: 2 (W1)
 ; value end address is: 2 (W1)
-L_dEbb_move11:
+L_dEbb_move1:
 ;d_ebb.c,66 :: 		dEbb_Value = value;
 ; value start address is: 2 (W1)
 	MOV	#lo_addr(_dEbb_value), W0
@@ -232,7 +100,7 @@ _dEbb_init:
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	PUSH	W0
-	MOV	#lo_addr(?lstr_8_d_ebb), W0
+	MOV	#lo_addr(?lstr_1_d_ebb), W0
 	PUSH	W0
 	MOV	#lo_addr(_dstr), W0
 	PUSH	W0
@@ -256,9 +124,9 @@ _dEbb_calibrateSwitch:
 	PUSH	W10
 	CALL	_dEbb_isCalibrateing
 	CP	W0, #1
-	BRA Z	L__dEbb_calibrateSwitch60
-	GOTO	L_dEbb_calibrateSwitch13
-L__dEbb_calibrateSwitch60:
+	BRA Z	L__dEbb_calibrateSwitch42
+	GOTO	L_dEbb_calibrateSwitch3
+L__dEbb_calibrateSwitch42:
 ;d_ebb.c,84 :: 		dEbb_calibrateStop();
 	CALL	_dEbb_calibrateStop
 ;d_ebb.c,85 :: 		calibrationState = FALSE;
@@ -268,13 +136,13 @@ L__dEbb_calibrateSwitch60:
 	MOV.B	#3, W10
 	CALL	_dSignalLed_switch
 ;d_ebb.c,87 :: 		} else if (dEbb_isCalibrateing() == FALSE) {
-	GOTO	L_dEbb_calibrateSwitch14
-L_dEbb_calibrateSwitch13:
+	GOTO	L_dEbb_calibrateSwitch4
+L_dEbb_calibrateSwitch3:
 	CALL	_dEbb_isCalibrateing
 	CP	W0, #0
-	BRA Z	L__dEbb_calibrateSwitch61
-	GOTO	L_dEbb_calibrateSwitch15
-L__dEbb_calibrateSwitch61:
+	BRA Z	L__dEbb_calibrateSwitch43
+	GOTO	L_dEbb_calibrateSwitch5
+L__dEbb_calibrateSwitch43:
 ;d_ebb.c,88 :: 		calibrationState = TRUE;
 	MOV	#1, W0
 	MOV	W0, _calibrationState
@@ -282,8 +150,8 @@ L__dEbb_calibrateSwitch61:
 	MOV.B	#3, W10
 	CALL	_dSignalLed_switch
 ;d_ebb.c,90 :: 		}
-L_dEbb_calibrateSwitch15:
-L_dEbb_calibrateSwitch14:
+L_dEbb_calibrateSwitch5:
+L_dEbb_calibrateSwitch4:
 ;d_ebb.c,91 :: 		}
 L_end_dEbb_calibrateSwitch:
 	POP	W10
@@ -296,14 +164,14 @@ _dEbb_error:
 ;d_ebb.c,94 :: 		if( value ==  1 ){
 	PUSH	W10
 	CP	W10, #1
-	BRA Z	L__dEbb_error63
-	GOTO	L_dEbb_error16
-L__dEbb_error63:
+	BRA Z	L__dEbb_error45
+	GOTO	L_dEbb_error6
+L__dEbb_error45:
 ;d_ebb.c,95 :: 		dd_printMessage("EBB ERROR");
-	MOV	#lo_addr(?lstr9_d_ebb), W10
+	MOV	#lo_addr(?lstr2_d_ebb), W10
 	CALL	_dd_printMessage
 ;d_ebb.c,96 :: 		}
-L_dEbb_error16:
+L_dEbb_error6:
 ;d_ebb.c,97 :: 		}
 L_end_dEbb_error:
 	POP	W10
@@ -326,48 +194,48 @@ _dEbb_calibrationState:
 ;d_ebb.c,104 :: 		if( value == 1 && dEbb_isCalibrateing() == 1 ){
 	PUSH	W10
 	CP	W10, #1
-	BRA Z	L__dEbb_calibrationState66
-	GOTO	L__dEbb_calibrationState43
-L__dEbb_calibrationState66:
+	BRA Z	L__dEbb_calibrationState48
+	GOTO	L__dEbb_calibrationState33
+L__dEbb_calibrationState48:
 	CALL	_dEbb_isCalibrateing
 	CP	W0, #1
-	BRA Z	L__dEbb_calibrationState67
-	GOTO	L__dEbb_calibrationState42
-L__dEbb_calibrationState67:
-L__dEbb_calibrationState41:
+	BRA Z	L__dEbb_calibrationState49
+	GOTO	L__dEbb_calibrationState32
+L__dEbb_calibrationState49:
+L__dEbb_calibrationState31:
 ;d_ebb.c,105 :: 		dd_printMessage("CALIBRATING EBB");
-	MOV	#lo_addr(?lstr10_d_ebb), W10
+	MOV	#lo_addr(?lstr3_d_ebb), W10
 	CALL	_dd_printMessage
 ;d_ebb.c,106 :: 		} else if(value == 0 && dEbb_isCalibrateing() == 0 ){
-	GOTO	L_dEbb_calibrationState20
+	GOTO	L_dEbb_calibrationState10
 ;d_ebb.c,104 :: 		if( value == 1 && dEbb_isCalibrateing() == 1 ){
-L__dEbb_calibrationState43:
-L__dEbb_calibrationState42:
+L__dEbb_calibrationState33:
+L__dEbb_calibrationState32:
 ;d_ebb.c,106 :: 		} else if(value == 0 && dEbb_isCalibrateing() == 0 ){
 	CP	W10, #0
-	BRA Z	L__dEbb_calibrationState68
-	GOTO	L__dEbb_calibrationState45
-L__dEbb_calibrationState68:
+	BRA Z	L__dEbb_calibrationState50
+	GOTO	L__dEbb_calibrationState35
+L__dEbb_calibrationState50:
 	CALL	_dEbb_isCalibrateing
 	CP	W0, #0
-	BRA Z	L__dEbb_calibrationState69
-	GOTO	L__dEbb_calibrationState44
-L__dEbb_calibrationState69:
-L__dEbb_calibrationState40:
+	BRA Z	L__dEbb_calibrationState51
+	GOTO	L__dEbb_calibrationState34
+L__dEbb_calibrationState51:
+L__dEbb_calibrationState30:
 ;d_ebb.c,107 :: 		dd_printMessage("CALIBRATION DONE");
-	MOV	#lo_addr(?lstr11_d_ebb), W10
+	MOV	#lo_addr(?lstr4_d_ebb), W10
 	CALL	_dd_printMessage
 ;d_ebb.c,108 :: 		} else {
-	GOTO	L_dEbb_calibrationState24
+	GOTO	L_dEbb_calibrationState14
 ;d_ebb.c,106 :: 		} else if(value == 0 && dEbb_isCalibrateing() == 0 ){
-L__dEbb_calibrationState45:
-L__dEbb_calibrationState44:
+L__dEbb_calibrationState35:
+L__dEbb_calibrationState34:
 ;d_ebb.c,109 :: 		dEbb_error(1);
 	MOV	#1, W10
 	CALL	_dEbb_error
 ;d_ebb.c,110 :: 		}
-L_dEbb_calibrationState24:
-L_dEbb_calibrationState20:
+L_dEbb_calibrationState14:
+L_dEbb_calibrationState10:
 ;d_ebb.c,111 :: 		}
 L_end_dEbb_calibrationState:
 	POP	W10
@@ -457,37 +325,37 @@ _dEbb_setEbbValueFromCAN:
 
 ;d_ebb.c,131 :: 		void dEbb_setEbbValueFromCAN(unsigned int value) {
 ;d_ebb.c,132 :: 		switch (value){
-	GOTO	L_dEbb_setEbbValueFromCAN25
+	GOTO	L_dEbb_setEbbValueFromCAN15
 ;d_ebb.c,133 :: 		case EBB_IS_CALIBRATING:
-L_dEbb_setEbbValueFromCAN27:
+L_dEbb_setEbbValueFromCAN17:
 ;d_ebb.c,134 :: 		dEbb_state = EBB_IS_CALIBRATING;
 	MOV	#100, W0
 	MOV	W0, _dEbb_state
 ;d_ebb.c,135 :: 		break;
-	GOTO	L_dEbb_setEbbValueFromCAN26
+	GOTO	L_dEbb_setEbbValueFromCAN16
 ;d_ebb.c,136 :: 		case EBB_MOTOR_STOPPED:
-L_dEbb_setEbbValueFromCAN28:
+L_dEbb_setEbbValueFromCAN18:
 ;d_ebb.c,137 :: 		dEbb_state = EBB_MOTOR_STOPPED;
 	MOV	#122, W0
 	MOV	W0, _dEbb_state
 ;d_ebb.c,138 :: 		break;
-	GOTO	L_dEbb_setEbbValueFromCAN26
+	GOTO	L_dEbb_setEbbValueFromCAN16
 ;d_ebb.c,139 :: 		case EBB_LOW_VOLTAGE_STOP:
-L_dEbb_setEbbValueFromCAN29:
+L_dEbb_setEbbValueFromCAN19:
 ;d_ebb.c,140 :: 		dEbb_state = EBB_LOW_VOLTAGE_STOP;
 	MOV	#124, W0
 	MOV	W0, _dEbb_state
 ;d_ebb.c,141 :: 		break;
-	GOTO	L_dEbb_setEbbValueFromCAN26
+	GOTO	L_dEbb_setEbbValueFromCAN16
 ;d_ebb.c,142 :: 		case EBB_MOTOR_ROTATEING:
-L_dEbb_setEbbValueFromCAN30:
+L_dEbb_setEbbValueFromCAN20:
 ;d_ebb.c,143 :: 		dEbb_state = EBB_MOTOR_ROTATEING;
 	MOV	#10, W0
 	MOV	W0, _dEbb_state
 ;d_ebb.c,144 :: 		break;
-	GOTO	L_dEbb_setEbbValueFromCAN26
+	GOTO	L_dEbb_setEbbValueFromCAN16
 ;d_ebb.c,145 :: 		default:
-L_dEbb_setEbbValueFromCAN31:
+L_dEbb_setEbbValueFromCAN21:
 ;d_ebb.c,146 :: 		dEbb_state = EBB_OK;
 	MOV	#112, W0
 	MOV	W0, _dEbb_state
@@ -499,132 +367,134 @@ L_dEbb_setEbbValueFromCAN31:
 	SE	[W0], W0
 	MOV	W0, _dEbb_localValue
 ;d_ebb.c,149 :: 		break;
-	GOTO	L_dEbb_setEbbValueFromCAN26
+	GOTO	L_dEbb_setEbbValueFromCAN16
 ;d_ebb.c,150 :: 		}
-L_dEbb_setEbbValueFromCAN25:
+L_dEbb_setEbbValueFromCAN15:
 	MOV	#100, W0
 	CP	W10, W0
-	BRA NZ	L__dEbb_setEbbValueFromCAN75
-	GOTO	L_dEbb_setEbbValueFromCAN27
-L__dEbb_setEbbValueFromCAN75:
+	BRA NZ	L__dEbb_setEbbValueFromCAN57
+	GOTO	L_dEbb_setEbbValueFromCAN17
+L__dEbb_setEbbValueFromCAN57:
 	MOV	#122, W0
 	CP	W10, W0
-	BRA NZ	L__dEbb_setEbbValueFromCAN76
-	GOTO	L_dEbb_setEbbValueFromCAN28
-L__dEbb_setEbbValueFromCAN76:
+	BRA NZ	L__dEbb_setEbbValueFromCAN58
+	GOTO	L_dEbb_setEbbValueFromCAN18
+L__dEbb_setEbbValueFromCAN58:
 	MOV	#124, W0
 	CP	W10, W0
-	BRA NZ	L__dEbb_setEbbValueFromCAN77
-	GOTO	L_dEbb_setEbbValueFromCAN29
-L__dEbb_setEbbValueFromCAN77:
+	BRA NZ	L__dEbb_setEbbValueFromCAN59
+	GOTO	L_dEbb_setEbbValueFromCAN19
+L__dEbb_setEbbValueFromCAN59:
 	CP	W10, #10
-	BRA NZ	L__dEbb_setEbbValueFromCAN78
-	GOTO	L_dEbb_setEbbValueFromCAN30
-L__dEbb_setEbbValueFromCAN78:
-	GOTO	L_dEbb_setEbbValueFromCAN31
-L_dEbb_setEbbValueFromCAN26:
-;d_ebb.c,151 :: 		}
+	BRA NZ	L__dEbb_setEbbValueFromCAN60
+	GOTO	L_dEbb_setEbbValueFromCAN20
+L__dEbb_setEbbValueFromCAN60:
+	GOTO	L_dEbb_setEbbValueFromCAN21
+L_dEbb_setEbbValueFromCAN16:
+;d_ebb.c,151 :: 		dEbb_propagateEbbChange();
+	CALL	_dEbb_propagateEbbChange
+;d_ebb.c,152 :: 		}
 L_end_dEbb_setEbbValueFromCAN:
 	RETURN
 ; end of _dEbb_setEbbValueFromCAN
 
 _dEbb_setEbbMotorStateFromCAN:
 
-;d_ebb.c,153 :: 		void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
-;d_ebb.c,154 :: 		dEbb_motorState = motorState;
+;d_ebb.c,154 :: 		void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
+;d_ebb.c,155 :: 		dEbb_motorState = motorState;
 	MOV	W10, _dEbb_motorState
-;d_ebb.c,155 :: 		}
+;d_ebb.c,156 :: 		}
 L_end_dEbb_setEbbMotorStateFromCAN:
 	RETURN
 ; end of _dEbb_setEbbMotorStateFromCAN
 
 _dEbb_setEbbMotorSenseFromCAN:
 
-;d_ebb.c,157 :: 		void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
-;d_ebb.c,158 :: 		dEbb_motorSense = motorSense;
+;d_ebb.c,158 :: 		void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
+;d_ebb.c,159 :: 		dEbb_motorSense = motorSense;
 	MOV	W10, _dEbb_motorSense
-;d_ebb.c,159 :: 		}
+;d_ebb.c,160 :: 		}
 L_end_dEbb_setEbbMotorSenseFromCAN:
 	RETURN
 ; end of _dEbb_setEbbMotorSenseFromCAN
 
 _dEbb_propagateEbbChange:
 
-;d_ebb.c,162 :: 		void dEbb_propagateEbbChange(void) {
-;d_ebb.c,163 :: 		switch (dEbb_state){
+;d_ebb.c,163 :: 		void dEbb_propagateEbbChange(void) {
+;d_ebb.c,164 :: 		switch (dEbb_state){
 	PUSH	W10
 	PUSH	W11
-	GOTO	L_dEbb_propagateEbbChange32
-;d_ebb.c,164 :: 		case EBB_IS_CALIBRATING:
-L_dEbb_propagateEbbChange34:
-;d_ebb.c,165 :: 		dd_Indicator_setStringValue(EBB, "=0=");
-	MOV	#lo_addr(?lstr12_d_ebb), W11
+	GOTO	L_dEbb_propagateEbbChange22
+;d_ebb.c,165 :: 		case EBB_IS_CALIBRATING:
+L_dEbb_propagateEbbChange24:
+;d_ebb.c,166 :: 		dd_Indicator_setStringValue(EBB, "=0=");
+	MOV	#lo_addr(?lstr5_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,166 :: 		break;
-	GOTO	L_dEbb_propagateEbbChange33
-;d_ebb.c,167 :: 		case EBB_MOTOR_STOPPED:
-L_dEbb_propagateEbbChange35:
-;d_ebb.c,168 :: 		dd_Indicator_setStringValue(EBB, "/");
-	MOV	#lo_addr(?lstr13_d_ebb), W11
+;d_ebb.c,167 :: 		break;
+	GOTO	L_dEbb_propagateEbbChange23
+;d_ebb.c,168 :: 		case EBB_MOTOR_STOPPED:
+L_dEbb_propagateEbbChange25:
+;d_ebb.c,169 :: 		dd_Indicator_setStringValue(EBB, "/");
+	MOV	#lo_addr(?lstr6_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,169 :: 		break;
-	GOTO	L_dEbb_propagateEbbChange33
-;d_ebb.c,170 :: 		case EBB_LOW_VOLTAGE_STOP:
-L_dEbb_propagateEbbChange36:
-;d_ebb.c,171 :: 		dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
-	MOV	#lo_addr(?lstr14_d_ebb), W11
+;d_ebb.c,170 :: 		break;
+	GOTO	L_dEbb_propagateEbbChange23
+;d_ebb.c,171 :: 		case EBB_LOW_VOLTAGE_STOP:
+L_dEbb_propagateEbbChange26:
+;d_ebb.c,172 :: 		dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
+	MOV	#lo_addr(?lstr7_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,172 :: 		break;
-	GOTO	L_dEbb_propagateEbbChange33
-;d_ebb.c,173 :: 		case EBB_MOTOR_ROTATEING:
-L_dEbb_propagateEbbChange37:
-;d_ebb.c,174 :: 		dd_Indicator_setStringValue(EBB, "...");
-	MOV	#lo_addr(?lstr15_d_ebb), W11
+;d_ebb.c,173 :: 		break;
+	GOTO	L_dEbb_propagateEbbChange23
+;d_ebb.c,174 :: 		case EBB_MOTOR_ROTATEING:
+L_dEbb_propagateEbbChange27:
+;d_ebb.c,175 :: 		dd_Indicator_setStringValue(EBB, "...");
+	MOV	#lo_addr(?lstr8_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,175 :: 		break;
-	GOTO	L_dEbb_propagateEbbChange33
-;d_ebb.c,176 :: 		default:
-L_dEbb_propagateEbbChange38:
-;d_ebb.c,177 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
+;d_ebb.c,176 :: 		break;
+	GOTO	L_dEbb_propagateEbbChange23
+;d_ebb.c,177 :: 		default:
+L_dEbb_propagateEbbChange28:
+;d_ebb.c,178 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_ebb.c,178 :: 		break;
-	GOTO	L_dEbb_propagateEbbChange33
-;d_ebb.c,179 :: 		}
-L_dEbb_propagateEbbChange32:
+;d_ebb.c,179 :: 		break;
+	GOTO	L_dEbb_propagateEbbChange23
+;d_ebb.c,180 :: 		}
+L_dEbb_propagateEbbChange22:
 	MOV	#100, W1
 	MOV	#lo_addr(_dEbb_state), W0
 	CP	W1, [W0]
-	BRA NZ	L__dEbb_propagateEbbChange82
-	GOTO	L_dEbb_propagateEbbChange34
-L__dEbb_propagateEbbChange82:
+	BRA NZ	L__dEbb_propagateEbbChange64
+	GOTO	L_dEbb_propagateEbbChange24
+L__dEbb_propagateEbbChange64:
 	MOV	#122, W1
 	MOV	#lo_addr(_dEbb_state), W0
 	CP	W1, [W0]
-	BRA NZ	L__dEbb_propagateEbbChange83
-	GOTO	L_dEbb_propagateEbbChange35
-L__dEbb_propagateEbbChange83:
+	BRA NZ	L__dEbb_propagateEbbChange65
+	GOTO	L_dEbb_propagateEbbChange25
+L__dEbb_propagateEbbChange65:
 	MOV	#124, W1
 	MOV	#lo_addr(_dEbb_state), W0
 	CP	W1, [W0]
-	BRA NZ	L__dEbb_propagateEbbChange84
-	GOTO	L_dEbb_propagateEbbChange36
-L__dEbb_propagateEbbChange84:
+	BRA NZ	L__dEbb_propagateEbbChange66
+	GOTO	L_dEbb_propagateEbbChange26
+L__dEbb_propagateEbbChange66:
 	MOV	_dEbb_state, W0
 	CP	W0, #10
-	BRA NZ	L__dEbb_propagateEbbChange85
-	GOTO	L_dEbb_propagateEbbChange37
-L__dEbb_propagateEbbChange85:
-	GOTO	L_dEbb_propagateEbbChange38
-L_dEbb_propagateEbbChange33:
-;d_ebb.c,180 :: 		}
+	BRA NZ	L__dEbb_propagateEbbChange67
+	GOTO	L_dEbb_propagateEbbChange27
+L__dEbb_propagateEbbChange67:
+	GOTO	L_dEbb_propagateEbbChange28
+L_dEbb_propagateEbbChange23:
+;d_ebb.c,181 :: 		}
 L_end_dEbb_propagateEbbChange:
 	POP	W11
 	POP	W10
@@ -633,8 +503,8 @@ L_end_dEbb_propagateEbbChange:
 
 _dEbb_tick:
 
-;d_ebb.c,182 :: 		void dEbb_tick(void) {
-;d_ebb.c,209 :: 		}
+;d_ebb.c,183 :: 		void dEbb_tick(void) {
+;d_ebb.c,210 :: 		}
 L_end_dEbb_tick:
 	RETURN
 ; end of _dEbb_tick

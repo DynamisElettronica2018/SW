@@ -53,8 +53,10 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
      Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
-     dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
-     d_traction_control_printNotification();
+     /*dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+     d_traction_control_printNotification();  */ //se mandano il valore ogni tot da gcu, stampiamo la notifica come conferma e non subito quando ruotiamo gli encoder
+                                              // se invece non ci mandano niente oppure ci mandano cose solo la prima volta, dobbiamo lasciare queste due funzioni.
+                                              //per me è meglio la prima ipotesi perchè così riceviamo un feedback
 }
 
 void d_traction_control_move(signed char movements){
@@ -69,11 +71,18 @@ void d_traction_control_move(signed char movements){
       d_traction_control_propagateValue(value);
 }
 
+void d_traction_control_setValueFromCAN(unsigned int value){
+     d_tractionValue = (signed char)value;              //controllare questo cast
+     dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+     d_traction_control_printNotification();
+     return;
+}
+
 void d_traction_control_init(void){
      Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) d_tractionValue);      //se si vuole partire sempre da zero
      dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
      sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
      Debug_UART_Write(dstr);
+     
      //altrimenti dobbiamo leggere il valore che ci manda gcu e poi settarlo come valore iniziale
 }
-
