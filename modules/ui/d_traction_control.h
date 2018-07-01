@@ -8,6 +8,8 @@
 void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
- 
+
+void d_traction_control_setValueFromCAN(unsigned int value);
+
  
 #endif //DPX_DISPLAY_TRACTION_CONTROL_H

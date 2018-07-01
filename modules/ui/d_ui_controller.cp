@@ -559,6 +559,8 @@ void dDCU_tick(void);
 void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
+
+void d_traction_control_setValueFromCAN(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"

@@ -16,6 +16,7 @@
 #include "modules/ui/display/dd_interfaces.h"
 #include "modules/ui/d_operating_modes.h"
 #include "d_sensors.h"
+#include "d_traction_control.h"
 #include "libs/debug.h"
 
 #include <stdlib.h>
@@ -163,7 +164,8 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
            break;
        case GCU_CLUTCH_FB_SW_ID:
-           dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+           dClutch_injectActualValue((unsigned char)firstInt);
+           d_traction_control_setValueFromCAN(secondInt);
            break;
        case DCU_AUX_ID:
            Debug_UART_Write("DCU sent MESSAGE\r\n");
@@ -203,9 +205,6 @@ onCanInterrupt{
        case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;
-       /*case ID_DA_CUI_RICEVIAMO_LA_POSIZIONE_DEL_TRACTION:
-          d_traction_control_setValueFromCAN(firstInt);
-          break;*/
        default:
            break;
     }

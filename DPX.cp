@@ -399,7 +399,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+void dClutch_injectActualValue(unsigned char value);
 
 unsigned char dClutch_get(void);
 
@@ -651,6 +651,19 @@ void dd_printMessage(char * title);
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_traction_control.h"
+
+
+
+
+
+
+
+void d_traction_control_move(signed char movements);
+
+void d_traction_control_init(void);
+
+void d_traction_control_setValueFromCAN(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
 #line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
@@ -702,7 +715,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0;
 
 
@@ -785,7 +798,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 111 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 112 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -841,7 +854,8 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
  break;
  case  0b01100010000 :
- dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+ dClutch_injectActualValue((unsigned char)firstInt);
+ d_traction_control_setValueFromCAN(secondInt);
  break;
  case  0b11111110111 :
  Debug_UART_Write("DCU sent MESSAGE\r\n");
@@ -863,7 +877,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 192 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 194 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -878,7 +892,6 @@ void main(){
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
  break;
-#line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  default:
  break;
  }

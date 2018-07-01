@@ -274,7 +274,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+void dClutch_injectActualValue(unsigned char value);
 
 unsigned char dClutch_get(void);
 

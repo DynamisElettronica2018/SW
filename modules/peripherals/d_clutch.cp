@@ -252,7 +252,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+void dClutch_injectActualValue(unsigned char value);
 
 unsigned char dClutch_get(void);
 
@@ -350,7 +350,7 @@ void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 #line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
 unsigned char dClutch_actualValue = 0, dClutch_value = 0;
 
 int i = 0;
@@ -364,17 +364,15 @@ void dClutch_set(unsigned char value) {
  if (value > 100) {
  value = 100;
  }
-
+ dClutch_value = value;
 
 }
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
- if (clutch_check ==  99 ){
+void dClutch_injectActualValue(unsigned char value) {
  dClutch_actualValue = value;
  dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
 
 
- }
 }
 
 unsigned char dClutch_get(void) {
