@@ -92,7 +92,7 @@ _dEfiSense_die:
 	INC.B	W0
 L__dEfiSense_die10:
 	MOV.B	W0, W11
-	MOV.B	#9, W10
+	MOV.B	#10, W10
 	CALL	_dd_Indicator_setBoolValue
 ;d_efiSense.c,34 :: 		dSignalLed_unset(DSIGNAL_LED_GREEN);
 	MOV.B	#3, W10

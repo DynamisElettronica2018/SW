@@ -47,7 +47,7 @@ diagnostics: 459	123	Compiled Successfully	d_controls.c
 diagnostics: 0	122	Compilation Started	eeprom.h
 diagnostics: 50	123	Compiled Successfully	d_hardReset.c
 diagnostics: 0	122	Compilation Started	basic.h
-diagnostics: 35	123	Compiled Successfully	d_paddle.c
+diagnostics: 37	123	Compiled Successfully	d_paddle.c
 diagnostics: 0	122	Compilation Started	d_rpm.h
 diagnostics: 54	123	Compiled Successfully	d_rpm.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -59,15 +59,15 @@ diagnostics: 122	123	Compiled Successfully	d_warnings.c
 diagnostics: 0	122	Compilation Started	d_acceleration.h
 diagnostics: 126	123	Compiled Successfully	d_acceleration.c
 diagnostics: 0	122	Compilation Started	d_controls.h
-diagnostics: 277	123	Compiled Successfully	d_operating_modes.c
+diagnostics: 279	123	Compiled Successfully	d_operating_modes.c
 diagnostics: 0	122	Compilation Started	d_controls.h
 diagnostics: 116	123	Compiled Successfully	d_ui_controller.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 21	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 64	123	Compiled Successfully	d_dcu.c
-diagnostics: 0	127	All files Compiled in 3859 ms	 
+diagnostics: 0	127	All files Compiled in 4797 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 938 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 5110 ms	 
-diagnostics: 0	103	Finished successfully: 30 giu 2018, 22:58:34	DPX.mcpds
+diagnostics: 0	128	Linked in 1218 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 6406 ms	 
+diagnostics: 0	103	Finished successfully: 02 lug 2018, 12:57:20	DPX.mcpds

@@ -21,7 +21,7 @@ void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
 
       //rivedere il significato di ydata e settarlo anche per queste definizioni
 
-const unsigned char dd_carParametersCount = 19;
+const unsigned char dd_carParametersCount = 20;
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
 
 /********************************* INDICATORS *********************************/
@@ -31,7 +31,8 @@ FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13, FALSE, TRUE, T
 FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3, FALSE, FALSE, TRUE, INT, 1, "?", 0};
 IntegerIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6, FALSE, FALSE, TRUE, INT, 1, "?", 0};
-IntegerIndicator ind_clutch_fb = {CLUTCH_FEEDBACK, "CL FB", "Clutch Fb", 3, 3, FALSE, FALSE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_clutch_fb = {CLUTCH_FEEDBACK, "CL FB", "Clutch Fb", 3, 9, FALSE, FALSE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_adc1_read = {ADC1, "ADC1", "ADC1", 4, 4, FALSE, FALSE, TRUE, INT, 1, "?", 0};
 BooleanIndicator ind_efi_status = {EFI_STATUS, "EFION", "Efi On", 5, 6, TRUE, TRUE, TRUE, BOOL, 1, "?", 0};
 IntegerIndicator ind_efi_crash_counter = {EFI_CRASH_COUNTER, "C.EFI", "EFI Crash Counter", 5, 17, TRUE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH2LI", "H20 Temp. Left In", 5, 17, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
@@ -69,6 +70,7 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
       (Indicator*)&ind_th2o,
       (Indicator*)&ind_vbat,
       (Indicator*)&ind_oil_press,
+      (Indicator*)&ind_adc1_read,
       (Indicator*)&ind_rpm,
       (Indicator*)&ind_clutch_pos,
       (Indicator*)&ind_clutch_fb,

@@ -1113,6 +1113,7 @@ base
 base
 base
 base
+base
 bbitsavailable
 bblocksinonepass
 bcd2dec
@@ -2527,6 +2528,8 @@ description
 description
 description
 description
+description
+descriptionlength
 descriptionlength
 descriptionlength
 descriptionlength
@@ -4983,6 +4986,7 @@ id
 id
 id
 id
+id
 idle
 idle
 idle_bit
@@ -5016,6 +5020,7 @@ ilr1
 ilr2
 ilr3
 imagefileasarray
+ind_adc1_read
 ind_clutch
 ind_clutch_fb
 ind_clutch_pos
@@ -5272,6 +5277,7 @@ isvisible
 isvisible
 isvisible
 isvisible
+isvisible
 isxdigit
 ivrie
 ivrie
@@ -5412,6 +5418,8 @@ label
 label
 label
 label
+label
+labellength
 labellength
 labellength
 labellength
@@ -5861,6 +5869,8 @@ name
 name
 name
 name
+name
+namelength
 namelength
 namelength
 namelength
@@ -6928,6 +6938,7 @@ parsevaluelabel
 parsevaluelabel
 parsevaluelabel
 parsevaluelabel
+parsevaluelabel
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
 pcfg_0
@@ -7043,6 +7054,7 @@ pdsel1
 pen
 pen
 pen_bit
+pendingprintupdate
 pendingprintupdate
 pendingprintupdate
 pendingprintupdate
@@ -12757,6 +12769,8 @@ value
 value
 value
 value
+value
+valuetype
 valuetype
 valuetype
 valuetype

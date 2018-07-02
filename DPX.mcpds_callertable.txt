@@ -470,6 +470,7 @@ timer2_interrupt
 		ADC1_Read
 			ADC1_Init
 			ADC1_Get_Sample
+		dd_Indicator_setIntValueP
 		_Long2Float
 		_Mul_FP
 		_AddSub_FP

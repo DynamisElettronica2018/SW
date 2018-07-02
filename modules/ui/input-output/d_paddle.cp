@@ -78,7 +78,7 @@ int getMinimumAnalogClockConversion(void);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM,
+ EBB, TH2O, VBAT, RPM, ADC1,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -258,11 +258,105 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux1(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE
+} OperatingMode;
+
+
+
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_th2o;
+extern FloatIndicator ind_vbat;
+extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern IntegerIndicator ind_adc1_read;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_oil_temp_out;
+extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 5 ])(void);
+#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose();
+void d_UI_setOperatingMode(OperatingMode mode);
+#line 131 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 unsigned int dPaddle_value = 0;
 
 void dPaddle_init(void) {
-#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 }
 
 
@@ -273,6 +367,7 @@ unsigned char dPaddle_getValue(void) {
 void dPaddle_readSample(void) {
  unsigned int analogValue;
  analogValue = ADC1_Read( 14 ) ;
+ dd_Indicator_setIntValueP(&ind_adc1_read.base, analogValue);
  if (analogValue <= 0) {
  dPaddle_value = 0;
  } else if (analogValue >  3800 ) {
