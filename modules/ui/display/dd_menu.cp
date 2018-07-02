@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
@@ -27,7 +27,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 68 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -122,7 +122,7 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_init();
 void dd_printMenu();
 
@@ -135,7 +135,7 @@ void dd_Menu_setX_OFFSET(unsigned char x);
 void dd_Menu_setHeight(unsigned char height);
 
 void dd_Menu_setWidth(unsigned char width);
-#line 33 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 33 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_moveSelection(signed char movements);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
@@ -162,9 +162,9 @@ char * strpbrk(char * s1, char * s2);
 char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dd_fonts.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dynamis_logo.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/dd_fonts.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/dynamis_logo.h"
 
 
 
@@ -221,8 +221,8 @@ static const unsigned char DYNAMIS_LOGO[1024] = {
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
 static const unsigned short DynamisFont_Big32x31[] = {
  0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00,
  0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01,
@@ -377,8 +377,8 @@ static const unsigned short DynamisFont_Big32x31[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
 static const unsigned short DynamisFont_Dashboard16x16[] = {
 
 
@@ -578,8 +578,8 @@ static const unsigned short DynamisFont_Dashboard16x16[] = {
  0x04, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
 static const unsigned short DynamisFont_Gears40x59[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0xFF, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x80, 0xFF,
@@ -798,7 +798,7 @@ static const unsigned short DynamisFont_Gears40x59[] = {
  0x00, 0x7C, 0x00, 0xC0, 0x07, 0x00, 0xF8, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x7C,
  0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00
 };
-#line 243 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+#line 243 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
 static const unsigned short Arial63x62[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -830,8 +830,8 @@ static const unsigned short Arial63x62[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00,
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
-#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
 static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -930,8 +930,8 @@ static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
-#line 25 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 25 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
 static const unsigned short DynamisFont_xTerminal6x8[] = {
  0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x05, 0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -1131,12 +1131,12 @@ static const unsigned short DynamisFont_UniformTerminal6x8[] = {
  0x06, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x06, 0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern const unsigned char BLACK, WHITE;
-#line 62 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 62 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
@@ -1168,11 +1168,11 @@ void eGlcd_setTimerCoefficient(float coefficient);
 unsigned int eGlcd_getTextPixelLength(char *text);
 
 void Lcd_PrintFrame();
-#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 102 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
 
 void eGlcd_fillPage(unsigned char page, char color);
-#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 115 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -1187,11 +1187,11 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -1203,42 +1203,45 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
 } Interface;
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_print[ 3 ])(void);
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_init[ 3 ])(void);
-#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 20 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 37 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
-#line 52 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -1257,9 +1260,9 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -1272,7 +1275,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 27 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 static const unsigned char MAX_MENU_HEIGHT = (unsigned char) ( 64  /  8 );
 
 static const unsigned char MAX_MENU_WIDTH = (int) ( 128  / ( 6  +  1 ));
@@ -1336,7 +1339,7 @@ void dd_Menu_scroll(signed char movements) {
  dd_currentIndicators[i]->pendingPrintUpdate =  1 ;
  }
 }
-#line 112 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 112 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 void dd_Menu_moveSelection(signed char movements) {
 
 
@@ -1363,7 +1366,7 @@ void dd_Menu_moveSelection(signed char movements) {
 
  }
 }
-#line 164 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 164 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 unsigned char dd_Menu_selectedLine(void) {
  return dd_Menu_SelectedLineIndex;
 }
@@ -1465,7 +1468,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 274 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 274 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
@@ -1480,7 +1483,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
  }
  }
-#line 304 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 304 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  if (valueWidth > 0) {
  for (i = 0; i <  1 ; i++) {
  lineText[lineCharIndex] = ' ';
@@ -1491,9 +1494,9 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineCharIndex += 1;
  }
  }
-#line 318 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 318 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  lineText[lineCharIndex] = ' ';
-#line 324 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 324 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {

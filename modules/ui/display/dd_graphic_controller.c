@@ -170,6 +170,20 @@ void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, N
     dd_GraphicController_fireNotification(text, type);
 }
 
+void dd_GraphicController_firePromptNotification(char *text) {
+    if(dd_notificationFlag)
+        dd_GraphicController_clearNotification();
+    else
+        eGlcd_clear();
+    
+    dd_GraphicController_fireNotification(text, PROMPT);
+}
+
+void dd_GraphicController_clearPrompt()
+{
+    dd_GraphicController_clearNotification();
+}
+
 void dd_GraphicController_handleNotification(void) {
     if (dd_notificationTimeoutCounter > 0) {
         dd_notificationTimeoutCounter--;

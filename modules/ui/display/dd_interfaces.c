@@ -38,7 +38,8 @@ void (*dd_Interface_init[INTERFACES_TOTAL_COUNT])(void) = {
 const char dd_notificationTitles[NOTIFICATION_TYPES_COUNT][MAX_INTERFACE_TITLE_LENGTH] = {
       "Message",
       "Warning",
-      "Error"
+      "Error",
+      "Prompt"
 };
 
 char dd_notificationText[MAX_NOTIFICATION_LENGTH] = "";

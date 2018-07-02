@@ -99,15 +99,9 @@ extern IntegerIndicator ind_gear_motor;
 */
 //!@{
 extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
-
 /**        \brief Groups operating mode methods called on exiting the specific mode.
 */
-/*extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
-        d_UI_SettingsModeClose(),
-        NULL,
-        NULL,
-        NULL
-} */
+extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void);
 //!@}
 
 /////////////////////////////////////////
@@ -118,7 +112,6 @@ extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
 *        
 *        Executes and saves all settings' changes.
 */
-void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 
 /**        \brief Invoked when value of a setting is changed.

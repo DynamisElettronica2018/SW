@@ -1,6 +1,6 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_acceleration.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 22 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -9,18 +9,20 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-void dAcc_startAutoAcceleration(void);
+#line 48 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+void dAcc_requestAction();
+
+
 
 char dAcc_isAutoAccelerationActive(void);
 
 char dAcc_isReleasingClutch(void);
 
-void dAcc_startClutchRelease(void);
+
 
 void dAcc_stopAutoAcceleration(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -32,9 +34,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
@@ -60,7 +62,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 68 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -155,22 +157,71 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
-typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
-extern void dd_Dashboard_init();
-extern void dd_Dashboard_print(void);
-#line 39 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
-unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+typedef enum {
+ DASHBOARD_INTERFACE,
+ MENU_INTERFACE,
+} Interface;
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+typedef enum {
+ MESSAGE,
+ WARNING,
+ ERROR,
+ PROMPT
+} NotificationType;
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
-void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/d_paddle.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/dspic.h"
+extern char dd_notificationText[ 20 ];
+
+void dd_printMessage(char * title);
+#line 20 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+extern Indicator** dd_currentIndicators;
+
+extern unsigned char dd_currentIndicatorsCount;
+
+extern char dd_currentInterfaceTitle[ 20 ];
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_init(void);
+#line 37 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
+
+Interface dd_GraphicController_getInterface(void);
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_forceFullFrameUpdate(void);
+
+void dd_GraphicController_forceNextFrameUpdate(void);
+
+char dd_GraphicController_isFrameUpdateForced(void);
+
+void dd_GraphicController_releaseFullFrameUpdate(void);
+
+void dd_GraphicController_invertColors(void);
+
+char dd_GraphicController_areColorsInverted(void);
+
+void dd_GraphicController_queueColorInversion(void);
+
+char dd_GraphicController_isColorInversionQueued(void);
+
+void dd_GraphicController_onTimerInterrupt(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/d_paddle.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -228,10 +279,21 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_dashboard.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_indicators.h"
+#line 23 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_dashboard.h"
+typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_dashboard.h"
+extern void dd_Dashboard_init();
+extern void dd_Dashboard_print(void);
+#line 39 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../display/dd_dashboard.h"
+unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
+
+
+void dd_Dashboard_printIndicators(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -263,15 +325,15 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/d_paddle.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/d_paddle.h"
 void dPaddle_init(void);
 
 unsigned char dPaddle_getValue(void);
 
 void dPaddle_readSample(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/display/dd_dashboard.h"
-#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/../ui/display/dd_dashboard.h"
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/ui/../peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
 void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
@@ -279,37 +341,44 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
+extern char dstr[100];
+
+void Debug_UART_Init();
+void Debug_Timer4_Init();
+void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
+void printf(char* string);
+void initTimer32(void);
+void resetTimer32(void);
+double getExecTime(void);
+void stopTimer32();
+void startTimer32();
+#line 11 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
-static char dAcc_ramping =  0 ;
-static double dAcc_rampStep = 0;
-static unsigned int dAcc_steps = 0;
-static unsigned char dAcc_endingRampValue = 0;
-static unsigned char dAcc_currentClutchValue = 0;
-static unsigned int dAcc_rampTime =  210 ;
-static unsigned int dAcc_trim1 =  500 ;
-static unsigned int dAcc_trim2 =  500 ;
-
+#line 23 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_acceleration.c"
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
-#line 29 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 31 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_acceleration.c"
 }
-#line 96 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 98 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_acceleration.c"
 void dAcc_startAutoAcceleration(void){
- if(!dAcc_autoAcceleration){
+
  dAcc_autoAcceleration =  1 ;
  dAcc_releasingClutch =  0 ;
 
- }
+
 }
 
 void dAcc_startClutchRelease(void){
- if(!dAcc_releasingClutch){
+
  dAcc_releasingClutch =  1 ;
 
- }
+
 
 }
 
@@ -318,6 +387,28 @@ void dAcc_stopAutoAcceleration(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
 
+ }
+}
+
+void dAcc_requestAction(){
+ if(!dAcc_autoAcceleration){
+ dd_GraphicController_clearPrompt();
+ Debug_UART_Write("Acc: cleared start prompt.\r\n");
+ dd_GraphicController_firePromptNotification("Press AUX1 to rel. clut.");
+ dAcc_startAutoAcceleration();
+ }
+ else if (!dAcc_releasingClutch)
+ {
+ dd_GraphicController_clearPrompt();
+ Debug_UART_Write("Acc: cleared release clutch prompt.\r\n");
+ dd_GraphicController_fireTimedNotification(2000, "Press AUX1 to stop acc.", MESSAGE);
+ dAcc_startClutchRelease();
+ }
+ else
+ {
+ dAcc_stopAutoAcceleration();
+ dd_GraphicController_fireTimedNotification(2000, "Accel. stopped.", MESSAGE);
+ Debug_UART_Write("Stopped acceleration by request.\r\n");
  }
 }
 

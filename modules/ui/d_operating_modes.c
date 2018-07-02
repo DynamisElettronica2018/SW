@@ -3,6 +3,8 @@
 #include "display/dd_menu.h"
 #include "../peripherals/d_gears.h"
 #include "display/dd_dashboard.h"
+#include "debug.h"
+#include "d_acceleration.h"
 #include "input-output/d_controls.h"
 
 void d_UI_CruiseModeInit();
@@ -11,12 +13,26 @@ void d_UI_DebugModeInit();
 void d_UI_SettingsModeInit();
 void d_UI_BoardDebugModeInit();
 
+void d_UI_CruiseModeClose();
+void d_UI_AccModeClose();
+void d_UI_DebugModeClose();
+void d_UI_SettingsModeClose();
+void d_UI_BoardDebugModeClose();
+
 void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
         d_UI_BoardDebugModeInit,
         d_UI_SettingsModeInit,
         d_UI_DebugModeInit,
         d_UI_CruiseModeInit,
         d_UI_AccModeInit
+};
+
+void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
+        d_UI_BoardDebugModeClose,
+        d_UI_SettingsModeClose,
+        d_UI_DebugModeClose,
+        d_UI_CruiseModeClose,
+        d_UI_AccModeClose
 };
 
       //rivedere il significato di ydata e settarlo anche per queste definizioni
@@ -110,7 +126,11 @@ void d_UI_CruiseModeInit() {
 }
 
 void d_UI_AccModeInit(){
-     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration ");
+     Debug_UART_Write("Acceleration mode entered.\r\n");
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
+     delay_ms(1000);
+     Debug_UART_Write("Acceleration start prompt set.\r\n");
+     dd_GraphicController_firePromptNotification("Press AUX1 to start acc.");
 }
 
 void d_UI_DebugModeInit() {
@@ -121,6 +141,23 @@ void d_UI_BoardDebugModeInit() {
      dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
 }
 
+void d_UI_CruiseModeClose()
+{
+}
+
+void d_UI_AccModeClose()
+{
+     dAcc_stopAutoAcceleration();
+     Debug_UART_Write("Stopped acceleration by mode switch.\r\n");
+}
+
+void d_UI_DebugModeClose()
+{
+}
+
+void d_UI_BoardDebugModeClose()
+{
+}
 
 
 /* * * * * * * * * * * * * *   S E T T I N G S     M O D E   * * * * * * * * * * * * * * * * * * * */

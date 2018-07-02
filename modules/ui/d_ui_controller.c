@@ -10,6 +10,7 @@
 #include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
+#include "d_acceleration.h"
 #include "d_dcu.h"
 
 #define TIMER_2_PERIOD 0.001 //seconds
@@ -36,6 +37,8 @@ void d_UIController_init() {
     Debug_UART_Write("rpm initialized.\r\n");
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
+    dAcc_init();
+    Debug_UART_Write("Acceleration module initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
     Debug_UART_Write("graphic controller initialized.\r\n");
    /* Debug_UART_Write("Signal Leds initialized.\r\n");
@@ -47,10 +50,13 @@ void d_UIController_init() {
 
 void d_UI_setOperatingMode(OperatingMode mode) {
      //printf("set op mode");
-     switch(d_currentOperatingMode) {
+     d_OperatingMode_close[d_currentOperatingMode]();
+     /*switch(d_currentOperatingMode) {
          case SETTINGS_MODE:
               d_UI_SettingsModeClose();
-     }
+         case ACC_MODE:
+              d_UI_AccelerationModeClose();
+     } */
      d_currentOperatingMode = mode;
      d_OperatingMode_init[mode]();
 }

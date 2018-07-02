@@ -4,12 +4,13 @@
 
 #include "d_acceleration.h"
 #include "../../libs/basic.h"
-#include "display/dd_dashboard.h"
+#include "dd_graphic_controller.h"
 #include "../peripherals/d_clutch.h"
+#include "debug.h"
 
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
-static char dAcc_ramping = FALSE;
+/*static char dAcc_ramping = FALSE;
 static double dAcc_rampStep = 0;
 static unsigned int dAcc_steps = 0;
 static unsigned char dAcc_endingRampValue = 0;
@@ -17,6 +18,7 @@ static unsigned char dAcc_currentClutchValue = 0;
 static unsigned int dAcc_rampTime = DAAC_RAMP_TIME;
 static unsigned int dAcc_trim1 = DACC_TRIM_DEFAULT;
 static unsigned int dAcc_trim2 = DACC_TRIM_DEFAULT;
+*/
 
 void dAcc_init(void) {
     dAcc_autoAcceleration = FALSE;
@@ -94,18 +96,18 @@ void dAcc_startAutoAcceleration(void) {
 
 //FULL ACC ON GCU
 void dAcc_startAutoAcceleration(void){
-    if(!dAcc_autoAcceleration){
+    //if(!dAcc_autoAcceleration){
         dAcc_autoAcceleration = TRUE;
         dAcc_releasingClutch = FALSE;
         //Can_writeInt(SW_AUX_ID, 0);
-    }
+    //}
 }//*/
 
 void dAcc_startClutchRelease(void){
-    if(!dAcc_releasingClutch){
+    //if(!dAcc_releasingClutch){
         dAcc_releasingClutch = TRUE;
         //Can_writeInt(SW_AUX_ID, 0);
-    }
+    //}
     //dAcc_setRamp(DACC_RAMP_START, DACC_RAMP_END, dAcc_rampTime);
 }
 
@@ -114,6 +116,28 @@ void dAcc_stopAutoAcceleration(void) {
         dAcc_autoAcceleration = FALSE;
         dAcc_releasingClutch = FALSE;
         //Can_writeInt(SW_AUX_ID, 0);
+    }
+}
+
+void dAcc_requestAction(){
+    if(!dAcc_autoAcceleration){            // send start acceleration
+        dd_GraphicController_clearPrompt();
+        Debug_UART_Write("Acc: cleared start prompt.\r\n");
+        dd_GraphicController_firePromptNotification("Press AUX1 to rel. clut.");
+        dAcc_startAutoAcceleration();
+    }
+    else if (!dAcc_releasingClutch)
+    {
+        dd_GraphicController_clearPrompt();
+        Debug_UART_Write("Acc: cleared release clutch prompt.\r\n");
+        dd_GraphicController_fireTimedNotification(2000, "Press AUX1 to stop acc.", MESSAGE);
+        dAcc_startClutchRelease();
+    }
+    else
+    {
+        dAcc_stopAutoAcceleration();
+        dd_GraphicController_fireTimedNotification(2000, "Accel. stopped.", MESSAGE);
+        Debug_UART_Write("Acc: stopped by request.\r\n");
     }
 }
 
