@@ -2220,15 +2220,20 @@ d_gearmotorstate
 d_getgearmotorstate
 d_isneutralset
 d_not_a
+d_operatingmode_close
 d_operatingmode_init
 d_selectorpositiontomode
 d_sensors_sendswtemp
 d_setgearmotorstate
 d_swtemp_gettempvalue
+d_ui_accmodeclose
 d_ui_accmodeinit
 d_ui_applysettings
+d_ui_boarddebugmodeclose
 d_ui_boarddebugmodeinit
+d_ui_cruisemodeclose
 d_ui_cruisemodeinit
+d_ui_debugmodeclose
 d_ui_debugmodeinit
 d_ui_onsettingschange
 d_ui_setoperatingmode
@@ -2241,6 +2246,7 @@ da_bit
 dacc_init
 dacc_isautoaccelerationactive
 dacc_isreleasingclutch
+dacc_requestaction
 dacc_startautoacceleration
 dacc_startclutchrelease
 dacc_stopautoacceleration
@@ -2338,7 +2344,9 @@ dd_getindicatorindex
 dd_getindicatorindexfromcollection
 dd_graphiccontroller_arecolorsinverted
 dd_graphiccontroller_clearnotification
+dd_graphiccontroller_clearprompt
 dd_graphiccontroller_firenotification
+dd_graphiccontroller_firepromptnotification
 dd_graphiccontroller_firetimednotification
 dd_graphiccontroller_forcefullframeupdate
 dd_graphiccontroller_forcenextframeupdate
@@ -2409,6 +2417,7 @@ dd_menuline_getscrollingoverflow
 dd_menuline_getscrolloffset
 dd_menuline_getvisibledescriptionwidth
 dd_menuline_hastoscroll
+dd_notificationistimed
 dd_notificationtext
 dd_notificationtimeoutcounter
 dd_notificationtitles

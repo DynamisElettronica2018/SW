@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=DPX.c
+Value=modules\ui\display\dd_graphic_controller.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -60,15 +60,19 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=8
-File0=modules\ui\input-output\d_controls.c
-File1=modules\ui\d_ui_controller.c
-File2=modules\ui\d_operating_modes.c
-File3=modules\ui\d_operating_modes.h
-File4=DPX.c
-File5=modules\peripherals\d_ebb.c
-File6=modules\peripherals\d_ebb.h
-File7=modules\ui\display\dd_dashboard.c
+Count=12
+File0=modules\ui\d_operating_modes.c
+File1=DPX.c
+File2=modules\ui\input-output\d_controls.c
+File3=modules\ui\d_acceleration.h
+File4=modules\ui\d_acceleration.c
+File5=modules\ui\display\dd_graphic_controller.c
+File6=modules\ui\display\dd_graphic_controller.h
+File7=modules\ui\d_ui_controller.c
+File8=modules\ui\d_operating_modes.h
+File9=modules\ui\display\dd_interfaces.c
+File10=modules\ui\display\dd_indicators.c
+File11=libs\eGlcd.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -79,8 +83,8 @@ Count=0
 Count=16
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\sofia\Desktop\GIT REPO\SW\
-Path3=C:\Users\utente\Desktop\git Repo\SW\
+Path2=C:\Users\utente\Desktop\git Repo\SW\
+Path3=C:\Users\sofia\Desktop\GIT REPO\SW\
 Path4=C:\Users\utente\Desktop\git Repo\SW\libs\
 Path5=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
 Path6=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\

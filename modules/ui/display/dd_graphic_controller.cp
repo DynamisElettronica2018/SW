@@ -1570,6 +1570,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
+char dd_notificationIsTimed =  0 ;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -1577,7 +1578,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 58 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 59 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1682,11 +1683,12 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
  dd_printMessage(dd_notificationText);
- dd_GraphicController_setNotificationFlag();
 }
 #line 168 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
+ dd_GraphicController_setNotificationFlag();
+ dd_notificationIsTimed = 1;
  dd_GraphicController_fireNotification(text, type);
 }
 
@@ -1696,6 +1698,7 @@ void dd_GraphicController_firePromptNotification(char *text) {
  else
  eGlcd_clear();
 
+ dd_notificationIsTimed = 0;
  dd_GraphicController_fireNotification(text, PROMPT);
 }
 
@@ -1715,7 +1718,7 @@ void dd_GraphicController_handleNotification(void) {
 
 
 }
-#line 219 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 222 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1822,7 +1825,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 331 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 334 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1837,11 +1840,14 @@ void dd_GraphicController_onTimerInterrupt(void)
  else
  {
  if (dd_notificationFlag) {
+ if(dd_notificationIsTimed)
  dd_GraphicController_handleNotification();
  }
+ else {
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
  dd_isFrameUpdateForced =  0 ;
+ }
  }
 
 
@@ -1849,5 +1855,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 368 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 374 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }

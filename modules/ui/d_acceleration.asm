@@ -120,7 +120,7 @@ L_dAcc_requestAction3:
 	MOV	#lo_addr(?lstr5_d_acceleration), W11
 	MOV	#2000, W10
 	CALL	_dd_GraphicController_fireTimedNotification
-;d_acceleration.c,140 :: 		Debug_UART_Write("Stopped acceleration by request.\r\n");
+;d_acceleration.c,140 :: 		Debug_UART_Write("Acc: stopped by request.\r\n");
 	MOV	#lo_addr(?lstr6_d_acceleration), W10
 	CALL	_Debug_UART_Write
 ;d_acceleration.c,141 :: 		}

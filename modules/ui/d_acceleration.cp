@@ -408,7 +408,7 @@ void dAcc_requestAction(){
  {
  dAcc_stopAutoAcceleration();
  dd_GraphicController_fireTimedNotification(2000, "Accel. stopped.", MESSAGE);
- Debug_UART_Write("Stopped acceleration by request.\r\n");
+ Debug_UART_Write("Acc: stopped by request.\r\n");
  }
 }
 

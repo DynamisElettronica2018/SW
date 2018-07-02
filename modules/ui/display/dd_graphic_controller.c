@@ -44,6 +44,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
+char dd_notificationIsTimed = FALSE;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -159,7 +160,6 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     strcpy(dd_notificationText, text);
     dd_printMessage(dd_notificationText);
-    dd_GraphicController_setNotificationFlag();
 }
 
 /**
@@ -167,6 +167,8 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
 */
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
     dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
+    dd_GraphicController_setNotificationFlag();
+    dd_notificationIsTimed = 1;
     dd_GraphicController_fireNotification(text, type);
 }
 
@@ -176,6 +178,7 @@ void dd_GraphicController_firePromptNotification(char *text) {
     else
         eGlcd_clear();
     
+    dd_notificationIsTimed = 0;
     dd_GraphicController_fireNotification(text, PROMPT);
 }
 
@@ -342,11 +345,14 @@ void dd_GraphicController_onTimerInterrupt(void)
         else
         {
             if (dd_notificationFlag) {
-               dd_GraphicController_handleNotification();
+               if(dd_notificationIsTimed)
+                   dd_GraphicController_handleNotification();
             }
-            dd_Interface_print[dd_currentInterface]();
-            Lcd_PrintFrame();
-            dd_isFrameUpdateForced = FALSE;
+            else {
+                 dd_Interface_print[dd_currentInterface]();
+                 Lcd_PrintFrame();
+                 dd_isFrameUpdateForced = FALSE;
+            }
         }
         //time = getExecTime();
         //sprintf(str, "%f", time);

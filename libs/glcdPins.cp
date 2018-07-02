@@ -1,4 +1,4 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/glcdPins.c"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/glcdPins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
