@@ -38,10 +38,10 @@ unsigned char dd_currentIndicatorsCount = 0;
 char dd_currentInterfaceTitle[MAX_INTERFACE_TITLE_LENGTH] = "";
 
 char dd_onStartup = 0;
-char dd_onInterfaceChange = 1;
+//char dd_onInterfaceChange = 1;
 unsigned char dd_tmr1Counter = 0;
 unsigned char dd_onStartupCounterLimit = 0;
-unsigned char dd_onInterfaceChangeCounterLimit = 0;
+//unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
 char dd_notificationIsTimed = FALSE;
@@ -109,14 +109,17 @@ char dd_GraphicController_areColorsInverted(void) {
 }
 
 void dd_GraphicController_setInterface(Interface interface) {
-     dd_isInterfaceChangedFromLastFrame = TRUE;
-     dd_onInterfaceChange = TRUE;
-     dd_isFrameUpdateForced = TRUE;
-     dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit(OP_MODE_POPUP_PERIOD);
+     //dd_isInterfaceChangedFromLastFrame = TRUE;
+     //dd_onInterfaceChange = TRUE;
+     //dd_isFrameUpdateForced = TRUE;
+     dd_currentInterface = interface;
+     //dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit(OP_MODE_POPUP_PERIOD);
+     eGlcd_clear();
+     dd_Interface_print[dd_currentInterface]();
+     dd_GraphicController_fireTimedNotification(OP_MODE_POPUP_PERIOD, dd_currentInterfaceTitle, MESSAGE);
      //printf("Set Interface");
      //sprintf(str, "%d", dd_onInterfaceChangeCounterLimit);
      //printf(str);
-     dd_currentInterface = interface;
 }
 
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title) {
@@ -159,8 +162,9 @@ void dd_GraphicController_clearNotification(void) {
 
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     strcpy(dd_notificationText, text);
-     dd_GraphicController_setNotificationFlag();
+    dd_GraphicController_setNotificationFlag();
     dd_printMessage(dd_notificationText);
+    Lcd_PrintFrame();
 }
 
 /**
@@ -313,7 +317,20 @@ void dd_GraphicController_onTimerInterrupt(void)
             Lcd_PrintFrame();
         }
     }
-    else {
+    else
+    {
+            if (dd_notificationFlag) {
+               if(dd_notificationIsTimed)
+                   dd_GraphicController_handleNotification();
+            }
+            else {
+                 eGlcd_clear();
+                 dd_Interface_print[dd_currentInterface]();
+                 Lcd_PrintFrame();
+                 dd_isFrameUpdateForced = FALSE;
+            }
+    }
+    /*else {
         //resetTimer32();
         if(dd_isInterfaceChangedFromLastFrame)
         {
@@ -331,7 +348,7 @@ void dd_GraphicController_onTimerInterrupt(void)
              appear on screen since the interrupt routine only increments the tmrcounter..
              we may like that the indicators change under the message, which would require
              redrawing Interface and message on every interrupt... */
-           dd_tmr1Counter++;
+           /*dd_tmr1Counter++;
            if(dd_tmr1Counter  >= dd_onInterfaceChangeCounterLimit)
            {
                dd_onInterfaceChange = 0;
@@ -341,23 +358,11 @@ void dd_GraphicController_onTimerInterrupt(void)
                Lcd_PrintFrame();
                dd_isFrameUpdateForced = FALSE;
            }
-        }
-        else
-        {
-            if (dd_notificationFlag) {
-               if(dd_notificationIsTimed)
-                   dd_GraphicController_handleNotification();
-            }
-            else {
-                 dd_Interface_print[dd_currentInterface]();
-                 Lcd_PrintFrame();
-                 dd_isFrameUpdateForced = FALSE;
-            }
-        }
+        }*/
+
         //time = getExecTime();
         //sprintf(str, "%f", time);
        //printf(str);
-    }
 
     clearTimer1();
     

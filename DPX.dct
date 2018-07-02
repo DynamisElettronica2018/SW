@@ -2421,8 +2421,6 @@ dd_notificationistimed
 dd_notificationtext
 dd_notificationtimeoutcounter
 dd_notificationtitles
-dd_oninterfacechange
-dd_oninterfacechangecounterlimit
 dd_onstartup
 dd_onstartupcounterlimit
 dd_printlogoanimation
