@@ -274,8 +274,6 @@ _d_traction_control_setValueFromCAN:
 	MOV	W10, W11
 	MOV	#lo_addr(_ind_efi_slip), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,77 :: 		d_traction_control_printNotification();
-	CALL	_d_traction_control_printNotification
 ;d_traction_control.c,79 :: 		}
 ;d_traction_control.c,78 :: 		return;
 ;d_traction_control.c,79 :: 		}

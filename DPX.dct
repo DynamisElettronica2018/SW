@@ -1113,6 +1113,7 @@ base
 base
 base
 base
+base
 bbitsavailable
 bblocksinonepass
 bcd2dec
@@ -2533,6 +2534,8 @@ description
 description
 description
 description
+description
+descriptionlength
 descriptionlength
 descriptionlength
 descriptionlength
@@ -4989,6 +4992,7 @@ id
 id
 id
 id
+id
 idle
 idle
 idle_bit
@@ -5053,6 +5057,7 @@ ind_th2o_dx_in
 ind_th2o_dx_out
 ind_th2o_sx_in
 ind_th2o_sx_out
+ind_traction_control
 ind_vbat
 inittimer32
 instruction_period
@@ -5278,6 +5283,7 @@ isvisible
 isvisible
 isvisible
 isvisible
+isvisible
 isxdigit
 ivrie
 ivrie
@@ -5418,6 +5424,8 @@ label
 label
 label
 label
+label
+labellength
 labellength
 labellength
 labellength
@@ -5867,6 +5875,8 @@ name
 name
 name
 name
+name
+namelength
 namelength
 namelength
 namelength
@@ -6934,6 +6944,7 @@ parsevaluelabel
 parsevaluelabel
 parsevaluelabel
 parsevaluelabel
+parsevaluelabel
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
 pcfg_0
@@ -7049,6 +7060,7 @@ pdsel1
 pen
 pen
 pen_bit
+pendingprintupdate
 pendingprintupdate
 pendingprintupdate
 pendingprintupdate
@@ -12763,6 +12775,8 @@ value
 value
 value
 value
+value
+valuetype
 valuetype
 valuetype
 valuetype

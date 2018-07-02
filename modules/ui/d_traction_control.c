@@ -74,7 +74,7 @@ void d_traction_control_move(signed char movements){
 void d_traction_control_setValueFromCAN(unsigned int value){
      d_tractionValue = (signed char)value;              //controllare questo cast
      dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
-     d_traction_control_printNotification();
+     //d_traction_control_printNotification();
      return;
 }
 

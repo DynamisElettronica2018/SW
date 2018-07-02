@@ -439,8 +439,6 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	d_traction_control_setValueFromCAN
 		dd_Indicator_setIntValueP
-		d_traction_control_printNotification
-			dd_GraphicController_fireTimedNotification
 	Debug_UART_Write
 	dDCU_sentAcquiringSignal
 		Debug_UART_Write
