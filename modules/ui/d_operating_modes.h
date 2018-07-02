@@ -151,5 +151,8 @@ void d_UI_onSettingsChange(signed char movements);
 *        \sa d_ui_controller.h
 */
 
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
 
 #endif /* D_UI_OPERATING_MODES */

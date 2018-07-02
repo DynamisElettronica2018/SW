@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=modules\ui\display\dd_graphic_controller.c
+Value=modules\ui\d_ui_controller.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -83,8 +83,8 @@ Count=0
 Count=16
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\utente\Desktop\git Repo\SW\
-Path3=C:\Users\sofia\Desktop\GIT REPO\SW\
+Path2=C:\Users\sofia\Desktop\GIT REPO\SW\
+Path3=C:\Users\utente\Desktop\git Repo\SW\
 Path4=C:\Users\utente\Desktop\git Repo\SW\libs\
 Path5=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
 Path6=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\

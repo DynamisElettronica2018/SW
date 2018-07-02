@@ -64,6 +64,11 @@ main
 			Debug_UART_Write
 			log2
 			d_UI_setOperatingMode
+				d_UI_SettingsModeClose
+					d_UI_ApplySettings
+				d_UI_AccModeClose
+					dAcc_stopAutoAcceleration
+					Debug_UART_Write
 				dd_Dashboard_print
 					dd_Dashboard_printGearLetter
 						dGear_getCurrentGearLetter
@@ -193,13 +198,8 @@ main
 								eGlcd_drawRect
 								eGlcd_writeText
 				d_UI_BoardDebugModeClose
-				d_UI_SettingsModeClose
-					d_UI_ApplySettings
 				d_UI_DebugModeClose
 				d_UI_CruiseModeClose
-				d_UI_AccModeClose
-					dAcc_stopAutoAcceleration
-					Debug_UART_Write
 			d_selectorPositionToMode
 			setExternalInterrupt
 				setInterruptPriority

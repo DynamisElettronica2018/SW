@@ -51,12 +51,12 @@ void d_UIController_init() {
 void d_UI_setOperatingMode(OperatingMode mode) {
      //printf("set op mode");
      d_OperatingMode_close[d_currentOperatingMode]();
-     /*switch(d_currentOperatingMode) {
+     switch(d_currentOperatingMode) {
          case SETTINGS_MODE:
               d_UI_SettingsModeClose();
          case ACC_MODE:
-              d_UI_AccelerationModeClose();
-     } */
+              d_UI_AccModeClose();
+     }
      d_currentOperatingMode = mode;
      d_OperatingMode_init[mode]();
 }

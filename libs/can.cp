@@ -1,6 +1,6 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/can.h"
-#line 51 "c:/users/utente/desktop/git repo/sw/libs/can.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -32,11 +32,11 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/utente/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -49,7 +49,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 32 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
+#line 32 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
 unsigned char can_dataOutBuffer[ 8 ];
 unsigned int can_dataOutLength = 0;
 unsigned int can_txPriority =  _CAN_TX_PRIORITY_1 ;
@@ -72,7 +72,7 @@ void Can_init() {
  CAN1SetMask(_CAN_MASK_B1,  0b11111100000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F1,  0b01100000000 , _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F2,  0b11100000000 , _CAN_CONFIG_STD_MSG);
-#line 59 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
+#line 59 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
  CAN1SetMask(_CAN_MASK_B2,  0b11111110000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B2_F1,  0b11111110000 , _CAN_CONFIG_STD_MSG);
 
@@ -165,7 +165,7 @@ void Can_clearInterrupt(void) {
 }
 
 void Can_initInterrupt(void) {
-#line 157 "C:/Users/utente/Desktop/git Repo/SW/libs/can.c"
+#line 157 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
  IEC1BITS.C1IE = 1;
  C1INTEBITS.RXB0IE = 1;
  C1INTEBITS.RXB1IE = 1;
