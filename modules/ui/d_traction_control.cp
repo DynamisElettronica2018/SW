@@ -215,9 +215,9 @@ typedef enum {
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_th2o;
-extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
@@ -409,14 +409,14 @@ void d_traction_control_move(signed char movements){
 
 void d_traction_control_setValueFromCAN(unsigned int value){
  d_tractionValue = (signed char)value;
- dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+ dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
 
  return;
 }
 
 void d_traction_control_init(void){
  Can_writeInt( 0b01000000011 , (int) d_tractionValue);
- dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
+ dd_Indicator_setIntValueP(&ind_traction_control.base, (int) d_tractionValue);
  sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
  Debug_UART_Write(dstr);
 

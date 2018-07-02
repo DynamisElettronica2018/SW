@@ -270,9 +270,9 @@ _d_traction_control_setValueFromCAN:
 	PUSH	W11
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	W10, [W0]
-;d_traction_control.c,76 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+;d_traction_control.c,76 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
 	MOV	W10, W11
-	MOV	#lo_addr(_ind_efi_slip), W10
+	MOV	#lo_addr(_ind_traction_control), W10
 	CALL	_dd_Indicator_setIntValueP
 ;d_traction_control.c,79 :: 		}
 ;d_traction_control.c,78 :: 		return;
@@ -296,11 +296,11 @@ _d_traction_control_init:
 	MOV	#515, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_traction_control.c,83 :: 		dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
+;d_traction_control.c,83 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, (int) d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W0
 	MOV	W0, W11
-	MOV	#lo_addr(_ind_efi_slip), W10
+	MOV	#lo_addr(_ind_traction_control), W10
 	CALL	_dd_Indicator_setIntValueP
 ;d_traction_control.c,84 :: 		sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0

@@ -73,14 +73,14 @@ void d_traction_control_move(signed char movements){
 
 void d_traction_control_setValueFromCAN(unsigned int value){
      d_tractionValue = (signed char)value;              //controllare questo cast
-     dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
+     dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
      //d_traction_control_printNotification();
      return;
 }
 
 void d_traction_control_init(void){
      Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) d_tractionValue);      //se si vuole partire sempre da zero
-     dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) d_tractionValue);
+     dd_Indicator_setIntValueP(&ind_traction_control.base, (int) d_tractionValue);
      sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
      Debug_UART_Write(dstr);
      

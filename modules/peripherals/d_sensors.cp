@@ -277,9 +277,9 @@ typedef enum {
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_th2o;
-extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern BooleanIndicator ind_rio_acq;
