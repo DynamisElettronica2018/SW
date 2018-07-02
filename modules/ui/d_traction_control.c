@@ -5,6 +5,7 @@
 #include "d_operating_modes.h"
 #include "dd_graphic_controller.h"
 #include "debug.h"
+#include "buzzer.h"
 
 #define TRACTION_MAX_VALUE 10
 #define TRACTION_MIN_VALUE 0
@@ -52,7 +53,7 @@ void d_traction_control_printNotification(void){
 }
 
 void d_traction_control_propagateValue(signed char value){
-     Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
+      Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
      /*dd_Indicator_setIntValueP(&ind_efi_slip.base, (int) value);
      d_traction_control_printNotification();  */ //se mandano il valore ogni tot da gcu, stampiamo la notifica come conferma e non subito quando ruotiamo gli encoder
                                               // se invece non ci mandano niente oppure ci mandano cose solo la prima volta, dobbiamo lasciare queste due funzioni.
@@ -72,7 +73,11 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
+     sprintf(dstr, "value unsigned int %d\n", value);
+     Debug_UART_Write(dstr);
      d_tractionValue = (signed char)value;              //controllare questo cast
+     sprintf(dstr, "value signed char %d\n", d_tractionValue);
+     Debug_UART_Write(Dstr);
      dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
      //d_traction_control_printNotification();
      return;

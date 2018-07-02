@@ -438,6 +438,8 @@ CAN_Interrupt
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
 	d_traction_control_setValueFromCAN
+		sprintf
+		Debug_UART_Write
 		dd_Indicator_setIntValueP
 	Debug_UART_Write
 	dDCU_sentAcquiringSignal
