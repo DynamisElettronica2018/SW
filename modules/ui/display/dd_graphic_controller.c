@@ -159,6 +159,7 @@ void dd_GraphicController_clearNotification(void) {
 
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     strcpy(dd_notificationText, text);
+     dd_GraphicController_setNotificationFlag();
     dd_printMessage(dd_notificationText);
 }
 
@@ -167,7 +168,6 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
 */
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
     dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
-    dd_GraphicController_setNotificationFlag();
     dd_notificationIsTimed = 1;
     dd_GraphicController_fireNotification(text, type);
 }

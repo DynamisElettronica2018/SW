@@ -328,10 +328,12 @@ _dd_GraphicController_fireNotification:
 	MOV	W10, W11
 	MOV	#lo_addr(_dd_notificationText), W10
 	CALL	_strcpy
-;dd_graphic_controller.c,162 :: 		dd_printMessage(dd_notificationText);
+;dd_graphic_controller.c,162 :: 		dd_GraphicController_setNotificationFlag();
+	CALL	_dd_GraphicController_setNotificationFlag
+;dd_graphic_controller.c,163 :: 		dd_printMessage(dd_notificationText);
 	MOV	#lo_addr(_dd_notificationText), W10
 	CALL	_dd_printMessage
-;dd_graphic_controller.c,163 :: 		}
+;dd_graphic_controller.c,164 :: 		}
 L_end_dd_GraphicController_fireNotification:
 	POP	W11
 	POP	W10
@@ -340,8 +342,8 @@ L_end_dd_GraphicController_fireNotification:
 
 _dd_GraphicController_fireTimedNotification:
 
-;dd_graphic_controller.c,168 :: 		void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
-;dd_graphic_controller.c,169 :: 		dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
+;dd_graphic_controller.c,169 :: 		void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
+;dd_graphic_controller.c,170 :: 		dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -351,8 +353,6 @@ _dd_GraphicController_fireTimedNotification:
 	POP	W12
 	ZE	W0, W0
 	MOV	W0, _dd_notificationTimeoutCounter
-;dd_graphic_controller.c,170 :: 		dd_GraphicController_setNotificationFlag();
-	CALL	_dd_GraphicController_setNotificationFlag
 ;dd_graphic_controller.c,171 :: 		dd_notificationIsTimed = 1;
 	MOV	#lo_addr(_dd_notificationIsTimed), W1
 	MOV.B	#1, W0

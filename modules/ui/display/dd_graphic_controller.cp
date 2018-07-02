@@ -1682,12 +1682,12 @@ void dd_GraphicController_clearNotification(void) {
 
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
+ dd_GraphicController_setNotificationFlag();
  dd_printMessage(dd_notificationText);
 }
-#line 168 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 169 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
- dd_GraphicController_setNotificationFlag();
  dd_notificationIsTimed = 1;
  dd_GraphicController_fireNotification(text, type);
 }

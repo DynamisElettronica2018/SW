@@ -184,6 +184,7 @@ main
 						eGlcd_clear
 						dd_GraphicController_fireNotification
 							strcpy
+							dd_GraphicController_setNotificationFlag
 							dd_printMessage
 								xGlcd_Set_Font
 								eGlcd_getTextPixelLength
@@ -351,7 +352,6 @@ external4
 						EEPROM_Read
 			dd_GraphicController_fireTimedNotification
 				dd_GraphicController_getTmrCounterLimit
-				dd_GraphicController_setNotificationFlag
 				dd_GraphicController_fireNotification
 			dSignalLed_set
 	d_controls_onAux1
