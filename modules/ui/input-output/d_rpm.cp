@@ -59,8 +59,8 @@ unsigned char I2CExpander_readPort(unsigned char address);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM, ADC1,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
+ OIL_TEMP_IN, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ CLUTCH_POSITION, EBB, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -222,10 +222,12 @@ typedef enum {
 
 
 
-extern IntegerIndicator ind_ebb;
+
+extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
-extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_tps;
 extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
@@ -236,7 +238,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern FloatIndicator ind_oil_temp_in;
+
+extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern FloatIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
@@ -264,12 +267,12 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 131 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
@@ -317,8 +320,8 @@ float dRpm_getDisplayValue(void) {
 void dRpm_set(unsigned int rpm) {
  if (rpm <  5000 ){
  dRpm =  5000 ;
- } else if ( rpm >  9500 ){
- dRpm =  9500 ;
+ } else if ( rpm >  11500 ){
+ dRpm =  11500 ;
  } else {
  dRpm = rpm;
  }
@@ -340,7 +343,7 @@ void dRpm_enableLedStripeOutput(void) {
 void dRpm_updateLedStripe(void) {
  unsigned char dLedStripePort = 0;
  if (dRpm >  5000 ) {
- dLedStripePort = 0b11111111 >> ( 8  - (unsigned int)ceil(((dRpm -  5000 ) /  ( ( 9500  - 5000 ) / 8  ) )));
+ dLedStripePort = 0b11111111 >> ( 8  - (unsigned int)ceil(((dRpm -  5000 ) /  ( ( 11500  - 5000 ) / 8  ) )));
  }
  I2CExpander_setPort( 0b01000000 , dLedStripePort);
 }

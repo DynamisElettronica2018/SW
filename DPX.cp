@@ -3,8 +3,8 @@
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM, ADC1,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
+ OIL_TEMP_IN, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ CLUTCH_POSITION, EBB, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -286,7 +286,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 25 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_tick(void);
@@ -294,6 +294,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+int dEfiSense_calculateTPS (unsigned int value);
 
 float dEfiSense_calculateOilInTemperature (unsigned int value);
 
@@ -567,10 +569,12 @@ typedef enum {
 
 
 
-extern IntegerIndicator ind_ebb;
+
+extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
-extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_tps;
 extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
@@ -581,7 +585,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern FloatIndicator ind_oil_temp_in;
+
+extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern FloatIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
@@ -609,12 +614,12 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 131 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -819,9 +824,10 @@ void main(){
 
  switch (id) {
  case  0b01100000101 :
- dRpm_set(secondInt*10);
+ dRpm_set(secondInt);
  dEfiSense_heartbeat();
  dGear_propagate(firstInt);
+ dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
  break;
  case  0b01100001100 :
  dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
@@ -855,7 +861,7 @@ void main(){
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
  break;
-#line 181 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 182 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -865,7 +871,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 194 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 195 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));

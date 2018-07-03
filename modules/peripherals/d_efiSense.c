@@ -38,6 +38,10 @@ char dEfiSense_isDead(void) {
     return dEfiSense_dead;
 }
 
+int dEfiSense_calculateTPS (unsigned int value){
+      return ((int)(value*100)/EFI_SENSE_TPS_RANGE);
+}
+
 float dEfiSense_calculateOilInTemperature (unsigned int value){
      return ((int) (( EFI_SENSE_OIL_MIN_TEMP - (value * EFI_SENSE_OIL_TEMP_RANGE ) ) * 100)) / 100.0;
 }

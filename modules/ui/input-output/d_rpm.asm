@@ -62,13 +62,13 @@ L__dRpm_set9:
 ;d_rpm.c,28 :: 		} else if ( rpm > RPM_STRIPE_MAX){
 	GOTO	L_dRpm_set1
 L_dRpm_set0:
-	MOV	#9500, W0
+	MOV	#11500, W0
 	CP	W10, W0
 	BRA GTU	L__dRpm_set10
 	GOTO	L_dRpm_set2
 L__dRpm_set10:
 ;d_rpm.c,29 :: 		dRpm = RPM_STRIPE_MAX;
-	MOV	#9500, W0
+	MOV	#11500, W0
 	MOV	W0, _dRpm
 ;d_rpm.c,30 :: 		} else {
 	GOTO	L_dRpm_set3
@@ -147,7 +147,7 @@ L__dRpm_updateLedStripe15:
 	MOV	_dRpm, W1
 	MOV	#5000, W0
 	SUB	W1, W0, W1
-	MOV	#562, W2
+	MOV	#812, W2
 	REPEAT	#17
 	DIV.U	W1, W2
 	CLR	W1

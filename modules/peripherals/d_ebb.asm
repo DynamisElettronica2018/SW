@@ -6,7 +6,7 @@ _dEbb_init:
 	PUSH	W10
 	PUSH	W11
 	MOV	_dEbb_value, W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setIntValue
 ;d_ebb.c,18 :: 		}
 L_end_dEbb_init:
@@ -413,7 +413,7 @@ _dEbb_propagateEbbChange:
 L_dEbb_propagateEbbChange25:
 ;d_ebb.c,124 :: 		dd_Indicator_setStringValue(EBB, "=0=");
 	MOV	#lo_addr(?lstr4_d_ebb), W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setStringValue
 ;d_ebb.c,125 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange24
@@ -421,7 +421,7 @@ L_dEbb_propagateEbbChange25:
 L_dEbb_propagateEbbChange26:
 ;d_ebb.c,127 :: 		dd_Indicator_setStringValue(EBB, "/");
 	MOV	#lo_addr(?lstr5_d_ebb), W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setStringValue
 ;d_ebb.c,128 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange24
@@ -429,7 +429,7 @@ L_dEbb_propagateEbbChange26:
 L_dEbb_propagateEbbChange27:
 ;d_ebb.c,130 :: 		dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
 	MOV	#lo_addr(?lstr6_d_ebb), W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setStringValue
 ;d_ebb.c,131 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange24
@@ -437,7 +437,7 @@ L_dEbb_propagateEbbChange27:
 L_dEbb_propagateEbbChange28:
 ;d_ebb.c,133 :: 		dd_Indicator_setStringValue(EBB, "...");
 	MOV	#lo_addr(?lstr7_d_ebb), W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setStringValue
 ;d_ebb.c,134 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange24
@@ -447,7 +447,7 @@ L_dEbb_propagateEbbChange29:
 	MOV	_dEbb_value, W0
 	SUBR	W0, #0, W0
 	MOV	W0, W11
-	CLR	W10
+	MOV.B	#8, W10
 	CALL	_dd_Indicator_setIntValue
 ;d_ebb.c,137 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange24

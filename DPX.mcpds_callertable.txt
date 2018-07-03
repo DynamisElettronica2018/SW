@@ -385,6 +385,9 @@ CAN_Interrupt
 		dSignalLed_set
 	dGear_propagate
 		dGear_set
+	dd_Indicator_setIntValueP
+		dd_Indicator_requestPrintUpdateP
+	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 	dEfiSense_calculateWaterTemperature
 		_Long2Float
@@ -416,8 +419,6 @@ CAN_Interrupt
 		_Mul_FP
 		_Float2Longint
 		_Div_FP
-	dd_Indicator_setIntValueP
-		dd_Indicator_requestPrintUpdateP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
@@ -485,6 +486,7 @@ timer2_interrupt
 			Can_write
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
+		Buzzer_bip
 		Can_writeByte
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe

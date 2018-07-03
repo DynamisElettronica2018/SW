@@ -9,7 +9,7 @@ _dHardReset_init:
 	MOV	W0, _dHardReset_counter
 ;d_hardReset.c,21 :: 		dd_Indicator_setIntValue(EFI_CRASH_COUNTER, dHardReset_counter);
 	MOV	W0, W11
-	MOV.B	#13, W10
+	MOV.B	#14, W10
 	CALL	_dd_Indicator_setIntValue
 ;d_hardReset.c,22 :: 		}
 L_end_dHardReset_init:
