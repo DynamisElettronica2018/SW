@@ -1641,10 +1641,10 @@ unsigned char dd_currentIndicatorsCount = 0;
 char dd_currentInterfaceTitle[ 20 ] = "";
 
 char dd_onStartup = 0;
-char dd_onInterfaceChange = 1;
+
 unsigned char dd_tmr1Counter = 0;
 unsigned char dd_onStartupCounterLimit = 0;
-unsigned char dd_onInterfaceChangeCounterLimit = 0;
+
 
 static char dd_notificationFlag =  0 ;
 char dd_notificationIsTimed =  0 ;
@@ -1709,14 +1709,17 @@ char dd_GraphicController_areColorsInverted(void) {
 }
 
 void dd_GraphicController_setInterface(Interface interface) {
- dd_isInterfaceChangedFromLastFrame =  1 ;
- dd_onInterfaceChange =  1 ;
- dd_isFrameUpdateForced =  1 ;
- dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit( 700 );
 
 
 
  dd_currentInterface = interface;
+
+ eGlcd_clear();
+ dd_Interface_print[dd_currentInterface]();
+ dd_GraphicController_fireTimedNotification( 700 , dd_currentInterfaceTitle, MESSAGE);
+
+
+
 }
 
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title) {
@@ -1759,12 +1762,13 @@ void dd_GraphicController_clearNotification(void) {
 
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
+ dd_GraphicController_setNotificationFlag();
  dd_printMessage(dd_notificationText);
+ Lcd_PrintFrame();
 }
-#line 169 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 174 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
- dd_GraphicController_setNotificationFlag();
  dd_notificationIsTimed = 1;
  dd_GraphicController_fireNotification(text, type);
 }
@@ -1795,7 +1799,7 @@ void dd_GraphicController_handleNotification(void) {
 
 
 }
-#line 223 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 227 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1890,33 +1894,6 @@ void dd_GraphicController_onTimerInterrupt(void)
  Lcd_PrintFrame();
  }
  }
- else {
-
- if(dd_isInterfaceChangedFromLastFrame)
- {
- eGlcd_clear();
- dd_Interface_print[dd_currentInterface]();
- dd_printMessage(dd_currentInterfaceTitle);
- dd_isInterfaceChangedFromLastFrame = 0;
- Lcd_PrintFrame();
- }
- else if (dd_onInterfaceChange)
- {
-#line 335 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
- dd_tmr1Counter++;
- if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
- {
- dd_onInterfaceChange = 0;
- dd_tmr1Counter = 0;
- eGlcd_fill(WHITE);
- dd_Interface_print[dd_currentInterface]();
- Lcd_PrintFrame();
- if (d_UI_getOperatingMode() == ACC_MODE){
- dd_printMessage("GRN->START");
- }
- dd_isFrameUpdateForced =  0 ;
- }
- }
  else
  {
  if (dd_notificationFlag) {
@@ -1924,16 +1901,13 @@ void dd_GraphicController_onTimerInterrupt(void)
  dd_GraphicController_handleNotification();
  }
  else {
+ eGlcd_clear();
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
  dd_isFrameUpdateForced =  0 ;
  }
  }
-
-
-
- }
-
+#line 371 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
   IFS0bits.T1IF  = 0 ;
-#line 378 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 383 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }
