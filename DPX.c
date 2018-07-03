@@ -58,10 +58,7 @@ onTimer2Interrupt{
     
     //Buzzer_bip();
 
-    if(timer2_counter4 == 4000){
-      d_controls_onAux1();
-    }
-    
+
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
         dPaddle_readSample();

@@ -613,9 +613,7 @@ void d_UIController_init() {
  Debug_UART_Write("Acceleration module initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 48 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
- d_UI_setOperatingMode(ACC_MODE);
-
+#line 50 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {

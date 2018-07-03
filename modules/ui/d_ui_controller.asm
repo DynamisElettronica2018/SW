@@ -55,9 +55,6 @@ _d_UIController_init:
 ;d_ui_controller.c,44 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
 	MOV	#lo_addr(?lstr9_d_ui_controller), W10
 	CALL	_Debug_UART_Write
-;d_ui_controller.c,48 :: 		d_UI_setOperatingMode(ACC_MODE);
-	MOV.B	#4, W10
-	CALL	_d_UI_setOperatingMode
 ;d_ui_controller.c,50 :: 		}
 L_end_d_UIController_init:
 	POP	W12

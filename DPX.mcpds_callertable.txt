@@ -325,7 +325,6 @@ main
 		dAcc_init
 			Can_writeInt
 		setTimer
-		d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
@@ -504,7 +503,6 @@ cn_interrupt
 			d_DashboardSetting_updateValue
 	clearExternalInterrupt
 timer2_interrupt
-	d_controls_onAux1
 	dPaddle_readSample
 		ADC1_Read
 			ADC1_Init
