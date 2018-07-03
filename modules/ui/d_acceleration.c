@@ -97,6 +97,7 @@ void dAcc_startAutoAcceleration(void){
         dAcc_autoAcceleration = TRUE;
         dAcc_releasingClutch = FALSE;
         Can_writeInt(SW_GENERAL_GCU_ID, COMMAND_START_ACCELERATION);
+        dd_printMessage("ACCELERATE");
     }
 }//*/
 
@@ -117,23 +118,19 @@ void dAcc_stopAutoAcceleration(void) {
 
 void dAcc_requestAction(){
     if(!dAcc_autoAcceleration){            // send start acceleration
-       // dd_GraphicController_clearPrompt();
-        Debug_UART_Write("Acc: cleared start prompt.\r\n");
-        //dd_GraphicController_firePromptNotification("AUX1 TO START");
+        dd_GraphicController_clearPrompt();
         dAcc_startAutoAcceleration();
     }
     else if (!dAcc_releasingClutch)
     {
-       // dd_GraphicController_clearPrompt();
-        Debug_UART_Write("Acc: cleared release clutch prompt.\r\n");
-        dd_GraphicController_fireTimedNotification(1000, "AUX1 TO START", MESSAGE);
+        dd_GraphicController_clearPrompt();
+        dd_GraphicController_fireTimedNotification(1000, "GRN TO GO", MESSAGE);
         dAcc_startClutchRelease();
     }
     else
     {
         dAcc_stopAutoAcceleration();
         dd_GraphicController_fireTimedNotification(2000, "STOP", MESSAGE);
-        Debug_UART_Write("Acc: stopped by request.\r\n");
     }
 }
 

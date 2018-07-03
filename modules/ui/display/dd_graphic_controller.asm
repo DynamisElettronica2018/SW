@@ -405,8 +405,14 @@ L_end_dd_GraphicController_firePromptNotification:
 _dd_GraphicController_clearPrompt:
 
 ;dd_graphic_controller.c,186 :: 		void dd_GraphicController_clearPrompt()
-;dd_graphic_controller.c,188 :: 		dd_GraphicController_clearNotification();
-	CALL	_dd_GraphicController_clearNotification
+;dd_graphic_controller.c,188 :: 		dd_Interface_print[dd_currentInterface]();
+	MOV	#lo_addr(dd_graphic_controller_dd_currentInterface), W0
+	ZE	[W0], W0
+	SL	W0, #1, W1
+	MOV	#lo_addr(_dd_Interface_print), W0
+	ADD	W0, W1, W0
+	MOV	[W0], W0
+	CALL	W0
 ;dd_graphic_controller.c,189 :: 		}
 L_end_dd_GraphicController_clearPrompt:
 	RETURN
@@ -909,7 +915,7 @@ L__dd_GraphicController_onTimerInterrupt83:
 	BRA Z	L__dd_GraphicController_onTimerInterrupt84
 	GOTO	L_dd_GraphicController_onTimerInterrupt31
 L__dd_GraphicController_onTimerInterrupt84:
-;dd_graphic_controller.c,344 :: 		dd_printMessage("AUX1->START");
+;dd_graphic_controller.c,344 :: 		dd_printMessage("GRN->START");
 	MOV	#lo_addr(?lstr1_dd_graphic_controller), W10
 	CALL	_dd_printMessage
 ;dd_graphic_controller.c,345 :: 		}

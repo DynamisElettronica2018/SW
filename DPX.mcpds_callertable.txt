@@ -353,9 +353,24 @@ external4
 	d_controls_onAux1
 		Debug_UART_Write
 		dAcc_requestAction
-			Debug_UART_Write
+			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
 			dAcc_startAutoAcceleration
 				Can_writeInt
+				dd_printMessage
 			dd_GraphicController_fireTimedNotification
 			dAcc_startClutchRelease
 			dAcc_stopAutoAcceleration

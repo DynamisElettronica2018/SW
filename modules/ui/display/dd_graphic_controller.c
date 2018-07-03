@@ -185,7 +185,7 @@ void dd_GraphicController_firePromptNotification(char *text) {
 
 void dd_GraphicController_clearPrompt()
 {
-    dd_GraphicController_clearNotification();
+     dd_Interface_print[dd_currentInterface]();
 }
 
 void dd_GraphicController_handleNotification(void) {
@@ -341,7 +341,7 @@ void dd_GraphicController_onTimerInterrupt(void)
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
                if (d_UI_getOperatingMode() == ACC_MODE){
-                  dd_printMessage("AUX1->START");
+                  dd_printMessage("GRN->START");
                }
                dd_isFrameUpdateForced = FALSE;
            }
