@@ -21,6 +21,40 @@ char dAcc_isReleasingClutch(void);
 
 
 void dAcc_stopAutoAcceleration(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+void Can_init(void);
+
+unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+void Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../../libs/basic.h"
 #line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/../../libs/basic.h"
 char log2(unsigned char byte);
@@ -292,39 +326,6 @@ unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition positio
 
 void dd_Dashboard_printIndicators(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
-void Can_init(void);
-
-unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
-
-void Can_writeByte(unsigned long int id, unsigned char dataOut);
-
-void Can_writeInt(unsigned long int id, int dataOut);
-
-void Can_addIntToWritePacket(int dataOut);
-
-void Can_addByteToWritePacket(unsigned char dataOut);
-
-void Can_write(unsigned long int id);
-
-void Can_setWritePriority(unsigned int txPriority);
-
-void Can_resetWritePacket(void);
-
-unsigned int Can_getWriteFlags(void);
-
-unsigned char Can_B0hasBeenReceived(void);
-
-unsigned char Can_B1hasBeenReceived(void);
-
-void Can_clearB0Flag(void);
-
-void Can_clearB1Flag(void);
-
-void Can_clearInterrupt(void);
-
-void Can_initInterrupt(void);
 #line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../ui/input-output/d_paddle.h"
 void dPaddle_init(void);
 
@@ -356,28 +357,27 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
-#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
-#line 31 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+ Can_writeInt( 0b01000000101 ,  0 );
 }
-#line 98 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 95 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 void dAcc_startAutoAcceleration(void){
-
+ if(!dAcc_autoAcceleration){
  dAcc_autoAcceleration =  1 ;
  dAcc_releasingClutch =  0 ;
-
-
+ Can_writeInt( 0b01000000101 ,  1 );
+ }
 }
 
 void dAcc_startClutchRelease(void){
 
  dAcc_releasingClutch =  1 ;
-
 
 
 }
@@ -386,28 +386,28 @@ void dAcc_stopAutoAcceleration(void) {
  if(dAcc_autoAcceleration){
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
-
+ Can_writeInt( 0b01000000101 ,  0 );
  }
 }
 
 void dAcc_requestAction(){
  if(!dAcc_autoAcceleration){
- dd_GraphicController_clearPrompt();
+
  Debug_UART_Write("Acc: cleared start prompt.\r\n");
- dd_GraphicController_firePromptNotification("Press AUX1 to rel. clut.");
+
  dAcc_startAutoAcceleration();
  }
  else if (!dAcc_releasingClutch)
  {
- dd_GraphicController_clearPrompt();
+
  Debug_UART_Write("Acc: cleared release clutch prompt.\r\n");
- dd_GraphicController_fireTimedNotification(2000, "Press AUX1 to stop acc.", MESSAGE);
+ dd_GraphicController_fireTimedNotification(1000, "AUX1 TO START", MESSAGE);
  dAcc_startClutchRelease();
  }
  else
  {
  dAcc_stopAutoAcceleration();
- dd_GraphicController_fireTimedNotification(2000, "Accel. stopped.", MESSAGE);
+ dd_GraphicController_fireTimedNotification(2000, "STOP", MESSAGE);
  Debug_UART_Write("Acc: stopped by request.\r\n");
  }
 }

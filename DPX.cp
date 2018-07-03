@@ -623,6 +623,10 @@ void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
@@ -745,7 +749,7 @@ void main(){
  timer2_counter1 += 1;
  timer2_counter2 += 1;
  timer2_counter3 += 1;
-
+ timer2_counter4 += 1;
  timer2_counter5 += 1;
 
 

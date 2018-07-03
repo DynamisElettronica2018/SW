@@ -222,6 +222,10 @@ void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
@@ -580,6 +584,7 @@ void dDCU_sentAcquiringSignal(void);
 void dDCU_tick(void);
 #line 18 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
+int d_OperatingModeChange =  0 ;
 
 void d_UI_setOperatingMode(OperatingMode mode);
 
@@ -605,7 +610,7 @@ void d_UIController_init() {
  Debug_UART_Write("Acceleration module initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 49 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 50 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -617,8 +622,19 @@ void d_UI_setOperatingMode(OperatingMode mode) {
  case ACC_MODE:
  d_UI_AccModeClose();
  }
+ if(d_currentOperatingMode != mode){
+ d_OperatingModeChange =  1 ;
+ }
  d_currentOperatingMode = mode;
  d_OperatingMode_init[mode]();
+}
+
+OperatingMode d_UI_getOperatingMode(){
+ return d_currentOperatingMode;
+}
+
+int d_UI_OperatingModeChanged(){
+ return d_OperatingModeChange;
 }
 
 void printf(char* string);
@@ -674,7 +690,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 120 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 132 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

@@ -35,7 +35,7 @@
 #define SW_LAUNCH_CONTROL_GCU_ID        0b01000000010 //514
 #define SW_TRACTION_CONTROL_GCU_ID      0b01000000011 //515
 #define SW_BRAKE_BIAS_EBB_ID            0b10000000000 //1024
-#define SW_DRS_GCU_ID                   0b01000000101 //517
+#define SW_GENERAL_GCU_ID               0b01000000101 //517
 
 
 /************************** DCU ***************************/
@@ -116,6 +116,11 @@
 #define COMMAND_DCU_START_ACQUISITION 1
 #define COMMAND_DCU_STOP_ACQUISITION 2
 #define COMMAND_DCU_IS_ACQUIRING 1
+
+
+/********************* ACCELERATION MODE *******************/
+#define COMMAND_START_ACCELERATION 1
+#define COMMAND_STOP_ACCELERATION  0
 
 
 #endif //DD_CAN_H

@@ -74,6 +74,10 @@ _timer2_interrupt:
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter3), W0
 	ADD	W1, [W0], [W0]
+;DPX.c,55 :: 		timer2_counter4 += 1;
+	MOV	#1, W1
+	MOV	#lo_addr(_timer2_counter4), W0
+	ADD	W1, [W0], [W0]
 ;DPX.c,56 :: 		timer2_counter5 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter5), W0

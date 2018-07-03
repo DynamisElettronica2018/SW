@@ -16,6 +16,7 @@
 #define TIMER_2_PERIOD 0.001 //seconds
 
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
+int d_OperatingModeChange = FALSE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
 
@@ -57,8 +58,19 @@ void d_UI_setOperatingMode(OperatingMode mode) {
          case ACC_MODE:
               d_UI_AccModeClose();
      }
+     if(d_currentOperatingMode != mode){
+        d_OperatingModeChange = TRUE;
+     }
      d_currentOperatingMode = mode;
      d_OperatingMode_init[mode]();
+}
+
+OperatingMode d_UI_getOperatingMode(){
+     return d_currentOperatingMode;
+}
+
+int d_UI_OperatingModeChanged(){
+     return d_OperatingModeChange;
 }
 
 void printf(char* string);

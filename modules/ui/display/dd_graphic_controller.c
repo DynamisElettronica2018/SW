@@ -21,6 +21,7 @@
 #include "../libs/debug.h"
 #include "../input-output/d_rpm.h"
 #include "d_clutch.h"
+#include "d_ui_controller.h"
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -339,6 +340,9 @@ void dd_GraphicController_onTimerInterrupt(void)
                eGlcd_fill(WHITE);
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
+               if (d_UI_getOperatingMode() == ACC_MODE){
+                  dd_printMessage("AUX1->START");
+               }
                dd_isFrameUpdateForced = FALSE;
            }
         }

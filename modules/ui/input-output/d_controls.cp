@@ -602,6 +602,10 @@ void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_ui_controller.h"
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 #line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"

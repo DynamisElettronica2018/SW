@@ -2222,6 +2222,7 @@ d_isneutralset
 d_not_a
 d_operatingmode_close
 d_operatingmode_init
+d_operatingmodechange
 d_selectorpositiontomode
 d_sensors_sendswtemp
 d_setgearmotorstate
@@ -2235,7 +2236,9 @@ d_ui_cruisemodeclose
 d_ui_cruisemodeinit
 d_ui_debugmodeclose
 d_ui_debugmodeinit
+d_ui_getoperatingmode
 d_ui_onsettingschange
+d_ui_operatingmodechanged
 d_ui_setoperatingmode
 d_ui_settingsmodeclose
 d_ui_settingsmodeinit

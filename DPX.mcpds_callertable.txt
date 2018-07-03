@@ -68,6 +68,14 @@ main
 					d_UI_ApplySettings
 				d_UI_AccModeClose
 					dAcc_stopAutoAcceleration
+						Can_writeInt
+							Can_resetWritePacket
+							Can_addIntToWritePacket
+								Can_addByteToWritePacket
+							Can_write
+								CAN1Write
+									CAN1IDToRegs
+								Can_getWriteFlags
 					Debug_UART_Write
 				dd_Dashboard_print
 					dd_Dashboard_printGearLetter
@@ -180,23 +188,6 @@ main
 				d_UI_AccModeInit
 					Debug_UART_Write
 					dd_GraphicController_setCollectionInterface
-					dd_GraphicController_firePromptNotification
-						dd_GraphicController_clearNotification
-							eGlcd_clear
-								eGlcd_fill
-									_frameBuffer_Fill
-							dd_GraphicController_unsetNotificationFlag
-						eGlcd_clear
-						dd_GraphicController_fireNotification
-							strcpy
-							dd_printMessage
-								xGlcd_Set_Font
-								eGlcd_getTextPixelLength
-									strlen
-									xGlcd_Char_Width
-										_Multiply_32x32
-								eGlcd_drawRect
-								eGlcd_writeText
 				d_UI_BoardDebugModeClose
 				d_UI_DebugModeClose
 				d_UI_CruiseModeClose
@@ -246,6 +237,8 @@ main
 				_Lcd_Init
 					_Lcd_Toggle_Enable
 			eGlcd_clear
+				eGlcd_fill
+					_frameBuffer_Fill
 			xGlcd_Set_Font
 			dHardReset_hasBeenReset
 			dd_GraphicController_startupLogo
@@ -322,6 +315,7 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		dAcc_init
+			Can_writeInt
 		setTimer
 external4
 	d_controls_onNeutral
@@ -329,13 +323,6 @@ external4
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
-			Can_resetWritePacket
-			Can_addIntToWritePacket
-				Can_addByteToWritePacket
-			Can_write
-				CAN1Write
-					CAN1IDToRegs
-				Can_getWriteFlags
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -353,15 +340,22 @@ external4
 				dd_GraphicController_getTmrCounterLimit
 				dd_GraphicController_setNotificationFlag
 				dd_GraphicController_fireNotification
+					strcpy
+					dd_printMessage
+						xGlcd_Set_Font
+						eGlcd_getTextPixelLength
+							strlen
+							xGlcd_Char_Width
+								_Multiply_32x32
+						eGlcd_drawRect
+						eGlcd_writeText
 			dSignalLed_set
 	d_controls_onAux1
 		Debug_UART_Write
 		dAcc_requestAction
-			dd_GraphicController_clearPrompt
-				dd_GraphicController_clearNotification
 			Debug_UART_Write
-			dd_GraphicController_firePromptNotification
 			dAcc_startAutoAcceleration
+				Can_writeInt
 			dd_GraphicController_fireTimedNotification
 			dAcc_startClutchRelease
 			dAcc_stopAutoAcceleration
@@ -539,8 +533,11 @@ timer1_interrupt
 		Lcd_PrintFrame
 		dd_printMessage
 		eGlcd_fill
+		d_UI_getOperatingMode
 		dd_GraphicController_handleNotification
 			dd_GraphicController_clearNotification
+				eGlcd_clear
+				dd_GraphicController_unsetNotificationFlag
 		dd_Dashboard_print
 		dd_Interface_printMenu
 		dd_Dashboard_init

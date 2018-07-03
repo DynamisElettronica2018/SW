@@ -128,9 +128,7 @@ void d_UI_CruiseModeInit() {
 void d_UI_AccModeInit(){
      Debug_UART_Write("Acceleration mode entered.\r\n");
      dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
-     delay_ms(1000);
      Debug_UART_Write("Acceleration start prompt set.\r\n");
-     dd_GraphicController_firePromptNotification("Press AUX1 to start acc.");
 }
 
 void d_UI_DebugModeInit() {

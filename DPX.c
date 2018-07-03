@@ -52,7 +52,7 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
     
     //Buzzer_bip();
