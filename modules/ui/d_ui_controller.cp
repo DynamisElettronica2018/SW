@@ -36,7 +36,7 @@ void d_controls_onSelectorSwitched(signed char position);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM,
+ EBB, TH2O, VBAT, RPM, TPS,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -170,6 +170,7 @@ extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_tps;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
@@ -207,15 +208,15 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 5 ])(void);
-#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 116 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 154 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 155 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 
 void d_UI_AccModeClose(void);
@@ -537,7 +538,7 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 24 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -546,12 +547,14 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 48 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 50 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 void dAcc_requestAction();
 
 
 
 char dAcc_isAutoAccelerationActive(void);
+
+void dAcc_getAccValue(int accValue);
 
 char dAcc_isReleasingClutch(void);
 
@@ -610,7 +613,9 @@ void d_UIController_init() {
  Debug_UART_Write("Acceleration module initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 50 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 48 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+ d_UI_setOperatingMode(ACC_MODE);
+
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {

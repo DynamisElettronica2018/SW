@@ -96,7 +96,7 @@ void Can_initInterrupt(void);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM,
+ EBB, TH2O, VBAT, RPM, TPS,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -352,7 +352,7 @@ void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
+#line 24 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -361,12 +361,14 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 48 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
+#line 50 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
 void dAcc_requestAction();
 
 
 
 char dAcc_isAutoAccelerationActive(void);
+
+void dAcc_getAccValue(int accValue);
 
 char dAcc_isReleasingClutch(void);
 
@@ -550,6 +552,7 @@ extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_tps;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
@@ -587,15 +590,15 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 5 ])(void);
-#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 116 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 154 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 155 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 
 void d_UI_AccModeClose(void);
@@ -877,7 +880,6 @@ void d_controls_onAux1(void) {
  switch(d_currentOperatingMode)
  {
  case ACC_MODE:
- Debug_UART_Write("Acceleration operation requested.\r\n");
  dAcc_requestAction();
  default:
  return;

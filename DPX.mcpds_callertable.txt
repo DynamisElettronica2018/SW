@@ -76,6 +76,31 @@ main
 								CAN1Write
 									CAN1IDToRegs
 								Can_getWriteFlags
+						dd_printMessage
+							xGlcd_Set_Font
+							eGlcd_getTextPixelLength
+								strlen
+								xGlcd_Char_Width
+									_Multiply_32x32
+							eGlcd_drawRect
+								ceil
+									_Float2Longint
+									_Long2Float
+									_Compare_Le_Fp
+									_AddSub_FP
+								_frameBuffer_Read
+								_frameBuffer_Write
+								_Long2Float
+								_Div_FP
+								_Float2Longint
+							eGlcd_writeText
+								xGlcd_Write_Text
+									strlen
+									xGlcd_Write_Char
+										xGLCD_Write_Data
+											_frameBuffer_Read
+											_frameBuffer_Write
+										_Multiply_32x32
 					Debug_UART_Write
 				dd_Dashboard_print
 					dd_Dashboard_printGearLetter
@@ -85,10 +110,6 @@ main
 						eGlcd_overwriteChar
 							eGlcd_clearChar
 								xGlcd_Write_Char
-									xGLCD_Write_Data
-										_frameBuffer_Read
-										_frameBuffer_Write
-									_Multiply_32x32
 								xGLCD_Set_Transparency
 							eGlcd_writeChar
 								xGlcd_Write_Char
@@ -98,27 +119,14 @@ main
 						dd_Dashboard_printIndicator
 							dd_Indicator_drawContainers
 								eGlcd_drawRect
-									ceil
-										_Float2Longint
-										_Long2Float
-										_Compare_Le_Fp
-										_AddSub_FP
-									_frameBuffer_Read
-									_frameBuffer_Write
-									_Long2Float
-									_Div_FP
-									_Float2Longint
 							dd_Indicator_getNameXCoord
 							dd_Indicator_getNameYCoord
 							xGlcd_Set_Font
 							eGlcd_overwriteText
 								eGlcd_clearText
 									xGlcd_Write_Text
-										strlen
-										xGlcd_Write_Char
 									xGLCD_Set_Transparency
 								eGlcd_writeText
-									xGlcd_Write_Text
 							dd_Indicator_getLabelXCoord
 							dd_Indicator_getLabelYCoord
 							eGlcd_clearText
@@ -317,6 +325,7 @@ main
 		dAcc_init
 			Can_writeInt
 		setTimer
+		d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
@@ -342,13 +351,6 @@ external4
 				dd_GraphicController_fireNotification
 					strcpy
 					dd_printMessage
-						xGlcd_Set_Font
-						eGlcd_getTextPixelLength
-							strlen
-							xGlcd_Char_Width
-								_Multiply_32x32
-						eGlcd_drawRect
-						eGlcd_writeText
 			dSignalLed_set
 	d_controls_onAux1
 		Debug_UART_Write
@@ -371,9 +373,6 @@ external4
 			dAcc_startAutoAcceleration
 				Can_writeInt
 				dd_printMessage
-			dd_GraphicController_fireTimedNotification
-			dAcc_startClutchRelease
-			dAcc_stopAutoAcceleration
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -417,6 +416,14 @@ CAN_Interrupt
 		dSignalLed_set
 	dGear_propagate
 		dGear_set
+	dAcc_getAccValue
+		dd_Indicator_setIntValueP
+			dd_Indicator_requestPrintUpdateP
+		d_UI_getOperatingMode
+		dAcc_startClutchRelease
+			dd_GraphicController_clearPrompt
+			dd_printMessage
+	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 	dEfiSense_calculateWaterTemperature
 		_Long2Float
@@ -449,7 +456,6 @@ CAN_Interrupt
 		_Float2Longint
 		_Div_FP
 	dd_Indicator_setIntValueP
-		dd_Indicator_requestPrintUpdateP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
@@ -498,6 +504,7 @@ cn_interrupt
 			d_DashboardSetting_updateValue
 	clearExternalInterrupt
 timer2_interrupt
+	d_controls_onAux1
 	dPaddle_readSample
 		ADC1_Read
 			ADC1_Init
@@ -506,6 +513,8 @@ timer2_interrupt
 		_Mul_FP
 		_AddSub_FP
 		_Float2Longint
+	d_UI_getOperatingMode
+	dAcc_stopAutoAcceleration
 	dClutch_set
 		dd_Indicator_setIntValueP
 	dPaddle_getValue

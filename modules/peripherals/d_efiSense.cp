@@ -5,7 +5,7 @@
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM,
+ EBB, TH2O, VBAT, RPM, TPS,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -245,7 +245,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 24 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_tick(void);
@@ -253,6 +253,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+int dEfiSense_calculateTPS (unsigned int value);
 
 float dEfiSense_calculateOilInTemperature (unsigned int value);
 
@@ -318,6 +320,7 @@ extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_tps;
 extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
@@ -355,15 +358,15 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 5 ])(void);
-#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 116 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 154 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 155 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 
 void d_UI_AccModeClose(void);
@@ -399,6 +402,10 @@ void dEfiSense_die(void) {
 
 char dEfiSense_isDead(void) {
  return dEfiSense_dead;
+}
+
+int dEfiSense_calculateTPS (unsigned int value){
+ return ((int)(value*100)/ 255 );
 }
 
 float dEfiSense_calculateOilInTemperature (unsigned int value){

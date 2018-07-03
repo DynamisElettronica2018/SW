@@ -1,6 +1,6 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 24 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -9,12 +9,14 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 48 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 50 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 void dAcc_requestAction();
 
 
 
 char dAcc_isAutoAccelerationActive(void);
+
+void dAcc_getAccValue(int accValue);
 
 char dAcc_isReleasingClutch(void);
 
@@ -73,7 +75,7 @@ void emptyString(char* myString);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, VBAT, RPM,
+ EBB, TH2O, VBAT, RPM, TPS,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -357,37 +359,155 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux1(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE
+} OperatingMode;
+
+
+
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_th2o;
+extern FloatIndicator ind_vbat;
+extern FloatIndicator ind_oil_press;
+extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_oil_temp_out;
+extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 5 ])(void);
+#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 5 ])(void);
+#line 116 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_setOperatingMode(OperatingMode mode);
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 155 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
-#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+static char dAcc_readyToGo =  0 ;
+#line 26 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
  Can_writeInt( 0b01000000101 ,  0 );
 }
-#line 95 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 98 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 void dAcc_startAutoAcceleration(void){
  if(!dAcc_autoAcceleration){
  dAcc_autoAcceleration =  1 ;
  dAcc_releasingClutch =  0 ;
  Can_writeInt( 0b01000000101 ,  1 );
- dd_printMessage("ACCELERATE");
+ dd_printMessage("STEADY");
  }
 }
 
 void dAcc_startClutchRelease(void){
+ dd_GraphicController_clearPrompt();
+ dd_printMessage("GREEN & GO");
+ dAcc_readyToGo =  1 ;
+}
 
- dAcc_releasingClutch =  1 ;
-
-
+void dAcc_getAccValue(int accValue){
+ dd_Indicator_setintValueP(&ind_tps.base, accValue);
+ if(d_UI_getOperatingMode() == ACC_MODE){
+ if(accValue >=  50 ){
+ dAcc_startClutchRelease();
+ }
+ }
 }
 
 void dAcc_stopAutoAcceleration(void) {
- if(dAcc_autoAcceleration){
+ if(dAcc_releasingClutch){
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
  Can_writeInt( 0b01000000101 ,  0 );
+ dd_printMessage("STOP");
  }
 }
 
@@ -396,16 +516,11 @@ void dAcc_requestAction(){
  dd_GraphicController_clearPrompt();
  dAcc_startAutoAcceleration();
  }
- else if (!dAcc_releasingClutch)
+ else if (dAcc_readyToGo)
  {
  dd_GraphicController_clearPrompt();
- dd_GraphicController_fireTimedNotification(1000, "GRN TO GO", MESSAGE);
- dAcc_startClutchRelease();
- }
- else
- {
- dAcc_stopAutoAcceleration();
- dd_GraphicController_fireTimedNotification(2000, "ACC STOP", MESSAGE);
+ dAcc_readyToGo =  0 ;
+ dAcc_releasingClutch =  1 ;
  }
 }
 

@@ -341,7 +341,7 @@ void dd_GraphicController_onTimerInterrupt(void)
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
                if (d_UI_getOperatingMode() == ACC_MODE){
-                  dd_printMessage("GRN->START");
+                  dd_printMessage("READY");
                }
                dd_isFrameUpdateForced = FALSE;
            }

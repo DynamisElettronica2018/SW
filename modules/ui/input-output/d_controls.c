@@ -454,7 +454,6 @@ void d_controls_onAux1(void) {
      switch(d_currentOperatingMode)
      {
          case ACC_MODE:
-              Debug_UART_Write("Acceleration operation requested.\r\n");
               dAcc_requestAction();
          default:
          return;

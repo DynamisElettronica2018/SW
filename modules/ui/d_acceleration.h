@@ -5,6 +5,8 @@
 #ifndef DP8_DISPLAY_CONTROLLER_D_ACCELERATION_H
 #define DP8_DISPLAY_CONTROLLER_D_ACCELERATION_H
 
+#define MIN_ACC_VALUE 50
+
 #define DACC_TRIM_DEFAULT 500
 #define DACC_TRIM_STEP 100
 #define DACC_TRIM_MAX   1000
@@ -50,6 +52,8 @@ void dAcc_requestAction();
 //void dAcc_startAutoAcceleration(void);
 
 char dAcc_isAutoAccelerationActive(void);
+
+void dAcc_getAccValue(int accValue);
 
 char dAcc_isReleasingClutch(void);
 

@@ -915,7 +915,7 @@ L__dd_GraphicController_onTimerInterrupt83:
 	BRA Z	L__dd_GraphicController_onTimerInterrupt84
 	GOTO	L_dd_GraphicController_onTimerInterrupt31
 L__dd_GraphicController_onTimerInterrupt84:
-;dd_graphic_controller.c,344 :: 		dd_printMessage("GRN->START");
+;dd_graphic_controller.c,344 :: 		dd_printMessage("READY");
 	MOV	#lo_addr(?lstr1_dd_graphic_controller), W10
 	CALL	_dd_printMessage
 ;dd_graphic_controller.c,345 :: 		}

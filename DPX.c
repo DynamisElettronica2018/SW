@@ -17,6 +17,7 @@
 #include "modules/ui/d_operating_modes.h"
 #include "d_sensors.h"
 #include "libs/debug.h"
+#include "d_acceleration.h"
 
 #include <stdlib.h>
 
@@ -57,9 +58,16 @@ onTimer2Interrupt{
     
     //Buzzer_bip();
 
+    if(timer2_counter4 == 4000){
+      d_controls_onAux1();
+    }
+    
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
         dPaddle_readSample();
+        if(d_UI_getOperatingMode() == ACC_MODE){
+          dAcc_stopAutoAcceleration();
+        }
         timer2_counter0 = 0;
     }
     // TIMER_2_PERIOD*10 = 10ms (100Hz)
@@ -136,9 +144,10 @@ onCanInterrupt{
 
     switch (id) {
        case EFI_GEAR_RPM_TPS_APPS_ID:
-           dRpm_set(secondInt*10);
+           dRpm_set(secondInt);
            dEfiSense_heartbeat();
            dGear_propagate(firstInt);
+           dAcc_getAccValue(dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
            dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));

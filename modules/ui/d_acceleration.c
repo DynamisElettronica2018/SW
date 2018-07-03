@@ -8,9 +8,11 @@
 #include "dd_graphic_controller.h"
 #include "../peripherals/d_clutch.h"
 #include "debug.h"
+#include "d_ui_controller.h"
 
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
+static char dAcc_readyToGo = FALSE;
 /*static char dAcc_ramping = FALSE;
 static double dAcc_rampStep = 0;
 static unsigned int dAcc_steps = 0;
@@ -91,29 +93,39 @@ void dAcc_startAutoAcceleration(void) {
 }
 //*/
 
+
 //FULL ACC ON GCU
 void dAcc_startAutoAcceleration(void){
     if(!dAcc_autoAcceleration){
         dAcc_autoAcceleration = TRUE;
         dAcc_releasingClutch = FALSE;
         Can_writeInt(SW_GENERAL_GCU_ID, COMMAND_START_ACCELERATION);
-        dd_printMessage("ACCELERATE");
+        dd_printMessage("STEADY");
     }
 }//*/
 
 void dAcc_startClutchRelease(void){
-    //if(!dAcc_releasingClutch){
-        dAcc_releasingClutch = TRUE;
-    //}
-    //dAcc_setRamp(DACC_RAMP_START, DACC_RAMP_END, dAcc_rampTime);
+        dd_GraphicController_clearPrompt();
+        dd_printMessage("GREEN & GO");
+        dAcc_readyToGo = TRUE;
+}
+
+void dAcc_getAccValue(int accValue){    //% di acc
+     dd_Indicator_setintValueP(&ind_tps.base, accValue);
+     if(d_UI_getOperatingMode() == ACC_MODE){
+       if(accValue >= MIN_ACC_VALUE){
+         dAcc_startClutchRelease();
+       }
+     }
 }
 
 void dAcc_stopAutoAcceleration(void) {
-    if(dAcc_autoAcceleration){
-        dAcc_autoAcceleration = FALSE;
-        dAcc_releasingClutch = FALSE;
-        Can_writeInt(SW_GENERAL_GCU_ID, COMMAND_STOP_ACCELERATION);
-    }
+        if(dAcc_releasingClutch){
+            dAcc_autoAcceleration = FALSE;
+            dAcc_releasingClutch = FALSE;
+            Can_writeInt(SW_GENERAL_GCU_ID, COMMAND_STOP_ACCELERATION);
+            dd_printMessage("STOP");
+            }
 }
 
 void dAcc_requestAction(){
@@ -121,16 +133,11 @@ void dAcc_requestAction(){
         dd_GraphicController_clearPrompt();
         dAcc_startAutoAcceleration();
     }
-    else if (!dAcc_releasingClutch)
+    else if (dAcc_readyToGo)
     {
         dd_GraphicController_clearPrompt();
-        dd_GraphicController_fireTimedNotification(1000, "GRN TO GO", MESSAGE);
-        dAcc_startClutchRelease();
-    }
-    else
-    {
-        dAcc_stopAutoAcceleration();
-        dd_GraphicController_fireTimedNotification(2000, "ACC STOP", MESSAGE);
+        dAcc_readyToGo = FALSE;
+        dAcc_releasingClutch = TRUE;
     }
 }
 

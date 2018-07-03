@@ -1113,6 +1113,7 @@ base
 base
 base
 base
+base
 bbitsavailable
 bblocksinonepass
 bcd2dec
@@ -2246,6 +2247,7 @@ d_uicontroller_init
 da
 da
 da_bit
+dacc_getaccvalue
 dacc_init
 dacc_isautoaccelerationactive
 dacc_isreleasingclutch
@@ -2476,6 +2478,7 @@ defisense_calculateoilouttemperature
 defisense_calculatepressure
 defisense_calculateslip
 defisense_calculatetemperature
+defisense_calculatetps
 defisense_calculatevoltage
 defisense_calculatewatertemperature
 defisense_dead
@@ -2539,6 +2542,8 @@ description
 description
 description
 description
+description
+descriptionlength
 descriptionlength
 descriptionlength
 descriptionlength
@@ -4995,6 +5000,7 @@ id
 id
 id
 id
+id
 idle
 idle
 idle_bit
@@ -5059,6 +5065,7 @@ ind_th2o_dx_in
 ind_th2o_dx_out
 ind_th2o_sx_in
 ind_th2o_sx_out
+ind_tps
 ind_vbat
 inittimer32
 instruction_period
@@ -5284,6 +5291,7 @@ isvisible
 isvisible
 isvisible
 isvisible
+isvisible
 isxdigit
 ivrie
 ivrie
@@ -5424,6 +5432,8 @@ label
 label
 label
 label
+label
+labellength
 labellength
 labellength
 labellength
@@ -5873,6 +5883,8 @@ name
 name
 name
 name
+name
+namelength
 namelength
 namelength
 namelength
@@ -6940,6 +6952,7 @@ parsevaluelabel
 parsevaluelabel
 parsevaluelabel
 parsevaluelabel
+parsevaluelabel
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
 pcfg_0
@@ -7055,6 +7068,7 @@ pdsel1
 pen
 pen
 pen_bit
+pendingprintupdate
 pendingprintupdate
 pendingprintupdate
 pendingprintupdate
@@ -12769,6 +12783,8 @@ value
 value
 value
 value
+value
+valuetype
 valuetype
 valuetype
 valuetype

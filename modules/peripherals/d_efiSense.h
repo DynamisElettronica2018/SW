@@ -19,6 +19,7 @@
 #define EFI_SENSE_OIL_TEMP_RANGE  (0.36094f)
 #define EFI_SENSE_OIL_MIN_TEMP (196.36f)
 #define EFI_SENSE_SLIP (0.1f)
+#define EFI_SENSE_TPS_RANGE 255
 
 void dEfiSense_heartbeat(void);
 
@@ -27,6 +28,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+int dEfiSense_calculateTPS (unsigned int value);
 
 float dEfiSense_calculateOilInTemperature (unsigned int value);
 
