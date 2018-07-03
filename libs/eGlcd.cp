@@ -1,4 +1,4 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
 
@@ -24,17 +24,21 @@ char * strpbrk(char * s1, char * s2);
 char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
-extern unsigned char BLACK, WHITE;
-#line 63 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+extern const unsigned char BLACK, WHITE;
+#line 62 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+extern unsigned char* frameBuff;
+
 void eGlcd_init(void);
 
 void eGlcd_invertColors(void);
 
 void eGlcd_clear(void);
+
+void eGlcd_loadImage(const char *image);
 
 void eGlcd_fill(unsigned char color);
 
@@ -55,9 +59,13 @@ void eGlcd_setupTimer(void);
 void eGlcd_setTimerCoefficient(float coefficient);
 
 unsigned int eGlcd_getTextPixelLength(char *text);
-#line 97 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+
+void Lcd_PrintFrame();
+#line 102 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
-#line 108 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/eglcd.h"
+
+void eGlcd_fillPage(unsigned char page, char color);
+#line 115 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -72,78 +80,34 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-char log2(unsigned char byte);
-
-void unsignedIntToString(unsigned int number, char *text);
-
-void signedIntToString(int number, char *text);
-
-unsigned char getNumberDigitCount(unsigned char number);
-
-void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/basic.h"
-#line 184 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/dspic.h"
-void setAllPinAsDigital(void);
-
-void setInterruptPriority(unsigned char device, unsigned char priority);
-
-void setExternalInterrupt(unsigned char device, char edge);
-
-void switchExternalInterruptEdge(unsigned char);
-
-char getExternalInterruptEdge(unsigned char);
-
-void clearExternalInterrupt(unsigned char);
-
-void setTimer(unsigned char device, double timePeriod);
-
-void clearTimer(unsigned char device);
-
-void turnOnTimer(unsigned char device);
-
-void turnOffTimer(unsigned char device);
-
-unsigned int getTimerPeriod(double timePeriod, unsigned char prescalerIndex);
-
-unsigned char getTimerPrescaler(double timePeriod);
-
-double getExactTimerPrescaler(double timePeriod);
-
-void setupAnalogSampling(void);
-
-void turnOnAnalogModule();
-
-void turnOffAnalogModule();
-
-void startSampling(void);
-
-unsigned int getAnalogValue(void);
-
-void setAnalogPIN(unsigned char pin);
-
-void unsetAnalogPIN(unsigned char pin);
-
-void setAnalogInterrupt(void);
-
-void unsetAnalogInterrupt(void);
-
-void clearAnalogInterrupt(void);
+#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
 
-void setAutomaticSampling(void);
-
-void unsetAutomaticSampling(void);
 
 
-void setAnalogVoltageReference(unsigned char mode);
 
-void setAnalogDataOutputFormat(unsigned char adof);
-
-int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/glcdpins.c"
+double fabs(double d);
+double floor(double x);
+double ceil(double x);
+double frexp(double value, int * eptr);
+double ldexp(double value, int newexp);
+double modf(double val, double * iptr);
+double sqrt(double x);
+double atan(double f);
+double asin(double x);
+double acos(double x);
+double atan2(double y,double x);
+double sin(double f);
+double cos(double f);
+double tan(double x);
+double exp(double x);
+double log(double x);
+double log10(double x);
+double pow(double x, double y);
+double sinh(double x);
+double cosh(double x);
+double tanh(double x);
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/glcdpins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
@@ -176,34 +140,8 @@ int getMinimumAnalogClockConversion(void);
  sbit GLCD_RW_Direction at TRISC2_bit;
  sbit GLCD_RS_Direction at TRISC1_bit;
  sbit GLCD_EN_Direction at TRISG15_bit;
-#line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
-
-
-
-
-
-double fabs(double d);
-double floor(double x);
-double ceil(double x);
-double frexp(double value, int * eptr);
-double ldexp(double value, int newexp);
-double modf(double val, double * iptr);
-double sqrt(double x);
-double atan(double f);
-double asin(double x);
-double acos(double x);
-double atan2(double y,double x);
-double sin(double f);
-double cos(double f);
-double tan(double x);
-double exp(double x);
-double log(double x);
-double log10(double x);
-double pow(double x, double y);
-double sinh(double x);
-double cosh(double x);
-double tanh(double x);
-#line 17 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 18 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 static const unsigned char INVERT =  2 ;
 
 static const unsigned short xColorClear = 0;
@@ -221,25 +159,23 @@ static char xGLCD_Transparency = 0;
 
 float EGLCD_TIMER_COEFFICIENT = 4;
 
-unsigned char BLACK =  1 , WHITE =  0 ;
+const unsigned char BLACK = 1;
+const unsigned char WHITE = 0;
+
+void _Lcd_Init();
+void _frameBuffer_Fill(unsigned char byte);
+void _frameBuffer_LoadImage(const char *image);
 
 void eGlcd_init() {
- BLACK =  1 ;
- WHITE =  0 ;
- Glcd_Init();
- if ( 80  >  80 ) {
- eGlcd_setupTimer();
- }
+
+
+
+ _Lcd_Init();
+#line 53 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 }
 
 void eGlcd_invertColors(void) {
- if (BLACK ==  0 ) {
- BLACK =  1 ;
- WHITE =  0 ;
- } else {
- BLACK =  0 ;
- WHITE =  1 ;
- }
+#line 63 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 }
 
 void eGlcd_clear(void) {
@@ -247,11 +183,11 @@ void eGlcd_clear(void) {
 }
 
 void eGlcd_fill(unsigned char color) {
- if (color) {
-  Glcd_Fill(0xFF) ;
- } else {
-  Glcd_Fill(0x00) ;
- }
+ char hex = 0;
+ if (color) hex = 0xFF;
+
+ _frameBuffer_Fill(color);
+#line 77 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 }
 
 
@@ -301,6 +237,13 @@ void eGlcd_writeText(char *text, unsigned char x, unsigned char y) {
  }
 }
 
+void eGlcd_loadImage(const char *image)
+{
+
+ _frameBuffer_LoadImage(image);
+#line 133 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+}
+
 void eGlcd_setupTimer(void) {
 
 
@@ -318,7 +261,262 @@ unsigned int eGlcd_getTextPixelLength(char *text) {
  }
  return textPixelLength;
 }
-#line 139 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+
+
+
+
+
+
+
+unsigned char _frame_buff_page = 0, _frame_buff_y = 0, _frame_buff_side = 0;
+unsigned char frameBuffer[1024] = {0};
+unsigned char* frameBuff = frameBuffer;
+
+
+void _Lcd_Toggle_Enable() {
+ asm {
+ BSET  LATG ,  #15 
+ REPEAT #90 ; 3.5us delay
+ NOP
+
+ BCLR  LATG ,  #15 
+ REPEAT #90
+ NOP
+ }
+}
+
+void _Lcd_Change_Side(){
+ asm {
+ ;BCLR  LATC ,  #1 
+ ;BSET  LATC ,  #1 
+
+ BTG  LATG ,  #8 
+ BTG  LATG ,  #7 
+
+ }
+}
+
+void _Lcd_Init(){
+ GLCD_D0_Direction = 0;
+ GLCD_D1_Direction = 0;
+ GLCD_D2_Direction = 0;
+ GLCD_D3_Direction = 0;
+ GLCD_D4_Direction = 0;
+ GLCD_D5_Direction = 0;
+ GLCD_D6_Direction = 0;
+ GLCD_D7_Direction = 0;
+
+ GLCD_CS1_Direction = 0;
+ GLCD_CS2_Direction = 0;
+ GLCD_RST_Direction = 0;
+ GLCD_RW_Direction = 0;
+ GLCD_RS_Direction = 0;
+ GLCD_EN_Direction = 0;
+
+ GLCD_RST = 0;
+ GLCD_RST = 1;
+
+
+ GLCD_EN = 0;
+asm {
+ ; Turn display on
+
+ BCLR  LATC ,  #2 
+ BCLR  LATC ,  #1 
+ BCLR  LATG ,  #8 
+ BCLR  LATG ,  #7 
+ BCLR  LATG ,  #9 
+ BCLR  LATB ,  #5 
+ BSET  LATB ,  #4 
+ BSET  LATB ,  #3 
+ BSET  LATB ,  #2 
+ BSET  LATB ,  #1 
+ BSET  LATB ,  #0 
+ BSET  LATB ,  #8 
+
+ CALL __Lcd_Toggle_Enable
+
+ ; Set Z coordinate
+
+ BCLR  LATC ,  #2 
+ BCLR  LATC ,  #1 
+ BSET  LATG ,  #9 
+ BSET  LATB ,  #5 
+ BCLR  LATB ,  #4 
+ BCLR  LATB ,  #3 
+ BCLR  LATB ,  #2 
+ BCLR  LATB ,  #1 
+ BCLR  LATB ,  #0 
+ BCLR  LATB ,  #8 
+
+ CALL __Lcd_Toggle_Enable
+
+ BCLR  LATG ,  #8 
+ BSET  LATG ,  #7 
+
+ CALL __Lcd_Toggle_Enable
+}
+}
+
+void _Lcd_ResetYAddr(){
+asm {
+ ; Set Y address, contained in D0-D5
+
+ BCLR  LATC ,  #2 
+ BCLR  LATC ,  #1 
+ BCLR  LATG ,  #9 
+ BSET  LATB ,  #5 
+ BCLR  LATB ,  #4 
+ BCLR  LATB ,  #3 
+ BCLR  LATB ,  #2 
+ BCLR  LATB ,  #1 
+ BCLR  LATB ,  #0 
+ BCLR  LATB ,  #8 
+
+ CALL __Lcd_Toggle_Enable
+}
+
+}
+
+void _Lcd_SetDataPort(){
+
+ asm{
+ LSR W10, #1, W1
+ MOV W1,  LATB 
+
+ BTSC W10, #7
+ BSET  LATG ,  #9 
+ BTSS W10, #7
+ BCLR  LATG ,  #9 
+
+ BTSC W10, #0
+ BSET  LATB ,  #8 
+ BTSS W10, #0
+ BCLR  LATB ,  #8 
+
+ CALL __Lcd_Toggle_Enable
+ }
+}
+
+void _Lcd_SetPage(){
+
+ asm{
+ BCLR  LATC ,  #2 
+ BCLR  LATC ,  #1 
+ MOV #0xB8, W1
+ ADD W1, W10, W10
+ CALL __Lcd_SetDataPort
+ }
+}
+
+void _Lcd_WriteData(){
+ asm{
+ BCLR  LATC ,  #2 
+ BSET  LATC ,  #1 
+ CALL __Lcd_SetDataPort
+ }
+}
+
+void Lcd_PrintFrame() {
+ asm {
+
+ CALL __Lcd_Init
+
+ CALL __Lcd_ResetYAddr
+
+ ; W10 is used as function argument
+ ; W1 is reserved for subfunctions
+ MOV #0, W2 ; side index
+ MOV _frameBuff, W6 ; buffer cursor address
+
+ Side_Loop:
+ MOV #0, W5 ; page index
+ MOV #64, W3 ; store y limit
+
+ Page_Loop:
+ CALL __Lcd_ResetYAddr
+ MOV #0, W4 ; y index
+ MOV W5, W10
+ CALL __Lcd_SetPage
+
+ Y_Loop:
+ MOV.B [W6++], W10
+ CALL __Lcd_WriteData
+ INC W4
+ CP W4, W3
+ BRA LTU, Y_Loop
+
+ INC W5
+ CP W5, #8
+ BRA LTU, Page_Loop
+
+ CALL __Lcd_Change_Side
+ INC W2
+ CP W2, #1
+ BRA LEU, Side_Loop
+
+ }
+
+ _frame_buff_page = 0;
+ _frame_buff_y = 0;
+ _frame_buff_side = 0;
+}
+
+
+
+void _frameBuffer_LoadImage(const char *image)
+{
+ int i, j;
+ for(i=0; i<16; i++)
+ {
+ for (j=0; j<64; j++)
+ {
+ frameBuffer[j+ (i/2)*64 + 512*(i%2)] = image[j + i*64];
+ }
+ }
+}
+
+void _frameBuffer_Fill(unsigned char byte)
+{
+ int i;
+ for (i=0; i<1024; i++) {
+ frameBuffer[i] = byte;
+ }
+}
+
+
+void _frameBuffer_Write(unsigned char byte)
+{
+ int i = _frame_buff_side*512 + _frame_buff_page*64 + _frame_buff_y;
+ frameBuffer[i] = byte;
+ _frame_buff_y++;
+}
+
+unsigned char _frameBuffer_Read(){
+ int i = _frame_buff_side*512 + _frame_buff_page*64 + _frame_buff_y;
+ return frameBuffer[i];
+}
+
+void _UART_DebugFrame(){
+ int i = 0;
+ int j=7;
+ char z = 0;
+ char byte;
+
+ for (z=0; z<2; z++)
+ {
+ for (i=0; i<64; i++)
+ {
+ for(j=7; j>=0; j--)
+ {
+ UART1_Write(frameBuffer[i+j*64+z*512]);
+ }
+ }
+ }
+#line 423 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+}
+#line 433 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 void printf(char* string);
 extern char str[100];
 
@@ -360,18 +558,23 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
 
  for(k=startSide; k<=endSide && lastX>0; k++)
  {
-  Glcd_Set_Side(k*64); ;
+
+ _frame_buff_side = k;
+#line 479 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  for (i=page; i<page+pageCount && i<8; i++)
  {
- Glcd_Set_Page(i);
- Glcd_Set_X(xOffset);
- if(i==page && pageOffset)
+
+ _frame_buff_page = i;
+ _frame_buff_y = xOffset;
+#line 488 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ if(i==page)
  {
  for (j=xOffset; j <= lastX; j++)
  {
  byte = ~(0xFF<<pageOffset);
- Glcd_Read_Data();
- rByte = Glcd_Read_Data();
+
+ rByte = _frameBuffer_Read();
+#line 499 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  byte&=rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -381,9 +584,15 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte|= byte2;
 
  if(j>=62)
- Glcd_Set_Page(i);
- Glcd_Set_X(j);
- Glcd_Write_Data(byte);
+ {
+
+ _frame_buff_page = i;
+#line 514 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ }
+
+ _frame_buff_y = j;
+ _frameBuffer_Write(byte);
+#line 522 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  }
  else if (i == (page+pageCount-1) && pageOverflow)
@@ -391,8 +600,9 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  for (j=xOffset; j <= lastX; j++)
  {
  byte = (0xFF<<pageOverflow);
- Glcd_Read_Data();
- rByte = Glcd_Read_Data();
+
+ rByte = _frameBuffer_Read();
+#line 535 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  byte &= rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -402,9 +612,15 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte|= byte2;
 
  if(j>=61)
- Glcd_Set_Page(i);
- Glcd_Set_X(j);
- Glcd_Write_Data(byte);
+ {
+
+ _frame_buff_page = i;
+#line 550 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ }
+
+ _frame_buff_y = j;
+ _frameBuffer_Write(byte);
+#line 558 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  }
  else
@@ -415,7 +631,9 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte = 0xFF;
  else
  byte = 0;
- Glcd_Write_Data(byte);
+
+ _frameBuffer_Write(byte);
+#line 573 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  }
 
@@ -424,7 +642,31 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  xOffset=0;
  }
 }
-#line 253 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+void eGlcd_fillPage(unsigned char page, char color)
+{
+ int k, i=0;
+ char byte = 0;
+ if (color == BLACK)
+ byte = 0xFF;
+
+ _frame_buff_page = page;
+#line 593 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ for(k=0; k<=1; k++)
+ {
+
+ _frame_buff_side = k;
+ _frame_buff_y = i;
+#line 602 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ for(; i<64; i++) {
+
+ _frameBuffer_Write(byte);
+#line 608 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ }
+ i = 0;
+ }
+}
+#line 621 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset) {
  xGlcdSelFont = ptrFontTbl;
@@ -432,6 +674,7 @@ void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  xGlcdSelFontHeight = font_height;
  xGlcdSelFontOffset = font_offset;
  xGLCD_Transparency =  0 ;
+
  xGlcdSelFontNbRows = xGlcdSelFontHeight / 8;
  if (xGlcdSelFontHeight % 8) xGlcdSelFontNbRows++;
 }
@@ -443,39 +686,57 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
  if ((pX > 127) || (pY > 63)) return;
  xx = pX % 64;
  tmp = pY / 8;
-
  tmpY = pY % 8;
  if (tmpY) {
 
  gData = pData << tmpY;
-  Glcd_Set_Side(pX); Glcd_Set_X(xx); Glcd_Set_Page(tmp); dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); ;
-#line 281 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+ _frame_buff_side = pX/64;
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+ dataR = _frameBuffer_Read();
+#line 656 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff >> (8 - tmpY));
  dataR = gData | dataR;
-  Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 287 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+
+ _frameBuffer_Write(dataR);
+#line 667 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  tmp++;
  if (tmp > 7) return;
-  Glcd_Set_X(xx); Glcd_Set_Page(tmp); gData = pData >> (8 - tmpY); dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); ;
-#line 294 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+ dataR = _frameBuffer_Read();
+#line 679 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ gData = pData >> (8 - tmpY);
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff << tmpY);
  dataR = gData | dataR;
-  Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 299 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+
+ _frameBuffer_Write(dataR);
+#line 690 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
  else {
-  Glcd_Set_Side(pX); Glcd_Set_X(xx); Glcd_Set_Page(tmp); ;
-#line 304 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+ _frame_buff_side = pX/64;
+ _frame_buff_y = xx;
+ _frame_buff_page = tmp;
+#line 701 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  if (xGLCD_Transparency) {
-  dataR = Glcd_Read_Data(); dataR = Glcd_Read_Data(); dataR = pData | dataR; ;
-#line 308 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+ dataR = _frameBuffer_Read();
+#line 708 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+ dataR = pData | dataR;
  }
  else
  dataR = pData;
-  Glcd_Set_X(xx); Glcd_Write_Data(dataR); ;
-#line 313 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/eGlcd.c"
+
+
+ _frameBuffer_Write(dataR);
+#line 719 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
  }
 }
 
@@ -493,10 +754,10 @@ unsigned short xGlcd_Write_Char(unsigned short ch, unsigned short x, unsigned sh
  for (j = 0; j < xGlcdSelFontNbRows; j++) {
  CurCharData = xGlcdSelFont + (i * xGlcdSelFontNbRows) + j + cOffset;
  switch (color) {
- case 0 :
- CharData = 0;
+ case WHITE:
+ CharData = ~(*CurCharData);
  break;
- case 1 :
+ case BLACK :
  CharData = *CurCharData;
  break;
  case 2 :

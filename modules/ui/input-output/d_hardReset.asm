@@ -31,14 +31,14 @@ _dHardReset_reset:
 	MOV	#lo_addr(?lstr1_d_hardReset), W11
 	MOV	#1000, W10
 	CALL	_dd_GraphicController_fireTimedNotification
-;d_hardReset.c,28 :: 		dSignalLed_set(DSIGNAL_LED_RED);
+;d_hardReset.c,28 :: 		dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
 	MOV.B	#1, W10
 	CALL	_dSignalLed_set
 ;d_hardReset.c,29 :: 		dSignalLed_set(DSIGNAL_LED_GREEN);
-	CLR	W10
+	MOV.B	#3, W10
 	CALL	_dSignalLed_set
 ;d_hardReset.c,30 :: 		dSignalLed_set(DSIGNAL_LED_BLUE);
-	MOV.B	#2, W10
+	CLR	W10
 	CALL	_dSignalLed_set
 ;d_hardReset.c,32 :: 		reset
 	RESET

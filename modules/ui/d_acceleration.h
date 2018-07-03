@@ -43,15 +43,22 @@ void dAcc_increaseRampTime(void);
 void dAcc_decreaseRampTime(void);
 */
 
-void dAcc_startAutoAcceleration(void);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void dAcc_requestAction();
+
+//void dAcc_startAutoAcceleration(void);
 
 char dAcc_isAutoAccelerationActive(void);
 
 char dAcc_isReleasingClutch(void);
 
-void dAcc_startClutchRelease(void);
+//void dAcc_startClutchRelease(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /*
 void dAcc_setRamp(unsigned char start, unsigned char end, unsigned int time);
 

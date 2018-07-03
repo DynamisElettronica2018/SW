@@ -4,20 +4,25 @@
 
 #include "d_signalLed.h"
 
+/*
+rosso blu verde giallo
+rosso rosso blu verde
+*/
+
 void dSignalLed_init(void) {
     DSIGNAL_0_Direction = OUTPUT;
     DSIGNAL_1_Direction = OUTPUT;
     DSIGNAL_2_Direction = OUTPUT;
     DSIGNAL_3_Direction = OUTPUT;
-    dSignalLed_set(DSIGNAL_LED_RED);
+    dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
     dSignalLed_set(DSIGNAL_LED_BLUE);
     dSignalLed_set(DSIGNAL_LED_GREEN);
-    dSignalLed_set(DSIGNAL_LED_YELLOW);
+    dSignalLed_set(DSIGNAL_LED_RED_LEFT);
     delay_ms(100);
-    dSignalLed_unset(DSIGNAL_LED_RED);
-    dSignalLed_unset(DSIGNAL_LED_BLUE);
     dSignalLed_unset(DSIGNAL_LED_GREEN);
-    dSignalLed_unset(DSIGNAL_LED_YELLOW);
+    dSignalLed_unset(DSIGNAL_LED_BLUE);
+    dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
+    dSignalLed_unset(DSIGNAL_LED_RED_LEFT);
 }
 
 void dSignalLed_switch(unsigned char led) {

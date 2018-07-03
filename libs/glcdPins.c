@@ -30,3 +30,35 @@
             sbit GLCD_RW_Direction at TRISC2_bit;
             sbit GLCD_RS_Direction at TRISC1_bit;
             sbit GLCD_EN_Direction at TRISG15_bit;
+
+           #define _GLCD_CS1  LATG
+           #define _GLCD_CS2  LATG
+           #define _GLCD_RST  LATG
+           #define _GLCD_RW   LATC
+           #define _GLCD_RS   LATC
+           #define _GLCD_EN   LATG
+
+           #define _GLCD_CS1_BIT  #8
+           #define _GLCD_CS2_BIT  #7
+           #define _GLCD_RST_BIT  #6
+           #define _GLCD_RW_BIT   #2
+           #define _GLCD_RS_BIT   #1
+           #define _GLCD_EN_BIT   #15
+
+           #define _GLCD_D0  LATB
+           #define _GLCD_D1  LATB
+           #define _GLCD_D2  LATB
+           #define _GLCD_D3  LATB
+           #define _GLCD_D4  LATB
+           #define _GLCD_D5  LATB
+           #define _GLCD_D6  LATB
+           #define _GLCD_D7  LATG
+           
+           #define _GLCD_D0_BIT  #8
+           #define _GLCD_D1_BIT  #0
+           #define _GLCD_D2_BIT  #1
+           #define _GLCD_D3_BIT  #2
+           #define _GLCD_D4_BIT  #3
+           #define _GLCD_D5_BIT  #4
+           #define _GLCD_D6_BIT  #5
+           #define _GLCD_D7_BIT  #9

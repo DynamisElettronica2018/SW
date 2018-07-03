@@ -44,12 +44,13 @@ Interface dd_GraphicController_getInterface(void);
 *        This method suspends the active interface and restores
 *        it after completion.
 *        
-*        \param time Time, in seconds, for the notification to be displayed.
+*        \param time Time, in milliseconds, for the notification to be displayed.
 *        \param text The string to be displayed.
 *        \param type The type of the notification.
 */
-
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 

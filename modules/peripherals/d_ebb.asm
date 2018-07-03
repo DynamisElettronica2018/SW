@@ -31,7 +31,7 @@ L__dEbb_calibrateSwitch38:
 	CLR	W0
 	MOV	W0, _calibrationState
 ;d_ebb.c,24 :: 		dSignalLed_switch(DSIGNAL_LED_GREEN);
-	CLR	W10
+	MOV.B	#3, W10
 	CALL	_dSignalLed_switch
 ;d_ebb.c,25 :: 		} else if (dEbb_isCalibrateing() == FALSE) {
 	GOTO	L_dEbb_calibrateSwitch1
@@ -45,7 +45,7 @@ L__dEbb_calibrateSwitch39:
 	MOV	#1, W0
 	MOV	W0, _calibrationState
 ;d_ebb.c,27 :: 		dSignalLed_switch(DSIGNAL_LED_GREEN);
-	CLR	W10
+	MOV.B	#3, W10
 	CALL	_dSignalLed_switch
 ;d_ebb.c,28 :: 		}
 L_dEbb_calibrateSwitch2:

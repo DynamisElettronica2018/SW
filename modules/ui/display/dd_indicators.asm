@@ -660,8 +660,8 @@ _dd_Indicator_parseValueLabel:
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
 	ADD	W1, [W0], W0
-; indicator start address is: 8 (W4)
-	MOV	[W0], W4
+; indicator start address is: 6 (W3)
+	MOV	[W0], W3
 ;dd_indicators.c,181 :: 		unsigned char valueType = indicator->valueType;
 	MOV	[W0], W0
 	ADD	W0, #8, W0
@@ -681,25 +681,25 @@ _dd_Indicator_parseValueLabel:
 ;dd_indicators.c,184 :: 		case INT:
 L_dd_Indicator_parseValueLabel24:
 ;dd_indicators.c,185 :: 		sprintf(indicator->label, "%i", ((IntegerIndicator*) indicator)->value);
-	ADD	W4, #20, W0
+	ADD	W3, #20, W0
 	MOV	[W0], W0
-	ADD	W4, #10, W1
-	PUSH	W4
+	ADD	W3, #10, W1
+	PUSH	W3
 	PUSH	W0
 	MOV	#lo_addr(?lstr_1_dd_indicators), W0
 	PUSH	W0
 	PUSH	W1
 	CALL	_sprintf
 	SUB	#6, W15
-	POP	W4
+	POP	W3
 ;dd_indicators.c,186 :: 		break;
 	GOTO	L_dd_Indicator_parseValueLabel23
 ;dd_indicators.c,187 :: 		case FLOAT:
 L_dd_Indicator_parseValueLabel25:
 ;dd_indicators.c,188 :: 		sprintf(indicator->label, "%.2f", ((FloatIndicator*) indicator)->value);
-	ADD	W4, #20, W0
-	ADD	W4, #10, W1
-	PUSH	W4
+	ADD	W3, #20, W0
+	ADD	W3, #10, W1
+	PUSH	W3
 	PUSH	[W0++]
 	PUSH	[W0--]
 	MOV	#lo_addr(?lstr_2_dd_indicators), W0
@@ -707,30 +707,34 @@ L_dd_Indicator_parseValueLabel25:
 	PUSH	W1
 	CALL	_sprintf
 	SUB	#8, W15
-	POP	W4
+	POP	W3
 ;dd_indicators.c,189 :: 		break;
 	GOTO	L_dd_Indicator_parseValueLabel23
 ;dd_indicators.c,190 :: 		case BOOL:
 L_dd_Indicator_parseValueLabel26:
 ;dd_indicators.c,191 :: 		if (((BooleanIndicator*) indicator)->value) {
-	ADD	W4, #20, W0
+	ADD	W3, #20, W0
 	CP0.B	[W0]
 	BRA NZ	L__dd_Indicator_parseValueLabel74
 	GOTO	L_dd_Indicator_parseValueLabel27
 L__dd_Indicator_parseValueLabel74:
 ;dd_indicators.c,192 :: 		strcpy(indicator->label, TRUE_STRING);
-	ADD	W4, #10, W0
+	ADD	W3, #10, W0
+	PUSH	W3
 	MOV	#lo_addr(?lstr3_dd_indicators), W11
 	MOV	W0, W10
 	CALL	_strcpy
+	POP	W3
 ;dd_indicators.c,193 :: 		} else {
 	GOTO	L_dd_Indicator_parseValueLabel28
 L_dd_Indicator_parseValueLabel27:
 ;dd_indicators.c,194 :: 		strcpy(indicator->label, FALSE_STRING);
-	ADD	W4, #10, W0
+	ADD	W3, #10, W0
+	PUSH	W3
 	MOV	#lo_addr(?lstr4_dd_indicators), W11
 	MOV	W0, W10
 	CALL	_strcpy
+	POP	W3
 ;dd_indicators.c,195 :: 		}
 L_dd_Indicator_parseValueLabel28:
 ;dd_indicators.c,196 :: 		break;
@@ -738,30 +742,32 @@ L_dd_Indicator_parseValueLabel28:
 ;dd_indicators.c,197 :: 		case STRING:
 L_dd_Indicator_parseValueLabel29:
 ;dd_indicators.c,198 :: 		strcpy(indicator->label, ((StringIndicator*) indicator)->value);
-	ADD	W4, #20, W1
-	ADD	W4, #10, W0
+	ADD	W3, #20, W1
+	ADD	W3, #10, W0
+	PUSH	W3
 	MOV	[W1], W11
 	MOV	W0, W10
 	CALL	_strcpy
+	POP	W3
 ;dd_indicators.c,199 :: 		break;
 	GOTO	L_dd_Indicator_parseValueLabel23
 ;dd_indicators.c,200 :: 		case INT_COUPLE:
 L_dd_Indicator_parseValueLabel30:
-;dd_indicators.c,201 :: 		sprintf(indicator->label, "%.2f %.2f", ((IntCoupleIndicator*) indicator)->value);
-	ADD	W4, #20, W3
-	ADD	W14, #4, W2
-	ADD	W4, #10, W0
-	MOV	W0, W1
-	MOV	W3, W0
-	REPEAT	#1
-	PUSH	[W0++]
+;dd_indicators.c,201 :: 		sprintf(indicator->label, "%3d %3d", ((IntCoupleIndicator*) indicator)->value.first, ((IntCoupleIndicator*) indicator)->value.second);
+	ADD	W3, #20, W1
+	ADD	W1, #2, W0
+	MOV	[W0], W2
+	MOV	[W1], W0
+	ADD	W3, #10, W1
+	PUSH	W3
+	PUSH	W2
+	PUSH	W0
 	MOV	#lo_addr(?lstr_5_dd_indicators), W0
-	PUSH	W4
 	PUSH	W0
 	PUSH	W1
 	CALL	_sprintf
-	SUB	#4, W15
-	POP	W4
+	SUB	#8, W15
+	POP	W3
 ;dd_indicators.c,202 :: 		break;
 	GOTO	L_dd_Indicator_parseValueLabel23
 ;dd_indicators.c,203 :: 		default:
@@ -795,10 +801,10 @@ L__dd_Indicator_parseValueLabel79:
 	GOTO	L_dd_Indicator_parseValueLabel31
 L_dd_Indicator_parseValueLabel23:
 ;dd_indicators.c,206 :: 		indicator->labelLength = (unsigned char) strlen(indicator->label);
-	ADD	W4, #9, W0
+	ADD	W3, #9, W0
 	MOV	W0, [W14+0]
-	ADD	W4, #10, W0
-; indicator end address is: 8 (W4)
+	ADD	W3, #10, W0
+; indicator end address is: 6 (W3)
 	MOV	W0, W10
 	CALL	_strlen
 	MOV	[W14+0], W1

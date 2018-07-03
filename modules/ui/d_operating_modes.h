@@ -56,11 +56,10 @@ extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
-extern FloatIndicator ind_clutch_pos;
-extern BooleanIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-//extern FloatIndicator ind_gcu_temp;
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -77,46 +76,32 @@ extern FloatIndicator ind_ebb_motor_curr;
 /*********************************** BOARDS ***********************************/
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 /*********************************** SENSORS **********************************/
 
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
 
-/*
-extern FloatIndicator ind_fuel_pump;
-extern FloatIndicator ind_H2O_pump;
-extern FloatIndicator ind_H2O_fans;
-extern FloatIndicator ind_clutch;
-extern FloatIndicator ind_drs;
-extern FloatIndicator ind_gear_motor;
-*/
 
 /**        \name Operating Mode methods
 *        
 */
 //!@{
 extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
-
 /**        \brief Groups operating mode methods called on exiting the specific mode.
 */
-/*extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
-        d_UI_SettingsModeClose(),
-        NULL,
-        NULL,
-        NULL
-} */
+extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void);
 //!@}
 
 /////////////////////////////////////////
@@ -127,7 +112,6 @@ extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
 *        
 *        Executes and saves all settings' changes.
 */
-void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 
 /**        \brief Invoked when value of a setting is changed.
@@ -167,5 +151,8 @@ void d_UI_onSettingsChange(signed char movements);
 *        \sa d_ui_controller.h
 */
 
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
 
 #endif /* D_UI_OPERATING_MODES */

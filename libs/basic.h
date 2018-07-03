@@ -14,6 +14,8 @@
 
 char log2(unsigned char byte);
 
+int round(double number);
+
 void unsignedIntToString(unsigned int number, char *text);
 
 void signedIntToString(int number, char *text);

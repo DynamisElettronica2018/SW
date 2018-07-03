@@ -1,6 +1,6 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/d_operating_modes.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/d_controls.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
 
 
@@ -14,7 +14,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -31,15 +31,15 @@ void d_controls_onLeftEncoder(signed char movements);
 void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
+ CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -58,7 +58,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -153,7 +153,7 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 43 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/d_operating_modes.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -170,11 +170,10 @@ extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
-extern FloatIndicator ind_clutch_pos;
-extern BooleanIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -191,35 +190,42 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 
 
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/d_operating_modes.h"
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 5 ])(void);
+#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/d_operating_modes.h"
+#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
+#line 154 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
+
+int round(double number);
 
 void unsignedIntToString(unsigned int number, char *text);
 
@@ -228,43 +234,45 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 20 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
-#line 52 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -283,9 +291,9 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_menu.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_menu.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_init();
 void dd_printMenu();
 
@@ -298,13 +306,13 @@ void dd_Menu_setX_OFFSET(unsigned char x);
 void dd_Menu_setHeight(unsigned char height);
 
 void dd_Menu_setWidth(unsigned char width);
-#line 33 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_menu.h"
+#line 33 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_moveSelection(signed char movements);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/d_gears.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/../../libs/basic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_gears.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -336,7 +344,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 30 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/../peripherals/d_gears.h"
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/ui/../peripherals/d_gears.h"
 void dGear_init(void);
 
 void dGear_requestGearUp();
@@ -372,25 +380,68 @@ void d_setGearMotorState(int motorState);
 unsigned char d_getGearMotorState(void);
 
 char d_canSetGear(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_dashboard.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 23 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_dashboard.h"
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 extern void dd_Dashboard_init();
 extern void dd_Dashboard_print(void);
-#line 39 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_dashboard.h"
+#line 39 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
 
 
 void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/d_controls.h"
-#line 8 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+extern char dstr[100];
+
+void Debug_UART_Init();
+void Debug_Timer4_Init();
+void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
+void printf(char* string);
+void initTimer32(void);
+void resetTimer32(void);
+double getExecTime(void);
+void stopTimer32();
+void startTimer32();
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+#line 48 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+void dAcc_requestAction();
+
+
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+
+
+void dAcc_stopAutoAcceleration(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_CruiseModeInit();
 void d_UI_AccModeInit();
 void d_UI_DebugModeInit();
 void d_UI_SettingsModeInit();
 void d_UI_BoardDebugModeInit();
+
+void d_UI_CruiseModeClose();
+void d_UI_AccModeClose();
+void d_UI_DebugModeClose();
+void d_UI_SettingsModeClose();
+void d_UI_BoardDebugModeClose();
 
 void (*d_OperatingMode_init[ 5 ])(void) = {
  d_UI_BoardDebugModeInit,
@@ -398,6 +449,14 @@ void (*d_OperatingMode_init[ 5 ])(void) = {
  d_UI_DebugModeInit,
  d_UI_CruiseModeInit,
  d_UI_AccModeInit
+};
+
+void (*d_OperatingMode_close[ 5 ])(void) = {
+ d_UI_BoardDebugModeClose,
+ d_UI_SettingsModeClose,
+ d_UI_DebugModeClose,
+ d_UI_CruiseModeClose,
+ d_UI_AccModeClose
 };
 
 
@@ -411,39 +470,40 @@ FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9,  0 ,  1 ,  1 ,  2 , 
 FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6,  0 ,  0 ,  1 ,  2 , 1, "?", 0};
-BooleanIndicator ind_rio_acq = {RIO_ACQUISITION, "RIO", "Rio", 3, 3,  0 ,  0 ,  1 ,  3 , 1, "?", 0};
+IntegerIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
+IntegerIndicator ind_clutch_fb = {CLUTCH_FEEDBACK, "CL FB", "Clutch Fb", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
 BooleanIndicator ind_efi_status = {EFI_STATUS, "EFION", "Efi On", 5, 6,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 IntegerIndicator ind_efi_crash_counter = {EFI_CRASH_COUNTER, "C.EFI", "EFI Crash Counter", 5, 17,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH20 L IN", "H20 Temp. left in", 9, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_sx_out = {TH2O_SX_OUT, "TH20 L OUT", "H20 Temp. left out", 10, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH20 R IN", "H20 Temp. right in", 9, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH20 R OUT", "H20 Temp. right out", 10, 19,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "T. OIL IN", "Oil Temp. In", 9, 12,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "T. OIL OUT", "Oil Temp. Out", 10, 13,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP TARGET", "Slip Target", 11, 11,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAUNCH CONTROL", "Launch Control", 13, 13,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUEL PUMP", "Fuel Pump Press.", 9, 16,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I EBB MOTOR", "Ebb Motor Current", 10, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
-
+FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH2LI", "H20 Temp. Left In", 5, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_sx_out = {TH2O_SX_OUT, "TH2LO", "H20 Temp. Left Out", 5, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH2RI", "H20 Temp. Right In", 5, 18,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH2RO", "H20 Temp. Right Out", 5, 19,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "TOILO", "Oil Temp. Out", 5, 13,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAU.C", "Launch Control", 5, 14,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
+FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUELP", "Fuel Pump Press.", 5, 16,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Current", 5, 17,  1 ,  1 ,  1 ,  2 , 1, "?", 0};
 
 
 IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_gcu_board = {GCU_BOARD, "GCU", "Gcu Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_sw_board = {SW_BOARD, "SW", "SW Board", 3, 8,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
+
 IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_r_board = {DAU_R_BOARD, "DAU REAR", "Dau Rear Board", 8, 14,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
+IntegerIndicator ind_sw_board = {SW_BOARD, "SW", "SW Temp.", 3, 8,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_gcu_temp = {GCU_TEMP, "GCU.T", "GCU Temp.", 5, 9,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
 
 
-IntCoupleIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump", 9, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_H2O_pump = {H2O_PUMP, "H20 PUMP", "H20 Pump", 8, 8,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_H2O_fans = {H2O_FANS, "H20 FANS", "H20 Fans", 8, 8,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch", 6, 6,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_drs = {DRS, "DRS", "Drs", 3, 3,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor", 10, 10,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-#line 75 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+IntegerIndicator ind_H2O_pump = {H2O_PUMP, "H20 PUMP", "H20 Pump Curr.", 8, 14,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_H2O_fans = {H2O_FANS, "H20 FANS", "H20 Fans Curr.", 8, 14,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+
+
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_ebb,
  (Indicator*)&ind_th2o,
@@ -451,10 +511,9 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_oil_press,
  (Indicator*)&ind_rpm,
  (Indicator*)&ind_clutch_pos,
- (Indicator*)&ind_rio_acq,
+ (Indicator*)&ind_clutch_fb,
  (Indicator*)&ind_efi_status,
  (Indicator*)&ind_efi_crash_counter,
-
  (Indicator*)&ind_oil_temp_in,
  (Indicator*)&ind_oil_temp_out,
  (Indicator*)&ind_th2o_sx_in,
@@ -470,18 +529,18 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
 
 static ydata Indicator* dd_carBoards[dd_carBoardsCount] = {
  (Indicator*)&ind_ebb_board,
- (Indicator*)&ind_gcu_board,
- (Indicator*)&ind_sw_board,
  (Indicator*)&ind_dcu_board,
  (Indicator*)&ind_dau_fl_board,
  (Indicator*)&ind_dau_fr_board,
  (Indicator*)&ind_dau_r_board,
+ (Indicator*)&ind_gcu_temp,
+ (Indicator*)&ind_sw_board,
  (Indicator*)&ind_H2O_pump,
  (Indicator*)&ind_H2O_fans,
  (Indicator*)&ind_clutch,
  (Indicator*)&ind_drs,
  (Indicator*)&ind_gear_motor,
- (Indicator*)&ind_ebb_motor_curr
+ (Indicator*)&ind_fuel_pump
 };
 
 
@@ -491,7 +550,9 @@ void d_UI_CruiseModeInit() {
 }
 
 void d_UI_AccModeInit(){
- dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration ");
+ Debug_UART_Write("Acceleration mode entered.\r\n");
+ dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
+ Debug_UART_Write("Acceleration start prompt set.\r\n");
 }
 
 void d_UI_DebugModeInit() {
@@ -499,9 +560,26 @@ void d_UI_DebugModeInit() {
 }
 
 void d_UI_BoardDebugModeInit() {
- dd_GraphicController_setCollectionInterface(BOARD_DEBUG_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
+ dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
 }
 
+void d_UI_CruiseModeClose()
+{
+}
+
+void d_UI_AccModeClose()
+{
+ dAcc_stopAutoAcceleration();
+ Debug_UART_Write("Stopped acceleration by mode switch.\r\n");
+}
+
+void d_UI_DebugModeClose()
+{
+}
+
+void d_UI_BoardDebugModeClose()
+{
+}
 
 
 
@@ -510,14 +588,14 @@ void d_UI_BoardDebugModeInit() {
 
 const unsigned char dd_settingsCount = 6;
 const unsigned char dd_dashboardSettingsCount =  4 ;
-#line 151 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 177 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 IntegerIndicator sett_dash_top_left = { S_DASH_TOP_L, "", "Dash. Top L.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_top_right = { S_DASH_TOP_R, "", "Dash. Top R.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_left = { S_DASH_BOTTOM_L, "", "Dash. Bottom L.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_right = { S_DASH_BOTTOM_R, "", "Dash. Bottom R.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 BooleanIndicator sett_invert_colors = { S_INVERT_COLORS, "", "Invert Colors", 0, 13,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 BooleanIndicator sett_bypass_gears = { S_BYPASS_GEARS, "", "Bypass gear shift", 0, 17,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
-#line 164 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 190 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 ydata Indicator* dd_settings[dd_settingsCount] = {
 
  (Indicator*)&sett_dash_top_left,
@@ -528,9 +606,9 @@ ydata Indicator* dd_settings[dd_settingsCount] = {
  (Indicator*)&sett_invert_colors,
  (Indicator*)&sett_bypass_gears
 };
-#line 179 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 205 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 Indicator** dd_dashboardSettings = dd_settings;
-#line 183 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_DashboardSetting_updateValue(IntegerIndicator* ind, int val) {
 
 
@@ -553,9 +631,9 @@ void d_UI_SettingsModeInit() {
 
  dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_settings, dd_settingsCount, "Settings");
 }
-#line 210 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 236 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_onSettingsChange(signed char movements) {
- int dashboardIndicatorIndex;
+ signed int dashboardIndicatorIndex;
  unsigned char position;
  Indicator* settingIndicator = dd_settings[dd_Menu_selectedLine()];
 
@@ -581,7 +659,7 @@ void d_UI_onSettingsChange(signed char movements) {
  break;
 
  }
-#line 243 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 269 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
  dashboardIndicatorIndex = ((IntegerIndicator*)settingIndicator)->value;
 
 
@@ -599,7 +677,7 @@ void d_UI_onSettingsChange(signed char movements) {
 
  d_DashboardSetting_updateValue((IntegerIndicator*)settingIndicator, dashboardIndicatorIndex);
 }
-#line 269 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/d_operating_modes.c"
+#line 295 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_ApplySettings() {
  char i;
  Indicator* oldIndicator;

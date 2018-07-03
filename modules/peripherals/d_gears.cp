@@ -1,8 +1,10 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/peripherals/d_gears.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/d_gears.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_gears.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
 char log2(unsigned char byte);
+
+int round(double number);
 
 void unsignedIntToString(unsigned int number, char *text);
 
@@ -11,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -45,7 +47,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 30 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/d_gears.h"
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
 void dGear_init(void);
 
 void dGear_requestGearUp();
@@ -81,7 +83,7 @@ void d_setGearMotorState(int motorState);
 unsigned char d_getGearMotorState(void);
 
 char d_canSetGear(void);
-#line 7 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/peripherals/d_gears.c"
+#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_gears.c"
 unsigned char d_currentGear = 3;
 char d_isNeutralSet =  0 ;
 char dGear_error =  0 ;
@@ -132,8 +134,8 @@ unsigned char dGear_getCurrentGearLetter(void) {
 }
 
 void dGear_set(unsigned char gear) {
- if (gear >  4 ) {
- gear =  4 ;
+ if (gear >  5 ) {
+ gear =  5 ;
  } else if (gear <  1 ) {
  gear =  1 ;
  }
@@ -157,7 +159,7 @@ void dGear_down(void) {
 }
 
 char dGear_canGearUp(void){
- return d_currentGear <  4  || dGear_bypassShiftCheck;
+ return d_currentGear <  5  || dGear_bypassShiftCheck;
 }
 
 char dGear_canGearDown(void){

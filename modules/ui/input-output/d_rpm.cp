@@ -1,5 +1,5 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/input-output/d_rpm.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/d_rpm.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 
 
 
@@ -20,23 +20,26 @@ void dRpm_disableLedStripeOutput(void);
 void dRpm_enableLedStripeOutput(void);
 
 void dRpm_updateLedStripe(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/debug.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 5 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
 void Debug_Timer4_Init();
 void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
 void printf(char* string);
 void initTimer32(void);
 void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
+
+int round(double number);
 
 void unsignedIntToString(unsigned int number, char *text);
 
@@ -45,22 +48,22 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/i2c_expander.h"
-#line 9 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_init(unsigned char address, char direction);
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_setPort(unsigned char address, unsigned char port);
-#line 21 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 21 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 unsigned char I2CExpander_readPort(unsigned char address);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
- CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
+ CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -79,7 +82,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -174,8 +177,8 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../d_operating_modes.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
 
 
@@ -189,7 +192,7 @@ void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
 
-void d_controls_onAux2(void);
+void d_controls_onStartAcquisition(void);
 
 void d_controls_onNeutral(void);
 
@@ -206,8 +209,8 @@ void d_controls_onLeftEncoder(signed char movements);
 void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -224,11 +227,10 @@ extern FloatIndicator ind_th2o;
 extern FloatIndicator ind_vbat;
 extern FloatIndicator ind_oil_press;
 extern IntegerIndicator ind_rpm;
-extern FloatIndicator ind_clutch_pos;
-extern BooleanIndicator ind_rio_acq;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
-
 extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
@@ -245,29 +247,34 @@ extern FloatIndicator ind_ebb_motor_curr;
 
 
 extern IntCoupleIndicator ind_ebb_board;
-extern IntCoupleIndicator ind_gcu_board;
-extern IntCoupleIndicator ind_sw_board;
 extern IntCoupleIndicator ind_dcu_board;
 extern IntCoupleIndicator ind_dau_fl_board;
 extern IntCoupleIndicator ind_dau_fr_board;
 extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
 
 
 
 
-extern IntCoupleIndicator ind_fuel_pump;
-extern IntCoupleIndicator ind_H2O_pump;
-extern IntCoupleIndicator ind_H2O_fans;
-extern IntCoupleIndicator ind_clutch;
-extern IntCoupleIndicator ind_drs;
-extern IntCoupleIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../d_operating_modes.h"
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 101 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 130 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 5 ])(void);
+#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 139 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/input-output/../d_operating_modes.h"
+#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
+#line 154 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
 
@@ -295,7 +302,7 @@ double pow(double x, double y);
 double sinh(double x);
 double cosh(double x);
 double tanh(double x);
-#line 10 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/input-output/d_rpm.c"
+#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
 unsigned int dRpm = 0;
 char dRpm_ledStripeOutputEnable =  0 ;
 

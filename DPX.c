@@ -1,6 +1,7 @@
 #include "modules/ui/display/dd_indicators.h"
 #include "libs/dsPIC.h"
 #include "libs/buttons.h"
+#include "d_dcu.h"
 #include "modules/peripherals/d_efiSense.h"
 #include "modules/peripherals/d_gears.h"
 #include "modules/peripherals/d_clutch.h"
@@ -14,6 +15,7 @@
 #include "modules/ui/d_ui_controller.h"
 #include "modules/ui/display/dd_interfaces.h"
 #include "modules/ui/d_operating_modes.h"
+#include "d_sensors.h"
 #include "libs/debug.h"
 
 #include <stdlib.h>
@@ -40,50 +42,58 @@ void main(){
     }
 }
 
+//on TIMER_2_PERIOD interval (1000Hz)
+
 onTimer2Interrupt{
     clearTimer2();
-    Buttons_tick();
-    //dRio_tick();
-    dEfiSense_tick();
+    //Buttons_tick();
+    //dEfiSense_tick();
     timer2_counter0 += 1;
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
+    
+    //Buzzer_bip();
 
+    // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
         dPaddle_readSample();
         timer2_counter0 = 0;
     }
-    if (timer2_counter1 >= 25) {
-        if (dStart_isSwitchedOn()) {
-            dStart_sendStartMessage();
-        }
-       //*/
-        timer2_counter1 = 0;
-    }
-    /*if (timer2_counter3 >= 100) {
-        if (dRpm_canUpdateLedStripe()) {
-            dRpm_updateLedStripe();
-        }
-       dEbb_tick();
-
-        timer2_counter3 = 0;
-    } */
-
+    // TIMER_2_PERIOD*10 = 10ms (100Hz)
     if (timer2_counter2 >= 10) {
         dClutch_set(dPaddle_getValue());
         dClutch_send();
         timer2_counter2 = 0;
-    }//*/
-
-    //SHOW WARNINGS
-    /*if (timer2_counter5 >= 1000) {
-        dSignalLed_switch(DSIGNAL_LED_2);
+    }
+    // TIMER_2_PERIOD*25 = 25ms (40Hz)
+    if (timer2_counter1 >= 25) {
+        if (dStart_isSwitchedOn()) {
+              dStart_sendStartMessage();
+        }
+        timer2_counter1 = 0;
+    }
+    // TIMER_2_PERIOD*100 = 100ms (10Hz)
+    if (timer2_counter3 >= 100) {
+        if (dRpm_canUpdateLedStripe()) {
+            dRpm_updateLedStripe();
+        }
+       //dEbb_tick();
+        timer2_counter3 = 0;
+    }
+    // TIMER_2_PERIOD*1000 = 1s (1Hz)
+    if (timer2_counter5 >= 1000) {
+        d_sensors_sendSWTemp();
+        if(dDCU_isAcquiring())
+        {
+           Debug_UART_Write("DCU Tick\r\n");
+           dDCU_tick();
+        }
         //dWarinings_check();
         timer2_counter5 = 0;
-    }//*/
+    }
 }
 
 
@@ -95,17 +105,16 @@ onCanInterrupt{
     char dataBuffer[8];
     unsigned int dataLen = 0, flags = 0;
      // Debug_UART_Write("in can interrupt\r\n");
-    if(C1INTFbits.ERRIF == 1){
-        dSignalLed_switch(DSIGNAL_LED_GREEN);
-    }
-   //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
-    IEC1BITS.C1IE = 0;
-    Can_clearInterrupt();
-    dSignalLed_switch(DSIGNAL_LED_RED);
+    /*if(C1INTFbits.ERRIF == 1){
+        dSignalLed_set(DSIGNAL_LED_GREEN);
+    }   */
+    //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
+    //IEC1BITS.C1IE = 0;
+    Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
+    dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
     Can_read(&id, dataBuffer, &dataLen, &flags);
 
-
-     //  Buzzer_bip();
+    //Buzzer_bip();
 
     //Can_clearB0Flag();
     //Can_clearB1Flag();
@@ -138,6 +147,7 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
            break;//*/
         case EFI_OIL_T_ENGINE_BAT_ID:
+           //Debug_UART_Write("EFI sent MESSAGE\r\n");
            dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
            dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
@@ -146,23 +156,28 @@ onCanInterrupt{
            break;
        case EFI_TRACTION_CONTROL_ID:
             dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
-            break; //*/
+            break;
        case EFI_FUEL_FAN_H2O_LAUNCH_ID:
             dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt); //è un flag
-            break;//*/
+            break;
        case EFI_PRESSURES_LAMBDA_SMOT_ID:
-          // dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
+           dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
            break;
-      /* case GCU_CLUTCH_FB_SW_ID:
-           dClutch_injectActualValue((unsigned char)firstInt);
+       case GCU_CLUTCH_FB_SW_ID:
+           dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+           break;
+       case DCU_AUX_ID:
+           Debug_UART_Write("DCU sent MESSAGE\r\n");
+           if(firstInt == COMMAND_DCU_IS_ACQUIRING)
+                dDCU_sentAcquiringSignal();
            break;
       /*case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
            dEbb_propagateEbbChange();
            dEbb_calibrationState(secondInt);
            dEbb_error(thirdInt);
-           break;
+           break;   */
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
            break;
@@ -172,28 +187,28 @@ onCanInterrupt{
        case DAU_REAR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
            break;
-       case EBB_DEBUG_ID:
+      /* case EBB_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
            dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
-           break;
+           break;  */
        case GCU_DEBUG_1_ID:
-           dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (firstInt)); //c'è una conversione da fare??    il firstint è gcu temp
-        /*   dd_Indicator_setFloatValueP(&ind_H2O_fans.base, (secondInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_H2O_pump.base, (thirdInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_fuel_pump.base, (fourthInt)); //c'è una conversione da fare??  */
-          // break;
-      // case GCU_DEBUG_2_ID:
-        /*   dd_Indicator_setFloatValueP(&ind_gear_motor.base, (firstInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_clutch.base, (secondInt)); //c'è una conversione da fare??
-           dd_Indicator_setFloatValueP(&ind_drs.base, (thirdInt)); //c'è una conversione da fare?? */
-        //   break;
-      /* case DCU_DEBUG_ID:
+           dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
+           dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
+           break; //*/
+       case GCU_DEBUG_2_ID:
+           dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
+           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+           break;
+       case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
-           break;     */
+           break;
        default:
            break;
     }
 
    //INTERRUPT_PROTECT(IEC1BITS.C1IE = 1);
-    IEC1BITS.C1IE = 1;
+   // IEC1BITS.C1IE = 1;
 }

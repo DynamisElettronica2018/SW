@@ -133,8 +133,6 @@ _Music_playNote:
 ;music.c,61 :: 		void Music_playNote(unsigned char note, unsigned char duration) {
 ;music.c,63 :: 		if (note == PAUSA) {
 	PUSH	W10
-	PUSH	W11
-	PUSH	W12
 	MOV.B	#200, W0
 	CP.B	W10, W0
 	BRA Z	L__Music_playNote19
@@ -184,15 +182,8 @@ L_Music_playNote7:
 	CALL	__Div_FP
 	CALL	__Float2Longint
 	MOV	W0, _music_trentaduesimoTicks
-;music.c,72 :: 		setTimer(TIMER4_DEVICE, timerPeriod);
-	MOV	[W14+0], W11
-	MOV	[W14+2], W12
-	MOV.B	#3, W10
-	CALL	_setTimer
 ;music.c,73 :: 		}
 L_end_Music_playNote:
-	POP	W12
-	POP	W11
 	POP	W10
 	ULNK
 	RETURN

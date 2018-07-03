@@ -82,7 +82,7 @@ L_end_dGear_requestGearDown:
 
 _dGear_propagate:
 
-;d_gears.c,28 :: 		void dGear_propagate(unsigned int gearCommand) {            //dove viene chiamata???
+;d_gears.c,28 :: 		void dGear_propagate(unsigned int gearCommand) {
 ;d_gears.c,29 :: 		dGear_error = FALSE;
 	MOV	#lo_addr(_dGear_error), W1
 	CLR	W0
@@ -174,12 +174,12 @@ _dGear_set:
 
 ;d_gears.c,56 :: 		void dGear_set(unsigned char gear) {
 ;d_gears.c,57 :: 		if (gear > MAX_GEAR) {
-	CP.B	W10, #4
+	CP.B	W10, #5
 	BRA GTU	L__dGear_set44
 	GOTO	L_dGear_set14
 L__dGear_set44:
 ;d_gears.c,58 :: 		gear = MAX_GEAR;
-	MOV.B	#4, W10
+	MOV.B	#5, W10
 ;d_gears.c,59 :: 		} else if (gear < MIN_GEAR) {
 	GOTO	L_dGear_set15
 L_dGear_set14:
@@ -257,7 +257,7 @@ _dGear_canGearUp:
 ;d_gears.c,82 :: 		return d_currentGear < MAX_GEAR || dGear_bypassShiftCheck;
 	MOV	#lo_addr(_d_currentGear), W0
 	MOV.B	[W0], W0
-	CP.B	W0, #4
+	CP.B	W0, #5
 	BRA GEU	L__dGear_canGearUp52
 	GOTO	L_dGear_canGearUp20
 L__dGear_canGearUp52:

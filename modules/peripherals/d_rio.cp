@@ -1,5 +1,5 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/peripherals/d_rio.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/d_rio.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_rio.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_rio.h"
 
 
 
@@ -10,29 +10,27 @@
 
 
 
-void dRio_switchAcquisition(void);
+void d_DCU_switchAcquisition(void);
 
-void dRio_zeroAcquisition(void);
+void d_DCU_startAcquisition(void);
 
-void dRio_startAcquisition(void);
+void d_DCU_stopAcquisition(void);
 
-void dRio_stopAcquisition(void);
+void d_DCU_isAcquiring(void);
 
-void dRio_heartBeat(void);
+void d_DCU_sentAcquiringSignal(void);
 
-void dRio_die(void);
-
-void dRio_tick(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_dashboard.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
+void d_DCU_tick(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -51,7 +49,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
+#line 68 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -146,19 +144,19 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 23 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 extern void dd_Dashboard_init();
 extern void dd_Dashboard_print(void);
-#line 39 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 39 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
 
 
 void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -190,12 +188,14 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_graphic_controller.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_indicators.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
+
+int round(double number);
 
 void unsignedIntToString(unsigned int number, char *text);
 
@@ -204,42 +204,41 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
- BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
-extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
-extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 69 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 20 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 20 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 37 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
-#line 52 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 52 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
@@ -259,50 +258,47 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/peripherals/../../libs/basic.h"
-#line 11 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/peripherals/d_rio.c"
-char dRio_isAcquiring =  0 ;
-unsigned int dRio_isAliveCounter =  2000 ;
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
+#line 13 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_rio.c"
+char d_DCU_isAcquiring =  0 ;
+unsigned int d_DCU_isAliveCounter = 0;
 
-void dRio_switchAcquisition(void) {
- if (dRio_isAcquiring) {
- dRio_stopAcquisition();
+void d_DCU_switchAcquisition(void) {
+ if (d_DCU_isAcquiring) {
+ d_DCU_stopAcquisition();
  } else {
- dRio_startAcquisition();
+ d_DCU_startAcquisition();
  }
 }
 
-void dRio_startAcquisition(void) {
+void d_DCU_startAcquisition(void) {
+ d_DCU_isAliveCounter = 0;
+ d_DCU_isAcquiring = 1;
  dd_GraphicController_fireTimedNotification( 1.5 , "Started ACQ.", MESSAGE);
  Can_writeInt( 0b11111110111 ,  1 );
 }
 
-void dRio_stopAcquisition(void) {
+void d_DCU_stopAcquisition(void) {
  dd_GraphicController_fireTimedNotification( 1.5 , "Stopped ACQ.", MESSAGE);
  Can_writeInt( 0b11111110111 ,  2 );
 }
 
-void dRio_zeroAcquisition(void) {
- dd_GraphicController_fireTimedNotification( 1.5 , "Zeroed ACQ.", MESSAGE);
- Can_writeInt( 0b11111110111 ,  3 );
-}
+void d_DCU_tick(){
+ d_DCU_isAliveCounter +=  1000 ;
+ if(d_DCU_isAliveCounter >=  5000 )
+ {
 
-void dRio_heartBeat(void) {
- dRio_isAliveCounter =  2000 ;
- dd_Indicator_setBoolValue(RIO_ACQUISITION,  1 );
- dRio_isAcquiring =  1 ;
-}
-
-void dRio_die(void) {
- dd_Indicator_setBoolValue(RIO_ACQUISITION,  0 );
- dRio_isAcquiring =  0 ;
-}
-
-void dRio_tick(void) {
- if (dRio_isAliveCounter > 0) {
- dRio_isAliveCounter -= 1;
- if (dRio_isAliveCounter == 0) {
- dRio_die();
+ dd_GraphicController_fireTimedNotification( 1.5 , "Stopped ACQ.", MESSAGE);
+ d_DCU_isAcquiring = 0;
  }
- }
+};
+
+void d_DCU_isAcquiring()
+{
+ return d_DCU_isAcquiring;
+}
+
+void d_DCU_sentAcquiringSignal(){
+ d_DCU_isAliveCounter = 0;
+
 }

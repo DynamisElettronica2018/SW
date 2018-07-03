@@ -198,7 +198,7 @@ void dd_Indicator_parseValueLabel(unsigned char indicatorIndex) {
                 strcpy(indicator->label, ((StringIndicator*) indicator)->value);
                 break;
             case INT_COUPLE:
-                sprintf(indicator->label, "%.2f %.2f", ((IntCoupleIndicator*) indicator)->value);
+                sprintf(indicator->label, "%3d %3d", ((IntCoupleIndicator*) indicator)->value.first, ((IntCoupleIndicator*) indicator)->value.second);
                 break;
             default:
                 break;

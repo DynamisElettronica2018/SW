@@ -12,7 +12,7 @@
 #define LETTER_NEUTRAL  58
 #define LETTER_GEAR_OFFSET  48          ///< ASCII offset for char '0'
 #define MIN_GEAR 1
-#define MAX_GEAR 4
+#define MAX_GEAR 5
 #define EFI_GEAR_COMMAND_NEUTRAL    0
 #define EFI_GEAR_COMMAND_ERROR      8
 

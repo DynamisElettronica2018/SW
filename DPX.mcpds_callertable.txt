@@ -66,6 +66,17 @@ main
 			d_UI_setOperatingMode
 				d_UI_SettingsModeClose
 					d_UI_ApplySettings
+				d_UI_AccModeClose
+					dAcc_stopAutoAcceleration
+						Can_writeInt
+							Can_resetWritePacket
+							Can_addIntToWritePacket
+								Can_addByteToWritePacket
+							Can_write
+								CAN1Write
+									CAN1IDToRegs
+								Can_getWriteFlags
+					Debug_UART_Write
 				dd_Dashboard_print
 					dd_Dashboard_printGearLetter
 						dGear_getCurrentGearLetter
@@ -75,20 +86,8 @@ main
 							eGlcd_clearChar
 								xGlcd_Write_Char
 									xGLCD_Write_Data
-										Glcd_Set_Side
-										Glcd_Set_X
-											Write_To_Pins
-											Strobe
-												Delay_10us
-										Glcd_Set_Page
-											Write_To_Pins
-											Strobe
-										Glcd_Read_Data
-											Delay_1us
-											Delay_10us
-										Glcd_Write_Data
-											Write_To_Pins
-											Strobe
+										_frameBuffer_Read
+										_frameBuffer_Write
 									_Multiply_32x32
 								xGLCD_Set_Transparency
 							eGlcd_writeChar
@@ -97,8 +96,6 @@ main
 						dd_Indicator_isRequestingUpdate
 						dd_GraphicController_isFrameUpdateForced
 						dd_Dashboard_printIndicator
-							dd_GraphicController_isFrameUpdateForced
-							dd_Indicator_isRequestingFullUpdate
 							dd_Indicator_drawContainers
 								eGlcd_drawRect
 									ceil
@@ -106,11 +103,8 @@ main
 										_Long2Float
 										_Compare_Le_Fp
 										_AddSub_FP
-									Glcd_Set_Side
-									Glcd_Set_Page
-									Glcd_Set_X
-									Glcd_Read_Data
-									Glcd_Write_Data
+									_frameBuffer_Read
+									_frameBuffer_Write
 									_Long2Float
 									_Div_FP
 									_Float2Longint
@@ -143,6 +137,8 @@ main
 						dd_GraphicController_isFrameUpdateForced
 						dd_printMenuLine
 							dd_Menu_isLineSelected
+							eGlcd_fillPage
+								_frameBuffer_Write
 							dd_Menu_makeLineText
 								dd_Indicator_parseValueLabel
 								dd_MenuLine_getScrollingOverflow
@@ -154,58 +150,63 @@ main
 									_Float2Longint
 								dd_MenuLine_getVisibleDescriptionWidth
 								dd_MenuLine_hasToScroll
-							Glcd_Set_Font
-							Glcd_Write_Text
-								Glcd_Write_Char
-									Glcd_Set_X
-									Glcd_Set_Page
-									Glcd_Set_Side
-									Glcd_Read_Data
-									Glcd_Write_Data
+							xGlcd_Set_Font
+							xGlcd_Write_Text
 							dd_Indicator_clearPrintUpdateRequest
-				dd_Interface_printBoardDebug
-					dd_boardDebug_print
-						dd_boardDebug_setStartPrintIndex
-						dd_boardDebug_printRect
-							dd_boardDebug_drawRect
-								dd_boardDebug_getPrintPosition
-								eGlcd_drawRect
-							dd_boardDebug_writeValue
-								xGlcd_Set_Font
-								dd_boardDebug_getPrintPosition
-								eGlcd_getTextPixelLength
-									strlen
-									xGlcd_Char_Width
-										_Multiply_32x32
-								eGlcd_writeText
-								dd_Indicator_parseValueLabel
-						dd_boardDebug_setPrintValue
 				dd_Dashboard_init
 				dd_Menu_init
 					dd_Menu_reset
-				dd_boardDebug_init
 				d_UI_BoardDebugModeInit
 					dd_GraphicController_setCollectionInterface
 						dd_GraphicController_setInterface
-							dd_GraphicController_getTmrCounterLimit
-								floor
-									_Float2Longint
+							eGlcd_clear
+								eGlcd_fill
+									_frameBuffer_Fill
+							dd_GraphicController_fireTimedNotification
+								dd_GraphicController_getTmrCounterLimit
+									floor
+										_Float2Longint
+										_Long2Float
+										_Compare_Ge_Fp
+										_Sub_FP
+										_Compare_Le_Fp
 									_Long2Float
-									_Compare_Ge_Fp
-									_Sub_FP
-									_Compare_Le_Fp
-								_Long2Float
-								_Div_FP
-								_Mul_FP
-								_Float2Longint
+									_Div_FP
+									_Mul_FP
+									_Float2Longint
+								dd_GraphicController_fireNotification
+									strcpy
+									dd_GraphicController_setNotificationFlag
+									dd_printMessage
+										xGlcd_Set_Font
+										eGlcd_getTextPixelLength
+											strlen
+											xGlcd_Char_Width
+												_Multiply_32x32
+										eGlcd_drawRect
+										eGlcd_writeText
+									Lcd_PrintFrame
+										_Lcd_Init
+											_Lcd_Toggle_Enable
+										_Lcd_ResetYAddr
+											_Lcd_Toggle_Enable
+										_Lcd_SetPage
+											_Lcd_SetDataPort
+												_Lcd_Toggle_Enable
+										_Lcd_WriteData
+											_Lcd_SetDataPort
+										_Lcd_Change_Side
+							dd_Dashboard_print
+							dd_Interface_printMenu
+							dd_Dashboard_init
+							dd_Menu_init
+							d_UI_BoardDebugModeInit | Recursion.
 						strlen
 						strcpy
 						dd_Dashboard_print
 						dd_Interface_printMenu
-						dd_Interface_printBoardDebug
 						dd_Dashboard_init
 						dd_Menu_init
-						dd_boardDebug_init
 						d_UI_BoardDebugModeInit | Recursion.
 				d_UI_SettingsModeInit
 					d_DashboardSetting_updateValue
@@ -216,7 +217,11 @@ main
 				d_UI_CruiseModeInit
 					dd_GraphicController_setCollectionInterface
 				d_UI_AccModeInit
+					Debug_UART_Write
 					dd_GraphicController_setCollectionInterface
+				d_UI_BoardDebugModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
 			d_selectorPositionToMode
 			setExternalInterrupt
 				setInterruptPriority
@@ -234,16 +239,22 @@ main
 			Can_initInterrupt
 			Can_setWritePriority
 		Debug_UART_Write
+		dDCU_init
 		dPaddle_init
-			setupAnalogSampling
-				getMinimumAnalogClockConversion
-				setAutomaticSampling
-				setAnalogVoltageReference
-				unsetAnalogInterrupt
-					clearAnalogInterrupt
-				startSampling
-			setAnalogPIN
-			turnOnAnalogModule
+		Buzzer_init
+			setTimer
+				setInterruptPriority
+				getTimerPrescaler
+					getExactTimerPrescaler
+						_Mul_FP
+						_Div_FP
+					_Float2Longint
+				getTimerPeriod
+					_Mul_FP
+					_Long2Float
+					_Div_FP
+					_Float2Longint
+			setInterruptPriority
 		dSignalLed_init
 			dSignalLed_set
 			dSignalLed_unset
@@ -254,46 +265,85 @@ main
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
-				Glcd_Init
-					Delay_1us
-					Write_To_Pins
-					Strobe
-				eGlcd_setupTimer
+				_Lcd_Init
 			eGlcd_clear
-				eGlcd_fill
-					Glcd_Fill
-						Glcd_Set_Page
-						Glcd_Write_Data
 			xGlcd_Set_Font
 			dHardReset_hasBeenReset
 			dd_GraphicController_startupLogo
 				dd_GraphicController_getTmrCounterLimit
-				Glcd_Image
-					Glcd_Set_Side
-					Glcd_Set_Page
-					Glcd_Set_X
-					Glcd_Write_Data
-					__AddToFarPointer
+				dd_printLogoAnimation
+					eGlcd_loadImage
+						_frameBuffer_LoadImage
+					resetTimer32
+					cos
+						sin
+							floor
+							eval_poly
+								_Mul_FP
+								_AddSub_FP
+							_Compare_Le_Fp
+							_Mul_FP
+							_Sub_FP
+							_Compare_Ge_Fp
+							_Div_FP
+						_Compare_Ge_Fp
+						_AddSub_FP
+						_Sub_FP
+					round
+						floor
+						ceil
+						_Float2Longint
+						_Long2Float
+						_Sub_FP
+						_Compare_Le_Fp
+					Lcd_PrintFrame
+					Delay_Cyc
+					floor
+					pow
+						log
+							frexp
+							eval_poly
+							_Compare_Le_Fp
+							_Mul_FP
+							_Sub_FP
+							_Long2Float
+							_AddSub_FP
+						exp
+							floor
+							ldexp
+								_Compare_Le_Fp
+							eval_poly
+							_Compare_Le_Fp
+							_Compare_Ge_Fp
+							_Mul_FP
+							_Float2Longint
+							_Long2Float
+							_Sub_FP
+							_Div_FP
+						_Compare_Le_Fp
+						_Float2Longint
+						_Long2Float
+						_Mul_FP
+					_Long2Float
+					_Mul_FP
+					_Div_FP
+					_AddSub_FP
+					_Float2Longint
 			dd_GraphicController_timerSetup
 				setInterruptPriority
 				setTimer
-					setInterruptPriority
-					getTimerPrescaler
-						getExactTimerPrescaler
-							_Mul_FP
-							_Div_FP
-						_Float2Longint
-					getTimerPeriod
-						_Mul_FP
-						_Long2Float
-						_Div_FP
-						_Float2Longint
 			dd_GraphicController_forceFullFrameUpdate
+		dAcc_init
+			Can_writeInt
+		setTimer
 external4
 	d_controls_onNeutral
+		Debug_UART_Write
 		dGear_isNeutralSet
 		dGear_get
+		Can_writeInt
 	d_controls_onReset
+		Debug_UART_Write
 		dHardReset_reset
 			dHardReset_setFlag
 				EEPROM_writeInt
@@ -306,31 +356,54 @@ external4
 					EEPROM_readInt
 						EEPROM_Read
 			dd_GraphicController_fireTimedNotification
-				dd_GraphicController_getTmrCounterLimit
-				dd_GraphicController_fireNotification
-					strcpy
-					dd_printMessage
-						xGlcd_Set_Font
-						eGlcd_getTextPixelLength
-						eGlcd_drawRect
-						eGlcd_writeText
-					dd_GraphicController_setNotificationFlag
 			dSignalLed_set
 	d_controls_onAux1
-	d_controls_onAux2
+		Debug_UART_Write
+		dAcc_requestAction
+			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+			dAcc_startAutoAcceleration
+				Can_writeInt
+				dd_printMessage
+			dd_GraphicController_fireTimedNotification
+			dAcc_startClutchRelease
+			dAcc_stopAutoAcceleration
+	d_controls_onStartAcquisition
+		dDCU_switchAcquisition
+			dDCU_stopAcquisition
+				dd_GraphicController_fireTimedNotification
+				Can_writeInt
+			dDCU_startAcquisition
+				dd_GraphicController_fireTimedNotification
+				Can_writeInt
+		Debug_UART_Write
 	clearExternalInterrupt
 external3
 	d_controls_onStart
 		getExternalInterruptEdge
 		dSignalLed_set
+		Debug_UART_Write
 		dStart_switchOn
 		switchExternalInterruptEdge
 		dSignalLed_unset
 		dStart_switchOff
 	clearExternalInterrupt
 CAN_Interrupt
-	dSignalLed_switch
 	Can_clearInterrupt
+	dSignalLed_switch
 	Can_read
 		Can_B0hasBeenReceived
 		Can_clearB0Flag
@@ -387,10 +460,21 @@ CAN_Interrupt
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
+	dClutch_injectActualValue
+		dd_Indicator_setIntValueP
+	Debug_UART_Write
+	dDCU_sentAcquiringSignal
+		Debug_UART_Write
+		dSignalLed_switch
+	dd_Indicator_setIntCoupleValueP
+		dd_Indicator_requestPrintUpdateP
 	_Long2Float
 external2
 	d_controls_onDRS
+		Debug_UART_Write
 	clearExternalInterrupt
+timer4_interrupt
+	Buzzer_tick
 external1
 	I2CExpander_readPort
 	sprintf
@@ -402,6 +486,10 @@ external1
 	clearExternalInterrupt
 cn_interrupt
 	d_controls_onLeftEncoder
+		dd_Menu_moveSelection
+			dd_Menu_scroll
+				Debug_UART_Write
+	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -415,81 +503,82 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
-		dd_boardDebug_Move
-			dd_boardDebug_setPrintValue
-	d_controls_onRightEncoder
-		dd_Menu_moveSelection
-			Debug_UART_Write
-			dd_Menu_scroll
-				Debug_UART_Write
-		dd_boardDebug_Move
 	clearExternalInterrupt
 timer2_interrupt
-	Buttons_tick
-	dEfiSense_tick
-		dEfiSense_die
-			dd_Indicator_setBoolValue
-				dd_getIndicatorIndex
-				dd_Indicator_requestPrintUpdate
-			dEfiSense_isDead
-			dSignalLed_unset
-		dHardReset_reset
 	dPaddle_readSample
-		getAnalogValue
+		ADC1_Read
+			ADC1_Init
+			ADC1_Get_Sample
 		_Long2Float
 		_Mul_FP
 		_AddSub_FP
 		_Float2Longint
-	dStart_isSwitchedOn
-	dStart_sendStartMessage
 	dClutch_set
+		dd_Indicator_setIntValueP
 	dPaddle_getValue
 	dClutch_send
 		Can_writeByte
 			Can_resetWritePacket
 			Can_addByteToWritePacket
 			Can_write
-				CAN1Write
-					CAN1IDToRegs
-				Can_getWriteFlags
+	dStart_isSwitchedOn
+	dStart_sendStartMessage
+		Can_writeByte
+	dRpm_canUpdateLedStripe
+	dRpm_updateLedStripe
+		ceil
+		I2CExpander_setPort
+			I2C1_Start
+			I2C1_Write
+			I2C1_Stop
+		_Long2Float
+		_Float2Longint
+	d_sensors_sendSWTemp
+		d_SWTemp_getTempValue
+			ADC1_Read
+			_Long2Float
+			_Div_FP
+			_Mul_FP
+			_Float2Longint
+			_Sub_FP
+		Can_writeInt
+		dd_Indicator_setIntValueP
+	dDCU_isAcquiring
+	Debug_UART_Write
+	dDCU_tick
+		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dRpm_updateLedStripe
-			ceil
-			I2CExpander_setPort
-				I2C1_Start
-				I2C1_Write
-				I2C1_Stop
-			_Long2Float
-			_Float2Longint
+		dSignalLed_set
+		dSignalLed_unset
 		eGlcd_clear
-		dd_printMessage
+		Lcd_PrintFrame
 		dd_GraphicController_handleNotification
 			dd_GraphicController_clearNotification
 				eGlcd_clear
 				dd_GraphicController_unsetNotificationFlag
-		eGlcd_fill
 		dd_Dashboard_print
 		dd_Interface_printMenu
-		dd_Interface_printBoardDebug
 		dd_Dashboard_init
 		dd_Menu_init
-		dd_boardDebug_init
 		d_UI_BoardDebugModeInit
 		d_UI_SettingsModeInit
 		d_UI_DebugModeInit
 		d_UI_CruiseModeInit
 		d_UI_AccModeInit
+		d_UI_BoardDebugModeClose
+		d_UI_SettingsModeClose
+		d_UI_DebugModeClose
+		d_UI_CruiseModeClose
+		d_UI_AccModeClose
 external0
 	d_controls_onGearUp
+		Debug_UART_Write
 		dGear_requestGearUp
 			dGear_canGearUp
 			Can_writeInt
-				Can_resetWritePacket
-				Can_addIntToWritePacket
-					Can_addByteToWritePacket
-				Can_write
 	d_controls_onGearDown
+		Debug_UART_Write
 		dGear_requestGearDown
 			dGear_canGearDown
 			Can_writeInt

@@ -72,7 +72,7 @@ _dWarnings_setParameter:
 	ADD	W0, W1, W1
 	MOV	#1, W0
 	MOV	W0, [W1]
-;d_warnings.c,109 :: 		dSignalLed_set(DSIGNAL_LED_RED);
+;d_warnings.c,109 :: 		dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
 	PUSH	W10
 	MOV.B	#1, W10
 	CALL	_dSignalLed_set
@@ -127,7 +127,7 @@ L_dWarnings_unsetParameter4:
 	GOTO	L_dWarnings_unsetParameter6
 L__dWarnings_unsetParameter14:
 ; or end address is: 6 (W3)
-;d_warnings.c,120 :: 		dSignalLed_unset(DSIGNAL_LED_RED);
+;d_warnings.c,120 :: 		dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
 	PUSH	W10
 	MOV.B	#1, W10
 	CALL	_dSignalLed_unset

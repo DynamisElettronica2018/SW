@@ -6,11 +6,17 @@
 #include "input-output/d_controls.h"
 #include "input-output/buzzer.h"
 #include "input-output/d_paddle.h"
+#include "d_sensors.h"
 #include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
+#include "d_acceleration.h"
+#include "d_dcu.h"
+
+#define TIMER_2_PERIOD 0.001 //seconds
 
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
+int d_OperatingModeChange = FALSE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
 
@@ -18,18 +24,24 @@ void d_UIController_init() {
      //printf("ui contr. init");
     dControls_init();
     Can_init();
-    C1INTEbits.ERRIE = 1;
+   // C1INTEbits.ERRIE = 1;
     Debug_UART_Write("can initialized.\r\n");
-    //Buzzer_init();
-   // Debug_UART_Write("Buzzer initialized.\r\n");
+    dDCU_init();
+    Debug_UART_Write("DCU initialized.\r\n");
     dPaddle_init();
-   // Debug_UART_Write("Paddle initialized.\r\n");
-   dSignalLed_init();
-   Debug_UART_Write("Signal Leds initialized.\r\n");
-   dRpm_init();
-   Debug_UART_Write("rpm initialized.\r\n");
-   dd_GraphicController_init();
-   Debug_UART_Write("graphic controller initialized.\r\n");
+    Debug_UART_Write("Paddle initialized.\r\n");
+    Buzzer_init();
+    Debug_UART_Write("Buzzer initialized.\r\n");
+    dSignalLed_init();
+    Debug_UART_Write("Signal Leds initialized.\r\n");
+    dRpm_init();
+    Debug_UART_Write("rpm initialized.\r\n");
+    dd_GraphicController_init();
+    Debug_UART_Write("graphic controller initialized.\r\n");
+    dAcc_init();
+    Debug_UART_Write("Acceleration module initialized.\r\n");
+    setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
+    Debug_UART_Write("graphic controller initialized.\r\n");
    /* Debug_UART_Write("Signal Leds initialized.\r\n");
     Debug_UART_Write("RPM initialized.\r\n"); */
     //printf("ui contr. init 2");
@@ -39,12 +51,26 @@ void d_UIController_init() {
 
 void d_UI_setOperatingMode(OperatingMode mode) {
      //printf("set op mode");
+     d_OperatingMode_close[d_currentOperatingMode]();
      switch(d_currentOperatingMode) {
          case SETTINGS_MODE:
               d_UI_SettingsModeClose();
+         case ACC_MODE:
+              d_UI_AccModeClose();
+     }
+     if(d_currentOperatingMode != mode){
+        d_OperatingModeChange = TRUE;
      }
      d_currentOperatingMode = mode;
      d_OperatingMode_init[mode]();
+}
+
+OperatingMode d_UI_getOperatingMode(){
+     return d_currentOperatingMode;
+}
+
+int d_UI_OperatingModeChanged(){
+     return d_OperatingModeChange;
 }
 
 void printf(char* string);
@@ -67,70 +93,33 @@ onTimer1Interrupt{
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
-            case DEBUG_MODE:
-                 d_UI_onSettingsChange(movements);
-                 break;
-            case CRUISE_MODE:
-            case ACC_MODE:
-                 //control EBB
             case BOARD_DEBUG_MODE:
-                  dd_boardDebug_Move(movements);
-                 break;
-            default:
-                 return;
-     }
-}
-
-/*void d_controls_onLeftEncoderDown() {
-     switch (d_currentOperatingMode) {
-            case SETTINGS_MODE:
-                 d_UI_onSettingsChange(MOVEMENT_DOWN);
-                 break;
-            case CRUISE_MODE:
-            case ACC_MODE:
-                 //control EBB
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_downMovement();
-                 break;
-            default:
-                 return;
-     }
-} */
-
-void d_controls_onRightEncoder(signed char movements) {
-     switch (d_currentOperatingMode) {
-            case SETTINGS_MODE:
             case DEBUG_MODE:
-                // d_UI_onSettingsChange(movements);
                  dd_Menu_moveSelection(movements);
                  break;
             case CRUISE_MODE:
             case ACC_MODE:
-                 //control TRACTION
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_Move(movements);
-                 break;
+                 //control EBB
             default:
                  return;
      }
 }
 
-/*void d_controls_onRightEncoderDown() {
+void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+              d_UI_onSettingsChange(movements);
+              break;
+            case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 dd_Menu_selectDown();
-                 break;
+              break;
             case CRUISE_MODE:
             case ACC_MODE:
                  //control TRACTION
-            case BOARD_DEBUG_MODE:
-                 dd_boardDebug_downMovement();
-                 break;
             default:
                  return;
      }
-}  */
+}
 
 OperatingMode d_selectorPositionToMode(signed char position){
      if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )

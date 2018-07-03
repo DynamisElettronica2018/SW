@@ -34,7 +34,7 @@
 #include "../modules/ui/display/dd_global_defines.h"
 
 extern float EGLCD_TIMER_COEFFICIENT;
-extern unsigned char BLACK, WHITE;
+extern const unsigned char BLACK, WHITE;
 
 #ifndef OSC_FREQ_MHZ
 #define OSC_FREQ_MHZ 80
@@ -59,12 +59,15 @@ extern unsigned char BLACK, WHITE;
 #define EGLCD_F_MAX (4/EGLCD_F_SLOPE) + 80
 #define EGLCD_TIMER_PERIOD_US (EGLCD_F_SLOPE * (0.025 * EGLCD_TIMER_COEFFICIENT * 10)  * (EGLCD_F_MAX - OSC_FREQ_MHZ))
 
+extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
 
 void eGlcd_invertColors(void);
 
 void eGlcd_clear(void);
+
+void eGlcd_loadImage(const char *image);
 
 void eGlcd_fill(unsigned char color);
 
@@ -86,6 +89,8 @@ void eGlcd_setTimerCoefficient(float coefficient);
 
 unsigned int eGlcd_getTextPixelLength(char *text);
 
+void Lcd_PrintFrame();
+
 /**
     Draws a white filled rectangle with black 1px border.
     The pixel border is included in the width and height values.
@@ -95,6 +100,8 @@ unsigned int eGlcd_getTextPixelLength(char *text);
     \param height Rectangle height. Must be greater equal than 1 page height or 8px.
 */
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
+
+void eGlcd_fillPage(unsigned char page, char color);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,9 +126,5 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-
-#include "basic.h"
-#include "dsPIC.h"
-#include "glcdPins.c"
 
 #endif //DP8_DISPLAY_CONTROLLER_GLCD_H

@@ -106,7 +106,7 @@ void dWarnings_flash(unsigned int ii){
 
 void dWarnings_setParameter(unsigned int ii){
      WARNINGS_FLAG[ii] = 1;
-     dSignalLed_set(DSIGNAL_LED_RED);
+     dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
      dWarnings_flash(ii);
 }
 
@@ -117,6 +117,6 @@ void dWarnings_unsetParameter(unsigned int ii){
           or += WARNINGS_FLAG[nn];
      }
      if(or == 0){
-          dSignalLed_unset(DSIGNAL_LED_RED);
+          dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
      }
 }

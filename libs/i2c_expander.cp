@@ -1,26 +1,27 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/i2c_expander.c"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/i2c_expander.h"
-#line 9 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/i2c_expander.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/i2c_expander.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
 void I2CExpander_init(unsigned char address, char direction);
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/i2c_expander.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
 void I2CExpander_setPort(unsigned char address, unsigned char port);
-#line 21 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/i2c_expander.h"
+#line 21 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
 unsigned char I2CExpander_readPort(unsigned char address);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/debug.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/../modules/ui/display/dd_global_defines.h"
-#line 5 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
 void Debug_Timer4_Init();
 void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
 void printf(char* string);
 void initTimer32(void);
 void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 4 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/libs/i2c_expander.c"
+#line 4 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/i2c_expander.c"
 void I2CExpander_init(unsigned char address, char direction)
 {
  I2C1_Start();

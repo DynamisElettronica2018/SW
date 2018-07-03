@@ -37,7 +37,18 @@ L_end_dStart_isSwitchedOn:
 _dStart_sendStartMessage:
 
 ;d_start.c,21 :: 		void dStart_sendStartMessage(void) {
+;d_start.c,22 :: 		Can_writeByte(SW_FIRE_GCU_ID, TRUE);
+	PUSH	W10
+	PUSH	W11
+	PUSH	W12
+	MOV.B	#1, W12
+	MOV	#516, W10
+	MOV	#0, W11
+	CALL	_Can_writeByte
 ;d_start.c,23 :: 		}
 L_end_dStart_sendStartMessage:
+	POP	W12
+	POP	W11
+	POP	W10
 	RETURN
 ; end of _dStart_sendStartMessage

@@ -1,4 +1,8 @@
-#line 1 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/display/dd_boardDebug.c"
+<<<<<<< HEAD
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_boardDebug.c"
+=======
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+>>>>>>> origin/can_module
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
 
@@ -24,7 +28,11 @@ char * strpbrk(char * s1, char * s2);
 char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_boarddebug.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_boarddebug.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_boarddebug.h"
+>>>>>>> origin/can_module
 
 
 
@@ -34,21 +42,32 @@ char * strtok(char * s1, char * s2);
 
 
 
-void dd_boardDebug_print() ;
 void dd_boardDebug_init(void);
+<<<<<<< HEAD
 void dd_boardDebug_Move(signed char movement);
 void dd_boardDebug_downMovement(void);
 void dd_boardDebug_upMovement(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+=======
+
+void dd_boardDebug_print(void);
+
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
+
+void dd_boardDebug_moveSelection(signed char movements);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+>>>>>>> origin/can_module
 typedef enum {
 
  EBB, TH2O, VBAT, RPM,
  CLUTCH_POSITION, OIL_PRESS, OIL_TEMP_IN, OIL_TEMP_OUT, RIO_ACQUISITION,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -67,7 +86,11 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_indicators.h"
+<<<<<<< HEAD
+#line 68 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+=======
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+>>>>>>> origin/can_module
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -162,10 +185,18 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+>>>>>>> origin/can_module
 char log2(unsigned char byte);
+
+int round(double number);
 
 void unsignedIntToString(unsigned int number, char *text);
 
@@ -174,42 +205,72 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+<<<<<<< HEAD
+#line 12 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+=======
+#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+>>>>>>> origin/can_module
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
  BOARD_DEBUG_INTERFACE
 } Interface;
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+<<<<<<< HEAD
+#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_print[ 4 ])(void);
-#line 44 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+#line 44 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_init[ 4 ])(void);
-#line 61 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+#line 61 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+=======
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 4 ])(void);
+#line 44 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 4 ])(void);
+#line 61 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+>>>>>>> origin/can_module
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_interfaces.h"
+<<<<<<< HEAD
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+=======
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+>>>>>>> origin/can_module
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 20 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+<<<<<<< HEAD
+#line 20 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+=======
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+>>>>>>> origin/can_module
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+<<<<<<< HEAD
+#line 29 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 37 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
-#line 52 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_graphic_controller.h"
+#line 52 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+=======
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_init(void);
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
+
+Interface dd_GraphicController_getInterface(void);
+#line 52 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+>>>>>>> origin/can_module
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
@@ -229,9 +290,15 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/dd_global_defines.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/dd_fonts.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/dynamis_logo.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/dd_fonts.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/dynamis_logo.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dd_fonts.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dynamis_logo.h"
+>>>>>>> origin/can_module
 
 
 
@@ -288,8 +355,13 @@ static const unsigned char DYNAMIS_LOGO[1024] = {
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_big.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_big.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_big.h"
+>>>>>>> origin/can_module
 static const unsigned short DynamisFont_Big32x31[] = {
  0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00,
  0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01, 0x00, 0x00, 0xC0, 0x01,
@@ -444,8 +516,13 @@ static const unsigned short DynamisFont_Big32x31[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_dashboard.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_dashboard.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_dashboard.h"
+>>>>>>> origin/can_module
 static const unsigned short DynamisFont_Dashboard16x16[] = {
 
 
@@ -645,8 +722,13 @@ static const unsigned short DynamisFont_Dashboard16x16[] = {
  0x04, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0xF8, 0x0F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_gears.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_gears.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+>>>>>>> origin/can_module
 static const unsigned short DynamisFont_Gears40x59[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF0, 0xFF, 0x3F, 0x00, 0x00, 0x00, 0x00, 0x80, 0xFF,
@@ -865,7 +947,11 @@ static const unsigned short DynamisFont_Gears40x59[] = {
  0x00, 0x7C, 0x00, 0xC0, 0x07, 0x00, 0xF8, 0x00, 0x00, 0x7C, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x7C,
  0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00
 };
-#line 243 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_gears.h"
+<<<<<<< HEAD
+#line 243 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+=======
+#line 243 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_gears.h"
+>>>>>>> origin/can_module
 static const unsigned short Arial63x62[] = {
  0x28, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -897,8 +983,13 @@ static const unsigned short Arial63x62[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00,
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_terminal.h"
-#line 14 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_terminal.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_terminal.h"
+>>>>>>> origin/can_module
 static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -997,8 +1088,13 @@ static const unsigned short DynamisFont_Terminal6x8[] = {
  0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_xterminal.h"
-#line 13 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/fonts/font_dynamis_xterminal.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 25 "c:/users/utente/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/font_dynamis_xterminal.h"
+>>>>>>> origin/can_module
 static const unsigned short DynamisFont_xTerminal6x8[] = {
  0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
  0x05, 0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
@@ -1097,17 +1193,131 @@ static const unsigned short DynamisFont_xTerminal6x8[] = {
  0x05, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
  0x06, 0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
 };
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/eglcd.h"
+<<<<<<< HEAD
+
+
+
+static const unsigned short DynamisFont_UniformTerminal6x8[] = {
+ 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+ 0x06, 0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,
+ 0x06, 0x00, 0x07, 0x03, 0x00, 0x07, 0x03,
+ 0x06, 0x00, 0x24, 0x7E, 0x24, 0x7E, 0x24,
+ 0x06, 0x00, 0x24, 0x2B, 0x6A, 0x12, 0x00,
+ 0x06, 0x00, 0x63, 0x13, 0x08, 0x64, 0x63,
+ 0x06, 0x00, 0x36, 0x49, 0x56, 0x20, 0x50,
+ 0x06, 0x00, 0x00, 0x07, 0x03, 0x00, 0x00,
+ 0x06, 0x00, 0x00, 0x3E, 0x41, 0x00, 0x00,
+ 0x06, 0x00, 0x00, 0x41, 0x3E, 0x00, 0x00,
+ 0x06, 0x00, 0x08, 0x3E, 0x1C, 0x3E, 0x08,
+ 0x06, 0x00, 0x08, 0x08, 0x3E, 0x08, 0x08,
+ 0x06, 0x00, 0x00, 0xE0, 0x60, 0x00, 0x00,
+ 0x06, 0x00, 0x08, 0x08, 0x08, 0x08, 0x08,
+ 0x06, 0x00, 0x00, 0x60, 0x60, 0x00, 0x00,
+ 0x06, 0x00, 0x20, 0x10, 0x08, 0x04, 0x02,
+ 0x06, 0x00, 0x3E, 0x51, 0x49, 0x45, 0x3E,
+ 0x06, 0x00, 0x00, 0x42, 0x7F, 0x40, 0x00,
+ 0x06, 0x00, 0x62, 0x51, 0x49, 0x49, 0x46,
+ 0x06, 0x00, 0x22, 0x49, 0x49, 0x49, 0x36,
+ 0x06, 0x00, 0x18, 0x14, 0x12, 0x7F, 0x10,
+ 0x06, 0x00, 0x2F, 0x49, 0x49, 0x49, 0x31,
+ 0x06, 0x00, 0x3C, 0x4A, 0x49, 0x49, 0x30,
+ 0x06, 0x00, 0x01, 0x71, 0x09, 0x05, 0x03,
+ 0x06, 0x00, 0x36, 0x49, 0x49, 0x49, 0x36,
+ 0x06, 0x00, 0x06, 0x49, 0x49, 0x29, 0x1E,
+ 0x06, 0x00, 0x00, 0x6C, 0x6C, 0x00, 0x00,
+ 0x06, 0x00, 0x00, 0xEC, 0x6C, 0x00, 0x00,
+ 0x06, 0x00, 0x08, 0x14, 0x22, 0x41, 0x00,
+ 0x06, 0x00, 0x24, 0x24, 0x24, 0x24, 0x24,
+ 0x06, 0x00, 0x00, 0x41, 0x22, 0x14, 0x08,
+ 0x06, 0x00, 0x02, 0x01, 0x59, 0x09, 0x06,
+ 0x06, 0x00, 0x3E, 0x41, 0x5D, 0x55, 0x1E,
+ 0x06, 0x00, 0x7E, 0x11, 0x11, 0x11, 0x7E,
+ 0x06, 0x00, 0x7F, 0x49, 0x49, 0x49, 0x36,
+ 0x06, 0x00, 0x3E, 0x41, 0x41, 0x41, 0x22,
+ 0x06, 0x00, 0x7F, 0x41, 0x41, 0x41, 0x3E,
+ 0x06, 0x00, 0x7F, 0x49, 0x49, 0x49, 0x41,
+ 0x06, 0x00, 0x7F, 0x09, 0x09, 0x09, 0x01,
+ 0x06, 0x00, 0x3E, 0x41, 0x49, 0x49, 0x7A,
+ 0x06, 0x00, 0x7F, 0x08, 0x08, 0x08, 0x7F,
+ 0x06, 0x00, 0x00, 0x41, 0x7F, 0x41, 0x00,
+ 0x06, 0x00, 0x30, 0x40, 0x40, 0x40, 0x3F,
+ 0x06, 0x00, 0x7F, 0x08, 0x14, 0x22, 0x41,
+ 0x06, 0x00, 0x7F, 0x40, 0x40, 0x40, 0x40,
+ 0x06, 0x00, 0x7F, 0x02, 0x04, 0x02, 0x7F,
+ 0x06, 0x00, 0x7F, 0x02, 0x04, 0x08, 0x7F,
+ 0x06, 0x00, 0x3E, 0x41, 0x41, 0x41, 0x3E,
+ 0x06, 0x00, 0x7F, 0x09, 0x09, 0x09, 0x06,
+ 0x06, 0x00, 0x3E, 0x41, 0x51, 0x21, 0x5E,
+ 0x06, 0x00, 0x7F, 0x09, 0x09, 0x19, 0x66,
+ 0x06, 0x00, 0x26, 0x49, 0x49, 0x49, 0x32,
+ 0x06, 0x00, 0x01, 0x01, 0x7F, 0x01, 0x01,
+ 0x06, 0x00, 0x3F, 0x40, 0x40, 0x40, 0x3F,
+ 0x06, 0x00, 0x1F, 0x20, 0x40, 0x20, 0x1F,
+ 0x06, 0x00, 0x3F, 0x40, 0x3C, 0x40, 0x3F,
+ 0x06, 0x00, 0x63, 0x14, 0x08, 0x14, 0x63,
+ 0x06, 0x00, 0x07, 0x08, 0x70, 0x08, 0x07,
+ 0x06, 0x00, 0x71, 0x49, 0x45, 0x43, 0x00,
+ 0x06, 0x00, 0x00, 0x7F, 0x41, 0x41, 0x00,
+ 0x06, 0x00, 0x02, 0x04, 0x08, 0x10, 0x20,
+ 0x06, 0x00, 0x00, 0x41, 0x41, 0x7F, 0x00,
+ 0x06, 0x00, 0x04, 0x02, 0x01, 0x02, 0x04,
+ 0x06, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80,
+ 0x06, 0x00, 0x00, 0x03, 0x07, 0x00, 0x00,
+ 0x06, 0x00, 0x20, 0x54, 0x54, 0x54, 0x78,
+ 0x06, 0x00, 0x7F, 0x44, 0x44, 0x44, 0x38,
+ 0x06, 0x00, 0x38, 0x44, 0x44, 0x44, 0x28,
+ 0x06, 0x00, 0x38, 0x44, 0x44, 0x44, 0x7F,
+ 0x06, 0x00, 0x38, 0x54, 0x54, 0x54, 0x08,
+ 0x06, 0x00, 0x08, 0x7E, 0x09, 0x09, 0x00,
+ 0x06, 0x00, 0x18, 0xA4, 0xA4, 0xA4, 0x7C,
+ 0x06, 0x00, 0x7F, 0x04, 0x04, 0x78, 0x00,
+ 0x06, 0x00, 0x00, 0x00, 0x7D, 0x40, 0x00,
+ 0x06, 0x00, 0x40, 0x80, 0x84, 0x7D, 0x00,
+ 0x06, 0x00, 0x7F, 0x10, 0x28, 0x44, 0x00,
+ 0x06, 0x00, 0x00, 0x00, 0x7F, 0x40, 0x00,
+ 0x06, 0x00, 0x7C, 0x04, 0x18, 0x04, 0x78,
+ 0x06, 0x00, 0x7C, 0x04, 0x04, 0x78, 0x00,
+ 0x06, 0x00, 0x38, 0x44, 0x44, 0x44, 0x38,
+ 0x06, 0x00, 0xFC, 0x44, 0x44, 0x44, 0x38,
+ 0x06, 0x00, 0x38, 0x44, 0x44, 0x44, 0xFC,
+ 0x06, 0x00, 0x44, 0x78, 0x44, 0x04, 0x08,
+ 0x06, 0x00, 0x08, 0x54, 0x54, 0x54, 0x20,
+ 0x06, 0x00, 0x04, 0x3E, 0x44, 0x24, 0x00,
+ 0x06, 0x00, 0x3C, 0x40, 0x20, 0x7C, 0x00,
+ 0x06, 0x00, 0x1C, 0x20, 0x40, 0x20, 0x1C,
+ 0x06, 0x00, 0x3C, 0x60, 0x30, 0x60, 0x3C,
+ 0x06, 0x00, 0x6C, 0x10, 0x10, 0x6C, 0x00,
+ 0x06, 0x00, 0x9C, 0xA0, 0x60, 0x3C, 0x00,
+ 0x06, 0x00, 0x64, 0x54, 0x54, 0x4C, 0x00,
+ 0x06, 0x00, 0x08, 0x3E, 0x41, 0x41, 0x00,
+ 0x06, 0x00, 0x00, 0x00, 0x77, 0x00, 0x00,
+ 0x06, 0x00, 0x00, 0x41, 0x41, 0x3E, 0x08,
+ 0x06, 0x00, 0x02, 0x01, 0x02, 0x01, 0x00,
+ 0x06, 0x00, 0x3C, 0x26, 0x23, 0x26, 0x3C
+};
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+extern float EGLCD_TIMER_COEFFICIENT;
+extern const unsigned char BLACK, WHITE;
+#line 62 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+extern unsigned char* frameBuff;
+
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern unsigned char BLACK, WHITE;
-#line 63 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/eglcd.h"
+#line 63 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+>>>>>>> origin/can_module
 void eGlcd_init(void);
 
 void eGlcd_invertColors(void);
 
 void eGlcd_clear(void);
+
+void eGlcd_loadImage(const char *image);
 
 void eGlcd_fill(unsigned char color);
 
@@ -1128,9 +1338,19 @@ void eGlcd_setupTimer(void);
 void eGlcd_setTimerCoefficient(float coefficient);
 
 unsigned int eGlcd_getTextPixelLength(char *text);
-#line 97 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/eglcd.h"
+<<<<<<< HEAD
+
+void Lcd_PrintFrame();
+#line 102 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
-#line 108 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/eglcd.h"
+
+void eGlcd_fillPage(unsigned char page, char color);
+#line 115 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+=======
+#line 97 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+>>>>>>> origin/can_module
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -1145,10 +1365,16 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
-#line 184 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/dspic.h"
+<<<<<<< HEAD
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+=======
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -1206,7 +1432,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/glcdpins.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/glcdpins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
@@ -1239,22 +1465,25 @@ int getMinimumAnalogClockConversion(void);
  sbit GLCD_RW_Direction at TRISC2_bit;
  sbit GLCD_RS_Direction at TRISC1_bit;
  sbit GLCD_EN_Direction at TRISG15_bit;
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/basic.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/debug.h"
-#line 1 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 5 "c:/users/sofia/desktop/dpx 1.3 - no fb/dpx 1.3/modules/ui/display/../../../libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 5 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/debug.h"
+>>>>>>> origin/can_module
 extern char dstr[100];
 
 void Debug_UART_Init();
 void Debug_Timer4_Init();
 void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
 void printf(char* string);
 void initTimer32(void);
 void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 16 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/display/dd_boardDebug.c"
+<<<<<<< HEAD
+#line 16 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_boardDebug.c"
 int dd_downMoves = 0, dd_upMoves =  3 ;
 int dd_currentPage = 0;
 unsigned char dd_StartPrintIndex =  0 ;
@@ -1262,148 +1491,207 @@ unsigned char dd_PrintValue =  0 ;
 unsigned char dd_upMovement =  0 , dd_downMovement =  0 ;
 
 
+=======
+#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+static const unsigned char MAX_BOARD_DEBUG_HEIGHT = (unsigned char) ( 64  /  8 );
+>>>>>>> origin/can_module
+
+static const unsigned char MAX_BOARD_DEBUG_WIDTH = (int) ( 128  / ( 6  +  1 ));
 
 
 
 
 
 
-static const unsigned char BOARD_RECT_HEIGHT = (unsigned char) ( 64  / 2) - ( 1  * 2) - 2;
-static const unsigned char BOARD_RECT_WIDTH = (unsigned char) (( 128  -  1  * 2) / 2) - 2;
+static signed char dd_boardDebug_SelectedLineIndex = 0;
+static signed char dd_boardDebug_FirstLineIndex = 0;
 
 
+static unsigned char dd_boardDebug_Height_param = MAX_BOARD_DEBUG_HEIGHT;
+static unsigned char dd_boardDebug_Width = MAX_BOARD_DEBUG_WIDTH;
+static unsigned char dd_boardDebug_X_OFFSET = 0;
+static unsigned char dd_boardDebug_Y_OFFSET = 0;
+static unsigned char dd_boardDebug_Height = MAX_BOARD_DEBUG_HEIGHT;
 
 
+static int dd_boardDebug_DescriptionScrollingTicks = 0;
 
 
-
-
-
-
-static const unsigned char BOARD_POSITION_COORDINATES[ 4 ][2] = {
- { 1 ,  1 },
- { 128  - BOARD_RECT_WIDTH - 1  * 2 - 1 ,  1 },
- { 1 ,  64  - BOARD_RECT_HEIGHT - 1  * 2 - 1 },
- { 128  - BOARD_RECT_WIDTH - 1  * 2 - 1 ,  64  - BOARD_RECT_HEIGHT - 1  * 2 - 1 }
-};
-
-
-
-
-void dd_boardDebug_setPrintValue(unsigned char index){
- dd_PrintValue = index;
+void dd_boardDebug_reset(void) {
+ dd_boardDebug_SelectedLineIndex = 0;
+ dd_boardDebug_FirstLineIndex = 0;
 }
 
-void dd_boardDebug_setStartPrintIndex(unsigned char index){
- dd_StartPrintIndex = index;
+void dd_boardDebug_init() {
+ dd_boardDebug_reset();
 }
 
-unsigned char dd_boardDebug_getPrintPosition(unsigned char index){
- if(dd_upMoves!= 3  || dd_downMoves!=0){
- return index - 4*(dd_downMoves);
+void dd_boardDebug_setY_OFFSET(unsigned char y) {
+ dd_boardDebug_Y_OFFSET = y;
+ dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
+}
+
+void dd_boardDebug_setX_OFFSET(unsigned char x) {
+ dd_boardDebug_X_OFFSET = x;
+}
+
+void dd_boardDebug_setHeight(unsigned char height) {
+ if (height > MAX_BOARD_DEBUG_HEIGHT) {
+ height = MAX_BOARD_DEBUG_HEIGHT;
  }
- else return index;
+ dd_boardDebug_Height_param = height;
+ dd_boardDebug_Height = dd_boardDebug_Height_param + dd_boardDebug_Y_OFFSET;
 }
 
- void dd_boardDebug_drawRect(unsigned char index) {
- unsigned char x, y;
- index = dd_boardDebug_getPrintPosition(index);
- x = BOARD_POSITION_COORDINATES[index][0];
- y = BOARD_POSITION_COORDINATES[index][1];
+void dd_boardDebug_setWidth(unsigned char width) {
+ if (width > MAX_BOARD_DEBUG_WIDTH) {
+ width = MAX_BOARD_DEBUG_WIDTH;
+ }
+ dd_boardDebug_Width = width;
+}
 
+
+<<<<<<< HEAD
   eGlcd_drawRect( x + 1 , y + 1 , BOARD_RECT_WIDTH, BOARD_RECT_HEIGHT ); ;
-#line 78 "C:/Users/sofia/Desktop/DPX 1.3 - NO FB/DPX 1.3/modules/ui/display/dd_boardDebug.c"
+#line 78 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_boardDebug.c"
+=======
+void dd_boardDebug_scroll(signed char movements) {
+ char i;
+ dd_boardDebug_FirstLineIndex+=movements;
+ if ( dd_boardDebug_FirstLineIndex > dd_currentIndicatorsCount - dd_boardDebug_Height_param ) {
+ dd_boardDebug_FirstLineIndex = dd_currentIndicatorsCount - 1 - dd_boardDebug_Height_param;
+ }
+ else if (dd_boardDebug_FirstLineIndex < 0) {
+ dd_boardDebug_FirstLineIndex = 0;
+ }
+ for (i = dd_boardDebug_FirstLineIndex; i < dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param; i++) {
+ dd_currentIndicators[i]->pendingPrintUpdate =  1 ;
+ }
+>>>>>>> origin/can_module
 }
 
-void dd_boardDebug_writeValue(unsigned char index){
- Indicator* indicator = dd_currentIndicators[index+ 0 ];
- unsigned char print_position;
- unsigned char title_letters = 0;
-  xGlcd_Set_Font ( DynamisFont_xTerminal6x8, 6 , 8 , 32 );
- print_position = dd_boardDebug_getPrintPosition(index);
- if(index +  0  <  7  ){
- title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
- eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2  - title_letters, BOARD_POSITION_COORDINATES[print_position][1] +  1  +  2 );
- eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3* BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- dd_Indicator_parseValueLabel(index+  0  );
- eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4* 1  , BOARD_POSITION_COORDINATES[print_position][1] +  1 *2 + ( 8 +1)*2);
- } else if(index <  7  +  6  && index +  0  >=  7  ){
- title_letters = eGlcd_getTextPixelLength(indicator->name)/2;
- eGlcd_writeText(indicator->name, BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2  - title_letters, BOARD_POSITION_COORDINATES[print_position][1] +  1  +  2 );
- eGlcd_writeText("T", BOARD_POSITION_COORDINATES[print_position][0] +  BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- eGlcd_writeText("I", BOARD_POSITION_COORDINATES[print_position][0] + 3* BOARD_RECT_WIDTH/2 /2 -  6 /2, BOARD_POSITION_COORDINATES[print_position][1] +  1 *3 + ( 8 +1));
- dd_Indicator_parseValueLabel(index+  0  );
- eGlcd_writeText(indicator->label, BOARD_POSITION_COORDINATES[print_position][0] + 4* 1  , BOARD_POSITION_COORDINATES[print_position][1] +  1 *2 + ( 8 +1)*2);
+void dd_boardDebug_moveSelection(signed char movements) {
+ dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate =  1 ;
+ dd_boardDebug_SelectedLineIndex+=movements;
+ if (dd_boardDebug_SelectedLineIndex >= dd_currentIndicatorsCount) {
+ dd_boardDebug_SelectedLineIndex = dd_currentIndicatorsCount - 1;
+ }
+ else if (dd_boardDebug_SelectedLineIndex < 0) {
+ dd_boardDebug_SelectedLineIndex = 0;
+ }
+ dd_currentIndicators[dd_boardDebug_SelectedLineIndex]->pendingPrintUpdate =  1 ;
+ if (dd_boardDebug_SelectedLineIndex >= dd_boardDebug_FirstLineIndex + dd_boardDebug_Height_param){
+ dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex - dd_boardDebug_Height_param + 1);
+ }
+ else if (dd_boardDebug_SelectedLineIndex < dd_boardDebug_FirstLineIndex){
+ dd_boardDebug_scroll(dd_boardDebug_SelectedLineIndex - dd_boardDebug_FirstLineIndex);
  }
 }
 
+char dd_boardDebug_isLineSelected(unsigned char lineIndex) {
+ return dd_boardDebug_SelectedLineIndex == lineIndex;
+}
 
+unsigned char dd_boardDebugLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
+ unsigned char labelLength;
+ labelLength = dd_currentIndicators[lineIndex]->labelLength;
+ if (labelLength > 0) {
+ return (unsigned char) (dd_boardDebug_Width - labelLength -  1 );
+ } else {
+ return dd_boardDebug_Width;
+ }
+}
 
- void dd_boardDebug_printRect(unsigned char index){
- dd_boardDebug_drawRect(index);
- dd_boardDebug_writeValue(index);
+unsigned char dd_boardDebugLine_hasToScroll(unsigned char lineIndex) {
+ return dd_boardDebug_isLineSelected(lineIndex) &&
+ dd_currentIndicators[lineIndex]->descriptionLength > dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
+}
+
+void dd_boardDebug_printLine(unsigned char lineIndex) {
+ unsigned char lineNumber, color;
+ char lineText[MAX_BOARD_DEBUG_WIDTH + 1];
+ lineNumber = lineIndex - dd_boardDebug_FirstLineIndex + dd_boardDebug_Y_OFFSET;
+ if (dd_boardDebug_isLineSelected(lineIndex)) {
+ color = WHITE;
+ } else {
+ color = BLACK;
+ }
+ dd_boardDebug_makeLineText(lineText, lineIndex);
+  Glcd_Set_Font( DynamisFont_Terminal6x8, 6 , 8 , 32 ); Glcd_Write_Text(lineText, 0, lineNumber, color); ;
+#line 145 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_boardDebug.c"
+ dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
 
 void dd_boardDebug_print() {
- unsigned char index, printIndex;
- if(dd_downMovement || dd_upMovement){
- dd_boardDebug_setStartPrintIndex(dd_printValue);
+ unsigned char i;
+ unsigned char lastLineIndex = dd_boardDebug_FirstLineIndex +
+ (dd_boardDebug_Height_param<=dd_currentIndicatorsCount ? dd_boardDebug_Height_param : dd_currentIndicatorsCount);
+ dd_boardDebug_DescriptionScrollingTicks++;
+ for (i = dd_boardDebug_FirstLineIndex; i < lastLineIndex; i++) {
+ if (dd_Indicator_isRequestingUpdate(i) || dd_boardDebugLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+ dd_boardDebug_printLine(i);
  }
- printIndex = dd_StartPrintIndex;
- for (index = 0; index <  4 ; index++) {
-
- dd_boardDebug_printRect(printIndex);
- printIndex++;
- }
- dd_boardDebug_setPrintValue(printIndex-1);
- if(dd_downMovement || dd_upMovement){
- dd_downMovement =  0 ;
- dd_upMovement =  0 ;
  }
 }
 
-void dd_boardDebug_init(void){
+int dd_boardDebugLine_getScrollingOverflow(unsigned char lineIndex) {
+ return dd_currentIndicators[lineIndex]->descriptionLength +  4 ;
 }
 
+int dd_boardDebugLine_getScrollOffset(unsigned char lineIndex) {
 
-void dd_boardDebug_Move(signed char movement){
- unsigned char value;
- if( dd_downMoves <  3  && movement > 0 ) {
- dd_downMovement =  1 ;
- value = dd_PrintValue+1;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves ++;
- dd_upMoves --;
+ int offset;
+ if (dd_boardDebugLine_hasToScroll(lineIndex)) {
+
+ offset = (int) ( (1.0 / 10 )  * dd_boardDebuG_DescriptionScrollingTicks *  3.5 );
+ if (offset >= dd_boardDebugLine_getScrollingOverflow(lineIndex)) {
+ offset = 0;
+ dd_boardDebug_DescriptionScrollingTicks = 0;
  }
- else if( dd_upMoves <  3  && movement < 0 ) {
- dd_upMovement =  1 ;
- value = dd_PrintValue-7;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves --;
- dd_upMoves ++;
- }
-}
-
-
-void dd_boardDebug_downMovement(){
- unsigned char value;
- if(dd_downMoves <  3 ){
- dd_downMovement =  1 ;
- value = dd_PrintValue-1;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves ++;
- dd_upMoves --;
+ return offset;
+ } else {
+ return 0;
  }
 }
 
-void dd_boardDebug_upMovement(){
- unsigned char value;
- if(dd_upMoves <  3 ){
- dd_upMovement =  1 ;
- value = dd_PrintValue-5;
- dd_boardDebug_setPrintValue(value);
- dd_downMoves --;
- dd_upMoves ++;
+void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex) {
+ char debug[100];
+
+ int lineCharIndex, i, scrollingOffset, scrollingOverflow;
+ unsigned char descriptionLength, valueWidth, visibleDescriptionWidth;
+ Indicator* item;
+
+ dd_Indicator_parseValueLabel(lineIndex);
+ item = dd_currentIndicators[lineIndex];
+ valueWidth = item->labelLength;
+
+ scrollingOverflow = dd_boardDebugLine_getScrollingOverflow(lineIndex);
+ scrollingOffset = dd_boardDebugLine_getScrollOffset(lineIndex);
+ descriptionLength = item->descriptionLength;
+ visibleDescriptionWidth = dd_boardDebugLine_getVisibleDescriptionWidth(lineIndex);
+ for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+ i = lineCharIndex + scrollingOffset;
+
+ if (i < descriptionLength) {
+ lineText[lineCharIndex] = (item->description)[i];
  }
+
+
+ else if (i < scrollingOverflow || !dd_boardDebugLine_hasToScroll(lineIndex)) {
+ lineText[lineCharIndex] = ' ';
+ } else {
+ lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
+ }
+ }
+ if (valueWidth > 0) {
+ for (i = 0; i <  1 ; i++) {
+ lineText[lineCharIndex] = ' ';
+ lineCharIndex += 1;
+ }
+ for (i = 0; i < valueWidth; i++) {
+ lineText[lineCharIndex] = (item->label)[i];
+ lineCharIndex += 1;
+ }
+ }
+ lineText[lineCharIndex] = ' ';
 }

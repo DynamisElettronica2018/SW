@@ -9,7 +9,7 @@
 #include "../display/dd_graphic_controller.h"
 #include "d_start.h"
 #include "../display/dd_global_defines.h"
-#include "../../peripherals/d_rio.h"
+#include "d_dcu.h"
 #include "d_hardReset.h"
 #include "../d_acceleration.h"
 #include "../../peripherals/d_ebb.h"
@@ -36,12 +36,6 @@
 #define ENCODER_RIGHT_PIN0    RD5_bit
 #define ENCODER_RIGHT_PIN1    RD4_bit
 #define ENCODER_RIGHT_PIN2    RD3_bit
-/*#define ENCODER_RIGHT_PIN0     RD6_bit
-#define ENCODER_RIGHT_PIN1     RD7_bit
-#define ENCODER_RIGHT_PIN2     RG1_bit
-#define ENCODER_LEFT_PIN0    RD5_bit
-#define ENCODER_LEFT_PIN1    RD4_bit
-#define ENCODER_LEFT_PIN2    RD3_bit  */
 
 #define START_BUTTON_DIRECTION            TRISD10_bit
 #define GEAR_UP_BUTTON_DIRECTION          TRISF2_bit
@@ -57,12 +51,6 @@
 #define ENCODER_RIGHT_PIN0_DIRECTION      TRISD5_bit
 #define ENCODER_RIGHT_PIN1_DIRECTION      TRISD4_bit
 #define ENCODER_RIGHT_PIN2_DIRECTION      TRISD3_bit
-/*#define ENCODER_RIGHT_PIN0_DIRECTION       TRISD6_bit
-#define ENCODER_RIGHT_PIN1_DIRECTION       TRISD7_bit
-#define ENCODER_RIGHT_PIN2_DIRECTION       TRISG1_bit
-#define ENCODER_LEFT_PIN0_DIRECTION      TRISD5_bit
-#define ENCODER_LEFT_PIN1_DIRECTION      TRISD4_bit
-#define ENCODER_LEFT_PIN2_DIRECTION      TRISD3_bit*/
 
 #define onStartInterrupt                  onExternal3Interrupt
 #define onDRSInterrupt                    onExternal2Interrupt
@@ -140,6 +128,7 @@ void dControls_init(void) {
    Debug_UART_Write(dstr);*/
    d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
+   setExternalInterrupt(START_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(GEAR_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(ROTARY_SWITCH_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(DRS_INTERRUPT, INTERRUPT_EDGE);
@@ -186,8 +175,9 @@ onCNInterrupt{
    new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
    new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
 
-   movement_dx = new_port_dx - old_port_dx;
-   movement_sx = new_port_sx - old_port_sx;
+    movement_dx = new_port_dx - old_port_dx;
+  // movement_sx = new_port_sx - old_port_sx;
+    movement_sx = - new_port_sx + old_port_sx;
    
 //   sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
 //   Debug_UART_Write(dstr);
@@ -324,7 +314,7 @@ onGeneralButtonInterrupt{
        d_controls_onAux1();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onAux2();
+       d_controls_onStartAcquisition();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
@@ -334,20 +324,24 @@ onGeneralButtonInterrupt{
 //////////////////////////////////////////////////////
 
 void d_controls_onGearUp() {
+     Debug_UART_Write("Request gear up\r\n");
     dGear_requestGearUp();
 }
 
 void d_controls_onGearDown() {
+    Debug_UART_Write("Request gear down\r\n");
     dGear_requestGearDown();
 }
 
 void d_controls_onStart() {
     if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
         dSignalLed_set(DSIGNAL_LED_2);
+        Debug_UART_Write("On Start\r\n");
         dStart_switchOn();
         switchExternalInterruptEdge(START_INTERRUPT);
     } else {
         dSignalLed_unset(DSIGNAL_LED_2);
+        Debug_UART_Write("On start off\r\n");
         dStart_switchOff();
         switchExternalInterruptEdge(START_INTERRUPT);
     }
@@ -414,17 +408,19 @@ void button_onMenuRight() {
 }*/
 
 void d_controls_onNeutral() {
+     Debug_UART_Write("On neutral\r\n");
     if (!dGear_isNeutralSet()) {
         if (dGear_get() == 1) {
-    // !       Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
         } else if (dGear_get() == 2) {
-    // !      Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
+            Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
         }
     }
 }
 
 void d_controls_onReset() {
-        dHardReset_reset();
+     Debug_UART_Write("On reset\r\n");
+     dHardReset_reset();
 }
 
 /*void button_onMenuDown() {
@@ -450,15 +446,24 @@ void d_controls_onReset() {
 ////////////////// DA DEFINIRE
 
 void d_controls_onDRS() {
-
+    Debug_UART_Write("On DRS\r\n");
 }
 
 void d_controls_onAux1(void) {
-
+     Debug_UART_Write("On aux 1.\r\n");
+     switch(d_currentOperatingMode)
+     {
+         case ACC_MODE:
+              Debug_UART_Write("Acceleration operation requested.\r\n");
+              dAcc_requestAction();
+         default:
+         return;
+     }
 }
 
-void d_controls_onAux2(void) {
-
+void d_controls_onStartAcquisition(void) {
+     dDCU_switchAcquisition();
+     Debug_UART_Write("Start acquisition\r\n");
 }
 
 //////////////////////////////
