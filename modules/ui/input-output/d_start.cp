@@ -142,7 +142,18 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_bip(void);
-#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+void dSignalLed_init(void);
+
+void dSignalLed_switch(unsigned char led);
+
+void dSignalLed_set(unsigned char led);
+
+void dSignalLed_unset(unsigned char led);
+#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
 char dStart_isSwitchOnFlag =  0 ;
 
 void dStart_switchOn(void) {
@@ -158,6 +169,6 @@ char dStart_isSwitchedOn(void) {
 }
 
 void dStart_sendStartMessage(void) {
- Buzzer_Bip();
  Can_writeByte( 0b01000000100 ,  1 );
+ dSignalLed_switch( 2 );
 }

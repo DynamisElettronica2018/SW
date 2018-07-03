@@ -486,8 +486,8 @@ timer2_interrupt
 			Can_write
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
-		Buzzer_bip
 		Can_writeByte
+		dSignalLed_switch
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe
 		ceil
