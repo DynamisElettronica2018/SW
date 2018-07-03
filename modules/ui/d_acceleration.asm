@@ -150,7 +150,7 @@ L__dAcc_requestAction14:
 L_dAcc_requestAction4:
 ;d_acceleration.c,132 :: 		dAcc_stopAutoAcceleration();
 	CALL	_dAcc_stopAutoAcceleration
-;d_acceleration.c,133 :: 		dd_GraphicController_fireTimedNotification(2000, "STOP", MESSAGE);
+;d_acceleration.c,133 :: 		dd_GraphicController_fireTimedNotification(2000, "ACC STOP", MESSAGE);
 	CLR	W12
 	MOV	#lo_addr(?lstr3_d_acceleration), W11
 	MOV	#2000, W10

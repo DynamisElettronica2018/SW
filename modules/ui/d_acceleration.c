@@ -130,7 +130,7 @@ void dAcc_requestAction(){
     else
     {
         dAcc_stopAutoAcceleration();
-        dd_GraphicController_fireTimedNotification(2000, "STOP", MESSAGE);
+        dd_GraphicController_fireTimedNotification(2000, "ACC STOP", MESSAGE);
     }
 }
 
