@@ -126,7 +126,7 @@ _dDCU_tick:
 	BRA GEU	L__dDCU_tick11
 	GOTO	L_dDCU_tick4
 L__dDCU_tick11:
-;d_dcu.c,51 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU IS DEAD", ERROR);
+;d_dcu.c,51 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
 	MOV.B	#2, W12
 	MOV	#lo_addr(?lstr3_d_dcu), W11
 	MOV	#1500, W10

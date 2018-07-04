@@ -48,7 +48,7 @@ void dDCU_tick(void){
      if(d_DCU_isAliveCounter >= DCU_DEAD_TIME)
      {
          //manda una notifica di error a schermo
-         dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU IS DEAD", ERROR);
+         dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
          d_DCU_isAcquiring = 0;
          d_DCU_isAliveCounter = 0;
      }

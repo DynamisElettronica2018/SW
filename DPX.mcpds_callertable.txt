@@ -426,7 +426,6 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
-	Buzzer_bip
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
 		Debug_UART_Write

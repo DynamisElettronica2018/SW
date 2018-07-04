@@ -30,8 +30,8 @@ void dDCU_tick(void);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- OIL_TEMP_IN, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
- CLUTCH_POSITION, EBB, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
  FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
@@ -385,7 +385,7 @@ void dDCU_tick(void){
  if(d_DCU_isAliveCounter >=  5000 )
  {
 
- dd_GraphicController_fireTimedNotification( 1500 , "DCU IS DEAD", ERROR);
+ dd_GraphicController_fireTimedNotification( 1500 , "DCU DEAD", ERROR);
  d_DCU_isAcquiring = 0;
  d_DCU_isAliveCounter = 0;
  }

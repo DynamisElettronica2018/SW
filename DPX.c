@@ -136,9 +136,9 @@ onCanInterrupt{
 
     switch (id) {
        case EFI_GEAR_RPM_TPS_APPS_ID:
+           dGear_propagate(firstInt);
            dRpm_set(secondInt);
            dEfiSense_heartbeat();
-           dGear_propagate(firstInt);
            dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
@@ -207,13 +207,12 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
            break;
        case DCU_DEBUG_ID:
-           Buzzer_bip();
-           dDCU_isAcquiringSet();
-           if(firstInt == COMMAND_DCU_IS_ACQUIRING){
+           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+           if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+                dDCU_isAcquiringSet();
                 dDCU_sentAcquiringSignal();
                 dSignalLed_switch(DSIGNAL_LED_GREEN);
            }
-        //  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;
        default:
            break;

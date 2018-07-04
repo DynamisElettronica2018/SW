@@ -25,10 +25,9 @@ const unsigned char dd_carParametersCount = 21;
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
 
 /********************************* INDICATORS *********************************/
-//IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3, TRUE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
-FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3, FALSE, FALSE, TRUE, INT, 1, "?", 0};
@@ -41,8 +40,7 @@ FloatIndicator ind_th2o_sx_in = {TH2O_SX_IN, "TH2LI", "H20 Temp. Left In", 5, 17
 FloatIndicator ind_th2o_sx_out = {TH2O_SX_OUT, "TH2LO", "H20 Temp. Left Out", 5, 18, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_th2o_dx_in = {TH2O_DX_IN, "TH2RI", "H20 Temp. Right In", 5, 18, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_th2o_dx_out = {TH2O_DX_OUT, "TH2RO", "H20 Temp. Right Out", 5, 19, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
-//FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
-IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
+FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "TOILO", "Oil Temp. Out", 5, 13, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11, TRUE, TRUE, TRUE, FLOAT, 1, "?", 0};
 IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAU.C", "Launch Control", 5, 14, TRUE, TRUE, TRUE, INT, 1, "?", 0};
@@ -68,20 +66,18 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15, TRUE, TRUE, TRUE, INT, 1, "  ?    ?", 0 };
 //*/
 
-static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i primi 4 sono quelli che di default si vedono nella dashboard
-      //(Indicator*)&ind_ebb,                                            //TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
-      (Indicator*)&ind_oil_temp_in,                                      //dashboard standard: EBB,th20, poil, vbat
-      (Indicator*)&ind_th2o,
-      (Indicator*)&ind_tps,
-      (Indicator*)&ind_oil_press,  //invertire oil p e vbat
-      (Indicator*)&ind_vbat,
+static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i primi 4 sono quelli che di default si vedono nella dashboard                                                                        //TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
+      (Indicator*)&ind_oil_temp_in,                                      //dashboard standard:
+      (Indicator*)&ind_th2o,                                             //EBB
+      (Indicator*)&ind_tps,                                              //TH20
+      (Indicator*)&ind_oil_press,                                        //V BAT
+      (Indicator*)&ind_vbat,                                             //P OIL
       (Indicator*)&ind_adc1_read,
       (Indicator*)&ind_rpm,
       (Indicator*)&ind_clutch_pos,
       (Indicator*)&ind_clutch_fb,
       (Indicator*)&ind_efi_status,
       (Indicator*)&ind_efi_crash_counter,
-      //(Indicator*)&ind_oil_temp_in,
       (Indicator*)&ind_ebb,
       (Indicator*)&ind_oil_temp_out,
       (Indicator*)&ind_th2o_sx_in,
@@ -94,7 +90,6 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i pri
       (Indicator*)&ind_ebb_motor_curr
     };
     
-
 static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
       (Indicator*)&ind_ebb_board,
       (Indicator*)&ind_dcu_board,
@@ -113,7 +108,6 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
 
 
 void d_UI_CruiseModeInit() {
-     //printf("cruise mode init");
      dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Drive");
 }
 

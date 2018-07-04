@@ -500,16 +500,19 @@ L_CAN_Interrupt30:
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,209 :: 		case DCU_DEBUG_ID:
 L_CAN_Interrupt31:
-;DPX.c,210 :: 		Buzzer_bip();
-	CALL	_Buzzer_bip
-;DPX.c,211 :: 		dDCU_isAcquiringSet();
-	CALL	_dDCU_isAcquiringSet
-;DPX.c,212 :: 		if(firstInt == COMMAND_DCU_IS_ACQUIRING){
-	MOV	[W14+0], W0
+;DPX.c,210 :: 		dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+	MOV	[W14+2], W12
+	MOV	[W14+0], W11
+	MOV	#lo_addr(_ind_dcu_board), W10
+	CALL	_dd_Indicator_setIntCoupleValueP
+;DPX.c,211 :: 		if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+	MOV	[W14+4], W0
 	CP	W0, #1
 	BRA Z	L__CAN_Interrupt51
 	GOTO	L_CAN_Interrupt32
 L__CAN_Interrupt51:
+;DPX.c,212 :: 		dDCU_isAcquiringSet();
+	CALL	_dDCU_isAcquiringSet
 ;DPX.c,213 :: 		dDCU_sentAcquiringSignal();
 	CALL	_dDCU_sentAcquiringSignal
 ;DPX.c,214 :: 		dSignalLed_switch(DSIGNAL_LED_GREEN);
@@ -517,13 +520,13 @@ L__CAN_Interrupt51:
 	CALL	_dSignalLed_switch
 ;DPX.c,215 :: 		}
 L_CAN_Interrupt32:
-;DPX.c,217 :: 		break;
+;DPX.c,216 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,218 :: 		default:
+;DPX.c,217 :: 		default:
 L_CAN_Interrupt33:
-;DPX.c,219 :: 		break;
+;DPX.c,218 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,220 :: 		}
+;DPX.c,219 :: 		}
 L_CAN_Interrupt17:
 	MOV	#773, W1
 	MOV	#0, W2
@@ -631,7 +634,7 @@ L__CAN_Interrupt63:
 L__CAN_Interrupt64:
 	GOTO	L_CAN_Interrupt33
 L_CAN_Interrupt18:
-;DPX.c,224 :: 		}
+;DPX.c,223 :: 		}
 L_end_CAN_Interrupt:
 	POP	W13
 	POP	W12
