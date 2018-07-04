@@ -483,7 +483,6 @@ void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
  dAcc_GCUConfirmed =  0 ;
- Can_writeInt( 0b01000000101 ,  0 );
 }
 
 
@@ -512,6 +511,8 @@ void dAcc_feedbackGCU(unsigned int value){
  dAcc_GCUConfirmed =  1 ;
  } else if (value ==  2 ){
  dAcc_GCUConfirmed =  2 ;
+ } else if (value ==  0 ){
+ dAcc_stopAutoAcceleration();
  }
 }
 
@@ -528,7 +529,6 @@ void dAcc_stopAutoAcceleration(void) {
  if(dAcc_releasingClutch){
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
- Can_writeInt( 0b01000000010 ,  0 );
  dd_printMessage("STOP");
  delay_ms(2000);
  d_UI_AccModeInit();

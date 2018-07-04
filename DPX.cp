@@ -790,9 +790,6 @@ void main(){
 
  if (timer2_counter0 >= 5) {
  dPaddle_readSample();
- if(d_UI_getOperatingMode() == ACC_MODE){
- dAcc_stopAutoAcceleration();
- }
  timer2_counter0 = 0;
  }
 
@@ -837,7 +834,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 118 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 115 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -901,7 +898,7 @@ void main(){
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
  break;
-#line 187 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 184 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -911,7 +908,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 200 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 197 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));

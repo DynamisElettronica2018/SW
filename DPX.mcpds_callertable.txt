@@ -68,14 +68,6 @@ main
 					d_UI_ApplySettings
 				d_UI_AccModeClose
 					dAcc_stopAutoAcceleration
-						Can_writeInt
-							Can_resetWritePacket
-							Can_addIntToWritePacket
-								Can_addByteToWritePacket
-							Can_write
-								CAN1Write
-									CAN1IDToRegs
-								Can_getWriteFlags
 						dd_printMessage
 							xGlcd_Set_Font
 							eGlcd_getTextPixelLength
@@ -328,7 +320,6 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		dAcc_init
-			Can_writeInt
 		setTimer
 external4
 	d_controls_onNeutral
@@ -336,6 +327,13 @@ external4
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+				Can_addByteToWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -467,6 +465,7 @@ CAN_Interrupt
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
 	dAcc_feedbackGCU
+		dAcc_stopAutoAcceleration
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -516,8 +515,6 @@ timer2_interrupt
 		_Mul_FP
 		_AddSub_FP
 		_Float2Longint
-	d_UI_getOperatingMode
-	dAcc_stopAutoAcceleration
 	dClutch_set
 		dd_Indicator_setIntValueP
 	dPaddle_getValue

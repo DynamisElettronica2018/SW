@@ -62,9 +62,6 @@ onTimer2Interrupt{
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
         dPaddle_readSample();
-        if(d_UI_getOperatingMode() == ACC_MODE){
-          dAcc_stopAutoAcceleration();
-        }
         timer2_counter0 = 0;
     }
     // TIMER_2_PERIOD*10 = 10ms (100Hz)
