@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0;
+int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 
 
 void main(){
@@ -52,16 +52,22 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    timer2_counter4 += 1;
+    //timer2_counter4 += 1;
     timer2_counter5 += 1;
+    //timer2_counter6 += 1;
+    /*
+    if(timer2_counter6==200){
+        dDCU_startAcquisition();
+    }
     
-    /*if(timer2_counter4 == 100){
+    if(timer2_counter4 == 100){
                        value1++;
           dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(value1));
     }
     if(timer2_counter4 == 150){
           value2++;
           dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(value2));
+          timer2_counter4 = 0;
     } */
     
     //Buzzer_bip();

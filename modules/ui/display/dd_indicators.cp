@@ -1275,7 +1275,7 @@ unsigned char dd_getIndicatorIndexFromCollection(Indicator_ID id, Indicator** co
 
 void dd_Indicator_requestPrintUpdate(unsigned char indicatorIndex) {
  Indicator* indicator = dd_currentIndicators[indicatorIndex];
- if(indicator->pendingPrintUpdate !=  2  )
+ if(indicator->pendingPrintUpdate !=  2 )
  indicator->pendingPrintUpdate =  1 ;
 }
 

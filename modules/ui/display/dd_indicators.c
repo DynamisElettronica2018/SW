@@ -50,7 +50,7 @@ unsigned char dd_getIndicatorIndexFromCollection(Indicator_ID id, Indicator** co
 
 void dd_Indicator_requestPrintUpdate(unsigned char indicatorIndex) {
     Indicator* indicator = dd_currentIndicators[indicatorIndex];
-    if(indicator->pendingPrintUpdate != FULL_PRINT_UPDATE /*&& !dd_GraphicController_getNotificationFlag()*/)
+    if(indicator->pendingPrintUpdate != FULL_PRINT_UPDATE)
         indicator->pendingPrintUpdate = TRUE;
 }
 

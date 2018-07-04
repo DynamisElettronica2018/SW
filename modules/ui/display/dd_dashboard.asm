@@ -320,7 +320,7 @@ _dd_Dashboard_printIndicators:
 	LNK	#2
 
 ;dd_dashboard.c,158 :: 		void dd_Dashboard_printIndicators(void) {
-;dd_dashboard.c,161 :: 		for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
+;dd_dashboard.c,160 :: 		for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
 	PUSH	W10
 	CLR	W0
 	MOV.B	W0, [W14+0]
@@ -330,10 +330,10 @@ L_dd_Dashboard_printIndicators4:
 	BRA LTU	L__dd_Dashboard_printIndicators29
 	GOTO	L_dd_Dashboard_printIndicators5
 L__dd_Dashboard_printIndicators29:
-;dd_dashboard.c,162 :: 		if (dd_Indicator_isRequestingUpdate(index) ||
+;dd_dashboard.c,161 :: 		if (dd_Indicator_isRequestingUpdate(index) ||
 	MOV.B	[W14+0], W10
 	CALL	_dd_Indicator_isRequestingUpdate
-;dd_dashboard.c,163 :: 		dd_GraphicController_isFrameUpdateForced()) {
+;dd_dashboard.c,162 :: 		dd_GraphicController_isFrameUpdateForced()) {
 	CP0.B	W0
 	BRA Z	L__dd_Dashboard_printIndicators30
 	GOTO	L__dd_Dashboard_printIndicators15
@@ -346,19 +346,19 @@ L__dd_Dashboard_printIndicators31:
 	GOTO	L_dd_Dashboard_printIndicators9
 L__dd_Dashboard_printIndicators15:
 L__dd_Dashboard_printIndicators14:
-;dd_dashboard.c,165 :: 		dd_Dashboard_printIndicator(index);
+;dd_dashboard.c,163 :: 		dd_Dashboard_printIndicator(index);
 	MOV.B	[W14+0], W10
 	CALL	dd_dashboard_dd_Dashboard_printIndicator
-;dd_dashboard.c,168 :: 		}
+;dd_dashboard.c,164 :: 		}
 L_dd_Dashboard_printIndicators9:
-;dd_dashboard.c,161 :: 		for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
+;dd_dashboard.c,160 :: 		for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
 	MOV.B	[W14+0], W1
 	ADD	W14, #0, W0
 	ADD.B	W1, #1, [W0]
-;dd_dashboard.c,169 :: 		}
+;dd_dashboard.c,165 :: 		}
 	GOTO	L_dd_Dashboard_printIndicators4
 L_dd_Dashboard_printIndicators5:
-;dd_dashboard.c,174 :: 		}
+;dd_dashboard.c,166 :: 		}
 L_end_dd_Dashboard_printIndicators:
 	POP	W10
 	ULNK
@@ -367,12 +367,12 @@ L_end_dd_Dashboard_printIndicators:
 
 _dd_Dashboard_print:
 
-;dd_dashboard.c,178 :: 		void dd_Dashboard_print(void) {
-;dd_dashboard.c,181 :: 		dd_Dashboard_printGearLetter();
+;dd_dashboard.c,170 :: 		void dd_Dashboard_print(void) {
+;dd_dashboard.c,171 :: 		dd_Dashboard_printGearLetter();
 	CALL	_dd_Dashboard_printGearLetter
-;dd_dashboard.c,187 :: 		dd_Dashboard_printIndicators();
+;dd_dashboard.c,172 :: 		dd_Dashboard_printIndicators();
 	CALL	_dd_Dashboard_printIndicators
-;dd_dashboard.c,188 :: 		}
+;dd_dashboard.c,173 :: 		}
 L_end_dd_Dashboard_print:
 	RETURN
 ; end of _dd_Dashboard_print

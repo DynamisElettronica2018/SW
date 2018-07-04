@@ -1569,6 +1569,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
+static char dd_onScreenNotificationFlag =  0 ;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -1576,7 +1577,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 58 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 59 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1665,15 +1666,17 @@ void dd_GraphicController_saveCurrentInterface(void) {
 }
 
 void dd_GraphicController_setNotificationFlag (void){
+ dd_onScreenNotificationFlag =  1 ;
  dd_notificationFlag =  1 ;
 }
 
 void dd_GraphicController_unsetNotificationFlag (void){
  dd_notificationFlag =  0 ;
+ dd_onScreenNotificationFlag =  0 ;
 }
 
 int dd_GraphicController_getNotificationFlag(void){
- return ((int)dd_notificationFlag);
+ return ((int)dd_onScreenNotificationFlag);
 }
 
 void dd_GraphicController_clearNotification(void) {
@@ -1687,7 +1690,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
  dd_GraphicController_setNotificationFlag();
 }
-#line 172 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 175 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
@@ -1698,11 +1701,8 @@ void dd_GraphicController_handleNotification(void) {
  dd_notificationTimeoutCounter--;
  if (dd_notificationTimeoutCounter == 0) {
  dd_GraphicController_clearNotification();
-
  }
  }
-
-
 }
 #line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
@@ -1832,11 +1832,8 @@ void dd_GraphicController_onTimerInterrupt(void)
  Lcd_PrintFrame();
  dd_isFrameUpdateForced =  0 ;
  }
-
-
-
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 358 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 355 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

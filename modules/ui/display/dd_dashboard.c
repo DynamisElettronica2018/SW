@@ -157,32 +157,17 @@ double getExecTime();
 
 void dd_Dashboard_printIndicators(void) {
     unsigned char index;
-    //double a = 0, b= 0, c=0;
     for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
         if (dd_Indicator_isRequestingUpdate(index) ||
             dd_GraphicController_isFrameUpdateForced()) {
-            //a = getExecTime();
             dd_Dashboard_printIndicator(index);
-            //b = getExecTime();
-            //c += b-a;
         }
     }
-    /*stopTimer32();
-    sprintf(str, "Ind: %f", c/DASHBOARD_INDICATORS_COUNT);
-    printf(str);
-    startTimer32();*/
 }
 
 
 
 void dd_Dashboard_print(void) {
-    //double a = 0, b= 0;
-    //a = getExecTime();
     dd_Dashboard_printGearLetter();
-    //b = getExecTime();
-    /*stopTimer32();
-    sprintf(str, "%f", b-a);
-    printf(str);
-    startTimer32();*/
     dd_Dashboard_printIndicators();
 }

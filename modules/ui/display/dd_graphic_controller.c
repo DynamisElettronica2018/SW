@@ -44,6 +44,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
+static char dd_onScreenNotificationFlag = FALSE;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -143,15 +144,17 @@ void dd_GraphicController_saveCurrentInterface(void) {
 }
 
 void dd_GraphicController_setNotificationFlag (void){
+     dd_onScreenNotificationFlag = TRUE;
      dd_notificationFlag = TRUE;
 }
 
 void dd_GraphicController_unsetNotificationFlag (void){
      dd_notificationFlag = FALSE;
+     dd_onScreenNotificationFlag = FALSE;
 }
 
 int dd_GraphicController_getNotificationFlag(void){
-     return ((int)dd_notificationFlag);
+     return ((int)dd_onScreenNotificationFlag);
 }
 
 void dd_GraphicController_clearNotification(void) {
@@ -179,11 +182,8 @@ void dd_GraphicController_handleNotification(void) {
         dd_notificationTimeoutCounter--;
         if (dd_notificationTimeoutCounter == 0) {
             dd_GraphicController_clearNotification();
-            //Debug_UART_Write("Clearing notification\r\n");
-        }
+       }
     }
-    //sprintf(dstr, "Handling notification: %d\r\n", dd_notificationTimeoutCounter);
-    //Debug_UART_Write(dstr);
 }
 
 /*void dd_GraphicController_printFrame(void) {
@@ -338,9 +338,6 @@ void dd_GraphicController_onTimerInterrupt(void)
             Lcd_PrintFrame();
             dd_isFrameUpdateForced = FALSE;
         }
-        //time = getExecTime();
-        //sprintf(str, "%f", time);
-       //printf(str);
     }
 
     clearTimer1();

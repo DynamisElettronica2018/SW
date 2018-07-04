@@ -9885,6 +9885,7 @@ timer2_counter2
 timer2_counter3
 timer2_counter4
 timer2_counter5
+timer2_counter6
 timer2_interrupt
 timer4_interrupt
 tmode

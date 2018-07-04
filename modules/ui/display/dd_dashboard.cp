@@ -1547,25 +1547,17 @@ double getExecTime();
 
 void dd_Dashboard_printIndicators(void) {
  unsigned char index;
-
  for (index = 0; index <  4 ; index++) {
  if (dd_Indicator_isRequestingUpdate(index) ||
  dd_GraphicController_isFrameUpdateForced()) {
-
  dd_Dashboard_printIndicator(index);
-
-
  }
  }
-#line 174 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 }
 
 
 
 void dd_Dashboard_print(void) {
-
-
  dd_Dashboard_printGearLetter();
-#line 187 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
  dd_Dashboard_printIndicators();
 }

@@ -581,7 +581,9 @@ void d_UIController_init() {
  Debug_UART_Write("graphic controller initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 46 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 44 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+ d_UI_setOperatingMode(CRUISE_MODE);
+
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
