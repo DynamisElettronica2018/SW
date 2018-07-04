@@ -19,6 +19,9 @@
 *   while clockwise rotations add +1, and are referred to as right.
 */
 //!@{
+
+void d_UI_AccModeInit(void);
+
 #define ACC_MODE_POSITION        1
 #define CRUISE_MODE_POSITION     0
 #define DEBUG_MODE_POSITION      -1

@@ -849,58 +849,48 @@ L_end_d_controls_onReset:
 _d_controls_onDRS:
 
 ;d_controls.c,448 :: 		void d_controls_onDRS() {
-;d_controls.c,449 :: 		Debug_UART_Write("On DRS\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr11_d_controls), W10
-	CALL	_Debug_UART_Write
-;d_controls.c,450 :: 		}
+;d_controls.c,449 :: 		switch(d_currentOperatingMode)
+	GOTO	L_d_controls_onDRS49
+;d_controls.c,451 :: 		case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
+L_d_controls_onDRS51:
+;d_controls.c,452 :: 		dAcc_requestAction();
+	CALL	_dAcc_requestAction
+;d_controls.c,453 :: 		default:
+L_d_controls_onDRS52:
+;d_controls.c,454 :: 		return;
+	GOTO	L_end_d_controls_onDRS
+;d_controls.c,455 :: 		}
+L_d_controls_onDRS49:
+	MOV	#lo_addr(_d_currentOperatingMode), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #4
+	BRA NZ	L__d_controls_onDRS88
+	GOTO	L_d_controls_onDRS51
+L__d_controls_onDRS88:
+	GOTO	L_d_controls_onDRS52
+;d_controls.c,456 :: 		}
 L_end_d_controls_onDRS:
-	POP	W10
 	RETURN
 ; end of _d_controls_onDRS
 
 _d_controls_onAux1:
 
-;d_controls.c,452 :: 		void d_controls_onAux1(void) {
-;d_controls.c,453 :: 		Debug_UART_Write("On aux 1.\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr12_d_controls), W10
-	CALL	_Debug_UART_Write
-;d_controls.c,454 :: 		switch(d_currentOperatingMode)
-	GOTO	L_d_controls_onAux149
-;d_controls.c,456 :: 		case ACC_MODE:
-L_d_controls_onAux151:
-;d_controls.c,457 :: 		dAcc_requestAction();
-	CALL	_dAcc_requestAction
-;d_controls.c,458 :: 		default:
-L_d_controls_onAux152:
-;d_controls.c,459 :: 		return;
-	GOTO	L_end_d_controls_onAux1
+;d_controls.c,458 :: 		void d_controls_onAux1(void) {
 ;d_controls.c,460 :: 		}
-L_d_controls_onAux149:
-	MOV	#lo_addr(_d_currentOperatingMode), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #4
-	BRA NZ	L__d_controls_onAux189
-	GOTO	L_d_controls_onAux151
-L__d_controls_onAux189:
-	GOTO	L_d_controls_onAux152
-;d_controls.c,461 :: 		}
 L_end_d_controls_onAux1:
-	POP	W10
 	RETURN
 ; end of _d_controls_onAux1
 
 _d_controls_onStartAcquisition:
 
-;d_controls.c,463 :: 		void d_controls_onStartAcquisition(void) {
-;d_controls.c,464 :: 		dDCU_switchAcquisition();
+;d_controls.c,462 :: 		void d_controls_onStartAcquisition(void) {
+;d_controls.c,463 :: 		dDCU_switchAcquisition();
 	PUSH	W10
 	CALL	_dDCU_switchAcquisition
-;d_controls.c,465 :: 		Debug_UART_Write("Start acquisition\r\n");
-	MOV	#lo_addr(?lstr13_d_controls), W10
+;d_controls.c,464 :: 		Debug_UART_Write("Start acquisition\r\n");
+	MOV	#lo_addr(?lstr11_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,466 :: 		}
+;d_controls.c,465 :: 		}
 L_end_d_controls_onStartAcquisition:
 	POP	W10
 	RETURN

@@ -557,7 +557,9 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AccModeInit(void);
+#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -611,15 +613,15 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
 #line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 5 ])(void);
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 5 ])(void);
-#line 116 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 119 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 127 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 155 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 158 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 
 void d_UI_AccModeClose(void);
@@ -684,7 +686,7 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 24 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -693,7 +695,8 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 50 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+
+
 void dAcc_requestAction();
 
 
@@ -703,6 +706,8 @@ char dAcc_isAutoAccelerationActive(void);
 void dAcc_getAccValue(int accValue);
 
 char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
 
 
 
@@ -921,6 +926,10 @@ void main(){
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
  break;
+ case  0b11111110001 :
+
+ dAcc_feedbackGCU(secondInt);
+
  default:
  break;
  }

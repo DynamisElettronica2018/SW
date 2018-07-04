@@ -446,18 +446,17 @@ void d_controls_onReset() {
 ////////////////// DA DEFINIRE
 
 void d_controls_onDRS() {
-    Debug_UART_Write("On DRS\r\n");
-}
-
-void d_controls_onAux1(void) {
-     Debug_UART_Write("On aux 1.\r\n");
-     switch(d_currentOperatingMode)
+    switch(d_currentOperatingMode)
      {
-         case ACC_MODE:
+         case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
               dAcc_requestAction();
          default:
          return;
      }
+}
+
+void d_controls_onAux1(void) {
+
 }
 
 void d_controls_onStartAcquisition(void) {

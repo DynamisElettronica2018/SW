@@ -101,101 +101,106 @@ main
 											_frameBuffer_Read
 											_frameBuffer_Write
 										_Multiply_32x32
+						d_UI_AccModeInit
+							Debug_UART_Write
+							dd_GraphicController_setCollectionInterface
+								dd_GraphicController_setInterface
+									dd_GraphicController_getTmrCounterLimit
+										floor
+											_Float2Longint
+											_Long2Float
+											_Compare_Ge_Fp
+											_Sub_FP
+											_Compare_Le_Fp
+										_Long2Float
+										_Div_FP
+										_Mul_FP
+										_Float2Longint
+								strlen
+								strcpy
+								dd_Dashboard_print
+									dd_Dashboard_printGearLetter
+										dGear_getCurrentGearLetter
+										dd_GraphicController_isFrameUpdateForced
+										xGlcd_Set_Font
+										eGlcd_overwriteChar
+											eGlcd_clearChar
+												xGlcd_Write_Char
+												xGLCD_Set_Transparency
+											eGlcd_writeChar
+												xGlcd_Write_Char
+									dd_Dashboard_printIndicators
+										dd_Indicator_isRequestingUpdate
+										dd_GraphicController_isFrameUpdateForced
+										dd_Dashboard_printIndicator
+											dd_Indicator_drawContainers
+												eGlcd_drawRect
+											dd_Indicator_getNameXCoord
+											dd_Indicator_getNameYCoord
+											xGlcd_Set_Font
+											eGlcd_overwriteText
+												eGlcd_clearText
+													xGlcd_Write_Text
+													xGLCD_Set_Transparency
+												eGlcd_writeText
+											dd_Indicator_getLabelXCoord
+											dd_Indicator_getLabelYCoord
+											eGlcd_clearText
+											dd_Indicator_parseValueLabel
+												sprintf
+												strcpy
+												strlen
+											eGlcd_writeText
+											dd_Indicator_clearPrintUpdateRequest
+								dd_Interface_printMenu
+									dd_printMenu
+										dd_Indicator_isRequestingUpdate
+										dd_MenuLine_hasToScroll
+											dd_Menu_isLineSelected
+											dd_MenuLine_getVisibleDescriptionWidth
+										dd_GraphicController_isFrameUpdateForced
+										dd_printMenuLine
+											dd_Menu_isLineSelected
+											eGlcd_fillPage
+												_frameBuffer_Write
+											dd_Menu_makeLineText
+												dd_Indicator_parseValueLabel
+												dd_MenuLine_getScrollingOverflow
+												dd_MenuLine_getScrollOffset
+													dd_MenuLine_hasToScroll
+													dd_MenuLine_getScrollingOverflow
+													_Long2Float
+													_Mul_FP
+													_Float2Longint
+												dd_MenuLine_getVisibleDescriptionWidth
+												dd_MenuLine_hasToScroll
+											xGlcd_Set_Font
+											xGlcd_Write_Text
+											dd_Indicator_clearPrintUpdateRequest
+								dd_Dashboard_init
+								dd_Menu_init
+									dd_Menu_reset
+								d_UI_BoardDebugModeInit
+									dd_GraphicController_setCollectionInterface | Recursion.
+								d_UI_SettingsModeInit
+									d_DashboardSetting_updateValue
+										strcpy
+									dd_GraphicController_setCollectionInterface | Recursion.
+								d_UI_DebugModeInit
+									dd_GraphicController_setCollectionInterface | Recursion.
+								d_UI_CruiseModeInit
+									dd_GraphicController_setCollectionInterface | Recursion.
+								d_UI_AccModeInit | Recursion.
 					Debug_UART_Write
 				dd_Dashboard_print
-					dd_Dashboard_printGearLetter
-						dGear_getCurrentGearLetter
-						dd_GraphicController_isFrameUpdateForced
-						xGlcd_Set_Font
-						eGlcd_overwriteChar
-							eGlcd_clearChar
-								xGlcd_Write_Char
-								xGLCD_Set_Transparency
-							eGlcd_writeChar
-								xGlcd_Write_Char
-					dd_Dashboard_printIndicators
-						dd_Indicator_isRequestingUpdate
-						dd_GraphicController_isFrameUpdateForced
-						dd_Dashboard_printIndicator
-							dd_Indicator_drawContainers
-								eGlcd_drawRect
-							dd_Indicator_getNameXCoord
-							dd_Indicator_getNameYCoord
-							xGlcd_Set_Font
-							eGlcd_overwriteText
-								eGlcd_clearText
-									xGlcd_Write_Text
-									xGLCD_Set_Transparency
-								eGlcd_writeText
-							dd_Indicator_getLabelXCoord
-							dd_Indicator_getLabelYCoord
-							eGlcd_clearText
-							dd_Indicator_parseValueLabel
-								sprintf
-								strcpy
-								strlen
-							eGlcd_writeText
-							dd_Indicator_clearPrintUpdateRequest
 				dd_Interface_printMenu
-					dd_printMenu
-						dd_Indicator_isRequestingUpdate
-						dd_MenuLine_hasToScroll
-							dd_Menu_isLineSelected
-							dd_MenuLine_getVisibleDescriptionWidth
-						dd_GraphicController_isFrameUpdateForced
-						dd_printMenuLine
-							dd_Menu_isLineSelected
-							eGlcd_fillPage
-								_frameBuffer_Write
-							dd_Menu_makeLineText
-								dd_Indicator_parseValueLabel
-								dd_MenuLine_getScrollingOverflow
-								dd_MenuLine_getScrollOffset
-									dd_MenuLine_hasToScroll
-									dd_MenuLine_getScrollingOverflow
-									_Long2Float
-									_Mul_FP
-									_Float2Longint
-								dd_MenuLine_getVisibleDescriptionWidth
-								dd_MenuLine_hasToScroll
-							xGlcd_Set_Font
-							xGlcd_Write_Text
-							dd_Indicator_clearPrintUpdateRequest
 				dd_Dashboard_init
 				dd_Menu_init
-					dd_Menu_reset
 				d_UI_BoardDebugModeInit
-					dd_GraphicController_setCollectionInterface
-						dd_GraphicController_setInterface
-							dd_GraphicController_getTmrCounterLimit
-								floor
-									_Float2Longint
-									_Long2Float
-									_Compare_Ge_Fp
-									_Sub_FP
-									_Compare_Le_Fp
-								_Long2Float
-								_Div_FP
-								_Mul_FP
-								_Float2Longint
-						strlen
-						strcpy
-						dd_Dashboard_print
-						dd_Interface_printMenu
-						dd_Dashboard_init
-						dd_Menu_init
-						d_UI_BoardDebugModeInit | Recursion.
 				d_UI_SettingsModeInit
-					d_DashboardSetting_updateValue
-						strcpy
-					dd_GraphicController_setCollectionInterface
 				d_UI_DebugModeInit
-					dd_GraphicController_setCollectionInterface
 				d_UI_CruiseModeInit
-					dd_GraphicController_setCollectionInterface
 				d_UI_AccModeInit
-					Debug_UART_Write
-					dd_GraphicController_setCollectionInterface
 				d_UI_BoardDebugModeClose
 				d_UI_DebugModeClose
 				d_UI_CruiseModeClose
@@ -352,26 +357,6 @@ external4
 					dd_printMessage
 			dSignalLed_set
 	d_controls_onAux1
-		Debug_UART_Write
-		dAcc_requestAction
-			dd_GraphicController_clearPrompt
-				dd_Dashboard_print
-				dd_Interface_printMenu
-				dd_Dashboard_init
-				dd_Menu_init
-				d_UI_BoardDebugModeInit
-				d_UI_SettingsModeInit
-				d_UI_DebugModeInit
-				d_UI_CruiseModeInit
-				d_UI_AccModeInit
-				d_UI_BoardDebugModeClose
-				d_UI_SettingsModeClose
-				d_UI_DebugModeClose
-				d_UI_CruiseModeClose
-				d_UI_AccModeClose
-			dAcc_startAutoAcceleration
-				Can_writeInt
-				dd_printMessage
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -421,6 +406,21 @@ CAN_Interrupt
 		d_UI_getOperatingMode
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+			Can_writeInt
 			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
@@ -466,10 +466,15 @@ CAN_Interrupt
 		dSignalLed_switch
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
+	dAcc_feedbackGCU
 	_Long2Float
 external2
 	d_controls_onDRS
-		Debug_UART_Write
+		dAcc_requestAction
+			dd_GraphicController_clearPrompt
+			dAcc_startAutoAcceleration
+				Can_writeInt
+				dd_printMessage
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick

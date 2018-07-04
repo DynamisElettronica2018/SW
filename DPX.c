@@ -211,6 +211,10 @@ onCanInterrupt{
        case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;
+       case GCU_AUX_ID:
+           //int1 è fb di traction  da NON considerare quando siamo in ACC
+           dAcc_feedbackGCU(secondInt);
+           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
        default:
            break;
     }
