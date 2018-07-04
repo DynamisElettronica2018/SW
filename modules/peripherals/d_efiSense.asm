@@ -94,10 +94,7 @@ L__dEfiSense_die10:
 	MOV.B	W0, W11
 	MOV.B	#10, W10
 	CALL	_dd_Indicator_setBoolValue
-;d_efiSense.c,34 :: 		dSignalLed_unset(DSIGNAL_LED_GREEN);
-	MOV.B	#3, W10
-	CALL	_dSignalLed_unset
-;d_efiSense.c,35 :: 		}
+;d_efiSense.c,34 :: 		}
 L_end_dEfiSense_die:
 	POP	W11
 	POP	W10
@@ -106,11 +103,11 @@ L_end_dEfiSense_die:
 
 _dEfiSense_isDead:
 
-;d_efiSense.c,37 :: 		char dEfiSense_isDead(void) {
-;d_efiSense.c,38 :: 		return dEfiSense_dead;
+;d_efiSense.c,36 :: 		char dEfiSense_isDead(void) {
+;d_efiSense.c,37 :: 		return dEfiSense_dead;
 	MOV	#lo_addr(_dEfiSense_dead), W0
 	MOV.B	[W0], W0
-;d_efiSense.c,39 :: 		}
+;d_efiSense.c,38 :: 		}
 L_end_dEfiSense_isDead:
 	RETURN
 ; end of _dEfiSense_isDead
@@ -118,8 +115,8 @@ L_end_dEfiSense_isDead:
 _dEfiSense_calculateOilInTemperature:
 	LNK	#4
 
-;d_efiSense.c,41 :: 		float dEfiSense_calculateOilInTemperature (unsigned int value){
-;d_efiSense.c,42 :: 		return ((int) (( EFI_SENSE_OIL_MIN_TEMP - (value * EFI_SENSE_OIL_TEMP_RANGE ) ) * 100)) / 100.0;
+;d_efiSense.c,40 :: 		float dEfiSense_calculateOilInTemperature (unsigned int value){
+;d_efiSense.c,41 :: 		return ((int) (( EFI_SENSE_OIL_MIN_TEMP - (value * EFI_SENSE_OIL_TEMP_RANGE ) ) * 100)) / 100.0;
 	MOV	W10, W0
 	CLR	W1
 	CALL	__Long2Float
@@ -145,7 +142,7 @@ _dEfiSense_calculateOilInTemperature:
 	MOV	#0, W2
 	MOV	#17096, W3
 	CALL	__Div_FP
-;d_efiSense.c,43 :: 		}
+;d_efiSense.c,42 :: 		}
 L_end_dEfiSense_calculateOilInTemperature:
 	ULNK
 	RETURN
@@ -153,10 +150,10 @@ L_end_dEfiSense_calculateOilInTemperature:
 
 _dEfiSense_calculateOilOutTemperature:
 
-;d_efiSense.c,45 :: 		float dEfiSense_calculateOilOutTemperature (unsigned int value){
-;d_efiSense.c,46 :: 		return dEfiSense_calculateWaterTemperature (value);
+;d_efiSense.c,44 :: 		float dEfiSense_calculateOilOutTemperature (unsigned int value){
+;d_efiSense.c,45 :: 		return dEfiSense_calculateWaterTemperature (value);
 	CALL	_dEfiSense_calculateWaterTemperature
-;d_efiSense.c,47 :: 		}
+;d_efiSense.c,46 :: 		}
 L_end_dEfiSense_calculateOilOutTemperature:
 	RETURN
 ; end of _dEfiSense_calculateOilOutTemperature
@@ -164,8 +161,8 @@ L_end_dEfiSense_calculateOilOutTemperature:
 _dEfiSense_calculateWaterTemperature:
 	LNK	#4
 
-;d_efiSense.c,49 :: 		float dEfiSense_calculateWaterTemperature (unsigned int value) {
-;d_efiSense.c,50 :: 		return ((int) (( EFI_SENSE_WATER_MIN_TEMP - (value * EFI_SENSE_WATER_TEMP_RANGE ) ) * 100)) / 100.0;
+;d_efiSense.c,48 :: 		float dEfiSense_calculateWaterTemperature (unsigned int value) {
+;d_efiSense.c,49 :: 		return ((int) (( EFI_SENSE_WATER_MIN_TEMP - (value * EFI_SENSE_WATER_TEMP_RANGE ) ) * 100)) / 100.0;
 	MOV	W10, W0
 	CLR	W1
 	CALL	__Long2Float
@@ -191,7 +188,7 @@ _dEfiSense_calculateWaterTemperature:
 	MOV	#0, W2
 	MOV	#17096, W3
 	CALL	__Div_FP
-;d_efiSense.c,51 :: 		}
+;d_efiSense.c,50 :: 		}
 L_end_dEfiSense_calculateWaterTemperature:
 	ULNK
 	RETURN
@@ -199,8 +196,8 @@ L_end_dEfiSense_calculateWaterTemperature:
 
 _dEfiSense_calculateTemperature:
 
-;d_efiSense.c,53 :: 		float dEfiSense_calculateTemperature(unsigned int value) { //Value is Temperature, 256 values ranging from -10° to 160°
-;d_efiSense.c,54 :: 		return ((int) ((((value * EFI_SENSE_TEMP_RANGE) / 256.0) - EFI_SENSE_MIN_TEMP) * 100)) / 100.0;
+;d_efiSense.c,52 :: 		float dEfiSense_calculateTemperature(unsigned int value) { //Value is Temperature, 256 values ranging from -10° to 160°
+;d_efiSense.c,53 :: 		return ((int) ((((value * EFI_SENSE_TEMP_RANGE) / 256.0) - EFI_SENSE_MIN_TEMP) * 100)) / 100.0;
 	MOV	#160, W0
 	MUL.UU	W10, W0, W0
 	CLR	W1
@@ -221,15 +218,15 @@ _dEfiSense_calculateTemperature:
 	MOV	#0, W2
 	MOV	#17096, W3
 	CALL	__Div_FP
-;d_efiSense.c,55 :: 		}
+;d_efiSense.c,54 :: 		}
 L_end_dEfiSense_calculateTemperature:
 	RETURN
 ; end of _dEfiSense_calculateTemperature
 
 _dEfiSense_calculatePressure:
 
-;d_efiSense.c,57 :: 		float dEfiSense_calculatePressure(unsigned int value) { //Value is Pressure in millibars
-;d_efiSense.c,58 :: 		return (value / 10) / 100.0;
+;d_efiSense.c,56 :: 		float dEfiSense_calculatePressure(unsigned int value) { //Value is Pressure in millibars
+;d_efiSense.c,57 :: 		return (value / 10) / 100.0;
 	MOV	#10, W2
 	REPEAT	#17
 	DIV.U	W10, W2
@@ -238,15 +235,15 @@ _dEfiSense_calculatePressure:
 	MOV	#0, W2
 	MOV	#17096, W3
 	CALL	__Div_FP
-;d_efiSense.c,59 :: 		}
+;d_efiSense.c,58 :: 		}
 L_end_dEfiSense_calculatePressure:
 	RETURN
 ; end of _dEfiSense_calculatePressure
 
 _dEfiSense_calculateVoltage:
 
-;d_efiSense.c,61 :: 		float dEfiSense_calculateVoltage(unsigned int value) { //Value is Battery Voltage, 1024 values ranging from 0 to 18V
-;d_efiSense.c,62 :: 		return ((int) (((value * EFI_SENSE_MAX_VOLTAGE) / 1024.0) * 100)) / 100.0;
+;d_efiSense.c,60 :: 		float dEfiSense_calculateVoltage(unsigned int value) { //Value is Battery Voltage, 1024 values ranging from 0 to 18V
+;d_efiSense.c,61 :: 		return ((int) (((value * EFI_SENSE_MAX_VOLTAGE) / 1024.0) * 100)) / 100.0;
 	MOV	#18, W0
 	MUL.UU	W10, W0, W0
 	CLR	W1
@@ -264,15 +261,15 @@ _dEfiSense_calculateVoltage:
 	MOV	#0, W2
 	MOV	#17096, W3
 	CALL	__Div_FP
-;d_efiSense.c,63 :: 		}
+;d_efiSense.c,62 :: 		}
 L_end_dEfiSense_calculateVoltage:
 	RETURN
 ; end of _dEfiSense_calculateVoltage
 
 _dEfiSense_calculateSlip:
 
-;d_efiSense.c,65 :: 		int dEfiSense_calculateSlip(unsigned int value){
-;d_efiSense.c,66 :: 		return ((int) ((value * EFI_SENSE_SLIP) * 100)) / 100.0;
+;d_efiSense.c,64 :: 		int dEfiSense_calculateSlip(unsigned int value){
+;d_efiSense.c,65 :: 		return ((int) ((value * EFI_SENSE_SLIP) * 100)) / 100.0;
 	MOV	W10, W0
 	CLR	W1
 	CALL	__Long2Float
@@ -290,7 +287,7 @@ _dEfiSense_calculateSlip:
 	MOV	#17096, W3
 	CALL	__Div_FP
 	CALL	__Float2Longint
-;d_efiSense.c,67 :: 		}
+;d_efiSense.c,66 :: 		}
 L_end_dEfiSense_calculateSlip:
 	RETURN
 ; end of _dEfiSense_calculateSlip

@@ -562,6 +562,8 @@ void d_traction_control_move(signed char movements);
 void d_traction_control_init(void);
 
 void d_traction_control_setValueFromCAN(unsigned int value);
+
+void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
@@ -619,7 +621,8 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 43 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+ d_traction_control_init();
+ Debug_UART_Write("traction control initialized.\r\n");
  dEbb_init();
  Debug_UART_Write("ebb initialized.\r\n");
  setTimer( 2 ,  0.001 );

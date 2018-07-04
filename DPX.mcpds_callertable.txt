@@ -308,6 +308,7 @@ main
 				setInterruptPriority
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
+		d_traction_control_init
 		dEbb_init
 			Can_writeInt
 				Can_resetWritePacket
@@ -426,25 +427,16 @@ CAN_Interrupt
 		_Div_FP
 		_Mul_FP
 		_Float2Longint
-	dEfiSense_calculateSlip
-		_Long2Float
-		_Mul_FP
-		_Float2Longint
-		_Div_FP
-	dd_Indicator_setIntValueP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
 	d_traction_control_setValueFromCAN
-		sprintf
-		Debug_UART_Write
 		dd_Indicator_setIntValueP
 	Debug_UART_Write
 	dDCU_sentAcquiringSignal
 		Debug_UART_Write
-		dSignalLed_switch
 	dEbb_setEbbValueFromCAN
 		dEbb_propagateEbbChange
 			dd_Indicator_setStringValue
@@ -460,7 +452,8 @@ CAN_Interrupt
 	dEbb_error
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
-	_Long2Float
+	dd_Indicator_setIntValueP
+	Buzzer_bip
 external2
 	d_controls_onDRS
 		Debug_UART_Write
@@ -494,6 +487,8 @@ cn_interrupt
 		d_traction_control_move
 			d_traction_control_propagateValue
 				Can_writeInt
+				dd_Indicator_setIntValueP
+				dSignalLed_switch
 	d_controls_onRightEncoder
 		dd_Menu_moveSelection
 			dd_Menu_scroll
@@ -504,6 +499,7 @@ cn_interrupt
 				dEbb_propagateEbbChange
 	clearExternalInterrupt
 timer2_interrupt
+	d_traction_control_propagateValue
 	dPaddle_readSample
 		ADC1_Read
 			ADC1_Init
@@ -545,8 +541,6 @@ timer2_interrupt
 		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dRpm_set
-		dRpm_updateLedStripe
 		dSignalLed_set
 		dSignalLed_unset
 		eGlcd_clear

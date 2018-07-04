@@ -43,8 +43,9 @@ void main(){
     }
 }
 
-//on TIMER_2_PERIOD interval (1000Hz)
+signed char value = 0;
 
+//on TIMER_2_PERIOD interval (1000Hz)
 onTimer2Interrupt{
     clearTimer2();
     //Buttons_tick();
@@ -53,8 +54,14 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
+
+    if(timer2_counter4 == 1000 && value <=7){
+     d_traction_control_propagateValue(value);
+       timer2_counter4 = 0;
+       value++;
+    }
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
@@ -103,10 +110,6 @@ onCanInterrupt{
     unsigned long int id;
     char dataBuffer[8];
     unsigned int dataLen = 0, flags = 0;
-     // Debug_UART_Write("in can interrupt\r\n");
-    /*if(C1INTFbits.ERRIF == 1){
-        dSignalLed_set(DSIGNAL_LED_GREEN);
-    }   */
     //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
     //IEC1BITS.C1IE = 0;
     Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
@@ -135,7 +138,7 @@ onCanInterrupt{
 
     switch (id) {
        case EFI_GEAR_RPM_TPS_APPS_ID:
-           dRpm_set(secondInt*10);
+           dRpm_set(secondInt);
            dEfiSense_heartbeat();
            dGear_propagate(firstInt);
            break;
@@ -154,11 +157,10 @@ onCanInterrupt{
            //dEfiSense_heartbeat();
            break;
        case EFI_TRACTION_CONTROL_ID:
-            dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
             break;
-       case EFI_FUEL_FAN_H2O_LAUNCH_ID:
+      /* case EFI_FUEL_FAN_H2O_LAUNCH_ID:
             dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt); //è un flag
-            break;
+            break;  */
        case EFI_PRESSURES_LAMBDA_SMOT_ID:
            dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
@@ -204,6 +206,12 @@ onCanInterrupt{
            break;
        case DCU_DEBUG_ID:
           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+           break;
+       case GCU_AUX_ID:
+           d_traction_control_setValueFromCAN(firstInt);
+           Buzzer_bip();
+           //dAcc_feedbackGCU(secondInt);
+           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
            break;
        default:
            break;

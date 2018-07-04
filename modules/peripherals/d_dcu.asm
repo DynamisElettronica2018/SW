@@ -153,9 +153,6 @@ _dDCU_sentAcquiringSignal:
 	PUSH	W10
 	MOV	#lo_addr(?lstr4_d_dcu), W10
 	CALL	_Debug_UART_Write
-;d_dcu.c,62 :: 		dSignalLed_switch(DSIGNAL_LED_GREEN);
-	MOV.B	#3, W10
-	CALL	_dSignalLed_switch
 ;d_dcu.c,63 :: 		d_DCU_isAliveCounter = 0;
 	CLR	W0
 	MOV	W0, d_dcu_d_DCU_isAliveCounter

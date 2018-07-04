@@ -1584,8 +1584,6 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
  dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit( 1000 );
-
-
  dd_printLogoAnimation();
  dd_onStartup = 1;
 
@@ -1681,7 +1679,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
  dd_GraphicController_setNotificationFlag();
 }
-#line 168 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 166 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
@@ -1698,7 +1696,7 @@ void dd_GraphicController_handleNotification(void) {
 
 
 }
-#line 205 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1767,9 +1765,6 @@ void dd_printLogoAnimation() {
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void)
 {
- dRpm_set(8000);
- dRpm_updateLedStripe();
-
  if ( __counter == 10 )
  {
  dSignalLed_set( 1 );
@@ -1805,7 +1800,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 317 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 312 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1832,5 +1827,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 354 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 349 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

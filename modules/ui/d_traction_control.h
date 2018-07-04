@@ -11,5 +11,6 @@ void d_traction_control_init(void);
 
 void d_traction_control_setValueFromCAN(unsigned int value);
 
+void d_traction_control_propagateValue(signed char value);
  
 #endif //DPX_DISPLAY_TRACTION_CONTROL_H

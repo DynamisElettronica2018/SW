@@ -42,10 +42,15 @@ _d_UIController_init:
 ;d_ui_controller.c,40 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
 	MOV	#lo_addr(?lstr7_d_ui_controller), W10
 	CALL	_Debug_UART_Write
+;d_ui_controller.c,41 :: 		d_traction_control_init();
+	CALL	_d_traction_control_init
+;d_ui_controller.c,42 :: 		Debug_UART_Write("traction control initialized.\r\n");
+	MOV	#lo_addr(?lstr8_d_ui_controller), W10
+	CALL	_Debug_UART_Write
 ;d_ui_controller.c,43 :: 		dEbb_init();
 	CALL	_dEbb_init
 ;d_ui_controller.c,44 :: 		Debug_UART_Write("ebb initialized.\r\n");
-	MOV	#lo_addr(?lstr8_d_ui_controller), W10
+	MOV	#lo_addr(?lstr9_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,45 :: 		setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
 	MOV	#4719, W11
@@ -53,7 +58,7 @@ _d_UIController_init:
 	MOV.B	#2, W10
 	CALL	_setTimer
 ;d_ui_controller.c,46 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
-	MOV	#lo_addr(?lstr9_d_ui_controller), W10
+	MOV	#lo_addr(?lstr10_d_ui_controller), W10
 	CALL	_Debug_UART_Write
 ;d_ui_controller.c,52 :: 		}
 L_end_d_UIController_init:

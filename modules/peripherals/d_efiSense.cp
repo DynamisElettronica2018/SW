@@ -390,7 +390,6 @@ void dEfiSense_tick(void) {
 void dEfiSense_die(void) {
  dEfiSense_dead =  1 ;
  dd_Indicator_setBoolValue(EFI_STATUS, !dEfiSense_isDead());
- dSignalLed_unset( 3 );
 }
 
 char dEfiSense_isDead(void) {

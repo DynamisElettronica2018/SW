@@ -64,8 +64,6 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
-    //sprintf(str, "%d - %d", startupCounterLimit, startupCounter);
-    //printf(str);
     dd_printLogoAnimation();
     dd_onStartup = 1;
     //eGlcd_LoadImage(DYNAMIS_LOGO);
@@ -270,9 +268,6 @@ void dd_printLogoAnimation() {
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void) 
 {
-     dRpm_set(8000);
-     dRpm_updateLedStripe();
-
     if ( __counter == 10 )
     {
        dSignalLed_set(DSIGNAL_LED_RED_RIGHT);

@@ -38,8 +38,8 @@ void d_UIController_init() {
     Debug_UART_Write("rpm initialized.\r\n");
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
-    /*d_traction_control_init();
-    Debug_UART_Write("traction control initialized.\r\n");*/
+    d_traction_control_init();
+    Debug_UART_Write("traction control initialized.\r\n");
     dEbb_init();
     Debug_UART_Write("ebb initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);

@@ -59,6 +59,6 @@ char dDCU_isAcquiring()
 
 void dDCU_sentAcquiringSignal(){
      Debug_UART_Write("DCU sent acquiring signal.\r\n");
-     dSignalLed_switch(DSIGNAL_LED_GREEN);
+     //dSignalLed_switch(DSIGNAL_LED_GREEN);
      d_DCU_isAliveCounter = 0;
 }

@@ -12,6 +12,8 @@ void d_traction_control_move(signed char movements);
 void d_traction_control_init(void);
 
 void d_traction_control_setValueFromCAN(unsigned int value);
+
+void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -434,14 +436,22 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_bip(void);
-#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+void dSignalLed_init(void);
+
+void dSignalLed_switch(unsigned char led);
+
+void dSignalLed_set(unsigned char led);
+
+void dSignalLed_unset(unsigned char led);
+#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
 signed char d_tractionValue = 0;
 
 void d_traction_control_printNotification(void){
  switch (d_tractionValue){
- case 0:
- dd_GraphicController_fireTimedNotification( 1000 , "TC 0", MESSAGE);
- break;
  case 1:
  dd_GraphicController_fireTimedNotification( 1000 , "TC 1", MESSAGE);
  break;
@@ -479,14 +489,15 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
  Can_writeInt( 0b01000000011 , (int) value);
-#line 61 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
+ dd_Indicator_setIntValueP(&ind_traction_control.base, value);
+ dSignalLed_switch( 0 );
 }
 
 void d_traction_control_move(signed char movements){
  signed char value;
  value = d_tractionValue - movements;
- if(value >  10 ){
- value =  10 ;
+ if(value >  7 ){
+ value =  7 ;
  } else if(value <  0 ){
  value =  0 ;
  }
@@ -495,21 +506,12 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
- sprintf(dstr, "value unsigned int %d\n", value);
- Debug_UART_Write(dstr);
  d_tractionValue = (signed char)value;
- sprintf(dstr, "value signed char %d\n", d_tractionValue);
- Debug_UART_Write(Dstr);
  dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
 
  return;
 }
 
 void d_traction_control_init(void){
- Can_writeInt( 0b01000000011 , (int) d_tractionValue);
- dd_Indicator_setIntValueP(&ind_traction_control.base, (int) d_tractionValue);
- sprintf(dstr, "Traction Control Value: %d\r\n", (int) d_tractionValue);
- Debug_UART_Write(dstr);
-
 
 }
