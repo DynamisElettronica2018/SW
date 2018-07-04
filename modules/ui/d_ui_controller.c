@@ -41,7 +41,7 @@ void d_UIController_init() {
    /* Debug_UART_Write("Signal Leds initialized.\r\n");
     Debug_UART_Write("RPM initialized.\r\n"); */
     //printf("ui contr. init 2");
-    d_UI_setOperatingMode(CRUISE_MODE);
+    //d_UI_setOperatingMode(CRUISE_MODE);
 
 }
 

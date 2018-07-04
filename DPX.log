@@ -66,8 +66,8 @@ diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 21	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 70	123	Compiled Successfully	d_dcu.c
-diagnostics: 0	127	All files Compiled in 4015 ms	 
+diagnostics: 0	127	All files Compiled in 5109 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 1000 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 5344 ms	 
-diagnostics: 0	103	Finished successfully: 04 lug 2018, 17:16:51	DPX.mcpds
+diagnostics: 0	128	Linked in 1250 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 6750 ms	 
+diagnostics: 0	103	Finished successfully: 04 lug 2018, 18:39:49	DPX.mcpds

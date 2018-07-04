@@ -300,7 +300,6 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		setTimer
-		d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
