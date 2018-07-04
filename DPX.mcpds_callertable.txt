@@ -348,8 +348,8 @@ external4
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
 			dDCU_startAcquisition
-				dd_GraphicController_fireTimedNotification
 				Can_writeInt
+				dd_GraphicController_fireTimedNotification
 		Debug_UART_Write
 	clearExternalInterrupt
 external3
@@ -424,12 +424,12 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
-	Debug_UART_Write
-	dDCU_sentAcquiringSignal
-		Debug_UART_Write
-		dSignalLed_switch
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
+	Buzzer_bip
+	dDCU_isAcquiringSet
+	dDCU_sentAcquiringSignal
+		Debug_UART_Write
 	_Long2Float
 external2
 	d_controls_onDRS

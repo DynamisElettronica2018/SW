@@ -227,6 +227,8 @@ void dDCU_startAcquisition(void);
 
 void dDCU_stopAcquisition(void);
 
+void dDCU_isAcquiringSet(void);
+
 char dDCU_isAcquiring(void);
 
 void dDCU_sentAcquiringSignal(void);
@@ -856,12 +858,7 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
- case  0b11111110111 :
- Debug_UART_Write("DCU sent MESSAGE\r\n");
- if(firstInt ==  1 )
- dDCU_sentAcquiringSignal();
- break;
-#line 182 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 185 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -871,7 +868,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 195 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 198 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -884,7 +881,13 @@ void main(){
  dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
  break;
  case  0b01100011000 :
- dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+ Buzzer_bip();
+ dDCU_isAcquiringSet();
+ if(firstInt ==  1 ){
+ dDCU_sentAcquiringSignal();
+ dSignalLed_switch( 3 );
+ }
+
  break;
  default:
  break;

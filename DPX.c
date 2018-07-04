@@ -168,11 +168,14 @@ onCanInterrupt{
        case GCU_CLUTCH_FB_SW_ID:
            dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
            break;
-       case DCU_AUX_ID:
+     /*  case DCU_AUX_ID:
            Debug_UART_Write("DCU sent MESSAGE\r\n");
-           if(firstInt == COMMAND_DCU_IS_ACQUIRING)
+           Buzzer_bip();
+           if(firstInt == COMMAND_DCU_IS_ACQUIRING){
                 dDCU_sentAcquiringSignal();
-           break;
+                dSignalLed_switch(DSIGNAL_LED_GREEN);
+           }
+           break; */
       /*case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
            dEbb_propagateEbbChange();
@@ -204,7 +207,13 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
            break;
        case DCU_DEBUG_ID:
-          dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+           Buzzer_bip();
+           dDCU_isAcquiringSet();
+           if(firstInt == COMMAND_DCU_IS_ACQUIRING){
+                dDCU_sentAcquiringSignal();
+                dSignalLed_switch(DSIGNAL_LED_GREEN);
+           }
+        //  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
            break;
        default:
            break;

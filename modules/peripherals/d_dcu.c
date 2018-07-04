@@ -29,9 +29,11 @@ void dDCU_switchAcquisition(void) {
 }
 
 void dDCU_startAcquisition(void) {
+    Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
     d_DCU_isAliveCounter = 0;
     d_DCU_isAcquiring = TRUE;
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Start ACQ.", MESSAGE);
+    delay_ms(500);
     Can_writeInt(SW_AUX_ID, COMMAND_DCU_START_ACQUISITION);
 }
 
@@ -52,6 +54,10 @@ void dDCU_tick(void){
      }
 }
 
+void dDCU_isAcquiringSet(){
+     d_DCU_isAcquiring = TRUE;
+}
+
 char dDCU_isAcquiring()
 {
       return d_DCU_isAcquiring;
@@ -59,6 +65,6 @@ char dDCU_isAcquiring()
 
 void dDCU_sentAcquiringSignal(){
      Debug_UART_Write("DCU sent acquiring signal.\r\n");
-     dSignalLed_switch(DSIGNAL_LED_GREEN);
+    // dSignalLed_switch(DSIGNAL_LED_GREEN);
      d_DCU_isAliveCounter = 0;
 }

@@ -2427,6 +2427,7 @@ dd_settingscount
 dd_tmr1counter
 ddcu_init
 ddcu_isacquiring
+ddcu_isacquiringset
 ddcu_sentacquiringsignal
 ddcu_startacquisition
 ddcu_stopacquisition

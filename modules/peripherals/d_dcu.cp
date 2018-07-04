@@ -18,6 +18,8 @@ void dDCU_startAcquisition(void);
 
 void dDCU_stopAcquisition(void);
 
+void dDCU_isAcquiringSet(void);
+
 char dDCU_isAcquiring(void);
 
 void dDCU_sentAcquiringSignal(void);
@@ -364,9 +366,11 @@ void dDCU_switchAcquisition(void) {
 }
 
 void dDCU_startAcquisition(void) {
+ Can_writeInt( 0b11111110000 ,  2 );
  d_DCU_isAliveCounter = 0;
  d_DCU_isAcquiring =  1 ;
  dd_GraphicController_fireTimedNotification( 1500 , "Start ACQ.", MESSAGE);
+ delay_ms(500);
  Can_writeInt( 0b11111110000 ,  1 );
 }
 
@@ -387,6 +391,10 @@ void dDCU_tick(void){
  }
 }
 
+void dDCU_isAcquiringSet(){
+ d_DCU_isAcquiring =  1 ;
+}
+
 char dDCU_isAcquiring()
 {
  return d_DCU_isAcquiring;
@@ -394,6 +402,6 @@ char dDCU_isAcquiring()
 
 void dDCU_sentAcquiringSignal(){
  Debug_UART_Write("DCU sent acquiring signal.\r\n");
- dSignalLed_switch( 3 );
+
  d_DCU_isAliveCounter = 0;
 }

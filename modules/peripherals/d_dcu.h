@@ -16,6 +16,8 @@ void dDCU_startAcquisition(void);
 
 void dDCU_stopAcquisition(void);
 
+void dDCU_isAcquiringSet(void);
+
 char dDCU_isAcquiring(void);
 
 void dDCU_sentAcquiringSignal(void);
