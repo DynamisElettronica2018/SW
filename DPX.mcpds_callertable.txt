@@ -372,6 +372,8 @@ CAN_Interrupt
 			RegsToCAN1ID
 		Can_B1hasBeenReceived
 		Can_clearB1Flag
+	dGear_propagate
+		dGear_set
 	dRpm_set
 		dd_Indicator_setFloatValueP
 			dd_Indicator_requestPrintUpdateP
@@ -383,8 +385,6 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 		dEfiSense_isDead
 		dSignalLed_set
-	dGear_propagate
-		dGear_set
 	dd_Indicator_setIntValueP
 		dd_Indicator_requestPrintUpdateP
 	dEfiSense_calculateTPS

@@ -43,7 +43,7 @@ void main(){
 }
 
 //on TIMER_2_PERIOD interval (1000Hz)
-
+  unsigned int value1 = 500, value2 = 50;
 onTimer2Interrupt{
     clearTimer2();
     //Buttons_tick();
@@ -52,8 +52,17 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
+    
+    /*if(timer2_counter4 == 100){
+                       value1++;
+          dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(value1));
+    }
+    if(timer2_counter4 == 150){
+          value2++;
+          dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(value2));
+    } */
     
     //Buzzer_bip();
 

@@ -2345,6 +2345,7 @@ dd_graphiccontroller_firetimednotification
 dd_graphiccontroller_forcefullframeupdate
 dd_graphiccontroller_forcenextframeupdate
 dd_graphiccontroller_getinterface
+dd_graphiccontroller_getnotificationflag
 dd_graphiccontroller_gettmrcounterlimit
 dd_graphiccontroller_handlenotification
 dd_graphiccontroller_init
@@ -12785,6 +12786,8 @@ value
 value
 value
 value
+value1
+value2
 valuetype
 valuetype
 valuetype

@@ -150,6 +150,10 @@ void dd_GraphicController_unsetNotificationFlag (void){
      dd_notificationFlag = FALSE;
 }
 
+int dd_GraphicController_getNotificationFlag(void){
+     return ((int)dd_notificationFlag);
+}
+
 void dd_GraphicController_clearNotification(void) {
      eGlcd_clear();
      dd_isFrameUpdateForced = TRUE;

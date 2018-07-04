@@ -97,7 +97,7 @@ _dd_Indicator_requestPrintUpdate:
 	ADD	W1, [W0], W0
 ; indicator start address is: 4 (W2)
 	MOV	[W0], W2
-;dd_indicators.c,53 :: 		if(indicator->pendingPrintUpdate != FULL_PRINT_UPDATE)
+;dd_indicators.c,53 :: 		if(indicator->pendingPrintUpdate != FULL_PRINT_UPDATE /*&& !dd_GraphicController_getNotificationFlag()*/)
 	MOV	[W0], W0
 	ADD	W0, #8, W0
 	MOV.B	[W0], W0

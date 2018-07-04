@@ -38,6 +38,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+int dd_GraphicController_getNotificationFlag(void);
+
 /** \brief Launches an alert notification on screen.
 *        A notification can be of different types depending on the seriousness
 *        of the alert. 
