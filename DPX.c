@@ -59,22 +59,7 @@ onTimer2Interrupt{
     timer2_counter3 += 1;
     //timer2_counter4 += 1;
     timer2_counter5 += 1;
-    //timer2_counter6 += 1;
-    /*
-    if(timer2_counter6==200){
-        dDCU_startAcquisition();
-    }
-    
-    if(timer2_counter4 == 100){
-                       value1++;
-          dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(value1));
-    }
-    if(timer2_counter4 == 150){
-          value2++;
-          dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(value2));
-          timer2_counter4 = 0;
-    } */
-    
+
     //Buzzer_bip();
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
@@ -167,7 +152,7 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_th2o_dx_in.base, dEfiSense_calculateWaterTemperature(thirdInt));
            dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
            dEfiSense_heartbeat();
-           break;//*/
+           break;
         case EFI_OIL_T_ENGINE_BAT_ID:
            dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
@@ -179,7 +164,7 @@ onCanInterrupt{
             dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
             break;
        case EFI_FUEL_FAN_H2O_LAUNCH_ID:
-            dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt); //è un flag
+            dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt);
             break;
        case EFI_PRESSURES_LAMBDA_SMOT_ID:
            dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
@@ -195,7 +180,7 @@ onCanInterrupt{
            dEbb_error(thirdInt);
            break;   */
        case DAU_FR_DEBUG_ID:
-           dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
+           dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
            break;
        case DAU_FL_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);

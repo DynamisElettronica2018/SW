@@ -525,6 +525,8 @@ timer1_interrupt
 		dd_printMessage
 		eGlcd_fill
 		dd_GraphicController_handleNotification
+			dd_printMessage
+			Lcd_PrintFrame
 			dd_GraphicController_clearNotification
 				eGlcd_clear
 				dd_GraphicController_unsetNotificationFlag

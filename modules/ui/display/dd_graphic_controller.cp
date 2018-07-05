@@ -1699,12 +1699,14 @@ void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, N
 void dd_GraphicController_handleNotification(void) {
  if (dd_notificationTimeoutCounter > 0) {
  dd_notificationTimeoutCounter--;
+ dd_printMessage(dd_notificationText);
+ Lcd_PrintFrame();
  if (dd_notificationTimeoutCounter == 0) {
  dd_GraphicController_clearNotification();
  }
  }
 }
-#line 209 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 211 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1811,7 +1813,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 321 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 323 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1827,13 +1829,14 @@ void dd_GraphicController_onTimerInterrupt(void)
  {
  if (dd_notificationFlag) {
  dd_GraphicController_handleNotification();
- }
+ }else{
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
  dd_isFrameUpdateForced =  0 ;
  }
  }
+ }
 
   IFS0bits.T1IF  = 0 ;
-#line 355 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 358 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

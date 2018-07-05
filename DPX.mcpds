@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=modules\ui\input-output\d_start.c
+Value=DPX.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -60,21 +60,11 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=14
+Count=4
 File0=DPX.c
-File1=modules\ui\input-output\d_controls.c
-File2=modules\ui\d_operating_modes.c
-File3=modules\ui\d_ui_controller.c
-File4=modules\ui\input-output\d_start.c
-File5=libs\dsPIC.h
-File6=libs\dsPIC.c
-File7=modules\peripherals\d_efiSense.c
-File8=modules\peripherals\d_clutch.c
-File9=modules\peripherals\d_dcu.c
-File10=modules\ui\input-output\d_hardReset.c
-File11=modules\ui\display\dd_graphic_controller.c
-File12=modules\peripherals\d_gears.c
-File13=modules\ui\input-output\d_hardReset.h
+File1=modules\ui\display\dd_graphic_controller.c
+File2=modules\peripherals\d_gears.c
+File3=modules\ui\input-output\d_hardReset.h
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

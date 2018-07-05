@@ -180,6 +180,8 @@ void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, N
 void dd_GraphicController_handleNotification(void) {
     if (dd_notificationTimeoutCounter > 0) {
         dd_notificationTimeoutCounter--;
+        dd_printMessage(dd_notificationText);
+        Lcd_PrintFrame();
         if (dd_notificationTimeoutCounter == 0) {
             dd_GraphicController_clearNotification();
        }
@@ -333,10 +335,11 @@ void dd_GraphicController_onTimerInterrupt(void)
         {
             if (dd_notificationFlag) {
                dd_GraphicController_handleNotification();
-            }
+            }else{
             dd_Interface_print[dd_currentInterface]();
             Lcd_PrintFrame();
             dd_isFrameUpdateForced = FALSE;
+            }
         }
     }
 
