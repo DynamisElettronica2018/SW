@@ -48,7 +48,7 @@ L__dAcc_startAutoAcceleration26:
 	CALL	_dd_printMessage
 ;d_acceleration.c,36 :: 		}
 L_dAcc_startAutoAcceleration0:
-;d_acceleration.c,37 :: 		}//*/
+;d_acceleration.c,37 :: 		}
 L_end_dAcc_startAutoAcceleration:
 	POP	W12
 	POP	W11
@@ -206,7 +206,7 @@ L_end_dAcc_stopAutoAcceleration:
 _dAcc_requestAction:
 
 ;d_acceleration.c,75 :: 		void dAcc_requestAction(){
-;d_acceleration.c,76 :: 		if(!dAcc_autoAcceleration){            // send start acceleration
+;d_acceleration.c,76 :: 		if(!dAcc_autoAcceleration){
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W0
 	CP0.B	[W0]
 	BRA Z	L__dAcc_requestAction39
