@@ -1,3 +1,8 @@
+/******************************************************************************/
+//                             U I  C O N T R O L L E R                       //
+//                                    D P X                                   //
+/******************************************************************************/
+
 #include "d_ui_controller.h"
 #include "../libs/dsPIC.h"
 #include "display/dd_graphic_controller.h"
@@ -19,10 +24,8 @@ OperatingMode d_currentOperatingMode = CRUISE_MODE;
 void d_UI_setOperatingMode(OperatingMode mode);
 
 void d_UIController_init() {
-     //printf("ui contr. init");
     dControls_init();
     Can_init();
-   // C1INTEbits.ERRIE = 1;
     Debug_UART_Write("can initialized.\r\n");
     dDCU_init();
     Debug_UART_Write("DCU initialized.\r\n");
@@ -38,15 +41,11 @@ void d_UIController_init() {
     Debug_UART_Write("graphic controller initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
     Debug_UART_Write("graphic controller initialized.\r\n");
-   /* Debug_UART_Write("Signal Leds initialized.\r\n");
-    Debug_UART_Write("RPM initialized.\r\n"); */
-    //printf("ui contr. init 2");
     //d_UI_setOperatingMode(CRUISE_MODE);
 
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
-     //printf("set op mode");
      switch(d_currentOperatingMode) {
          case SETTINGS_MODE:
               d_UI_SettingsModeClose();
@@ -60,17 +59,11 @@ void printf(char* string);
 //extern char BOOL2 = 0;
 //Frame rate period timer
 onTimer1Interrupt{
-    //printf("INT");
     dd_GraphicController_onTimerInterrupt();
 }
-
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-////////////////                C O N T R O L
-////////////////                A C T I O N S
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
+/******************************************************************************/
+//                              CONTROL ACTIONS                               //
+/******************************************************************************/
 
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
@@ -80,8 +73,9 @@ void d_controls_onLeftEncoder(signed char movements) {
                  dd_Menu_moveSelection(movements);
                  break;
             case CRUISE_MODE:
+                 //TC
             case ACC_MODE:
-                 //control EBB
+                 break;
             default:
                  return;
      }
@@ -94,10 +88,11 @@ void d_controls_onRightEncoder(signed char movements) {
               break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
+            case ACC_MODE:
               break;
             case CRUISE_MODE:
-            case ACC_MODE:
-                 //control TRACTION
+              //EBB
+              break;
             default:
                  return;
      }

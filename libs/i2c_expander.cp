@@ -21,7 +21,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 4 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/i2c_expander.c"
+#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/i2c_expander.c"
 void I2CExpander_init(unsigned char address, char direction)
 {
  I2C1_Start();

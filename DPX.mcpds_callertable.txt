@@ -518,8 +518,6 @@ timer2_interrupt
 		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dSignalLed_set
-		dSignalLed_unset
 		eGlcd_clear
 		Lcd_PrintFrame
 		dd_printMessage

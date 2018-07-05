@@ -1,3 +1,14 @@
+/******************************************************************************/
+//                           I 2 C  E X P A N D E R                           //
+//                                    D P X                                   //
+/******************************************************************************/
+//nel nostro caso c'è un problema con la lettura della porta 8 del selettore  //
+//centrale perchè dà lo stesso indirizzo dell'expander degli RPM e quindi si  //
+//creano dei conflitti che non dovrebbero crearsi sull'I2C che risulta        //
+//essere sempre occupato. crasha tutto quando si ha a che fare con la porta 8 //
+//perchè mikroc è stupido probabilmente e non riesce a gestire questa cosa.   //
+/******************************************************************************/
+
 #include "i2c_expander.h"
 #include "debug.h"
 

@@ -1,6 +1,7 @@
-//
-// Created by Aaron Russo on 20/03/16.
-//
+/******************************************************************************/
+//                              I N T E R F A C E S                           //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "dd_interfaces.h"
 #include "dd_dashboard.h"
@@ -11,7 +12,7 @@
 #include "../../../libs/eGlcd.h"
 #include "dd_graphic_controller.h"
 
-//Graphics defines
+/*********************************Graphics defines*****************************/
 #define INTERFACE_TITLE_FONT DD_Dashboard_Font
 #define INTERFACE_TITLE_FONT_HEIGHT DynamisFont_Dashboard_HEIGHT
 #define INTERFACE_TITLE_X_MARGIN      12
@@ -45,9 +46,9 @@ char dd_notificationText[MAX_NOTIFICATION_LENGTH] = "";
 
 extern char dd_currentInterfaceTitle[MAX_INTERFACE_TITLE_LENGTH];
 
-//////////////////////////////
-/////  DRAWING HELPER FUNCTIONS
-//////////////////////////////
+/******************************************************************************/
+//                            DRAWING HELPER FUNCTIONS                        //
+/******************************************************************************/
 
 unsigned char dd_Interface_getTitleX(char *title) {
     return (unsigned char) (SCREEN_X_MIDDLE - eGlcd_getTextPixelLength(title) / 2);
@@ -70,24 +71,13 @@ void dd_Interface_drawTitleContainers(void) {
 
 void dd_Interface_drawTitle(char *title) {
     eGlcd_setFont(INTERFACE_TITLE_FONT);
-    eGlcd_writeText(title, dd_Interface_getTitleX(title), dd_Interface_getTitleY());  //lo incapsulerei in una funzione writeCenteredText
+    eGlcd_writeText(title, dd_Interface_getTitleX(title), dd_Interface_getTitleY());
     dd_Interface_drawTitleContainers();
 }
 
-/*unsigned char dd_Interface_getParameterValueX(unsigned char indicatorIndex) {
-    return (unsigned char) (SCREEN_X_MIDDLE -
-                            (dd_indicators[indicatorIndex]->labelLength * PARAMETER_VALUE_FONT_WIDTH) / 2);
-}
-
-unsigned char dd_Interface_getParameterValueY(void) {
-    return (unsigned char) (PARAMETER_TOP_MARGIN * 2 + PARAMETER_DESCRIPTION_FONT_HEIGHT +
-                            ((SCREEN_HEIGHT - (PARAMETER_TOP_MARGIN * 2 + PARAMETER_DESCRIPTION_FONT_HEIGHT)) / 2) -
-                            (PARAMETER_VALUE_FONT_HEIGHT / 2));
-} */
-
-//////////////////////////////
-/////  INTERFACE PRINTING FUNCTIONS
-//////////////////////////////
+/******************************************************************************/
+//                           INTERFACE PRINTING FUNCTIONS                     //
+/******************************************************************************/
 
 void dd_printMessage(char * title)
 {
@@ -106,35 +96,3 @@ void dd_printMessage(char * title)
 void dd_Interface_printMenu() {
     dd_printMenu();
 }
-
-
-/*void dd_Interface_printParameterPage(unsigned char parameter) {
-    unsigned char x, y, oldValueWidth, indicatorIndex;
-    indicatorIndex = dd_getIndicatorIndex(parameter);
-    oldValueWidth = dd_indicators[indicatorIndex]->labelLength;
-
-    if (dd_GraphicController_isFrameUpdateForced()) {
-        dd_Interface_drawTitle(dd_indicators[indicatorIndex]->name);
-    }
-
-    if (!dd_GraphicController_isFrameUpdateForced() &&
-        !dd_isPrintedIndicatorRequestingUpdate(indicatorIndex)) {
-        return;
-    }
-
-    eGlcd_setFont(DD_Big_Font);
-    //Make coordinates
-    x = dd_Interface_getTitleX(dd_indicators[indicatorIndex]->label);
-    y = dd_Interface_getParameterValueY();
-    //Clear text
-    eGlcd_clearText(dd_indicators[indicatorIndex]->label, x, y);
-    //Update string value
-    dd_Indicator_makeLabelValue(indicatorIndex);
-    if (oldValueWidth != dd_indicators[indicatorIndex]->labelLength) {
-        //Update value x if string width is different
-        x = dd_Interface_getTitleX(dd_indicators[indicatorIndex]->label);
-    }
-    eGlcd_writeText(dd_indicators[indicatorIndex]->label, x, y);
-
-    dd_clearIndicatorPrintUpdateRequest(indicatorIndex);
-}  */

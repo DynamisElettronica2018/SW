@@ -1,31 +1,29 @@
-//
-// Created by Aaron Russo on 03/07/16.
-//
+/******************************************************************************/
+//                                    C A N                                   //                                 //
+//                                    D P X                                   //
+/******************************************************************************/
+//BRP =  1, 2, 4 se rispettivamente Fck = 20 40 80 MHz                        //
+//Steering Wheel  dsPIC30F6012A CAN1 80MHz                                    //
+/******************************************************************************/
+//Per mandare interi:                                                         //
+// > Can_writeInt(indirizzo, valore);                                         //
+//                                                                            //
+//Per mandare byte:                                                           //
+// > Can_writeByte(indirizzo, valore);                                        //
+//                                                                            //
+//Per mandare pacchetti (esempio int + byte)                                  //
+// > Can_resetWritePacket();                                                  //
+// > Can_addIntToWritePacket(valore);                                         //
+// > Can_addByteToWritePacket(valore);                                        //
+// > Can_write(indirizzo);                                                    //
+/******************************************************************************/
+//è necessario settare entrambe le maschere. se non vengono usate, si settano //
+//a zero. non è necessario settare tutti i filtri.                            //
+/******************************************************************************/
 
 #include "can.h"
 #include "d_can.h"
 #include "debug.h"
-
-/*
-BRP =  1, 2, 4 se rispettivamente Fck = 20 40 80 MHz
-Steering Wheel  dsPIC30F6012A CAN1 80MHz
-*/
-
-/*
- * Come usare la libreria CAN
- *
- * Per mandare interi
- * > Can_writeInt(indirizzo, valore);
- *
- * Per mandare byte
- * > Can_writeByte(indirizzo, valore);
- *
- * Per mandare pacchetti (esempio int + byte)
- * > Can_resetWritePacket();
- * > Can_addIntToWritePacket(valore);
- * > Can_addByteToWritePacket(valore);
- * > Can_write(indirizzo);
- */
 
 #define CAN_PACKET_SIZE 8
 
@@ -52,10 +50,6 @@ void Can_init() {
     CAN1SetFilter(_CAN_FILTER_B1_F1, SW_FILTER_EFI_DEBUG, _CAN_CONFIG_STD_MSG);
     CAN1SetFilter(_CAN_FILTER_B1_F2, SW_FILTER_IMU_EBB, _CAN_CONFIG_STD_MSG);
     
-    /*CAN1SetMask(_CAN_MASK_B1, 0b11111111111, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
-    CAN1SetFilter(_CAN_FILTER_B1_F1, SW_FILTER_EFI_DEBUG, _CAN_CONFIG_STD_MSG);
-    CAN1SetFilter(_CAN_FILTER_B1_F2, 0b01100000101, _CAN_CONFIG_STD_MSG); */
-
     CAN1SetMask(_CAN_MASK_B2, ALL_MASK_AUX, _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
     CAN1SetFilter(_CAN_FILTER_B2_F1, ALL_FILTER_AUX, _CAN_CONFIG_STD_MSG);
 
@@ -103,7 +97,6 @@ void Can_addByteToWritePacket(unsigned char dataOut) {
 void Can_write(unsigned long int id) {
     unsigned int sent, i = 0, j = 0;
     do {
-        //sent = CAN1Write(id, can_dataOutBuffer, can_dataOutLength, Can_getWriteFlags());
         sent = CAN1Write(id, can_dataOutBuffer, CAN_PACKET_SIZE, Can_getWriteFlags());
         i += 1;
     } while ((sent == 0) && (i < CAN_RETRY_LIMIT));

@@ -1264,7 +1264,7 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 26 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
+#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
 void dd_Interface_printMenu();
 
 void (*dd_Interface_print[ 3 ])(void) = {
@@ -1301,7 +1301,7 @@ unsigned char dd_Interface_getTitleY(void) {
 
 void dd_Interface_drawTitleContainers(void) {
   Glcd_Rectangle_Round_Edges( 1 , 1 , 128  - 1  * 2, 16  + 3  * 2, 3 , BLACK ); ;
-#line 69 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
+#line 70 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
 }
 
 void dd_Interface_drawTitle(char *title) {
@@ -1309,7 +1309,12 @@ void dd_Interface_drawTitle(char *title) {
  eGlcd_writeText(title, dd_Interface_getTitleX(title), dd_Interface_getTitleY());
  dd_Interface_drawTitleContainers();
 }
-#line 92 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
+
+
+
+
+
+
 void dd_printMessage(char * title)
 {
  unsigned int width = 0;

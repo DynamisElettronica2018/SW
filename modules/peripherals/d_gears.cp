@@ -83,7 +83,7 @@ void d_setGearMotorState(int motorState);
 unsigned char d_getGearMotorState(void);
 
 char d_canSetGear(void);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_gears.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_gears.c"
 unsigned char d_currentGear = 3;
 char d_isNeutralSet =  0 ;
 char dGear_error =  0 ;
@@ -117,9 +117,7 @@ void dGear_propagate(unsigned int gearCommand) {
  }
 }
 
-void dGear_init(void)
-{
-
+void dGear_init(void){
  d_isNeutralSet =  1 ;
 }
 

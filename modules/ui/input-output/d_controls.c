@@ -1,7 +1,7 @@
-
-//
-// Created by Aaron Russo on 28/03/16.
-//
+/******************************************************************************/
+//                                C O N T R O L S                             //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include <math.h>
 #include "d_controls.h"
@@ -88,7 +88,6 @@ void dControls_init(void) {
     char expanderPort;
     signed char position;
 
-   //printf("controls init");
    START_BUTTON_DIRECTION       = INPUT;
    GEAR_UP_BUTTON_DIRECTION     = INPUT;
    GEAR_DOWN_BUTTON_DIRECTION   = INPUT;
@@ -176,15 +175,7 @@ onCNInterrupt{
    new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
 
     movement_dx = new_port_dx - old_port_dx;
-  // movement_sx = new_port_sx - old_port_sx;
     movement_sx = - new_port_sx + old_port_sx;
-   
-//   sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
-//   Debug_UART_Write(dstr);
-//   sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
-//   Debug_UART_Write(dstr);
-//   sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
-//   Debug_UART_Write(dstr);
    
    if (movement_dx>4)
    {
@@ -205,9 +196,7 @@ onCNInterrupt{
       movement_sx += 8;
    }
    else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-   
-//   sprintf(dstr, "CORRECT right moves: %d   left moves: %d   }\r\n\r\n", movement_dx, movement_sx);
-//   Debug_UART_Write(dstr);
+
    
    if(movement_sx){
          d_controls_onLeftEncoder(movement_sx);
@@ -218,34 +207,6 @@ onCNInterrupt{
    
    _CLEAR_CN_LABEL:
    clearExternalInterrupt(CN_DEVICE);
-   
-   /*if(ENCODER_LEFT_PIN0 != old_encoder_left_pin0){
-      movement = (ENCODER_LEFT_PIN0 != (ENCODER_LEFT_PIN1 != old_encoder_left_pin1));
-      if(movement){
-         sprintf(dstr, "Left Movement UP\n");
-         d_controls_onLeftEncoderUp();
-      }
-      else {
-         sprintf(dstr, "Left Movement DOWN\n");
-         d_controls_onLeftEncoderDown();
-      }
-      old_encoder_left_pin1 = ENCODER_LEFT_PIN1;
-      old_encoder_left_pin0 = ENCODER_LEFT_PIN0;
-   }
-   if(ENCODER_RIGHT_PIN0 != old_encoder_right_pin0) {
-      movement = (ENCODER_RIGHT_PIN0 != (ENCODER_RIGHT_PIN1 != old_encoder_right_pin1));
-      if(movement) {
-         sprintf(dstr, "Right Movement UP\n");
-         d_controls_onRightEncoderUp();
-      }
-      else {
-         sprintf(dstr, "Right Movement DOWN\n");
-         d_controls_onRightEncoderDown();
-      }
-      old_encoder_right_pin1 = ENCODER_RIGHT_PIN1;
-      old_encoder_right_pin0 = ENCODER_RIGHT_PIN0;
-   }
-   Debug_UART_Write(dstr);           */
 }
 
 /*
@@ -282,8 +243,6 @@ onRotarySwitchInterrupt{
     }
     else
         position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
-    //sprintf(dstr, "\r\nExpander Port = %c\r\n", expanderPort);
-    //UART1_Write_Text(dstr);
     d_controls_onSelectorSwitched(position);
     clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
 }
@@ -319,24 +278,16 @@ onGeneralButtonInterrupt{
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
 
-//////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+/******************************************************************************/
 
 void d_controls_onGearUp() {
-     Debug_UART_Write("Request gear up\r\n");
     dGear_requestGearUp();
 }
 
 void d_controls_onGearDown() {
-    Debug_UART_Write("Request gear down\r\n");
     dGear_requestGearDown();
 }
 
-/*  PROBLEMA AVVIAMENTO: potrebbe darsi che io non entro mai nell'else e quindi, anche quando la macchina è spenta,
-il volante la veda accesa. Di conseguenza continuo a dire a GCU che è accesa e perchè dovrebbe accendere una cosa già accesa??
-*/
- 
 void d_controls_onStart() {
     if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
         dSignalLed_set(DSIGNAL_LED_2);
@@ -348,9 +299,7 @@ void d_controls_onStart() {
     }
 }
 
-
 void d_controls_onNeutral() {
-     Debug_UART_Write("On neutral\r\n");
     if (!dGear_isNeutralSet()) {
         if (dGear_get() == 1) {
             Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
@@ -361,20 +310,17 @@ void d_controls_onNeutral() {
 }
 
 void d_controls_onReset() {
-     Debug_UART_Write("On reset\r\n");
      dHardReset_reset();
 }
 
-
 void d_controls_onDRS() {
-    Debug_UART_Write("On DRS\r\n");
 }
 
 void d_controls_onAux1(void) {
-     Debug_UART_Write("On aux 1\r\n");
 }
 
 void d_controls_onStartAcquisition(void) {
      dDCU_switchAcquisition();
-     Debug_UART_Write("Start acquisition\r\n");
 }
+
+/******************************************************************************/

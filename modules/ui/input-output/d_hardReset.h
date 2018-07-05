@@ -1,9 +1,7 @@
-//
-// Created by Aaron Russo on 04/08/16.
-//
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_HARDRESET_H
-#define DP8_DISPLAY_CONTROLLER_D_HARDRESET_H
+
+#ifndef DPX_DISPLAY_CONTROLLER_D_HARDRESET_H
+#define DPX_DISPLAY_CONTROLLER_D_HARDRESET_H
 
 #include "../../../libs/eeprom.h"
 
@@ -26,4 +24,4 @@ void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
 
-#endif //DP8_DISPLAY_CONTROLLER_D_HARDRESET_H
+#endif //DPX_DISPLAY_CONTROLLER_D_HARDRESET_H

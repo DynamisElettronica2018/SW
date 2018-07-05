@@ -1,3 +1,8 @@
+/******************************************************************************/
+//                                  D E B U G                                 //
+//                                    D P X                                   //
+/******************************************************************************/
+
 #include "../modules/ui/display/dd_global_defines.h"
 #include "../modules/ui/display/fonts/dd_fonts.h"
 #include "dsPIC.h"

@@ -1,9 +1,7 @@
-//
-//  DP8 Graphic LCD Controller
-//  Aaron Russo 01/03/2016
-//
-//  See .h for documentation
-//
+/******************************************************************************/
+//                        G R A P H I C   C O N T R O L L E R                 //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "dd_global_defines.h"
 #include "../libs/eGlcd.h"
@@ -65,8 +63,6 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
-    //sprintf(str, "%d - %d", startupCounterLimit, startupCounter);
-    //printf(str);
     dd_printLogoAnimation();
     dd_onStartup = 1;
     //eGlcd_LoadImage(DYNAMIS_LOGO);
@@ -85,7 +81,6 @@ void dd_GraphicController_switchBacklight(void) {
 }
 
 void dd_GraphicController_init(void) {
-//printf("graphic init");
     DD_BACKLIGHT_PIN_DIRECTION = OUTPUT;
     dd_GraphicController_turnOnBacklight();
     eGlcd_init();
@@ -113,25 +108,16 @@ void dd_GraphicController_setInterface(Interface interface) {
      dd_onInterfaceChange = TRUE;
      dd_isFrameUpdateForced = TRUE;
      dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit(OP_MODE_POPUP_PERIOD);
-     //printf("Set Interface");
-     //sprintf(str, "%d", dd_onInterfaceChangeCounterLimit);
-     //printf(str);
      dd_currentInterface = interface;
 }
 
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title) {
-    //printf("set coll. interf.");
     dd_GraphicController_setInterface(interface);
-    
-    dd_Interface_init[dd_currentInterface]();
+        dd_Interface_init[dd_currentInterface]();
     if ( strlen(title) < MAX_INTERFACE_TITLE_LENGTH )
          strcpy(dd_currentInterfaceTitle, title);
     dd_currentIndicators = indicator_collection;
     dd_currentIndicatorsCount = indicator_count;
-    //printf("finished");
-    //printf("coll. int. set");
-    //printf("collection set..");
-    //printf("interface set..");
 }
 
 Interface dd_GraphicController_getInterface(void) {
@@ -188,27 +174,7 @@ void dd_GraphicController_handleNotification(void) {
     }
 }
 
-/*void dd_GraphicController_printFrame(void) {
-    if (dd_isColorInversionQueued) {
-        eGlcd_invertColors();
-        dd_isColorInversionQueued = FALSE;
-    }
-    if (dd_isInterfaceChangedFromLastFrame || dd_isNextFrameUpdateForced) {
-        eGlcd_clear();
-        dd_GraphicController_forceFullFrameUpdate();
-        dd_isInterfaceChangedFromLastFrame = FALSE;
-    }
-    dd_Interface_print[dd_currentInterface]();
-    if (dd_GraphicController_isFrameUpdateForced) {
-        dd_isFrameUpdateForced = FALSE;
-    }
-    if (dd_isNextFrameUpdateForced) {
-        dd_isNextFrameUpdateForced = FALSE;
-    }
-} */
-// sono tutte inutili
-
-void dd_GraphicController_forceFullFrameUpdate(void) {              //inutile
+void dd_GraphicController_forceFullFrameUpdate(void) {
     dd_isFrameUpdateForced = TRUE;
 }
 
@@ -228,7 +194,7 @@ void dd_GraphicController_queueColorInversion(void) {
     dd_isColorInversionQueued = TRUE;
 }
 
-char dd_GraphicController_isColorInversionQueued(void) {               //inutile
+char dd_GraphicController_isColorInversionQueued(void) {
     return dd_isColorInversionQueued;
 }
 
@@ -274,23 +240,7 @@ void dd_printLogoAnimation() {
 }
 
 int __counter = 0;
-void dd_GraphicController_onTimerInterrupt(void) 
-{
-     //dRpm_set(8000);
-     //dRpm_updateLedStripe();
-
-    if ( __counter == 10 )
-    {
-       dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
-    }
-    if (__counter == 20)
-    {
-       dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
-     __counter = 0;
-    }
-
-   __counter++;
-
+void dd_GraphicController_onTimerInterrupt(void) {
     if(dd_onStartup)
     {
         dd_tmr1Counter++;
@@ -303,7 +253,6 @@ void dd_GraphicController_onTimerInterrupt(void)
         }
     }
     else {
-        //resetTimer32();
         if(dd_isInterfaceChangedFromLastFrame)
         {
             eGlcd_clear();

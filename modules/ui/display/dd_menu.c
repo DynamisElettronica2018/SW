@@ -1,7 +1,7 @@
-//
-//  DP8 LCD Menu
-//  Aaron Russo 04/03/2016
-//
+/******************************************************************************/
+//                                   M E N U                                  //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "dd_menu.h"
 #include <string.h>
@@ -88,78 +88,25 @@ void dd_Menu_scroll(signed char movements) {
     }
 }
 
-/*void dd_Menu_scrollDown(void) {
-    unsigned char i;
-    if (dd_Menu_FirstLineIndex + dd_Menu_Height_param < dd_currentIndicatorsCount) {
-        dd_Menu_FirstLineIndex ++;
-        for (i = dd_Menu_FirstLineIndex; i < dd_Menu_FirstLineIndex + dd_Menu_Height_param; i++) {
-            dd_currentIndicators[i]->pendingPrintUpdate = TRUE;
-        }
-    }
-}
-
-void dd_Menu_scrollUp(void) {
-    unsigned char i;
-    if (dd_Menu_FirstLineIndex > 0) {
-        dd_Menu_FirstLineIndex -= 1;
-        for (i = dd_Menu_FirstLineIndex; i < dd_Menu_FirstLineIndex + dd_Menu_Height_param; i++) {
-            dd_currentIndicators[i]->pendingPrintUpdate = TRUE;
-        }
-    }
-}*/
-
-
 void dd_Menu_moveSelection(signed char movements) {
-//   sprintf(dstr, "Moving selection from: %d to %d.\r\n", dd_Menu_SelectedLineIndex, dd_Menu_SelectedLineIndex+movements);
-//   Debug_UART_Write(dstr);
     dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
     dd_Menu_SelectedLineIndex+=movements;
     if (dd_Menu_SelectedLineIndex >= dd_currentIndicatorsCount) {
            dd_Menu_SelectedLineIndex = dd_currentIndicatorsCount - 1;
     }
     else if (dd_Menu_SelectedLineIndex < 0) {
-        //Debug_UART_Write("SelectedLineIndex = 0\r\n");
         dd_Menu_SelectedLineIndex = 0;
     }
     dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
-//    sprintf(dstr, "Moving firstLineIndex from: %d.\r\n", dd_Menu_FirstLineIndex);
-//    Debug_UART_Write(dstr);
     if (dd_Menu_SelectedLineIndex >= dd_Menu_FirstLineIndex + dd_Menu_Height_param)
     {
         dd_Menu_scroll(dd_Menu_SelectedLineIndex - dd_Menu_FirstLineIndex - dd_Menu_Height_param + 1);
     }
     else if (dd_Menu_SelectedLineIndex < dd_Menu_FirstLineIndex)
     {
-        //Debug_UART_Write("scroll up\r\n");
-        dd_Menu_scroll(dd_Menu_SelectedLineIndex - dd_Menu_FirstLineIndex);
-        //Debug_UART_Write("scrolled successfully\r\n");
+         dd_Menu_scroll(dd_Menu_SelectedLineIndex - dd_Menu_FirstLineIndex);
     }
 }
-
-/*void dd_Menu_selectDown(void) {
-    if (dd_Menu_SelectedLineIndex < dd_currentIndicatorsCount - 1) {
-       dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
-       dd_Menu_SelectedLineIndex++;
-       dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
-       dd_Menu_DescriptionScrollingTicks = 0;
-    }
-    //if I reach past last visible element, scroll down
-    if (dd_Menu_SelectedLineIndex == dd_Menu_FirstLineIndex + dd_Menu_Height_param) {
-        dd_Menu_scrollDown();
-    }
-}
-
-void dd_Menu_selectUp(void) {
-    if (dd_Menu_SelectedLineIndex > 0) {
-        dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
-        dd_Menu_SelectedLineIndex -= 1;
-        dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate = TRUE;
-        dd_Menu_DescriptionScrollingTicks = 0;
-    }
-    if (dd_Menu_SelectedLineIndex < dd_Menu_FirstLineIndex) {
-        dd_Menu_scrollUp();
-    }
-} */
 
 unsigned char dd_Menu_selectedLine(void) {
     return dd_Menu_SelectedLineIndex;
@@ -173,9 +120,6 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 void dd_printMenuLine(unsigned char lineIndex) {
      unsigned char lineNumber, color;
     char lineText[MAX_MENU_WIDTH + 1]; //Adding 1 in so we can clean our border char
-    //sprintf(str, "printing line number: %d\n", lineIndex);
-    //UART1_Write_Text(str);
-    // compute line's Y-coord
     lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
     if (dd_Menu_isLineSelected(lineIndex)) {
        color = WHITE;
@@ -285,21 +229,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
             lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
         }
     }
-    /*sprintf(str1, "Label l: %d", (int)valueWidth);
-    printf(str1);
-    sprintf(str1, "Desc. l: %d", (int)item->descriptionLength);
-    printf(str1);
-    sprintf(str1, "Desc. av. l: %d", (int)visibleDescriptionWidth);
-    printf(str1);
-    strncpy(debug, lineText, visibleDescriptionWidth-6);
-    debug[visibleDescriptionWidth-6] = '\0';
-    sprintf(str1, "'%s'", debug);
-    printf(str1);
-    strncpy(debug, lineText+visibleDescriptionWidth-6, 6);
-    debug[6] = '\0';
-    sprintf(str1, "'%s'", debug);
-    printf(str1);*/
-    
+
     //value label portion
     if (valueWidth > 0) {
         for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
@@ -311,16 +241,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
             lineCharIndex += 1;
         }
     }
-    
-    /*sprintf(str1, "line chars: %d", lineCharIndex);
-    printf(str1);*/
-    
     lineText[lineCharIndex] = ' ';
-    /*strncpy(debug, lineText+visibleDescriptionWidth, lineCharIndex-visibleDescriptionWidth);
-    debug[lineCharIndex-visibleDescriptionWidth] = '\0';
-    sprintf(str1, "value: '%s'", debug);
-    printf(str1);
-    delay_ms(4000);*/
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {

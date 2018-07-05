@@ -1,3 +1,8 @@
+/******************************************************************************/
+//                         O P E R A T I N G  M O D E S                       //
+//                                    D P X                                   //
+/******************************************************************************/
+
 #include "d_operating_modes.h"
 #include "display/dd_graphic_controller.h"
 #include "display/dd_menu.h"
@@ -47,7 +52,6 @@ FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Curr
 
 /*********************************** BOARDS ***********************************/
 IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
-//IntCoupleIndicator ind_sw_board  = {SW_BOARD, "SW", "SW Board", 3, 8, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
@@ -62,7 +66,6 @@ IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12, TRUE, TR
 IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9, TRUE, TRUE, TRUE, INT, 1, "  ?    ?", 0 };
 IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16, TRUE, TRUE, TRUE, INT, 1, "  ?    ?", 0 };
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15, TRUE, TRUE, TRUE, INT, 1, "  ?    ?", 0 };
-//*/
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i primi 4 sono quelli che di default si vedono nella dashboard                                                                        //TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
       (Indicator*)&ind_oil_temp_in,                                      //dashboard standard:  EBB, TH20, VBAT, TOIL
@@ -86,7 +89,7 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i pri
       (Indicator*)&ind_fuel_press,
       (Indicator*)&ind_launch_control,
       (Indicator*)&ind_ebb_motor_curr
-    };
+};
     
 static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
       (Indicator*)&ind_ebb_board,
@@ -172,20 +175,15 @@ Indicator** dd_dashboardSettings = dd_settings;
 /** Stores the index in the value of the settings Indicator and updates its label.
 */
 void d_DashboardSetting_updateValue(IntegerIndicator* ind, int val) {
-     //sprintf(str, "From: %s\n", dd_carParameters[ind->value]->name);
-     //UART1_Write_Text(str);
      ind->value = val;
      strcpy(ind->base.label, dd_carParameters[ind->value]->name);
      ind->base.labelLength = dd_carParameters[ind->value]->nameLength;
      ind->base.pendingPrintUpdate = TRUE;
-     //sprintf(str, "To: %s\n", dd_carParameters[ind->value]->name);
-     //UART1_Write_Text(str);
 }
 
 void d_UI_SettingsModeInit() {
      // loads current indicators displayed in dashboard by their index,
      // which corresponds to the position
-     //printf("sett. mode init");
      d_DashboardSetting_updateValue(&sett_dash_top_left, TOP_LEFT);
      d_DashboardSetting_updateValue(&sett_dash_top_right, TOP_RIGHT);
      d_DashboardSetting_updateValue(&sett_dash_bottom_right, BOTTOM_RIGHT);
@@ -203,7 +201,6 @@ void d_UI_onSettingsChange(signed char movements) {
     unsigned char position;
     Indicator* settingIndicator = dd_settings[dd_Menu_selectedLine()];
     
-    //if (movements%2) {
     switch (settingIndicator->id) {
         case S_INVERT_COLORS:
             dd_GraphicController_invertColors();
@@ -223,7 +220,6 @@ void d_UI_onSettingsChange(signed char movements) {
             return;
         default:
             break;
-   // }
     }
     /*
       This section is executed only if the selected setting is a Dashboard setting,
@@ -232,8 +228,6 @@ void d_UI_onSettingsChange(signed char movements) {
     */
     
     dashboardIndicatorIndex = ((IntegerIndicator*)settingIndicator)->value;
-    //sprintf(str, "Sett. changed from: %d\n", dashboardIndicatorIndex);
-    //UART1_Write_Text(str);
     if (movements) {
        dashboardIndicatorIndex+=movements;
        if (dashboardIndicatorIndex >= dd_carParametersCount) {
@@ -243,9 +237,6 @@ void d_UI_onSettingsChange(signed char movements) {
           dashboardIndicatorIndex += dd_carParametersCount;
        }
     }
-    //sprintf(str, "    to: %d\n", dashboardIndicatorIndex);
-    //UART1_Write_Text(str);
-    
     d_DashboardSetting_updateValue((IntegerIndicator*)settingIndicator, dashboardIndicatorIndex);
 }
 

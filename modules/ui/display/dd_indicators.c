@@ -1,6 +1,18 @@
-//
-// Created by Aaron Russo on 19/03/16.
-//
+/******************************************************************************/
+//                              I N D I C A T O R S                           //
+//                                    D P X                                   //
+/******************************************************************************/
+//To allow both classical indicators and those which were the old MenuLine    //
+//structs to share the same data structure and methods, without passing       //
+//pointers as arguments to these methods to avoid overloading the stack, but  //
+//instead keeping an index oriented approach, the methods need to know which  //
+//collection of indicators to access.. thus it must be set to                 //
+//dd_currentIndicators, and the methods will act always on this.              //
+/******************************************************************************/
+//le funzioni che aggiornano il valore degli indicatori sono doppi perchè     //
+//alcune erano utilizzate per la DP9 e il modo in cui erano definiti prima    //
+//gli indicators. adesso usiamo quelle che utilizzao i puntatori.             //
+/******************************************************************************/
 
 #include <string.h>
 #include "dd_indicators.h"
@@ -13,14 +25,7 @@
 #define FULL_PRINT_UPDATE 2
 
 static const int BLINK_PERIOD_TICKS = (int) (INDICATOR_BLINK_PERIOD / FRAME_PERIOD);
-/* 
-   To allow both classical indicators and those which were the old MenuLine structs
-   to share the same data structure and methods, without passing pointers as arguments to these
-   methods to avoid overloading the stack, but instead keeping an index oriented approach, 
-   the methods need to know which collection of indicators
-   to access.. thus it must be set to dd_currentIndicators, and the methods will act
-   always on this.
-*/
+
 
 void printf(char* string);
 extern char str[100];
@@ -136,14 +141,6 @@ void dd_Indicator_setBoolValueP(Indicator* ind, char value) {
         dd_Indicator_requestPrintUpdateP(ind);
     }
 }
-
-/*void dd_Indicator_setIntCoupleValue(Indicator_ID id, IntCouple value){
-    unsigned char indicatorIndex = dd_getIndicatorIndex(id);
-    if (dd_currentIndicators[indicatorIndex]->valueType == FLOAT_COUPLE) {
-        ((IntCoupleIndicator*) dd_currentIndicators[indicatorIndex])->value = value;
-        dd_Indicator_requestPrintUpdate(indicatorIndex);
-    }
-}   */
 
 void dd_Indicator_setIntCoupleValueP(Indicator* ind, int first_value, int second_value) {
     if (ind->valueType == INT_COUPLE ){

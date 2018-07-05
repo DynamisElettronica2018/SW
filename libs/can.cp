@@ -49,7 +49,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 32 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
+#line 30 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
 unsigned char can_dataOutBuffer[ 8 ];
 unsigned int can_dataOutLength = 0;
 unsigned int can_txPriority =  _CAN_TX_PRIORITY_1 ;
@@ -72,7 +72,7 @@ void Can_init() {
  CAN1SetMask(_CAN_MASK_B1,  0b11111100000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F1,  0b01100000000 , _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B1_F2,  0b11100000000 , _CAN_CONFIG_STD_MSG);
-#line 59 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
+
  CAN1SetMask(_CAN_MASK_B2,  0b11111110000 , _CAN_CONFIG_MATCH_MSG_TYPE & _CAN_CONFIG_STD_MSG);
  CAN1SetFilter(_CAN_FILTER_B2_F1,  0b11111110000 , _CAN_CONFIG_STD_MSG);
 
@@ -120,7 +120,6 @@ void Can_addByteToWritePacket(unsigned char dataOut) {
 void Can_write(unsigned long int id) {
  unsigned int sent, i = 0, j = 0;
  do {
-
  sent = CAN1Write(id, can_dataOutBuffer,  8 , Can_getWriteFlags());
  i += 1;
  } while ((sent == 0) && (i <  50 ));
@@ -165,7 +164,7 @@ void Can_clearInterrupt(void) {
 }
 
 void Can_initInterrupt(void) {
-#line 157 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
+#line 150 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
  IEC1BITS.C1IE = 1;
  C1INTEBITS.RXB0IE = 1;
  C1INTEBITS.RXB1IE = 1;

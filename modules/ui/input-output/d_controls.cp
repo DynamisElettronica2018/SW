@@ -340,7 +340,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);

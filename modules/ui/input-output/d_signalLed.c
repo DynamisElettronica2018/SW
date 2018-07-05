@@ -1,13 +1,12 @@
-//
-// Created by Aaron Russo on 08/07/16.
-//
+/******************************************************************************/
+//                              S I G N A L  L E D                            //
+//                                    D P X                                   //
+/******************************************************************************/
+//ROSSO VERDE BLU ROSSO                                                       //
+/******************************************************************************/
 
 #include "d_signalLed.h"
 
-/*
-rosso blu verde giallo
-rosso rosso blu verde
-*/
 
 void dSignalLed_init(void) {
     DSIGNAL_0_Direction = OUTPUT;

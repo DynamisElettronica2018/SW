@@ -1,6 +1,7 @@
-//
-// Created by Aaron Russo on 31/07/16.
-//
+/******************************************************************************/
+//                                    D C U                                   //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "d_dcu.h"
 #include "../ui/display/dd_dashboard.h"
@@ -45,9 +46,7 @@ void dDCU_stopAcquisition(void) {
 
 void dDCU_tick(void){
      d_DCU_isAliveCounter += DCU_TICK_PERIOD;
-     if(d_DCU_isAliveCounter >= DCU_DEAD_TIME)
-     {
-         //manda una notifica di error a schermo
+     if(d_DCU_isAliveCounter >= DCU_DEAD_TIME){
          dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
          d_DCU_isAcquiring = 0;
          d_DCU_isAliveCounter = 0;
@@ -64,7 +63,5 @@ char dDCU_isAcquiring()
 }
 
 void dDCU_sentAcquiringSignal(){
-     Debug_UART_Write("DCU sent acquiring signal.\r\n");
-    // dSignalLed_switch(DSIGNAL_LED_GREEN);
      d_DCU_isAliveCounter = 0;
 }

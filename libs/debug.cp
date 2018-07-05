@@ -1111,7 +1111,7 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
 unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
-#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/debug.c"
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/debug.c"
 char dstr[100] = "";
 
 void Debug_UART_Init()

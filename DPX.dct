@@ -4178,7 +4178,6 @@ glcd_write_text
 glcd_write_text_adv
 glcd_write_text_return_pos
 halfbits
-i
 i2c1_init
 i2c1_is_idle
 i2c1_read

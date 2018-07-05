@@ -16,7 +16,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eeprom.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eeprom.c"
 void EEPROM_writeInt(unsigned int address, unsigned int value) {
  unsigned int currentValue;
 

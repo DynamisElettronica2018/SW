@@ -1,6 +1,12 @@
-//
-// Created by Aaron Russo on 23/05/16.
-//
+/******************************************************************************/
+//                                 P A D D L E                                //
+//                                    D P X                                   //
+/******************************************************************************/
+//se si usa la funzione di Aaron che in DPX non va più, si deve inizializzare //
+//il pin come analogico. se si usa la funzione di mikroc, non si deve fare    //
+//niente. inoltre nella funzione di aaron il nome del pin deve essere completo//
+//e non solo il numero.                                                       //
+/******************************************************************************/
 
 #include "d_paddle.h"
 #include "d_clutch.h"
@@ -30,8 +36,6 @@ void dPaddle_readSample(void) {
     } else if (analogValue > CLUTCH_MAX_ANALOG_VALUE) {
         dPaddle_value = CLUTCH_MAX_ANALOG_VALUE;
     } else {
-        dPaddle_value = (unsigned int) ((analogValue * 0.8) + (dPaddle_value * 0.2));   /// strano.. il valore letto della posizione
-        //del paddle risulta non nel nuovo valore del paddle ma solo come variazione del precedente??
-
+        dPaddle_value = (unsigned int) ((analogValue * 0.8) + (dPaddle_value * 0.2));
     }
 }

@@ -233,7 +233,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 17 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -368,7 +368,7 @@ void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 #line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 

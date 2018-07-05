@@ -1,10 +1,11 @@
-//
-//  dd_gears.c
-//  
+/******************************************************************************/
+//                                  G E A R S                                 //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "d_gears.h"
 
-unsigned char d_currentGear = 3;                ///dove agiscono queste funzioni? sembra non essere chiamato nulla di esterno..
+unsigned char d_currentGear = 3;
 char d_isNeutralSet = FALSE;
 char dGear_error = FALSE;
 char dGear_bypassShiftCheck = FALSE;
@@ -37,9 +38,7 @@ void dGear_propagate(unsigned int gearCommand) {
     }
 }
 
-void dGear_init(void)
-{
-   // dGear_set((unsigned char)1);
+void dGear_init(void){
     d_isNeutralSet = TRUE;
 }
 

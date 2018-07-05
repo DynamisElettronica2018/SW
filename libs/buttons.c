@@ -1,18 +1,18 @@
-//
-// Created by Aaron Russo on 15/03/16.
-//
+/******************************************************************************/
+//                                B U T T O N S                               //
+//                                    D P X                                   //
+/******************************************************************************/
+//Calling Buttons_protractPress() after a button has been pressed keeps the   //
+//button under observation for buttons_pressureProtractionResidualTime, which //
+//is reduced every millisecond by the Buttons_tick() function. When the time  //
+//expires it sends off another call to the original button pressed function.  //
+//It is the caller of the pressure protraction which has to discriminate      //
+//whether it is executing from a finished protraction or from a new pressure. //
+/******************************************************************************/
 
 #include "buttons.h"
 #include "dsPIC.h"
 #include "../modules/ui/input-output/d_signalLed.h"
-
-
-/* Calling Buttons_protractPress() after a button has been pressed keeps the button under
-   observation for buttons_pressureProtractionResidualTime, which is reduced every millisecond by the
-   Buttons_tick() function. When the time expires it sends off another call to the original button
-   pressed function. It is the caller of the pressure protraction which has to discriminate whether
-   it is executing from a finished protraction or from a new pressure.
-*/
 
 unsigned int buttons_pressureProtractionResidualTime = 0;   //time in milliseconds
 unsigned char buttons_pressureProtractionButton;
@@ -26,8 +26,8 @@ void Buttons_protractPress(unsigned char button, unsigned int milliseconds) {
     }
 }
 
-void Buttons_tick(void) {
-    /*if (buttons_pressureProtractionResidualTime > 0) {
+void Buttons_tick(void) {               //questa funzione per ora non serve. è quella dp9
+   /* if (buttons_pressureProtractionResidualTime > 0) {
         buttons_pressureProtractionResidualTime --;
         if (buttons_pressureProtractionResidualTime == 0) {
             switch (buttons_pressureProtractionButton) {
@@ -112,7 +112,7 @@ void Buttons_tick(void) {
                     break;
             }
         }
-    }*/
+    } */
 }
 
 char Buttons_isPressureProtracted(void) {

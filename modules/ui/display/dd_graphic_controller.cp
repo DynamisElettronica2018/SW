@@ -284,7 +284,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../input-output/d_hardreset.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -1552,7 +1552,7 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 31 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 29 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[ 20 ] = "";
@@ -1577,7 +1577,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 59 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 57 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1587,8 +1587,6 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
  dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit( 1000 );
-
-
  dd_printLogoAnimation();
  dd_onStartup = 1;
 
@@ -1607,7 +1605,6 @@ void dd_GraphicController_switchBacklight(void) {
 }
 
 void dd_GraphicController_init(void) {
-
   TRISG13_bit  =  0 ;
  dd_GraphicController_turnOnBacklight();
  eGlcd_init();
@@ -1635,25 +1632,16 @@ void dd_GraphicController_setInterface(Interface interface) {
  dd_onInterfaceChange =  1 ;
  dd_isFrameUpdateForced =  1 ;
  dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit( 700 );
-
-
-
  dd_currentInterface = interface;
 }
 
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title) {
-
  dd_GraphicController_setInterface(interface);
-
  dd_Interface_init[dd_currentInterface]();
  if ( strlen(title) <  20  )
  strcpy(dd_currentInterfaceTitle, title);
  dd_currentIndicators = indicator_collection;
  dd_currentIndicatorsCount = indicator_count;
-
-
-
-
 }
 
 Interface dd_GraphicController_getInterface(void) {
@@ -1690,7 +1678,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
  dd_GraphicController_setNotificationFlag();
 }
-#line 175 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 161 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_fireNotification(text, type);
@@ -1706,7 +1694,7 @@ void dd_GraphicController_handleNotification(void) {
  }
  }
 }
-#line 211 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+
 void dd_GraphicController_forceFullFrameUpdate(void) {
  dd_isFrameUpdateForced =  1 ;
 }
@@ -1773,23 +1761,7 @@ void dd_printLogoAnimation() {
 }
 
 int __counter = 0;
-void dd_GraphicController_onTimerInterrupt(void)
-{
-
-
-
- if ( __counter == 10 )
- {
- dSignalLed_set( 1 );
- }
- if (__counter == 20)
- {
- dSignalLed_unset( 1 );
- __counter = 0;
- }
-
- __counter++;
-
+void dd_GraphicController_onTimerInterrupt(void) {
  if(dd_onStartup)
  {
  dd_tmr1Counter++;
@@ -1802,7 +1774,6 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  }
  else {
-
  if(dd_isInterfaceChangedFromLastFrame)
  {
  eGlcd_clear();
@@ -1813,7 +1784,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 323 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 272 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1838,5 +1809,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 358 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 307 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

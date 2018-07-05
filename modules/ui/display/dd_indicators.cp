@@ -1244,9 +1244,10 @@ char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_indicators.c"
+#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_indicators.c"
 static const int BLINK_PERIOD_TICKS = (int) ( 0.5  /  (1.0 / 10 ) );
-#line 25 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_indicators.c"
+
+
 void printf(char* string);
 extern char str[100];
 
@@ -1361,7 +1362,7 @@ void dd_Indicator_setBoolValueP(Indicator* ind, char value) {
  dd_Indicator_requestPrintUpdateP(ind);
  }
 }
-#line 148 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_indicators.c"
+
 void dd_Indicator_setIntCoupleValueP(Indicator* ind, int first_value, int second_value) {
  if (ind->valueType ==  4  ){
  ((IntCoupleIndicator*) ind) -> value.first = first_value;

@@ -1,3 +1,7 @@
+/******************************************************************************/
+//                                S E N S O R S                               //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #include "d_sensors.h"
 
@@ -19,4 +23,3 @@ void d_sensors_sendSWTemp(void){
      Can_writeInt(SW_DEBUG_ID, temp);
      dd_Indicator_setIntValueP(&ind_sw_board.base, (int)temp);
 }
-

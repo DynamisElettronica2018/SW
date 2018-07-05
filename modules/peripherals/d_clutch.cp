@@ -354,11 +354,8 @@ void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 #line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
+#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
 unsigned char dClutch_actualValue = 0, dClutch_value = 0;
-
-int i = 0;
-
 
 void dClutch_send(void) {
  Can_writeByte( 0b01000000001 , dClutch_value);
@@ -376,8 +373,6 @@ void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value) {
  if (clutch_check ==  99 ){
  dClutch_actualValue = value;
  dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
-
-
  }
 }
 

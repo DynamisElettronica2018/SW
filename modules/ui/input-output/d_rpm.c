@@ -1,10 +1,14 @@
+/******************************************************************************/
+//                                    R P M                                   //
+//                                    D P X                                   //
+/******************************************************************************/
+
 #include "d_rpm.h"
 #include "../../../libs/debug.h"
 #include "../../../libs/basic.h"
 #include "../../../libs/i2c_expander.h"
 #include "../ui/display/dd_indicators.h"
 #include "../d_operating_modes.h"
-//#include "../display/dd_dashboard.h"
 #include <math.h>
 
 unsigned int dRpm = 0;
@@ -12,10 +16,8 @@ char dRpm_ledStripeOutputEnable = FALSE;
 
 void dRpm_init() {
     I2CExpander_init(I2C_ADDRESS_RPM_STRIPE, OUTPUT);
-    Debug_UART_Write("a\r\n");
     dRpm = 0;
     dRpm_enableLedStripeOutput();
-    Debug_UART_Write("b\r\n");
 }
 
 float dRpm_getDisplayValue(void) {
