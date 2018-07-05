@@ -754,14 +754,7 @@ signed char value = 0;
  timer2_counter3 += 1;
  timer2_counter4 += 1;
  timer2_counter5 += 1;
-
- if(timer2_counter4 == 1000 && value <=7){
- d_traction_control_propagateValue(value);
- timer2_counter4 = 0;
- value++;
- }
-
-
+#line 72 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  if (timer2_counter0 >= 5) {
  dPaddle_readSample();
  timer2_counter0 = 0;
@@ -856,7 +849,7 @@ signed char value = 0;
  break;
  case  0b01100000110 :
  break;
-#line 164 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 169 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100000111 :
  dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
@@ -885,7 +878,7 @@ signed char value = 0;
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 196 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));

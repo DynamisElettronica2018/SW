@@ -56,12 +56,17 @@ onTimer2Interrupt{
     timer2_counter3 += 1;
     timer2_counter4 += 1;
     timer2_counter5 += 1;
-
-    if(timer2_counter4 == 1000 && value <=7){
-     d_traction_control_propagateValue(value);
-       timer2_counter4 = 0;
-       value++;
+    /*
+    if(timer2_counter4 == 3000){
+       d_controls_onLeftEncoder(1);
     }
+     if(timer2_counter4 == 5000){
+       d_controls_onLeftEncoder(2);
+    }
+     if(timer2_counter4 == 7000){
+       d_controls_onLeftEncoder(-1);
+       timer2_counter4=0;
+    } */
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {

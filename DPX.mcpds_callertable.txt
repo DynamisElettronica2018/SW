@@ -323,6 +323,7 @@ main
 			sprintf
 			Debug_UART_Write
 		setTimer
+		d_UI_setOperatingMode
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
@@ -487,7 +488,8 @@ cn_interrupt
 		d_traction_control_move
 			d_traction_control_propagateValue
 				Can_writeInt
-				dd_Indicator_setIntValueP
+				d_traction_control_printNotification
+					dd_GraphicController_fireTimedNotification
 				dSignalLed_switch
 	d_controls_onRightEncoder
 		dd_Menu_moveSelection
@@ -499,7 +501,6 @@ cn_interrupt
 				dEbb_propagateEbbChange
 	clearExternalInterrupt
 timer2_interrupt
-	d_traction_control_propagateValue
 	dPaddle_readSample
 		ADC1_Read
 			ADC1_Init

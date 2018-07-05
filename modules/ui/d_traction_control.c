@@ -52,13 +52,14 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
       Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
-      dd_Indicator_setIntValueP(&ind_traction_control.base, value);
+      d_tractionValue = value;
+      d_traction_control_printNotification();
       dSignalLed_switch(DSIGNAL_LED_BLUE);
 }
 
 void d_traction_control_move(signed char movements){
       signed char value;
-      value = d_tractionValue - movements;
+      value = d_tractionValue + movements;
       if(value > TRACTION_MAX_VALUE){
          value = TRACTION_MAX_VALUE;
       } else if(value < TRACTION_MIN_VALUE){
@@ -69,9 +70,9 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
-     d_tractionValue = (signed char)value;              //controllare questo cast
-     dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
-     //d_traction_control_printNotification();
+     d_tractionValue = value;
+     dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+     //d_traction_control_printNotification();   ci starebbe fare un flag che mostri le notifiche quando il tc non è nella dashboard
      return;
 }
 

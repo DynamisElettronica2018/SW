@@ -187,14 +187,15 @@ _d_traction_control_propagateValue:
 	MOV	#0, W11
 	CALL	_Can_writeInt
 	POP	W10
-;d_traction_control.c,55 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, value);
-	SE	W10, W11
-	MOV	#lo_addr(_ind_traction_control), W10
-	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,56 :: 		dSignalLed_switch(DSIGNAL_LED_BLUE);
+;d_traction_control.c,55 :: 		d_tractionValue = value;
+	MOV	#lo_addr(_d_tractionValue), W0
+	MOV.B	W10, [W0]
+;d_traction_control.c,56 :: 		d_traction_control_printNotification();
+	CALL	_d_traction_control_printNotification
+;d_traction_control.c,57 :: 		dSignalLed_switch(DSIGNAL_LED_BLUE);
 	CLR	W10
 	CALL	_dSignalLed_switch
-;d_traction_control.c,57 :: 		}
+;d_traction_control.c,58 :: 		}
 L_end_d_traction_control_propagateValue:
 	POP	W12
 	POP	W11
@@ -204,23 +205,23 @@ L_end_d_traction_control_propagateValue:
 
 _d_traction_control_move:
 
-;d_traction_control.c,59 :: 		void d_traction_control_move(signed char movements){
-;d_traction_control.c,61 :: 		value = d_tractionValue - movements;
+;d_traction_control.c,60 :: 		void d_traction_control_move(signed char movements){
+;d_traction_control.c,62 :: 		value = d_tractionValue + movements;
 	PUSH	W10
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W1
 	SE	W10, W0
-	SUB	W1, W0, W0
+	ADD	W1, W0, W0
 ; value start address is: 2 (W1)
 	MOV.B	W0, W1
-;d_traction_control.c,62 :: 		if(value > TRACTION_MAX_VALUE){
+;d_traction_control.c,63 :: 		if(value > TRACTION_MAX_VALUE){
 	CP.B	W0, #7
 	BRA GT	L__d_traction_control_move30
 	GOTO	L_d_traction_control_move13
 L__d_traction_control_move30:
-;d_traction_control.c,63 :: 		value = TRACTION_MAX_VALUE;
+;d_traction_control.c,64 :: 		value = TRACTION_MAX_VALUE;
 	MOV.B	#7, W1
-;d_traction_control.c,64 :: 		} else if(value < TRACTION_MIN_VALUE){
+;d_traction_control.c,65 :: 		} else if(value < TRACTION_MIN_VALUE){
 	GOTO	L_d_traction_control_move14
 L_d_traction_control_move13:
 	CP.B	W1, #0
@@ -228,29 +229,29 @@ L_d_traction_control_move13:
 	GOTO	L__d_traction_control_move16
 L__d_traction_control_move31:
 ; value end address is: 2 (W1)
-;d_traction_control.c,65 :: 		value = TRACTION_MIN_VALUE;
+;d_traction_control.c,66 :: 		value = TRACTION_MIN_VALUE;
 ; value start address is: 0 (W0)
 	CLR	W0
 ; value end address is: 0 (W0)
 	MOV.B	W0, W1
-;d_traction_control.c,66 :: 		}
+;d_traction_control.c,67 :: 		}
 	GOTO	L_d_traction_control_move15
 L__d_traction_control_move16:
-;d_traction_control.c,64 :: 		} else if(value < TRACTION_MIN_VALUE){
-;d_traction_control.c,66 :: 		}
+;d_traction_control.c,65 :: 		} else if(value < TRACTION_MIN_VALUE){
+;d_traction_control.c,67 :: 		}
 L_d_traction_control_move15:
 ; value start address is: 2 (W1)
 ; value end address is: 2 (W1)
 L_d_traction_control_move14:
-;d_traction_control.c,67 :: 		d_tractionValue = value;
+;d_traction_control.c,68 :: 		d_tractionValue = value;
 ; value start address is: 2 (W1)
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	W1, [W0]
-;d_traction_control.c,68 :: 		d_traction_control_propagateValue(value);
+;d_traction_control.c,69 :: 		d_traction_control_propagateValue(value);
 	MOV.B	W1, W10
 ; value end address is: 2 (W1)
 	CALL	_d_traction_control_propagateValue
-;d_traction_control.c,69 :: 		}
+;d_traction_control.c,70 :: 		}
 L_end_d_traction_control_move:
 	POP	W10
 	RETURN
@@ -258,19 +259,19 @@ L_end_d_traction_control_move:
 
 _d_traction_control_setValueFromCAN:
 
-;d_traction_control.c,71 :: 		void d_traction_control_setValueFromCAN(unsigned int value){
-;d_traction_control.c,72 :: 		d_tractionValue = (signed char)value;              //controllare questo cast
+;d_traction_control.c,72 :: 		void d_traction_control_setValueFromCAN(unsigned int value){
+;d_traction_control.c,73 :: 		d_tractionValue = value;
 	PUSH	W10
 	PUSH	W11
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	W10, [W0]
-;d_traction_control.c,73 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, (int) value);
-	MOV	W10, W11
+;d_traction_control.c,74 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+	SE	W10, W11
 	MOV	#lo_addr(_ind_traction_control), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,76 :: 		}
-;d_traction_control.c,75 :: 		return;
-;d_traction_control.c,76 :: 		}
+;d_traction_control.c,77 :: 		}
+;d_traction_control.c,76 :: 		return;
+;d_traction_control.c,77 :: 		}
 L_end_d_traction_control_setValueFromCAN:
 	POP	W11
 	POP	W10
@@ -279,8 +280,8 @@ L_end_d_traction_control_setValueFromCAN:
 
 _d_traction_control_init:
 
-;d_traction_control.c,78 :: 		void d_traction_control_init(void){
-;d_traction_control.c,80 :: 		}
+;d_traction_control.c,79 :: 		void d_traction_control_init(void){
+;d_traction_control.c,81 :: 		}
 L_end_d_traction_control_init:
 	RETURN
 ; end of _d_traction_control_init
