@@ -66,8 +66,6 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
-    //sprintf(str, "%d - %d", startupCounterLimit, startupCounter);
-    //printf(str);
     dd_printLogoAnimation();
     dd_onStartup = 1;
     //eGlcd_LoadImage(DYNAMIS_LOGO);
@@ -86,7 +84,6 @@ void dd_GraphicController_switchBacklight(void) {
 }
 
 void dd_GraphicController_init(void) {
-//printf("graphic init");
     DD_BACKLIGHT_PIN_DIRECTION = OUTPUT;
     dd_GraphicController_turnOnBacklight();
     eGlcd_init();
@@ -114,25 +111,16 @@ void dd_GraphicController_setInterface(Interface interface) {
      dd_onInterfaceChange = TRUE;
      dd_isFrameUpdateForced = TRUE;
      dd_onInterfaceChangeCounterLimit = dd_GraphicController_getTmrCounterLimit(OP_MODE_POPUP_PERIOD);
-     //printf("Set Interface");
-     //sprintf(str, "%d", dd_onInterfaceChangeCounterLimit);
-     //printf(str);
      dd_currentInterface = interface;
 }
 
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title) {
-    //printf("set coll. interf.");
     dd_GraphicController_setInterface(interface);
-    
-    dd_Interface_init[dd_currentInterface]();
+        dd_Interface_init[dd_currentInterface]();
     if ( strlen(title) < MAX_INTERFACE_TITLE_LENGTH )
          strcpy(dd_currentInterfaceTitle, title);
     dd_currentIndicators = indicator_collection;
     dd_currentIndicatorsCount = indicator_count;
-    //printf("finished");
-    //printf("coll. int. set");
-    //printf("collection set..");
-    //printf("interface set..");
 }
 
 Interface dd_GraphicController_getInterface(void) {
@@ -191,13 +179,12 @@ void dd_GraphicController_clearPrompt()
 void dd_GraphicController_handleNotification(void) {
     if (dd_notificationTimeoutCounter > 0) {
         dd_notificationTimeoutCounter--;
+        dd_printMessage(dd_notificationText);
+        Lcd_PrintFrame();
         if (dd_notificationTimeoutCounter == 0) {
             dd_GraphicController_clearNotification();
-            //Debug_UART_Write("Clearing notification\r\n");
         }
     }
-    //sprintf(dstr, "Handling notification: %d\r\n", dd_notificationTimeoutCounter);
-    //Debug_UART_Write(dstr);
 }
 
 /*void dd_GraphicController_printFrame(void) {
@@ -220,7 +207,7 @@ void dd_GraphicController_handleNotification(void) {
 } */
 // sono tutte inutili
 
-void dd_GraphicController_forceFullFrameUpdate(void) {              //inutile
+void dd_GraphicController_forceFullFrameUpdate(void) {
     dd_isFrameUpdateForced = TRUE;
 }
 
@@ -288,9 +275,6 @@ void dd_printLogoAnimation() {
 int __counter = 0;
 void dd_GraphicController_onTimerInterrupt(void) 
 {
-     //dRpm_set(8000);
-     //dRpm_updateLedStripe();
-
     if ( __counter == 10 )
     {
        dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
@@ -349,13 +333,11 @@ void dd_GraphicController_onTimerInterrupt(void)
         else
         {
             if (dd_notificationFlag) {
-               if(dd_notificationIsTimed)
-                   dd_GraphicController_handleNotification();
-            }
-            else {
-                 dd_Interface_print[dd_currentInterface]();
-                 Lcd_PrintFrame();
-                 dd_isFrameUpdateForced = FALSE;
+               dd_GraphicController_handleNotification();
+            }else{
+            dd_Interface_print[dd_currentInterface]();
+            Lcd_PrintFrame();
+            dd_isFrameUpdateForced = FALSE;
             }
         }
         //time = getExecTime();

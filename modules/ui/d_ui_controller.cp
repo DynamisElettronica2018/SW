@@ -553,8 +553,6 @@ void dAcc_init(void);
 
 void dAcc_requestAction();
 
-
-
 char dAcc_isAutoAccelerationActive(void);
 
 void dAcc_getAccValue(int accValue);
@@ -563,7 +561,7 @@ char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);
 
-
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_dcu.h"
@@ -622,7 +620,6 @@ void d_UIController_init() {
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
-
  d_OperatingMode_close[d_currentOperatingMode]();
  switch(d_currentOperatingMode) {
  case SETTINGS_MODE:
@@ -698,7 +695,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 132 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 131 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

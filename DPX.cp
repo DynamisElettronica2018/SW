@@ -699,8 +699,6 @@ void dAcc_init(void);
 
 void dAcc_requestAction();
 
-
-
 char dAcc_isAutoAccelerationActive(void);
 
 void dAcc_getAccValue(int accValue);
@@ -709,7 +707,7 @@ char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);
 
-
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
@@ -763,7 +761,6 @@ void main(){
  delay_ms(250);
  }
 
- Debug_UART_Write("ON\r\n");
  d_UIController_init();
 
  while(1){
@@ -834,7 +831,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 115 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 114 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -898,7 +895,7 @@ void main(){
  if(firstInt ==  1 )
  dDCU_sentAcquiringSignal();
  break;
-#line 184 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 183 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -908,7 +905,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 197 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 196 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));

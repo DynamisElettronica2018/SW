@@ -24,8 +24,6 @@ void dAcc_init(void);
 
 void dAcc_requestAction();
 
-//void dAcc_startAutoAcceleration(void);
-
 char dAcc_isAutoAccelerationActive(void);
 
 void dAcc_getAccValue(int accValue);
@@ -34,7 +32,7 @@ char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);
 
-//void dAcc_startClutchRelease(void);
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 

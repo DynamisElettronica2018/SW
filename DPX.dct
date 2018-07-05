@@ -2257,6 +2257,7 @@ dacc_requestaction
 dacc_startautoacceleration
 dacc_startclutchrelease
 dacc_stopautoacceleration
+dacc_stopautoaccelerationfromsw
 dben
 dben
 dben

@@ -365,8 +365,6 @@ void dAcc_init(void);
 
 void dAcc_requestAction();
 
-
-
 char dAcc_isAutoAccelerationActive(void);
 
 void dAcc_getAccValue(int accValue);
@@ -375,7 +373,7 @@ char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);
 
-
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"

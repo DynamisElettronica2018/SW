@@ -34,8 +34,7 @@ void main(){
     {
         delay_ms(250);
     }
-
-    Debug_UART_Write("ON\r\n");
+    
     d_UIController_init();
     
     while(1){

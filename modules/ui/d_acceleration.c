@@ -1,6 +1,17 @@
-//
-// Created by Aaron Russo on 13/08/16.
-//
+
+/************************** A C C E L E R A T I O N ***************************/
+//appena siamo nell'acceleration mode, siamo in READY.                        //
+//il pilota schiaccia il pulsante acceleration (DRS) e viene mandato il       //
+//pacchetto di acceleration start a gcu. Il volante si mette in modalità      //
+//STEADY. a questo punto il pilota deve accelerare. non appena accelera,      //
+//se GCU conferma, siamo in modalità GO. dopo che il pilota schiaccia         //
+//di nuovo il pulsante DRS, il pilota lascia l'acceleratore e può partire!    //
+//il pilota può uscire dalla modalità acceleration in qualsiasi momento       //
+//tirando il PADDLE o, da fermo, anche girando lo SWITCH CENTRALE.            //
+/******************************************************************************/
+//in questa modalità il pilota non deve cambiare marcia, nè settare il DRS,   //
+//nè il traction, nè EBB perchè è tutto gestito da GCU.                       //
+/******************************************************************************/
 
 #include "d_acceleration.h"
 #include "d_can.h"
@@ -21,11 +32,6 @@ void dAcc_init(void) {
     dAcc_releasingClutch = FALSE;  
     dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
 }
-
-//appena siamo nell'acceleration mode, siamo in ready. il pilota schiaccia il pulsante acceleration (sarà quello DRS), manda il pacchetto di
-//acceleration start a gcu e si mette in modalità steady. a questo punto il pilota deve accelerare. non appena accelera (vedi dAcc_getAccValue),
-//siamo in modalità go. dopo che il pilota schiaccia di nuovo il pulsante verde, può partire!
-//il pilota può uscire dalla modalità acceleration in qualsiasi momento tirando la frizione.
 
 void dAcc_startAutoAcceleration(void){
     if(!dAcc_autoAcceleration){
@@ -63,13 +69,16 @@ void dAcc_getAccValue(int accValue){    //% di acc
 }
 
 void dAcc_stopAutoAcceleration(void) {
-    if(dAcc_releasingClutch){
-         dAcc_autoAcceleration = FALSE;
-         dAcc_releasingClutch = FALSE;
-         dd_printMessage("STOP");
-         delay_ms(2000);
-         d_UI_AccModeInit();
-    }
+     dAcc_autoAcceleration = FALSE;
+     dAcc_releasingClutch = FALSE;
+     dd_printMessage("STOP");
+     delay_ms(2000);
+     d_UI_AccModeInit();
+}
+
+void dAcc_stopAutoAccelerationFromSW(void){
+     Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_STOP_ACCELERATION);
+     dAcc_stopAutoAcceleration();
 }
 
 void dAcc_requestAction(){
@@ -77,8 +86,7 @@ void dAcc_requestAction(){
         dd_GraphicController_clearPrompt();
         dAcc_startAutoAcceleration();
     }
-    else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE)
-    {
+    else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
         dd_GraphicController_clearPrompt();
         dAcc_readyToGo = FALSE;
         dAcc_releasingClutch = TRUE;

@@ -50,7 +50,6 @@ void d_UIController_init() {
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
-     //printf("set op mode");
      d_OperatingMode_close[d_currentOperatingMode]();
      switch(d_currentOperatingMode) {
          case SETTINGS_MODE:
@@ -75,19 +74,14 @@ int d_UI_OperatingModeChanged(){
 
 void printf(char* string);
 
-//extern char BOOL2 = 0;
-//Frame rate period timer
 onTimer1Interrupt{
-    //printf("INT");
     dd_GraphicController_onTimerInterrupt();
 }
 
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-////////////////                C O N T R O L
-////////////////                A C T I O N S
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
+/******************************************************************************/
+//                              C O N T R O L                                 //
+//                              A C T I O N S                                 //
+/******************************************************************************/
 
 
 void d_controls_onLeftEncoder(signed char movements) {
@@ -99,7 +93,6 @@ void d_controls_onLeftEncoder(signed char movements) {
                  break;
             case CRUISE_MODE:
             case ACC_MODE:
-                 //control EBB
             default:
                  return;
      }
@@ -115,7 +108,6 @@ void d_controls_onRightEncoder(signed char movements) {
               break;
             case CRUISE_MODE:
             case ACC_MODE:
-                 //control TRACTION
             default:
                  return;
      }

@@ -205,10 +205,7 @@ onCNInterrupt{
       movement_sx += 8;
    }
    else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-   
-//   sprintf(dstr, "CORRECT right moves: %d   left moves: %d   }\r\n\r\n", movement_dx, movement_sx);
-//   Debug_UART_Write(dstr);
-   
+
    if(movement_sx){
          d_controls_onLeftEncoder(movement_sx);
    }
@@ -218,34 +215,6 @@ onCNInterrupt{
    
    _CLEAR_CN_LABEL:
    clearExternalInterrupt(CN_DEVICE);
-   
-   /*if(ENCODER_LEFT_PIN0 != old_encoder_left_pin0){
-      movement = (ENCODER_LEFT_PIN0 != (ENCODER_LEFT_PIN1 != old_encoder_left_pin1));
-      if(movement){
-         sprintf(dstr, "Left Movement UP\n");
-         d_controls_onLeftEncoderUp();
-      }
-      else {
-         sprintf(dstr, "Left Movement DOWN\n");
-         d_controls_onLeftEncoderDown();
-      }
-      old_encoder_left_pin1 = ENCODER_LEFT_PIN1;
-      old_encoder_left_pin0 = ENCODER_LEFT_PIN0;
-   }
-   if(ENCODER_RIGHT_PIN0 != old_encoder_right_pin0) {
-      movement = (ENCODER_RIGHT_PIN0 != (ENCODER_RIGHT_PIN1 != old_encoder_right_pin1));
-      if(movement) {
-         sprintf(dstr, "Right Movement UP\n");
-         d_controls_onRightEncoderUp();
-      }
-      else {
-         sprintf(dstr, "Right Movement DOWN\n");
-         d_controls_onRightEncoderDown();
-      }
-      old_encoder_right_pin1 = ENCODER_RIGHT_PIN1;
-      old_encoder_right_pin0 = ENCODER_RIGHT_PIN0;
-   }
-   Debug_UART_Write(dstr);           */
 }
 
 /*
@@ -319,9 +288,7 @@ onGeneralButtonInterrupt{
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
 
-//////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////
+
 
 void d_controls_onGearUp() {
      Debug_UART_Write("Request gear up\r\n");

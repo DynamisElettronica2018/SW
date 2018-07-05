@@ -13,8 +13,6 @@ void dAcc_init(void);
 
 void dAcc_requestAction();
 
-
-
 char dAcc_isAutoAccelerationActive(void);
 
 void dAcc_getAccValue(int accValue);
@@ -23,7 +21,7 @@ char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);
 
-
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
@@ -473,7 +471,7 @@ int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 22 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
@@ -484,11 +482,6 @@ void dAcc_init(void) {
  dAcc_releasingClutch =  0 ;
  dAcc_GCUConfirmed =  0 ;
 }
-
-
-
-
-
 
 void dAcc_startAutoAcceleration(void){
  if(!dAcc_autoAcceleration){
@@ -526,13 +519,16 @@ void dAcc_getAccValue(int accValue){
 }
 
 void dAcc_stopAutoAcceleration(void) {
- if(dAcc_releasingClutch){
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
  dd_printMessage("STOP");
  delay_ms(2000);
  d_UI_AccModeInit();
- }
+}
+
+void dAcc_stopAutoAccelerationFromSW(void){
+ Can_writeInt( 0b01000000010 ,  0 );
+ dAcc_stopAutoAcceleration();
 }
 
 void dAcc_requestAction(){
@@ -540,8 +536,7 @@ void dAcc_requestAction(){
  dd_GraphicController_clearPrompt();
  dAcc_startAutoAcceleration();
  }
- else if (dAcc_readyToGo && dAcc_GCUConfirmed ==  2 )
- {
+ else if (dAcc_readyToGo && dAcc_GCUConfirmed ==  2 ){
  dd_GraphicController_clearPrompt();
  dAcc_readyToGo =  0 ;
  dAcc_releasingClutch =  1 ;

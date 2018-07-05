@@ -64,7 +64,6 @@ FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Curr
 
 /*********************************** BOARDS ***********************************/
 IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
-//IntCoupleIndicator ind_sw_board  = {SW_BOARD, "SW", "SW Board", 3, 8, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12, TRUE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
@@ -147,8 +146,7 @@ void d_UI_CruiseModeClose()
 
 void d_UI_AccModeClose()
 {
-     dAcc_stopAutoAcceleration();
-     Debug_UART_Write("Stopped acceleration by mode switch.\r\n");
+     dAcc_stopAutoAccelerationFromSW();
 }
 
 void d_UI_DebugModeClose()
