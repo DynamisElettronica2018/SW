@@ -170,5 +170,5 @@ char dStart_isSwitchedOn(void) {
 
 void dStart_sendStartMessage(void) {
  Can_writeByte( 0b01000000100 ,  1 );
- dSignalLed_switch( 2 );
+ Buzzer_bip();
 }

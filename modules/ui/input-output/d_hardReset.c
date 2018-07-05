@@ -8,7 +8,6 @@
 #include "../display/dd_graphic_controller.h"
 #include "../display/dd_indicators.h"
 
-#define HARD_RESET_NOTIFICATION_TIME 1000
 
 unsigned int dHardReset_counter = 0;
 int lastId=0;
@@ -24,7 +23,6 @@ int temp;
 void dHardReset_reset(void) {
     char msg[14];
     dHardReset_setFlag();
-    dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
     dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
     dSignalLed_set(DSIGNAL_LED_GREEN);
     dSignalLed_set(DSIGNAL_LED_BLUE);

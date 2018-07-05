@@ -19,8 +19,6 @@ void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
         d_UI_AccModeInit
 };
 
-      //rivedere il significato di ydata e settarlo anche per queste definizioni
-
 const unsigned char dd_carParametersCount = 21;
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
 

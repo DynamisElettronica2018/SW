@@ -737,8 +737,8 @@ L_end_d_controls_onGearDown:
 
 _d_controls_onStart:
 
-;d_controls.c,336 :: 		void d_controls_onStart() {
-;d_controls.c,337 :: 		if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
+;d_controls.c,340 :: 		void d_controls_onStart() {
+;d_controls.c,341 :: 		if (getExternalInterruptEdge(START_INTERRUPT) == NEGATIVE_EDGE) {
 	PUSH	W10
 	MOV.B	#7, W10
 	CALL	_getExternalInterruptEdge
@@ -746,34 +746,25 @@ _d_controls_onStart:
 	BRA Z	L__d_controls_onStart77
 	GOTO	L_d_controls_onStart43
 L__d_controls_onStart77:
-;d_controls.c,338 :: 		dSignalLed_set(DSIGNAL_LED_2);
+;d_controls.c,342 :: 		dSignalLed_set(DSIGNAL_LED_2);
 	MOV.B	#2, W10
 	CALL	_dSignalLed_set
-;d_controls.c,339 :: 		Debug_UART_Write("On Start\r\n");
-	MOV	#lo_addr(?lstr7_d_controls), W10
-	CALL	_Debug_UART_Write
-;d_controls.c,340 :: 		dStart_switchOn();
+;d_controls.c,343 :: 		dStart_switchOn();
 	CALL	_dStart_switchOn
-;d_controls.c,341 :: 		switchExternalInterruptEdge(START_INTERRUPT);
+;d_controls.c,344 :: 		switchExternalInterruptEdge(START_INTERRUPT);
 	MOV.B	#7, W10
 	CALL	_switchExternalInterruptEdge
-;d_controls.c,342 :: 		} else {
+;d_controls.c,345 :: 		} else {
 	GOTO	L_d_controls_onStart44
 L_d_controls_onStart43:
-;d_controls.c,343 :: 		dSignalLed_unset(DSIGNAL_LED_2);
-	MOV.B	#2, W10
-	CALL	_dSignalLed_unset
-;d_controls.c,344 :: 		Debug_UART_Write("On start off\r\n");
-	MOV	#lo_addr(?lstr8_d_controls), W10
-	CALL	_Debug_UART_Write
-;d_controls.c,345 :: 		dStart_switchOff();
+;d_controls.c,346 :: 		dStart_switchOff();
 	CALL	_dStart_switchOff
-;d_controls.c,346 :: 		switchExternalInterruptEdge(START_INTERRUPT);
+;d_controls.c,347 :: 		switchExternalInterruptEdge(START_INTERRUPT);
 	MOV.B	#7, W10
 	CALL	_switchExternalInterruptEdge
-;d_controls.c,347 :: 		}
-L_d_controls_onStart44:
 ;d_controls.c,348 :: 		}
+L_d_controls_onStart44:
+;d_controls.c,349 :: 		}
 L_end_d_controls_onStart:
 	POP	W10
 	RETURN
@@ -781,31 +772,31 @@ L_end_d_controls_onStart:
 
 _d_controls_onNeutral:
 
-;d_controls.c,410 :: 		void d_controls_onNeutral() {
-;d_controls.c,411 :: 		Debug_UART_Write("On neutral\r\n");
+;d_controls.c,352 :: 		void d_controls_onNeutral() {
+;d_controls.c,353 :: 		Debug_UART_Write("On neutral\r\n");
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
-	MOV	#lo_addr(?lstr9_d_controls), W10
+	MOV	#lo_addr(?lstr7_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,412 :: 		if (!dGear_isNeutralSet()) {
+;d_controls.c,354 :: 		if (!dGear_isNeutralSet()) {
 	CALL	_dGear_isNeutralSet
 	CP0.B	W0
 	BRA Z	L__d_controls_onNeutral79
 	GOTO	L_d_controls_onNeutral45
 L__d_controls_onNeutral79:
-;d_controls.c,413 :: 		if (dGear_get() == 1) {
+;d_controls.c,355 :: 		if (dGear_get() == 1) {
 	CALL	_dGear_get
 	CP.B	W0, #1
 	BRA Z	L__d_controls_onNeutral80
 	GOTO	L_d_controls_onNeutral46
 L__d_controls_onNeutral80:
-;d_controls.c,414 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
+;d_controls.c,356 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
 	MOV	#50, W12
 	MOV	#512, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_controls.c,415 :: 		} else if (dGear_get() == 2) {
+;d_controls.c,357 :: 		} else if (dGear_get() == 2) {
 	GOTO	L_d_controls_onNeutral47
 L_d_controls_onNeutral46:
 	CALL	_dGear_get
@@ -813,17 +804,17 @@ L_d_controls_onNeutral46:
 	BRA Z	L__d_controls_onNeutral81
 	GOTO	L_d_controls_onNeutral48
 L__d_controls_onNeutral81:
-;d_controls.c,416 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
+;d_controls.c,358 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
 	MOV	#100, W12
 	MOV	#512, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_controls.c,417 :: 		}
+;d_controls.c,359 :: 		}
 L_d_controls_onNeutral48:
 L_d_controls_onNeutral47:
-;d_controls.c,418 :: 		}
+;d_controls.c,360 :: 		}
 L_d_controls_onNeutral45:
-;d_controls.c,419 :: 		}
+;d_controls.c,361 :: 		}
 L_end_d_controls_onNeutral:
 	POP	W12
 	POP	W11
@@ -833,14 +824,14 @@ L_end_d_controls_onNeutral:
 
 _d_controls_onReset:
 
-;d_controls.c,421 :: 		void d_controls_onReset() {
-;d_controls.c,422 :: 		Debug_UART_Write("On reset\r\n");
+;d_controls.c,363 :: 		void d_controls_onReset() {
+;d_controls.c,364 :: 		Debug_UART_Write("On reset\r\n");
 	PUSH	W10
-	MOV	#lo_addr(?lstr10_d_controls), W10
+	MOV	#lo_addr(?lstr8_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,423 :: 		dHardReset_reset();
+;d_controls.c,365 :: 		dHardReset_reset();
 	CALL	_dHardReset_reset
-;d_controls.c,424 :: 		}
+;d_controls.c,366 :: 		}
 L_end_d_controls_onReset:
 	POP	W10
 	RETURN
@@ -848,12 +839,12 @@ L_end_d_controls_onReset:
 
 _d_controls_onDRS:
 
-;d_controls.c,448 :: 		void d_controls_onDRS() {
-;d_controls.c,449 :: 		Debug_UART_Write("On DRS\r\n");
+;d_controls.c,369 :: 		void d_controls_onDRS() {
+;d_controls.c,370 :: 		Debug_UART_Write("On DRS\r\n");
 	PUSH	W10
-	MOV	#lo_addr(?lstr11_d_controls), W10
+	MOV	#lo_addr(?lstr9_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,450 :: 		}
+;d_controls.c,371 :: 		}
 L_end_d_controls_onDRS:
 	POP	W10
 	RETURN
@@ -861,12 +852,12 @@ L_end_d_controls_onDRS:
 
 _d_controls_onAux1:
 
-;d_controls.c,452 :: 		void d_controls_onAux1(void) {
-;d_controls.c,453 :: 		Debug_UART_Write("On aux 1\r\n");
+;d_controls.c,373 :: 		void d_controls_onAux1(void) {
+;d_controls.c,374 :: 		Debug_UART_Write("On aux 1\r\n");
 	PUSH	W10
-	MOV	#lo_addr(?lstr12_d_controls), W10
+	MOV	#lo_addr(?lstr10_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,454 :: 		}
+;d_controls.c,375 :: 		}
 L_end_d_controls_onAux1:
 	POP	W10
 	RETURN
@@ -874,14 +865,14 @@ L_end_d_controls_onAux1:
 
 _d_controls_onStartAcquisition:
 
-;d_controls.c,456 :: 		void d_controls_onStartAcquisition(void) {
-;d_controls.c,457 :: 		dDCU_switchAcquisition();
+;d_controls.c,377 :: 		void d_controls_onStartAcquisition(void) {
+;d_controls.c,378 :: 		dDCU_switchAcquisition();
 	PUSH	W10
 	CALL	_dDCU_switchAcquisition
-;d_controls.c,458 :: 		Debug_UART_Write("Start acquisition\r\n");
-	MOV	#lo_addr(?lstr13_d_controls), W10
+;d_controls.c,379 :: 		Debug_UART_Write("Start acquisition\r\n");
+	MOV	#lo_addr(?lstr11_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,459 :: 		}
+;d_controls.c,380 :: 		}
 L_end_d_controls_onStartAcquisition:
 	POP	W10
 	RETURN

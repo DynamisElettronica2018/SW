@@ -276,7 +276,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 16 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -678,6 +678,43 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+extern Indicator** dd_currentIndicators;
+
+extern unsigned char dd_currentIndicatorsCount;
+
+extern char dd_currentInterfaceTitle[ 20 ];
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_init(void);
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
+
+Interface dd_GraphicController_getInterface(void);
+
+int dd_GraphicController_getNotificationFlag(void);
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+
+void dd_GraphicController_forceFullFrameUpdate(void);
+
+void dd_GraphicController_forceNextFrameUpdate(void);
+
+char dd_GraphicController_isFrameUpdateForced(void);
+
+void dd_GraphicController_releaseFullFrameUpdate(void);
+
+void dd_GraphicController_invertColors(void);
+
+char dd_GraphicController_areColorsInverted(void);
+
+void dd_GraphicController_queueColorInversion(void);
+
+char dd_GraphicController_isColorInversionQueued(void);
+
+void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
 
 
@@ -714,12 +751,12 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 
 
-void main(){
 
+void main(){
 
  setAllPinAsDigital();
  Debug_UART_Init();
@@ -729,8 +766,12 @@ void main(){
  delay_ms(250);
  }
 
- Debug_UART_Write("ON\r\n");
  d_UIController_init();
+
+ if(dHardReset_hasBeenReset()){
+ dd_GraphicController_fireTimedNotification( 1000 , "RESET", WARNING);
+ dHardReset_unsetFlag();
+ }
 
  while(1){
 
@@ -742,14 +783,14 @@ void main(){
  void timer2_interrupt() iv IVT_ADDR_T2INTERRUPT ics ICS_AUTO {
   IFS0bits.T2IF  = 0 ;
 
-
+ dEfiSense_tick();
  timer2_counter0 += 1;
  timer2_counter1 += 1;
  timer2_counter2 += 1;
  timer2_counter3 += 1;
 
  timer2_counter5 += 1;
-#line 76 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 81 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  if (timer2_counter0 >= 5) {
  dPaddle_readSample();
  timer2_counter0 = 0;
@@ -796,7 +837,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 128 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 133 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -833,14 +874,14 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_th2o_sx_out.base, dEfiSense_calculateWaterTemperature(secondInt));
  dd_Indicator_setFloatValueP(&ind_th2o_dx_in.base, dEfiSense_calculateWaterTemperature(thirdInt));
  dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
+ dEfiSense_heartbeat();
  break;
  case  0b01100001101 :
-
  dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
  dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
  dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
-
+ dEfiSense_heartbeat();
  break;
  case  0b01100000110 :
  dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
@@ -855,7 +896,7 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
-#line 200 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 197 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -865,7 +906,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 213 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 210 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -882,7 +923,6 @@ void main(){
  if(thirdInt ==  1 ){
  dDCU_isAcquiringSet();
  dDCU_sentAcquiringSignal();
- dSignalLed_switch( 3 );
  }
  break;
  default:

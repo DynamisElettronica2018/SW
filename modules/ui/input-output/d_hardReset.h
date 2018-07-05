@@ -12,6 +12,7 @@
 #define LAST_CAN_ID_ADDRESS (EEPROM_ADDRESS_OFFSET + 8)
 
 #define HARDRESET_FLAG  RCONbits.SWR
+#define HARD_RESET_NOTIFICATION_TIME 1000
 
 void dHardReset_init(void);
 

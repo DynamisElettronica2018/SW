@@ -45,9 +45,8 @@ _dStart_sendStartMessage:
 	MOV	#516, W10
 	MOV	#0, W11
 	CALL	_Can_writeByte
-;d_start.c,25 :: 		dSignalLed_switch(DSIGNAL_LED_RED_LEFT);
-	MOV.B	#2, W10
-	CALL	_dSignalLed_switch
+;d_start.c,25 :: 		Buzzer_bip();
+	CALL	_Buzzer_bip
 ;d_start.c,26 :: 		}
 L_end_dStart_sendStartMessage:
 	POP	W12

@@ -17,14 +17,15 @@
 #include "modules/ui/d_operating_modes.h"
 #include "d_sensors.h"
 #include "libs/debug.h"
+#include "dd_graphic_controller.h"
 
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 
+//sarebbe comodo decidere per cosa usare ogni signalLed a seconda delle 4 cose più importanti che vogliamo controllare sempre.
 
 void main(){
-    // Debug_Timer4_Init();
 
     setAllPinAsDigital();
     Debug_UART_Init();
@@ -33,9 +34,13 @@ void main(){
     {
         delay_ms(250);
     }
-
-    Debug_UART_Write("ON\r\n");
+    
     d_UIController_init();
+    
+    if(dHardReset_hasBeenReset()){
+       dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
+       dHardReset_unsetFlag();
+    }
     
     while(1){
 
@@ -47,7 +52,7 @@ void main(){
 onTimer2Interrupt{
     clearTimer2();
     //Buttons_tick();
-    //dEfiSense_tick();
+    dEfiSense_tick();
     timer2_counter0 += 1;
     timer2_counter1 += 1;
     timer2_counter2 += 1;
@@ -147,7 +152,7 @@ onCanInterrupt{
     }
     if (dataLen >= 8) {
         fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
-    }                                                        //noi quando mandiamo sw temp e curr?? come lo mostriamo a schermo??
+    }
 
     switch (id) {
        case EFI_GEAR_RPM_TPS_APPS_ID:
@@ -161,14 +166,14 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_th2o_sx_out.base, dEfiSense_calculateWaterTemperature(secondInt));
            dd_Indicator_setFloatValueP(&ind_th2o_dx_in.base, dEfiSense_calculateWaterTemperature(thirdInt));
            dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
+           dEfiSense_heartbeat();
            break;//*/
         case EFI_OIL_T_ENGINE_BAT_ID:
-           //Debug_UART_Write("EFI sent MESSAGE\r\n");
            dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
            dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
            dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
-           //dEfiSense_heartbeat();
+           dEfiSense_heartbeat();
            break;
        case EFI_TRACTION_CONTROL_ID:
             dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
@@ -183,14 +188,6 @@ onCanInterrupt{
        case GCU_CLUTCH_FB_SW_ID:
            dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
            break;
-     /*  case DCU_AUX_ID:
-           Debug_UART_Write("DCU sent MESSAGE\r\n");
-           Buzzer_bip();
-           if(firstInt == COMMAND_DCU_IS_ACQUIRING){
-                dDCU_sentAcquiringSignal();
-                dSignalLed_switch(DSIGNAL_LED_GREEN);
-           }
-           break; */
       /*case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
            dEbb_propagateEbbChange();
@@ -226,7 +223,6 @@ onCanInterrupt{
            if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
                 dDCU_isAcquiringSet();
                 dDCU_sentAcquiringSignal();
-                dSignalLed_switch(DSIGNAL_LED_GREEN);
            }
            break;
        default:

@@ -22,5 +22,5 @@ char dStart_isSwitchedOn(void) {
 
 void dStart_sendStartMessage(void) {
     Can_writeByte(SW_FIRE_GCU_ID, TRUE);
-    dSignalLed_switch(DSIGNAL_LED_RED_LEFT);
+    Buzzer_bip();
 }

@@ -17,7 +17,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 16 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -294,7 +294,7 @@ char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_indicators.h"
-#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_hardReset.c"
+#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_hardReset.c"
 unsigned int dHardReset_counter = 0;
 int lastId=0;
 
@@ -309,7 +309,6 @@ int temp;
 void dHardReset_reset(void) {
  char msg[14];
  dHardReset_setFlag();
- dd_GraphicController_fireTimedNotification( 1000 , "RESET", WARNING);
  dSignalLed_set( 1 );
  dSignalLed_set( 3 );
  dSignalLed_set( 0 );

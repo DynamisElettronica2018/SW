@@ -340,7 +340,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 16 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -831,21 +831,19 @@ void d_controls_onGearDown() {
  Debug_UART_Write("Request gear down\r\n");
  dGear_requestGearDown();
 }
-
+#line 340 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onStart() {
  if (getExternalInterruptEdge( 7 ) ==  1 ) {
  dSignalLed_set( 2 );
- Debug_UART_Write("On Start\r\n");
  dStart_switchOn();
  switchExternalInterruptEdge( 7 );
  } else {
- dSignalLed_unset( 2 );
- Debug_UART_Write("On start off\r\n");
  dStart_switchOff();
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 410 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+
+
 void d_controls_onNeutral() {
  Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
@@ -861,7 +859,8 @@ void d_controls_onReset() {
  Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 448 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+
+
 void d_controls_onDRS() {
  Debug_UART_Write("On DRS\r\n");
 }

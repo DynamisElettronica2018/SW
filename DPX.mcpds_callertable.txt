@@ -9,9 +9,6 @@ main
 			_Modulus_32x32
 			_Divide_32x32
 	dHardReset_hasBeenReset
-	Debug_UART_Write
-		UART2_Write_Text
-			UART2_Write
 	d_UIController_init
 		dControls_init
 			I2C1_Init
@@ -32,6 +29,8 @@ main
 					I2C1_Is_Finished
 			I2CExpander_readPort
 				Debug_UART_Write
+					UART2_Write_Text
+						UART2_Write
 				I2C1_Start
 				I2C1_Write
 				sprintf
@@ -300,6 +299,20 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		setTimer
+	dd_GraphicController_fireTimedNotification
+		dd_GraphicController_getTmrCounterLimit
+		dd_GraphicController_fireNotification
+			strcpy
+			dd_printMessage
+				xGlcd_Set_Font
+				eGlcd_getTextPixelLength
+					strlen
+					xGlcd_Char_Width
+						_Multiply_32x32
+				eGlcd_drawRect
+				eGlcd_writeText
+			dd_GraphicController_setNotificationFlag
+	dHardReset_unsetFlag
 external4
 	d_controls_onNeutral
 		Debug_UART_Write
@@ -326,19 +339,6 @@ external4
 				dHardReset_getCounter
 					EEPROM_readInt
 						EEPROM_Read
-			dd_GraphicController_fireTimedNotification
-				dd_GraphicController_getTmrCounterLimit
-				dd_GraphicController_fireNotification
-					strcpy
-					dd_printMessage
-						xGlcd_Set_Font
-						eGlcd_getTextPixelLength
-							strlen
-							xGlcd_Char_Width
-								_Multiply_32x32
-						eGlcd_drawRect
-						eGlcd_writeText
-					dd_GraphicController_setNotificationFlag
 			dSignalLed_set
 	d_controls_onAux1
 		Debug_UART_Write
@@ -356,10 +356,8 @@ external3
 	d_controls_onStart
 		getExternalInterruptEdge
 		dSignalLed_set
-		Debug_UART_Write
 		dStart_switchOn
 		switchExternalInterruptEdge
-		dSignalLed_unset
 		dStart_switchOff
 	clearExternalInterrupt
 CAN_Interrupt
@@ -466,6 +464,14 @@ cn_interrupt
 			d_DashboardSetting_updateValue
 	clearExternalInterrupt
 timer2_interrupt
+	dEfiSense_tick
+		dEfiSense_die
+			dd_Indicator_setBoolValue
+				dd_getIndicatorIndex
+				dd_Indicator_requestPrintUpdate
+			dEfiSense_isDead
+			dSignalLed_unset
+		dHardReset_reset
 	dPaddle_readSample
 		ADC1_Read
 			ADC1_Init
@@ -486,7 +492,7 @@ timer2_interrupt
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
 		Can_writeByte
-		dSignalLed_switch
+		Buzzer_bip
 	dRpm_canUpdateLedStripe
 	dRpm_updateLedStripe
 		ceil
