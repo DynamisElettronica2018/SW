@@ -270,10 +270,10 @@ onGeneralButtonInterrupt{
        d_controls_onReset();
     }
     else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onAux1();
+        d_controls_onStartAcquisition();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onStartAcquisition();
+        d_controls_onAux1();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }

@@ -675,16 +675,16 @@ L_external438:
 ;d_controls.c,272 :: 		else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
 	BTSC	RD1_bit, BitPos(RD1_bit+0)
 	GOTO	L_external440
-;d_controls.c,273 :: 		d_controls_onAux1();
-	CALL	_d_controls_onAux1
+;d_controls.c,273 :: 		d_controls_onStartAcquisition();
+	CALL	_d_controls_onStartAcquisition
 ;d_controls.c,274 :: 		}
 	GOTO	L_external441
 L_external440:
 ;d_controls.c,275 :: 		else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
 	BTSC	RB15_bit, BitPos(RB15_bit+0)
 	GOTO	L_external442
-;d_controls.c,276 :: 		d_controls_onStartAcquisition();
-	CALL	_d_controls_onStartAcquisition
+;d_controls.c,276 :: 		d_controls_onAux1();
+	CALL	_d_controls_onAux1
 ;d_controls.c,277 :: 		}
 L_external442:
 L_external441:

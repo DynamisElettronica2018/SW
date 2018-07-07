@@ -796,10 +796,10 @@ void dControls_init(void) {
  d_controls_onReset();
  }
  else if ( RD1_bit  ==  0 ) {
- d_controls_onAux1();
+ d_controls_onStartAcquisition();
  }
  else if ( RB15_bit  ==  0 ) {
- d_controls_onStartAcquisition();
+ d_controls_onAux1();
  }
  clearExternalInterrupt( 8 );
 }

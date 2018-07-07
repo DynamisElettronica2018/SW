@@ -337,7 +337,6 @@ external4
 					EEPROM_readInt
 						EEPROM_Read
 			dSignalLed_set
-	d_controls_onAux1
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -346,6 +345,7 @@ external4
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
+	d_controls_onAux1
 	clearExternalInterrupt
 external3
 	d_controls_onStart
