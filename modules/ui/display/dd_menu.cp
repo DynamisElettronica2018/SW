@@ -1338,34 +1338,27 @@ void dd_Menu_scroll(signed char movements) {
  dd_currentIndicators[i]->pendingPrintUpdate =  1 ;
  }
 }
-#line 112 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+
 void dd_Menu_moveSelection(signed char movements) {
-
-
  dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate =  1 ;
  dd_Menu_SelectedLineIndex+=movements;
  if (dd_Menu_SelectedLineIndex >= dd_currentIndicatorsCount) {
  dd_Menu_SelectedLineIndex = dd_currentIndicatorsCount - 1;
  }
  else if (dd_Menu_SelectedLineIndex < 0) {
-
  dd_Menu_SelectedLineIndex = 0;
  }
  dd_currentIndicators[dd_Menu_SelectedLineIndex]->pendingPrintUpdate =  1 ;
-
-
  if (dd_Menu_SelectedLineIndex >= dd_Menu_FirstLineIndex + dd_Menu_Height_param)
  {
  dd_Menu_scroll(dd_Menu_SelectedLineIndex - dd_Menu_FirstLineIndex - dd_Menu_Height_param + 1);
  }
  else if (dd_Menu_SelectedLineIndex < dd_Menu_FirstLineIndex)
  {
-
  dd_Menu_scroll(dd_Menu_SelectedLineIndex - dd_Menu_FirstLineIndex);
-
  }
 }
-#line 164 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+
 unsigned char dd_Menu_selectedLine(void) {
  return dd_Menu_SelectedLineIndex;
 }
@@ -1378,9 +1371,6 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 void dd_printMenuLine(unsigned char lineIndex) {
  unsigned char lineNumber, color;
  char lineText[MAX_MENU_WIDTH + 1];
-
-
-
  lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
  if (dd_Menu_isLineSelected(lineIndex)) {
  color = WHITE;
@@ -1467,7 +1457,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 274 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+#line 218 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
@@ -1482,7 +1472,8 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
  }
  }
-#line 304 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
+
+
  if (valueWidth > 0) {
  for (i = 0; i <  1 ; i++) {
  lineText[lineCharIndex] = ' ';
@@ -1493,9 +1484,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  lineCharIndex += 1;
  }
  }
-#line 318 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
  lineText[lineCharIndex] = ' ';
-#line 324 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_menu.c"
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {

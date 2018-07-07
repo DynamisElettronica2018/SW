@@ -301,16 +301,14 @@ double pow(double x, double y);
 double sinh(double x);
 double cosh(double x);
 double tanh(double x);
-#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
+#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
 unsigned int dRpm = 0;
 char dRpm_ledStripeOutputEnable =  0 ;
 
 void dRpm_init() {
  I2CExpander_init( 0b01000000 ,  0 );
- Debug_UART_Write("a\r\n");
  dRpm = 0;
  dRpm_enableLedStripeOutput();
- Debug_UART_Write("b\r\n");
 }
 
 float dRpm_getDisplayValue(void) {

@@ -153,7 +153,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
+#line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
 char dStart_isSwitchOnFlag =  0 ;
 
 void dStart_switchOn(void) {

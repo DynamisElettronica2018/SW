@@ -355,11 +355,11 @@ void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 #line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 unsigned int dPaddle_value = 0;
 
 void dPaddle_init(void) {
-#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
+#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_paddle.c"
 }
 
 
@@ -377,7 +377,5 @@ void dPaddle_readSample(void) {
  dPaddle_value =  3800 ;
  } else {
  dPaddle_value = (unsigned int) ((analogValue * 0.8) + (dPaddle_value * 0.2));
-
-
  }
 }

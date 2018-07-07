@@ -350,7 +350,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_dcu.c"
+#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_dcu.c"
 static char d_DCU_isAcquiring =  0 ;
 static unsigned int d_DCU_isAliveCounter = 0;
 
@@ -384,9 +384,7 @@ void dDCU_stopAcquisition(void) {
 
 void dDCU_tick(void){
  d_DCU_isAliveCounter +=  1000 ;
- if(d_DCU_isAliveCounter >=  5000 )
- {
-
+ if(d_DCU_isAliveCounter >=  5000 ){
  dd_GraphicController_fireTimedNotification( 1500 , "DCU DEAD", ERROR);
  d_DCU_isAcquiring = 0;
  d_DCU_isAliveCounter = 0;
@@ -403,7 +401,5 @@ char dDCU_isAcquiring()
 }
 
 void dDCU_sentAcquiringSignal(){
- Debug_UART_Write("DCU sent acquiring signal.\r\n");
-
  d_DCU_isAliveCounter = 0;
 }

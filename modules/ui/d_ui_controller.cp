@@ -556,16 +556,14 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
-#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 22 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
 void d_UI_setOperatingMode(OperatingMode mode);
 
 void d_UIController_init() {
-
  dControls_init();
  Can_init();
-
  Debug_UART_Write("can initialized.\r\n");
  dDCU_init();
  Debug_UART_Write("DCU initialized.\r\n");
@@ -581,11 +579,11 @@ void d_UIController_init() {
  Debug_UART_Write("graphic controller initialized.\r\n");
  setTimer( 2 ,  0.001 );
  Debug_UART_Write("graphic controller initialized.\r\n");
-#line 46 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+
+
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
-
  switch(d_currentOperatingMode) {
  case SETTINGS_MODE:
  d_UI_SettingsModeClose();
@@ -599,14 +597,8 @@ void printf(char* string);
 
 
  void timer1_interrupt() iv IVT_ADDR_T1INTERRUPT ics ICS_AUTO {
-
  dd_GraphicController_onTimerInterrupt();
 }
-
-
-
-
-
 
 
 
@@ -619,8 +611,9 @@ void d_controls_onLeftEncoder(signed char movements) {
  dd_Menu_moveSelection(movements);
  break;
  case CRUISE_MODE:
- case ACC_MODE:
 
+ case ACC_MODE:
+ break;
  default:
  return;
  }
@@ -633,10 +626,11 @@ void d_controls_onRightEncoder(signed char movements) {
  break;
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
+ case ACC_MODE:
  break;
  case CRUISE_MODE:
- case ACC_MODE:
 
+ break;
  default:
  return;
  }
@@ -647,7 +641,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 114 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 109 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

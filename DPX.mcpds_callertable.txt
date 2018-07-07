@@ -213,7 +213,6 @@ main
 			dSignalLed_unset
 		dRpm_init
 			I2CExpander_init
-			Debug_UART_Write
 			dRpm_enableLedStripeOutput
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
@@ -315,7 +314,6 @@ main
 	dHardReset_unsetFlag
 external4
 	d_controls_onNeutral
-		Debug_UART_Write
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
@@ -327,7 +325,6 @@ external4
 					CAN1IDToRegs
 				Can_getWriteFlags
 	d_controls_onReset
-		Debug_UART_Write
 		dHardReset_reset
 			dHardReset_setFlag
 				EEPROM_writeInt
@@ -341,7 +338,6 @@ external4
 						EEPROM_Read
 			dSignalLed_set
 	d_controls_onAux1
-		Debug_UART_Write
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -350,7 +346,6 @@ external4
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
-		Debug_UART_Write
 	clearExternalInterrupt
 external3
 	d_controls_onStart
@@ -426,11 +421,9 @@ CAN_Interrupt
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
-		Debug_UART_Write
 	_Long2Float
 external2
 	d_controls_onDRS
-		Debug_UART_Write
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick
@@ -539,12 +532,10 @@ timer1_interrupt
 		d_UI_AccModeInit
 external0
 	d_controls_onGearUp
-		Debug_UART_Write
 		dGear_requestGearUp
 			dGear_canGearUp
 			Can_writeInt
 	d_controls_onGearDown
-		Debug_UART_Write
 		dGear_requestGearDown
 			dGear_canGearDown
 			Can_writeInt

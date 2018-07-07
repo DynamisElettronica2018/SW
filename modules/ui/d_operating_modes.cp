@@ -391,7 +391,7 @@ unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition positio
 
 void dd_Dashboard_printIndicators(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
-#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_CruiseModeInit();
 void d_UI_AccModeInit();
 void d_UI_DebugModeInit();
@@ -434,7 +434,6 @@ FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Curr
 
 
 IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-
 IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12,  1 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
@@ -449,7 +448,6 @@ IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12,  1 ,  1 
 IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
 IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  1 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_oil_temp_in,
@@ -473,7 +471,7 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_fuel_press,
  (Indicator*)&ind_launch_control,
  (Indicator*)&ind_ebb_motor_curr
- };
+};
 
 static ydata Indicator* dd_carBoards[dd_carBoardsCount] = {
  (Indicator*)&ind_ebb_board,
@@ -516,14 +514,14 @@ void d_UI_BoardDebugModeInit() {
 
 const unsigned char dd_settingsCount = 6;
 const unsigned char dd_dashboardSettingsCount =  4 ;
-#line 142 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 145 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 IntegerIndicator sett_dash_top_left = { S_DASH_TOP_L, "", "Dash. Top L.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_top_right = { S_DASH_TOP_R, "", "Dash. Top R.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_left = { S_DASH_BOTTOM_L, "", "Dash. Bottom L.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_right = { S_DASH_BOTTOM_R, "", "Dash. Bottom R.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 BooleanIndicator sett_invert_colors = { S_INVERT_COLORS, "", "Invert Colors", 0, 13,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 BooleanIndicator sett_bypass_gears = { S_BYPASS_GEARS, "", "Bypass gear shift", 0, 17,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
-#line 155 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 158 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 ydata Indicator* dd_settings[dd_settingsCount] = {
 
  (Indicator*)&sett_dash_top_left,
@@ -534,22 +532,17 @@ ydata Indicator* dd_settings[dd_settingsCount] = {
  (Indicator*)&sett_invert_colors,
  (Indicator*)&sett_bypass_gears
 };
-#line 170 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 173 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 Indicator** dd_dashboardSettings = dd_settings;
-#line 174 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 177 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_DashboardSetting_updateValue(IntegerIndicator* ind, int val) {
-
-
  ind->value = val;
  strcpy(ind->base.label, dd_carParameters[ind->value]->name);
  ind->base.labelLength = dd_carParameters[ind->value]->nameLength;
  ind->base.pendingPrintUpdate =  1 ;
-
-
 }
 
 void d_UI_SettingsModeInit() {
-
 
 
  d_DashboardSetting_updateValue(&sett_dash_top_left, TOP_LEFT);
@@ -559,12 +552,11 @@ void d_UI_SettingsModeInit() {
 
  dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_settings, dd_settingsCount, "Settings");
 }
-#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 199 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_onSettingsChange(signed char movements) {
  signed int dashboardIndicatorIndex;
  unsigned char position;
  Indicator* settingIndicator = dd_settings[dd_Menu_selectedLine()];
-
 
  switch (settingIndicator->id) {
  case S_INVERT_COLORS:
@@ -585,12 +577,9 @@ void d_UI_onSettingsChange(signed char movements) {
  return;
  default:
  break;
-
  }
-#line 234 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
  dashboardIndicatorIndex = ((IntegerIndicator*)settingIndicator)->value;
-
-
  if (movements) {
  dashboardIndicatorIndex+=movements;
  if (dashboardIndicatorIndex >= dd_carParametersCount) {
@@ -600,12 +589,9 @@ void d_UI_onSettingsChange(signed char movements) {
  dashboardIndicatorIndex += dd_carParametersCount;
  }
  }
-
-
-
  d_DashboardSetting_updateValue((IntegerIndicator*)settingIndicator, dashboardIndicatorIndex);
 }
-#line 260 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 251 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_ApplySettings() {
  char i;
  Indicator* oldIndicator;

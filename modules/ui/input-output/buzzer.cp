@@ -98,13 +98,13 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_bip(void);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
 unsigned int buzzer_ticks = 0, buzzer_bipTicks;
 
  void timer4_interrupt() iv IVT_ADDR_T4INTERRUPT ics ICS_AUTO {
   IFS1bits.T4IF  = 0 ;
  Buzzer_tick();
-#line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
+#line 20 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
 }
 
 void Buzzer_init(void) {

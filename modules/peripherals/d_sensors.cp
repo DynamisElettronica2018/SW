@@ -331,7 +331,7 @@ void d_UI_onSettingsChange(signed char movements);
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
+#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
 unsigned int d_SWTemp_getTempValue(){
  unsigned int analogValue, voltage, temp;
  analogValue = ADC1_Read( 12 );

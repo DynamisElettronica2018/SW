@@ -639,7 +639,6 @@ void dControls_init(void) {
  char expanderPort;
  signed char position;
 
-
   TRISD10_bit  =  1 ;
   TRISF2_bit  =  1 ;
   TRISF3_bit  =  1 ;
@@ -675,7 +674,7 @@ void dControls_init(void) {
  if (expanderPort == 0) position =  0 ;
  else
  position = log2(expanderPort) -  3 ;
-#line 129 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 128 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
  setExternalInterrupt( 7 ,  1 );
@@ -696,7 +695,7 @@ void dControls_init(void) {
  }
  clearExternalInterrupt( 4 );
 }
-#line 155 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 154 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -721,15 +720,7 @@ void dControls_init(void) {
  new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
 
  movement_dx = new_port_dx - old_port_dx;
-
  movement_sx = - new_port_sx + old_port_sx;
-
-
-
-
-
-
-
 
  if (movement_dx>4)
  {
@@ -752,8 +743,6 @@ void dControls_init(void) {
  else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 
 
-
-
  if(movement_sx){
  d_controls_onLeftEncoder(movement_sx);
  }
@@ -763,9 +752,8 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 249 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 }
-#line 270 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 231 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -781,8 +769,6 @@ void dControls_init(void) {
  }
  else
  position = log2(expanderPort) -  3 ;
-
-
  d_controls_onSelectorSwitched(position);
  clearExternalInterrupt( 5 );
 }
@@ -820,18 +806,14 @@ void dControls_init(void) {
 
 
 
-
-
 void d_controls_onGearUp() {
- Debug_UART_Write("Request gear up\r\n");
  dGear_requestGearUp();
 }
 
 void d_controls_onGearDown() {
- Debug_UART_Write("Request gear down\r\n");
  dGear_requestGearDown();
 }
-#line 340 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+
 void d_controls_onStart() {
  if (getExternalInterruptEdge( 7 ) ==  1 ) {
  dSignalLed_set( 2 );
@@ -843,9 +825,7 @@ void d_controls_onStart() {
  }
 }
 
-
 void d_controls_onNeutral() {
- Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
  if (dGear_get() == 1) {
  Can_writeInt( 0b01000000000 ,  50 );
@@ -856,20 +836,15 @@ void d_controls_onNeutral() {
 }
 
 void d_controls_onReset() {
- Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
 
-
 void d_controls_onDRS() {
- Debug_UART_Write("On DRS\r\n");
 }
 
 void d_controls_onAux1(void) {
- Debug_UART_Write("On aux 1\r\n");
 }
 
 void d_controls_onStartAcquisition(void) {
  dDCU_switchAcquisition();
- Debug_UART_Write("Start acquisition\r\n");
 }

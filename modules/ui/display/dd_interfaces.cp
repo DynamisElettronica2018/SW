@@ -1314,7 +1314,6 @@ void dd_Interface_drawTitle(char *title) {
 
 
 
-
 void dd_printMessage(char * title)
 {
  unsigned int width = 0;
