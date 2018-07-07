@@ -82,6 +82,7 @@ void dEbb_setEbbValueFromCAN(unsigned int value){
 void dEbb_setPositionZero(void){
     Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
     dEbb_Value = 0;
+    dd_GraphicController_fireTimedNotification(1000, "CALIBRATION", ERROR);
     dEbb_propagateEbbChange();
 }
 
@@ -100,7 +101,9 @@ void dEbb_propagateEbbChange(void) {
         dd_Indicator_setStringValue(EBB, "...");
         break;
     default:
-        dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
+        dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+        sprintf(dstr, "indicator value %d\r\n", dEbb_value+EBB_DAGO_OFFSET);
+        Debug_UART_Write(dstr);
         break;
     }
 }
@@ -112,24 +115,33 @@ void dEbb_propagateValue(signed char value){
 
 void dEbb_move(signed char movements){
       signed char value;
-      value = dEbb_value + movements;
+      value = dEbb_value - movements;
+      sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
+      Debug_UART_Write(dstr);
+      sprintf(dstr, "movements%d\r\n", movements);
+      Debug_UART_Write(dstr);
+      sprintf(dstr, "value1 %d\r\n", value);
+      Debug_UART_Write(dstr);
       if(value > EBB_MAX_VALUE){
          value = EBB_MAX_VALUE;
       } else if(value < EBB_MIN_VALUE){
          value = EBB_MIN_VALUE;
       }
       dEbb_Value = value;
+      sprintf(dstr, "value %d\r\n", value);
+      Debug_UART_Write(dstr);
+      dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
       dEbb_propagateValue(value);
 }
 
 void dEbb_init(void){
-
+      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(dEbb_Value + EBB_DAGO_OFFSET));
 }
 
 
 /*****************************************************************************/
 //funzioni dp9. sopra quelle dpx, poi vediamo cosa fare.
-void dEbb_calibrateSwitch(void) {
+/*void dEbb_calibrateSwitch(void) {
     if (dEbb_isCalibrateing() == TRUE){
         dEbb_calibrateStop();
         calibrationState = FALSE;
@@ -186,7 +198,7 @@ void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
     dEbb_motorSense = motorSense;
 }
 
-
+      */
 
 void dEbb_tick(void) {
 /*switch (dEbb_state){
@@ -216,4 +228,3 @@ if(dEbb_isCalibrateing() == TRUE){
         dEbb_calibratePause();
     }*/
 }
-

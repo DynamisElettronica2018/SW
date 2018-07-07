@@ -23,6 +23,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
@@ -385,6 +387,10 @@ void dDCU_tick(void){
  d_DCU_isAcquiring = 0;
  d_DCU_isAliveCounter = 0;
  }
+}
+
+void dDCU_isAcquiringSet(){
+ d_DCU_isAcquiring =  1 ;
 }
 
 char dDCU_isAcquiring()

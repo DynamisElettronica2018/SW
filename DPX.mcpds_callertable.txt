@@ -310,6 +310,14 @@ main
 			dd_GraphicController_forceFullFrameUpdate
 		d_traction_control_init
 		dEbb_init
+			Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+					Can_addByteToWritePacket
+				Can_write
+					CAN1Write
+						CAN1IDToRegs
+					Can_getWriteFlags
 		setTimer
 		d_UI_setOperatingMode
 external4
@@ -318,13 +326,6 @@ external4
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
-			Can_resetWritePacket
-			Can_addIntToWritePacket
-				Can_addByteToWritePacket
-			Can_write
-				CAN1Write
-					CAN1IDToRegs
-				Can_getWriteFlags
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -355,6 +356,7 @@ external4
 	d_controls_onAux1
 		dEbb_setPositionZero
 			Can_writeInt
+			dd_GraphicController_fireTimedNotification
 			dEbb_propagateEbbChange
 				dd_Indicator_setStringValue
 					dd_getIndicatorIndex
@@ -362,6 +364,8 @@ external4
 					dd_Indicator_requestPrintUpdate
 				dd_Indicator_setIntValueP
 					dd_Indicator_requestPrintUpdateP
+				sprintf
+				Debug_UART_Write
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -438,21 +442,15 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	d_traction_control_setValueFromCAN
 		dd_Indicator_setIntValueP
-	Debug_UART_Write
-	dDCU_sentAcquiringSignal
-		Debug_UART_Write
 	dEbb_setEbbValueFromCAN
 		dEbb_printNotification
 			dd_GraphicController_fireTimedNotification
-	dEbb_calibrationState
-		dEbb_isCalibrateing
-		dd_printMessage
-		dEbb_error
-			dd_printMessage
-	dEbb_error
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
 	dd_Indicator_setIntValueP
+	dDCU_isAcquiringSet
+	dDCU_sentAcquiringSignal
+		Debug_UART_Write
 	Buzzer_bip
 external2
 	d_controls_onDRS
@@ -468,8 +466,6 @@ external1
 		d_selectorPositionToMode
 	clearExternalInterrupt
 cn_interrupt
-	sprintf
-	Debug_UART_Write
 	d_controls_onLeftEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
@@ -495,6 +491,9 @@ cn_interrupt
 			dd_Menu_scroll
 				Debug_UART_Write
 		dEbb_move
+			sprintf
+			Debug_UART_Write
+			dd_Indicator_setIntValueP
 			dEbb_propagateValue
 				Can_writeInt
 				dEbb_propagateEbbChange

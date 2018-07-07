@@ -174,16 +174,11 @@ onCanInterrupt{
            dClutch_injectActualValue((unsigned char)firstInt);
            d_traction_control_setValueFromCAN(secondInt);
            break;
-       case DCU_AUX_ID:
-           Debug_UART_Write("DCU sent MESSAGE\r\n");
-           if(firstInt == COMMAND_DCU_IS_ACQUIRING)
-                dDCU_sentAcquiringSignal();
-           break;
        case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
           // da qua in giù la parte dell'ebb è da controllare!!!
-           dEbb_calibrationState(secondInt);
-           dEbb_error(thirdInt);
+//           dEbb_calibrationState(secondInt);
+          // dEbb_error(thirdInt);
            break; //  */
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
@@ -210,7 +205,11 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
            break;
        case DCU_DEBUG_ID:
-          dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+           dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+           if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+                dDCU_isAcquiringSet();
+                dDCU_sentAcquiringSignal();
+           }
            break;
        case GCU_AUX_ID:
            d_traction_control_setValueFromCAN(firstInt);

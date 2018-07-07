@@ -135,28 +135,40 @@ L_end_dDCU_tick:
 	RETURN
 ; end of _dDCU_tick
 
+_dDCU_isAcquiringSet:
+
+;d_dcu.c,55 :: 		void dDCU_isAcquiringSet(){
+;d_dcu.c,56 :: 		d_DCU_isAcquiring = TRUE;
+	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W1
+	MOV.B	#1, W0
+	MOV.B	W0, [W1]
+;d_dcu.c,57 :: 		}
+L_end_dDCU_isAcquiringSet:
+	RETURN
+; end of _dDCU_isAcquiringSet
+
 _dDCU_isAcquiring:
 
-;d_dcu.c,55 :: 		char dDCU_isAcquiring()
-;d_dcu.c,57 :: 		return d_DCU_isAcquiring;
+;d_dcu.c,59 :: 		char dDCU_isAcquiring()
+;d_dcu.c,61 :: 		return d_DCU_isAcquiring;
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W0
 	MOV.B	[W0], W0
-;d_dcu.c,58 :: 		}
+;d_dcu.c,62 :: 		}
 L_end_dDCU_isAcquiring:
 	RETURN
 ; end of _dDCU_isAcquiring
 
 _dDCU_sentAcquiringSignal:
 
-;d_dcu.c,60 :: 		void dDCU_sentAcquiringSignal(){
-;d_dcu.c,61 :: 		Debug_UART_Write("DCU sent acquiring signal.\r\n");
+;d_dcu.c,64 :: 		void dDCU_sentAcquiringSignal(){
+;d_dcu.c,65 :: 		Debug_UART_Write("DCU sent acquiring signal.\r\n");
 	PUSH	W10
 	MOV	#lo_addr(?lstr4_d_dcu), W10
 	CALL	_Debug_UART_Write
-;d_dcu.c,63 :: 		d_DCU_isAliveCounter = 0;
+;d_dcu.c,67 :: 		d_DCU_isAliveCounter = 0;
 	CLR	W0
 	MOV	W0, d_dcu_d_DCU_isAliveCounter
-;d_dcu.c,64 :: 		}
+;d_dcu.c,68 :: 		}
 L_end_dDCU_sentAcquiringSignal:
 	POP	W10
 	RETURN

@@ -179,12 +179,12 @@ onCNInterrupt{
   // movement_sx = new_port_sx - old_port_sx;
    movement_sx = - new_port_sx + old_port_sx;
    
-   sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
+   /*sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
    Debug_UART_Write(dstr);
    sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
    Debug_UART_Write(dstr);
    sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
-   Debug_UART_Write(dstr);
+   Debug_UART_Write(dstr);  */
    
    if (movement_dx>4)
    {

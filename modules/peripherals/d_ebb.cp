@@ -261,27 +261,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
-
-
-void dEbb_calibrateSwitch(void);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
@@ -524,6 +503,7 @@ void dEbb_setEbbValueFromCAN(unsigned int value){
 void dEbb_setPositionZero(void){
  Can_writeInt( 0b10000000000 ,  100 );
  dEbb_Value = 0;
+ dd_GraphicController_fireTimedNotification(1000, "CALIBRATION", ERROR);
  dEbb_propagateEbbChange();
 }
 
@@ -542,7 +522,9 @@ void dEbb_propagateEbbChange(void) {
  dd_Indicator_setStringValue(EBB, "...");
  break;
  default:
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+ 8 ));
+ sprintf(dstr, "indicator value %d\r\n", dEbb_value+ 8 );
+ Debug_UART_Write(dstr);
  break;
  }
 }
@@ -554,82 +536,29 @@ void dEbb_propagateValue(signed char value){
 
 void dEbb_move(signed char movements){
  signed char value;
- value = dEbb_value + movements;
- if(value >  -7 ){
- value =  -7 ;
- } else if(value <  7 ){
+ value = dEbb_value - movements;
+ sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "movements%d\r\n", movements);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "value1 %d\r\n", value);
+ Debug_UART_Write(dstr);
+ if(value >  7 ){
  value =  7 ;
+ } else if(value <  -7 ){
+ value =  -7 ;
  }
  dEbb_Value = value;
+ sprintf(dstr, "value %d\r\n", value);
+ Debug_UART_Write(dstr);
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
  dEbb_propagateValue(value);
 }
 
 void dEbb_init(void){
-
+ Can_writeInt( 0b10000000000 , (int)(dEbb_Value +  8 ));
 }
-
-
-
-
-void dEbb_calibrateSwitch(void) {
- if (dEbb_isCalibrateing() ==  1 ){
- dEbb_calibrateStop();
- calibrationState =  0 ;
- dSignalLed_switch( 3 );
- } else if (dEbb_isCalibrateing() ==  0 ) {
- calibrationState =  1 ;
- dSignalLed_switch( 3 );
- }
-}
-
-void dEbb_error(int value){
- if( value == 1 ){
- dd_printMessage("EBB ERROR");
- }
-}
-
-int dEbb_isCalibrateing(void) {
- return calibrationState;
-}
-
-void dEbb_calibrationState(int value){
- if( value == 1 && dEbb_isCalibrateing() == 1 ){
- dd_printMessage("CALIBRATING EBB");
- } else if(value == 0 && dEbb_isCalibrateing() == 0 ){
- dd_printMessage("CALIBRATION DONE");
- } else {
- dEbb_error(1);
- }
-}
-
-void dEbb_calibrateUp(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  101 );
-}
-
-void dEbb_calibrateDown(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  99 );
-}
-
-void dEbb_calibratePause(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  100 );
-}
-
-void dEbb_calibrateStop(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  8 );
- dEbb_localValue = 0;
-
-}
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
- dEbb_motorState = motorState;
-}
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
- dEbb_motorSense = motorSense;
-}
-
-
-
+#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 218 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

@@ -232,6 +232,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
@@ -420,27 +422,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
-
-
-void dEbb_calibrateSwitch(void);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
@@ -861,16 +842,11 @@ signed char value = 0;
  dClutch_injectActualValue((unsigned char)firstInt);
  d_traction_control_setValueFromCAN(secondInt);
  break;
- case  0b11111110111 :
- Debug_UART_Write("DCU sent MESSAGE\r\n");
- if(firstInt ==  1 )
- dDCU_sentAcquiringSignal();
- break;
  case  0b11100001101 :
  dEbb_setEbbValueFromCAN(firstInt);
 
- dEbb_calibrationState(secondInt);
- dEbb_error(thirdInt);
+
+
  break;
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
@@ -881,7 +857,7 @@ signed char value = 0;
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 196 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -895,6 +871,10 @@ signed char value = 0;
  break;
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+ if(thirdInt ==  1 ){
+ dDCU_isAcquiringSet();
+ dDCU_sentAcquiringSignal();
+ }
  break;
  case  0b11111110001 :
  d_traction_control_setValueFromCAN(firstInt);

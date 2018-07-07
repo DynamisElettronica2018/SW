@@ -318,6 +318,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
 
@@ -464,27 +466,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
-
-
-void dEbb_calibrateSwitch(void);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_gears.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_can.h"
@@ -715,14 +696,7 @@ void dControls_init(void) {
  movement_dx = new_port_dx - old_port_dx;
 
  movement_sx = - new_port_sx + old_port_sx;
-
- sprintf(dstr, "{   Old port dx: %d ; sx: %d\r\n", old_port_dx, old_port_sx);
- Debug_UART_Write(dstr);
- sprintf(dstr, "New port dx: %d ; sx: %d\r\n", new_port_dx, new_port_sx);
- Debug_UART_Write(dstr);
- sprintf(dstr, "Right moves: %d   left moves: %d\r\n", movement_dx, movement_sx);
- Debug_UART_Write(dstr);
-
+#line 189 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  if (movement_dx>4)
  {
  movement_dx -= 8;

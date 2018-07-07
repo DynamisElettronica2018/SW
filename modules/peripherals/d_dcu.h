@@ -22,6 +22,8 @@ void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
 
+void dDCU_isAcquiringSet(void);
+
 /**
    \brief Communication with DCU unit, manages data acquisition.
    The steering wheel can instruct the DCU module to start or stop the acquisition process

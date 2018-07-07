@@ -52,6 +52,10 @@ void dDCU_tick(void){
      }
 }
 
+void dDCU_isAcquiringSet(){
+     d_DCU_isAcquiring = TRUE;
+}
+
 char dDCU_isAcquiring()
 {
       return d_DCU_isAcquiring;

@@ -549,6 +549,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_traction_control.h"
 
 
@@ -580,27 +582,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
-
-
-void dEbb_calibrateSwitch(void);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
 #line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
