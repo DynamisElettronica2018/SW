@@ -2452,11 +2452,13 @@ debb_localvalue
 debb_motorsense
 debb_motorstate
 debb_move
+debb_printnotification
 debb_propagateebbchange
 debb_propagatevalue
 debb_setebbmotorsensefromcan
 debb_setebbmotorstatefromcan
 debb_setebbvaluefromcan
+debb_setpositionzero
 debb_state
 debb_tick
 debb_value

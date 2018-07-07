@@ -82,7 +82,7 @@ onTimer2Interrupt{
     // TIMER_2_PERIOD*25 = 25ms (40Hz)
     if (timer2_counter1 >= 25) {
         if (dStart_isSwitchedOn()) {
-            //dStart_sendStartMessage();
+            dStart_sendStartMessage();
         }
         timer2_counter1 = 0;
     }

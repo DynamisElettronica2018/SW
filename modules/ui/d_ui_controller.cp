@@ -568,12 +568,25 @@ void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 38 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 41 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_setPositionZero(void);
 
 void dEbb_move(signed char movements);
 
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+
+
 void dEbb_calibrateSwitch(void);
+
+void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
+
+void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_calibrationState(int value);
 
@@ -588,16 +601,6 @@ void dEbb_calibrateDown(void);
 void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
-
-void dEbb_setEbbValueFromCAN(unsigned int value);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_propagateEbbChange(void);
-
-void dEbb_tick(void);
 #line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 

@@ -868,13 +868,10 @@ L_end_d_controls_onDRS:
 _d_controls_onAux1:
 
 ;d_controls.c,452 :: 		void d_controls_onAux1(void) {
-;d_controls.c,453 :: 		Debug_UART_Write("On aux 1\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr13_d_controls), W10
-	CALL	_Debug_UART_Write
+;d_controls.c,453 :: 		dEbb_setPositionZero();
+	CALL	_dEbb_setPositionZero
 ;d_controls.c,454 :: 		}
 L_end_d_controls_onAux1:
-	POP	W10
 	RETURN
 ; end of _d_controls_onAux1
 
@@ -885,7 +882,7 @@ _d_controls_onStartAcquisition:
 	PUSH	W10
 	CALL	_dDCU_switchAcquisition
 ;d_controls.c,458 :: 		Debug_UART_Write("Start acquisition\r\n");
-	MOV	#lo_addr(?lstr14_d_controls), W10
+	MOV	#lo_addr(?lstr13_d_controls), W10
 	CALL	_Debug_UART_Write
 ;d_controls.c,459 :: 		}
 L_end_d_controls_onStartAcquisition:

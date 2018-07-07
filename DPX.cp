@@ -408,12 +408,25 @@ void dClutch_send(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 38 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 41 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_setPositionZero(void);
 
 void dEbb_move(signed char movements);
 
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+
+
 void dEbb_calibrateSwitch(void);
+
+void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
+
+void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_calibrationState(int value);
 
@@ -428,16 +441,6 @@ void dEbb_calibrateDown(void);
 void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
-
-void dEbb_setEbbValueFromCAN(unsigned int value);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_propagateEbbChange(void);
-
-void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
@@ -768,7 +771,7 @@ signed char value = 0;
 
  if (timer2_counter1 >= 25) {
  if (dStart_isSwitchedOn()) {
-
+ dStart_sendStartMessage();
  }
  timer2_counter1 = 0;
  }

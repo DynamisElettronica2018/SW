@@ -450,7 +450,7 @@ void d_controls_onDRS() {
 }
 
 void d_controls_onAux1(void) {
-     Debug_UART_Write("On aux 1\r\n");
+    dEbb_setPositionZero();
 }
 
 void d_controls_onStartAcquisition(void) {

@@ -55,7 +55,94 @@ void dStart_switchOff(void);
 char dStart_isSwitchedOn(void);
 
 void dStart_sendStartMessage(void);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+void setAllPinAsDigital(void);
+
+void setInterruptPriority(unsigned char device, unsigned char priority);
+
+void setExternalInterrupt(unsigned char device, char edge);
+
+void switchExternalInterruptEdge(unsigned char);
+
+char getExternalInterruptEdge(unsigned char);
+
+void clearExternalInterrupt(unsigned char);
+
+void setTimer(unsigned char device, double timePeriod);
+
+void clearTimer(unsigned char device);
+
+void turnOnTimer(unsigned char device);
+
+void turnOffTimer(unsigned char device);
+
+unsigned int getTimerPeriod(double timePeriod, unsigned char prescalerIndex);
+
+unsigned char getTimerPrescaler(double timePeriod);
+
+double getExactTimerPrescaler(double timePeriod);
+
+void setupAnalogSampling(void);
+
+void turnOnAnalogModule();
+
+void turnOffAnalogModule();
+
+void startSampling(void);
+
+unsigned int getAnalogValue(void);
+
+void setAnalogPIN(unsigned char pin);
+
+void unsetAnalogPIN(unsigned char pin);
+
+void setAnalogInterrupt(void);
+
+void unsetAnalogInterrupt(void);
+
+void clearAnalogInterrupt(void);
+
+
+void setAutomaticSampling(void);
+
+void unsetAutomaticSampling(void);
+
+
+void setAnalogVoltageReference(unsigned char mode);
+
+void setAnalogDataOutputFormat(unsigned char adof);
+
+int getMinimumAnalogClockConversion(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 11 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+char Music_hasToMakeSound(void);
+
+void Music_tick(void);
+
+void Music_setSongTime(unsigned int time);
+
+void Music_playSong(unsigned char song[], unsigned int songLength);
+
+void Music_playSongNextNote(void);
+
+void Music_playNote(unsigned char note, unsigned char duration);
+
+float Music_getActualNoteDuration(unsigned char duration);
+
+float Music_getNoteFrequency(unsigned char note);
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+void Buzzer_init(void);
+
+void Buzzer_tick(void);
+
+void Buzzer_bip(void);
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_start.c"
 char dStart_isSwitchOnFlag =  0 ;
 
 void dStart_switchOn(void) {
@@ -72,4 +159,5 @@ char dStart_isSwitchedOn(void) {
 
 void dStart_sendStartMessage(void) {
  Can_writeByte( 0b01000000100 ,  1 );
+ Buzzer_bip();
 }

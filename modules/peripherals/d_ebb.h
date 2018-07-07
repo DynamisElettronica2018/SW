@@ -15,10 +15,12 @@
 //se eeb target vale 15, il signorino deve calibrare
 //calibrazione tra 10 e 20
 
-#define EBB_CENTER_CALIBRATION 15
-#define EBB_MAX_VALUE 3
-#define EBB_MIN_VALUE -3
-#define EBB_DAGO_OFFSET 4
+//#define EBB_CENTER_CALIBRATION 15
+#define EBB_MAX_VALUE -7
+#define EBB_MIN_VALUE 7
+#define EBB_DAGO_OFFSET 8
+#define EBB_SET_ZERO 100
+
 #define EBB_IS_CALIBRATING 100
 #define EBB_OK 112
 #define EBB_MOTOR_STATE_READY 0
@@ -34,12 +36,26 @@
 #define EBB_CALIBRATE_DOWN 99
 #define EBB_CALIBRATE_UP 101
 #define EBB_NOTIFICATION_TIME 1000
+#define EBB_CENTER_CALIBRATION 100
 
 void dEbb_init(void);
 
+void dEbb_setPositionZero(void);
+
 void dEbb_move(signed char movements);
 
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+
+/******************************************************************************/
 void dEbb_calibrateSwitch(void);
+
+void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
+
+void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_calibrationState(int value);
 
@@ -54,15 +70,5 @@ void dEbb_calibrateDown(void);
 void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
-
-void dEbb_setEbbValueFromCAN(unsigned int value);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_propagateEbbChange(void);
-
-void dEbb_tick(void);
-
+/******************************************************************************/
 #endif //DP8_DISPLAY_CONTROLLER_D_EBB_H

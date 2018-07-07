@@ -124,6 +124,8 @@ L__timer2_interrupt42:
 	BRA NZ	L__timer2_interrupt43
 	GOTO	L_timer2_interrupt8
 L__timer2_interrupt43:
+;DPX.c,85 :: 		dStart_sendStartMessage();
+	CALL	_dStart_sendStartMessage
 ;DPX.c,86 :: 		}
 L_timer2_interrupt8:
 ;DPX.c,87 :: 		timer2_counter1 = 0;

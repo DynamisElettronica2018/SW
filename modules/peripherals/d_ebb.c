@@ -21,9 +21,21 @@ char textMessage;
 
 
 signed char d_ebb = 0;
-/*      non serve perchè c'è già l'indicator sulla dashboard  */
-/*void dEbb_printNotification(void){
+
+void dEbb_printNotification(void){
      switch (dEbb_value){
+           case -7:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -7", MESSAGE);
+                 break;
+           case -6:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -6", MESSAGE);
+                 break;
+           case -5:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -5", MESSAGE);
+                 break;
+           case -4:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -4", MESSAGE);
+                 break;
            case -3:
                  dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB -3", MESSAGE);
                  break;
@@ -45,10 +57,53 @@ signed char d_ebb = 0;
            case 3:
                  dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 3", MESSAGE);
                  break;
+           case 4:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 4", MESSAGE);
+                 break;
+           case 5:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 5", MESSAGE);
+                 break;
+           case 6:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 6", MESSAGE);
+                 break;
+           case 7:
+                 dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB 7", MESSAGE);
+                 break;
            default:
                  break;
            }
-} //*/
+}
+
+void dEbb_setEbbValueFromCAN(unsigned int value){
+     dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
+     dEbb_printNotification();
+}
+
+void dEbb_setPositionZero(void){
+    Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
+    dEbb_Value = 0;
+    dEbb_propagateEbbChange();
+}
+
+void dEbb_propagateEbbChange(void) {
+ switch (dEbb_state){
+    case EBB_IS_CALIBRATING:
+        dd_Indicator_setStringValue(EBB, "=0=");
+        break;
+    case EBB_MOTOR_STOPPED:
+        dd_Indicator_setStringValue(EBB, "/");
+        break;
+    case EBB_LOW_VOLTAGE_STOP:
+        dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
+        break;
+    case EBB_MOTOR_ROTATEING:
+        dd_Indicator_setStringValue(EBB, "...");
+        break;
+    default:
+        dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
+        break;
+    }
+}
 
 void dEbb_propagateValue(signed char value){
      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
@@ -57,7 +112,7 @@ void dEbb_propagateValue(signed char value){
 
 void dEbb_move(signed char movements){
       signed char value;
-      value = dEbb_value - movements;
+      value = dEbb_value + movements;
       if(value > EBB_MAX_VALUE){
          value = EBB_MAX_VALUE;
       } else if(value < EBB_MIN_VALUE){
@@ -68,17 +123,12 @@ void dEbb_move(signed char movements){
 }
 
 void dEbb_init(void){
-     Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int) dEbb_value);      //se si vuole partire sempre da zero
-     dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
-     sprintf(dstr, "Traction Control Value: %d\r\n", (int) dEbb_value);
-     Debug_UART_Write(dstr);
-     //altrimenti dobbiamo leggere il valore che ci manda ebb e poi settarlo come valore iniziale
+
 }
 
 
-
-
-////COME ENTRIAMO NELLA CALIBRATION MODE??///
+/*****************************************************************************/
+//funzioni dp9. sopra quelle dpx, poi vediamo cosa fare.
 void dEbb_calibrateSwitch(void) {
     if (dEbb_isCalibrateing() == TRUE){
         dEbb_calibrateStop();
@@ -128,29 +178,6 @@ void dEbb_calibrateStop(void) {
     
 }
 
-void dEbb_setEbbValueFromCAN(unsigned int value) {
-    switch (value){
-    case EBB_IS_CALIBRATING:
-        dEbb_state = EBB_IS_CALIBRATING;
-        break;
-    case EBB_MOTOR_STOPPED:
-        dEbb_state = EBB_MOTOR_STOPPED;
-        break;
-    case EBB_LOW_VOLTAGE_STOP:
-        dEbb_state = EBB_LOW_VOLTAGE_STOP;
-        break;
-    case EBB_MOTOR_ROTATEING:
-        dEbb_state = EBB_MOTOR_ROTATEING;
-        break;
-    default:
-        dEbb_state = EBB_OK;
-        dEbb_value = value - EBB_DAGO_OFFSET;
-        dEbb_localValue = dEbb_value;
-        break;
-    }
-    dEbb_propagateEbbChange();
-}
-
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
     dEbb_motorState = motorState;
 }
@@ -160,25 +187,6 @@ void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
 }
 
 
-void dEbb_propagateEbbChange(void) {
- switch (dEbb_state){
-    case EBB_IS_CALIBRATING:
-        dd_Indicator_setStringValue(EBB, "=0=");
-        break;
-    case EBB_MOTOR_STOPPED:
-        dd_Indicator_setStringValue(EBB, "/");
-        break;
-    case EBB_LOW_VOLTAGE_STOP:
-        dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
-        break;
-    case EBB_MOTOR_ROTATEING:
-        dd_Indicator_setStringValue(EBB, "...");
-        break;
-    default:
-        dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
-        break;
-    }
-}
 
 void dEbb_tick(void) {
 /*switch (dEbb_state){
@@ -208,3 +216,4 @@ if(dEbb_isCalibrateing() == TRUE){
         dEbb_calibratePause();
     }*/
 }
+

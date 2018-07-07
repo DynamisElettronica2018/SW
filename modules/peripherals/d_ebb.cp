@@ -249,12 +249,25 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 38 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 41 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
+
+void dEbb_setPositionZero(void);
 
 void dEbb_move(signed char movements);
 
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+
+
 void dEbb_calibrateSwitch(void);
+
+void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
+
+void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
 
 void dEbb_calibrationState(int value);
 
@@ -269,16 +282,6 @@ void dEbb_calibrateDown(void);
 void dEbb_calibratePause(void);
 
 void dEbb_calibrateStop(void);
-
-void dEbb_setEbbValueFromCAN(unsigned int value);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_propagateEbbChange(void);
-
-void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
@@ -453,39 +456,117 @@ int dEbb_localValue = 0, dEbb_motorState = 0;
 signed char dEbb_value = 0;
 
 unsigned int dEbb_motorSense = 0, stateFlag = 0;
-int dEbb_calibration =  15 ;
+int dEbb_calibration =  100 ;
 int dEbb_state =  112 ;
 int calibrationState =  0 ;
 char textMessage;
 
 
 signed char d_ebb = 0;
-#line 53 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+
+void dEbb_printNotification(void){
+ switch (dEbb_value){
+ case -7:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -7", MESSAGE);
+ break;
+ case -6:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -6", MESSAGE);
+ break;
+ case -5:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -5", MESSAGE);
+ break;
+ case -4:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -4", MESSAGE);
+ break;
+ case -3:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -3", MESSAGE);
+ break;
+ case -2:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -2", MESSAGE);
+ break;
+ case -1:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -1", MESSAGE);
+ break;
+ case 0:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 0", MESSAGE);
+ break;
+ case 1:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 1", MESSAGE);
+ break;
+ case 2:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 2", MESSAGE);
+ break;
+ case 3:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 3", MESSAGE);
+ break;
+ case 4:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 4", MESSAGE);
+ break;
+ case 5:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 5", MESSAGE);
+ break;
+ case 6:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 6", MESSAGE);
+ break;
+ case 7:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 7", MESSAGE);
+ break;
+ default:
+ break;
+ }
+}
+
+void dEbb_setEbbValueFromCAN(unsigned int value){
+ dEbb_Value = (int)(value -  8 );
+ dEbb_printNotification();
+}
+
+void dEbb_setPositionZero(void){
+ Can_writeInt( 0b10000000000 ,  100 );
+ dEbb_Value = 0;
+ dEbb_propagateEbbChange();
+}
+
+void dEbb_propagateEbbChange(void) {
+ switch (dEbb_state){
+ case  100 :
+ dd_Indicator_setStringValue(EBB, "=0=");
+ break;
+ case  122 :
+ dd_Indicator_setStringValue(EBB, "/");
+ break;
+ case  124 :
+ dd_Indicator_setStringValue(EBB, ";");
+ break;
+ case  10 :
+ dd_Indicator_setStringValue(EBB, "...");
+ break;
+ default:
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
+ break;
+ }
+}
+
 void dEbb_propagateValue(signed char value){
- Can_writeInt( 0b10000000000 , (int)(value +  4 ));
+ Can_writeInt( 0b10000000000 , (int)(value +  8 ));
  dEbb_propagateEbbChange();
 }
 
 void dEbb_move(signed char movements){
  signed char value;
- value = dEbb_value - movements;
- if(value >  3 ){
- value =  3 ;
- } else if(value <  -3 ){
- value =  -3 ;
+ value = dEbb_value + movements;
+ if(value >  -7 ){
+ value =  -7 ;
+ } else if(value <  7 ){
+ value =  7 ;
  }
  dEbb_Value = value;
  dEbb_propagateValue(value);
 }
 
 void dEbb_init(void){
- Can_writeInt( 0b10000000000 , (int) dEbb_value);
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
- sprintf(dstr, "Traction Control Value: %d\r\n", (int) dEbb_value);
- Debug_UART_Write(dstr);
 
 }
-
 
 
 
@@ -534,32 +615,9 @@ void dEbb_calibratePause(void) {
 }
 
 void dEbb_calibrateStop(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  4 );
+ Can_writeByte( 0b10000000000 , (unsigned char)  8 );
  dEbb_localValue = 0;
 
-}
-
-void dEbb_setEbbValueFromCAN(unsigned int value) {
- switch (value){
- case  100 :
- dEbb_state =  100 ;
- break;
- case  122 :
- dEbb_state =  122 ;
- break;
- case  124 :
- dEbb_state =  124 ;
- break;
- case  10 :
- dEbb_state =  10 ;
- break;
- default:
- dEbb_state =  112 ;
- dEbb_value = value -  4 ;
- dEbb_localValue = dEbb_value;
- break;
- }
- dEbb_propagateEbbChange();
 }
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
@@ -571,26 +629,7 @@ void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
 }
 
 
-void dEbb_propagateEbbChange(void) {
- switch (dEbb_state){
- case  100 :
- dd_Indicator_setStringValue(EBB, "=0=");
- break;
- case  122 :
- dd_Indicator_setStringValue(EBB, "/");
- break;
- case  124 :
- dd_Indicator_setStringValue(EBB, ";");
- break;
- case  10 :
- dd_Indicator_setStringValue(EBB, "...");
- break;
- default:
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) dEbb_value);
- break;
- }
-}
 
 void dEbb_tick(void) {
-#line 210 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 218 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

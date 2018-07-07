@@ -25,7 +25,7 @@ diagnostics: 81	123	Compiled Successfully	music.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 34	123	Compiled Successfully	d_clutch.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
-diagnostics: 210	123	Compiled Successfully	d_ebb.c
+diagnostics: 218	123	Compiled Successfully	d_ebb.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
 diagnostics: 66	123	Compiled Successfully	d_efiSense.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -53,7 +53,7 @@ diagnostics: 54	123	Compiled Successfully	d_rpm.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 77	123	Compiled Successfully	d_signalLed.c
 diagnostics: 0	122	Compilation Started	can.h
-diagnostics: 23	123	Compiled Successfully	d_start.c
+diagnostics: 25	123	Compiled Successfully	d_start.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 122	123	Compiled Successfully	d_warnings.c
 diagnostics: 0	122	Compilation Started	d_acceleration.h
@@ -68,8 +68,8 @@ diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 64	123	Compiled Successfully	d_dcu.c
 diagnostics: 0	122	Compilation Started	d_traction_control.h
 diagnostics: 81	123	Compiled Successfully	d_traction_control.c
-diagnostics: 0	127	All files Compiled in 7328 ms	 
+diagnostics: 0	127	All files Compiled in 4266 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 1016 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 8625 ms	 
-diagnostics: 0	103	Finished successfully: 05 lug 2018, 16:38:35	DPX.mcpds
+diagnostics: 0	128	Linked in 1187 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 5797 ms	 
+diagnostics: 0	103	Finished successfully: 07 lug 2018, 12:30:39	DPX.mcpds
