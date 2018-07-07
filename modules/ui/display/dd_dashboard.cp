@@ -1514,32 +1514,29 @@ static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
  Indicator* indicator = dd_currentIndicators[indicatorIndex];
  unsigned char x, y, oldLabelLength;
 
-
-
+ if (dd_GraphicController_isFrameUpdateForced()) {
  dd_Indicator_drawContainers(indicatorIndex);
  x = dd_Indicator_getNameXCoord(indicatorIndex);
  y = dd_Indicator_getNameYCoord(indicatorIndex);
   xGlcd_Set_Font ( DynamisFont_xTerminal6x8, 6 , 8 , 32 );
-
- eGlcd_overwriteText(indicator->name, indicator->name, x, y);
-
+ eGlcd_writeText(indicator->name, x, y);
+  xGlcd_Set_Font ( DynamisFont_Dashboard16x16, 16 , 16 , 32 );
+ }
 
  oldLabelLength = indicator->labelLength;
-  xGlcd_Set_Font ( DynamisFont_Dashboard16x16, 16 , 16 , 32 );
 
  x = dd_Indicator_getLabelXCoord(indicatorIndex);
  y = dd_Indicator_getLabelYCoord(indicatorIndex);
 
  eGlcd_clearText(indicator->label, x, y);
 
+ if(dd_Indicator_isRequestingUpdate(indicatorIndex))
+ {
  dd_Indicator_parseValueLabel(indicatorIndex);
- if (oldLabelLength != indicator->labelLength) {
-
  x = dd_Indicator_getLabelXCoord(indicatorIndex);
+ dd_Indicator_clearPrintUpdateRequest(indicatorIndex);
  }
  eGlcd_writeText(indicator->label, x, y);
-
- dd_Indicator_clearPrintUpdateRequest(indicatorIndex);
 }
 
 extern char str[100];
@@ -1551,6 +1548,7 @@ double getExecTime();
 
 void dd_Dashboard_printIndicators(void) {
  unsigned char index;
+  xGlcd_Set_Font ( DynamisFont_Dashboard16x16, 16 , 16 , 32 );
  for (index = 0; index <  4 ; index++) {
  if (dd_Indicator_isRequestingUpdate(index) ||
  dd_GraphicController_isFrameUpdateForced()) {
@@ -1562,6 +1560,8 @@ void dd_Dashboard_printIndicators(void) {
 
 
 void dd_Dashboard_print(void) {
+ if(dd_GraphicController_isFrameUpdateForced())
+ eGlcd_clear();
  dd_Dashboard_printGearLetter();
  dd_Dashboard_printIndicators();
 }

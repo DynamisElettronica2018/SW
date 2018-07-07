@@ -120,32 +120,29 @@ static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
     Indicator* indicator = dd_currentIndicators[indicatorIndex];
     unsigned char x, y, oldLabelLength;
 
-   // if (dd_GraphicController_isFrameUpdateForced() ||
-   //     dd_Indicator_isRequestingFullUpdate(indicatorIndex)) {
+    if (dd_GraphicController_isFrameUpdateForced()) {
         dd_Indicator_drawContainers(indicatorIndex);
         x = dd_Indicator_getNameXCoord(indicatorIndex);
         y = dd_Indicator_getNameYCoord(indicatorIndex);
         eGlcd_setFont(DD_xTerminal_Font);
-        //che senso ha?
-        eGlcd_overwriteText(indicator->name, indicator->name, x, y);
-  //  }
+        eGlcd_writeText(indicator->name, x, y);
+        eGlcd_setFont(DD_Dashboard_Font);
+    }
 
     oldLabelLength = indicator->labelLength;
-    eGlcd_setFont(DD_Dashboard_Font);
     //Make coordinates
     x = dd_Indicator_getLabelXCoord(indicatorIndex);
     y = dd_Indicator_getLabelYCoord(indicatorIndex);
     //Clear text
     eGlcd_clearText(indicator->label, x, y);
     //Update string label value
-    dd_Indicator_parseValueLabel(indicatorIndex);
-    if (oldLabelLength != indicator->labelLength) {
-        //Update value x if string width is different
+    if(dd_Indicator_isRequestingUpdate(indicatorIndex))
+    {
+        dd_Indicator_parseValueLabel(indicatorIndex);
         x = dd_Indicator_getLabelXCoord(indicatorIndex);
+        dd_Indicator_clearPrintUpdateRequest(indicatorIndex);
     }
     eGlcd_writeText(indicator->label, x, y);
-
-    dd_Indicator_clearPrintUpdateRequest(indicatorIndex);
 }
 
 extern char str[100];
@@ -157,6 +154,7 @@ double getExecTime();
 
 void dd_Dashboard_printIndicators(void) {
     unsigned char index;
+    eGlcd_setFont(DD_Dashboard_Font);
     for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
         if (dd_Indicator_isRequestingUpdate(index) ||
             dd_GraphicController_isFrameUpdateForced()) {
@@ -168,6 +166,8 @@ void dd_Dashboard_printIndicators(void) {
 
 
 void dd_Dashboard_print(void) {
+    if(dd_GraphicController_isFrameUpdateForced())
+        eGlcd_clear();
     dd_Dashboard_printGearLetter();
     dd_Dashboard_printIndicators();
 }
