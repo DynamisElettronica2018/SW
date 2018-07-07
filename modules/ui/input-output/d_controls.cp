@@ -36,6 +36,8 @@ double tanh(double x);
 
 void dControls_init(void);
 
+void dControls_disableCentralSelector();
+
 void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);
@@ -631,6 +633,7 @@ static unsigned char old_encoder_right_pin0 = 0;
 static unsigned char old_encoder_right_pin1 = 0;
 static unsigned char old_encoder_right_pin2 = 0;
 
+static d_isCentralSelectorEnabled =  1 ;
 extern OperatingMode d_currentOperatingMode;
 
 void printf(char* string);
@@ -674,7 +677,7 @@ void dControls_init(void) {
  if (expanderPort == 0) position =  0 ;
  else
  position = log2(expanderPort) -  3 ;
-#line 128 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 129 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
  setExternalInterrupt( 7 ,  1 );
@@ -686,6 +689,11 @@ void dControls_init(void) {
  Debug_UART_Write("FINISHED");
 }
 
+void dControls_disableCentralSelector()
+{
+ d_isCentralSelectorEnabled =  0 ;
+}
+
  void external0() iv IVT_ADDR_INT0INTERRUPT ics ICS_AUTO {
  Delay_ms( 1 );
  if ( RF2_bit  ==  0 ) {
@@ -695,7 +703,7 @@ void dControls_init(void) {
  }
  clearExternalInterrupt( 4 );
 }
-#line 154 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 160 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -753,10 +761,12 @@ void dControls_init(void) {
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
 }
-#line 231 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 235 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
+ if(d_isCentralSelectorEnabled)
+ {
  delay_ms(30);
  Delay_ms( 1 );
  expanderPort = ~I2CExpander_readPort( 0b01000010 );
@@ -770,6 +780,7 @@ void dControls_init(void) {
  else
  position = log2(expanderPort) -  3 ;
  d_controls_onSelectorSwitched(position);
+ }
  clearExternalInterrupt( 5 );
 }
 

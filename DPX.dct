@@ -2294,6 +2294,7 @@ dclutch_injectactualvalue
 dclutch_send
 dclutch_set
 dclutch_value
+dcontrols_disablecentralselector
 dcontrols_init
 dcount
 dcount_0
@@ -2467,6 +2468,7 @@ defisense_calculateoilintemperature
 defisense_calculateoilouttemperature
 defisense_calculatepressure
 defisense_calculateslip
+defisense_calculatespeed
 defisense_calculatetemperature
 defisense_calculatetps
 defisense_calculatevoltage

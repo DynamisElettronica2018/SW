@@ -188,6 +188,8 @@ void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
 
 void dControls_init(void);
 
+void dControls_disableCentralSelector();
+
 void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);

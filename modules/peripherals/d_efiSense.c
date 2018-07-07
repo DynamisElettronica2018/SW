@@ -39,6 +39,10 @@ char dEfiSense_isDead(void) {
     return dEfiSense_dead;
 }
 
+float dEfiSense_calculateSpeed(unsigned int value){
+    return 0.1*value;
+}
+
 int dEfiSense_calculateTPS (unsigned int value){
       return ((int)(value*100)/EFI_SENSE_TPS_RANGE);
 }

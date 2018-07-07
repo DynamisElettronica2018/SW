@@ -80,6 +80,7 @@ static unsigned char old_encoder_right_pin0 = 0;
 static unsigned char old_encoder_right_pin1 = 0;
 static unsigned char old_encoder_right_pin2 = 0;
 
+static d_isCentralSelectorEnabled = TRUE;
 extern OperatingMode d_currentOperatingMode;
 
 void printf(char* string);
@@ -134,6 +135,11 @@ void dControls_init(void) {
    setExternalInterrupt(GENERAL_BUTTON_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(ENCODER_INTERRUPT, INTERRUPT_EDGE);
    Debug_UART_Write("FINISHED");
+}
+
+void dControls_disableCentralSelector()
+{
+     d_isCentralSelectorEnabled = FALSE;
 }
 
 onGearInterrupt{
@@ -226,24 +232,25 @@ onCNInterrupt{
     expander's port) to map the switch's positions
     around 0.
 */
-
-
 onRotarySwitchInterrupt{
     signed char position = 0;
     unsigned char expanderPort;
-    delay_ms(30);
-    Delay_ms(STRANGE_BUTTON_DELAY);
-    expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
-    sprintf(dstr, "Port: %d\r\n", expanderPort);
-    Debug_UART_Write(dstr);
-    if (expanderPort == 0) {
-       position = CRUISE_MODE_POSITION;
-       sprintf(dstr, "Position: %d\r\n", position);
-       Debug_UART_Write(dstr);
-    }
-    else
+    if(d_isCentralSelectorEnabled)
+    {
+        delay_ms(30);
+        Delay_ms(STRANGE_BUTTON_DELAY);
+        expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
+        sprintf(dstr, "Port: %d\r\n", expanderPort);
+        Debug_UART_Write(dstr);
+        if (expanderPort == 0) {
+           position = CRUISE_MODE_POSITION;
+           sprintf(dstr, "Position: %d\r\n", position);
+           Debug_UART_Write(dstr);
+        }
+        else
         position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
-    d_controls_onSelectorSwitched(position);
+        d_controls_onSelectorSwitched(position);
+    }
     clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
 }
 

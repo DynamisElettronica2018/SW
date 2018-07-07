@@ -411,6 +411,10 @@ CAN_Interrupt
 		_Div_FP
 		_Mul_FP
 		_Float2Longint
+	dEfiSense_calculateSpeed
+		_Long2Float
+		_Mul_FP
+	dControls_disableCentralSelector
 	dEfiSense_calculateSlip
 		_Long2Float
 		_Mul_FP
@@ -425,6 +429,7 @@ CAN_Interrupt
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+	_Compare_Ge_Fp
 	_Long2Float
 external2
 	d_controls_onDRS

@@ -169,6 +169,8 @@ onCanInterrupt{
            dEfiSense_heartbeat();
            break;
        case EFI_TRACTION_CONTROL_ID:
+            if(dEfiSense_calculateSpeed(firstInt)>=10)
+                dControls_disableCentralSelector();
             dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
             break;
        case EFI_FUEL_FAN_H2O_LAUNCH_ID:
