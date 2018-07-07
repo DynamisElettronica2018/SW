@@ -72,14 +72,15 @@ main
 						xGlcd_Set_Font
 						eGlcd_overwriteChar
 							eGlcd_clearChar
-								xGlcd_Write_Char
+								xGlcd_Clear_Char
 									xGLCD_Write_Data
 										_frameBuffer_Read
 										_frameBuffer_Write
 									_Multiply_32x32
-								xGLCD_Set_Transparency
 							eGlcd_writeChar
 								xGlcd_Write_Char
+									xGLCD_Write_Data
+									_Multiply_32x32
 					dd_Dashboard_printIndicators
 						dd_Indicator_isRequestingUpdate
 						dd_GraphicController_isFrameUpdateForced
@@ -101,12 +102,13 @@ main
 							xGlcd_Set_Font
 							eGlcd_overwriteText
 								eGlcd_clearText
+									xGlcd_Clear_Text
+										strlen
+										xGlcd_Clear_Char
+								eGlcd_writeText
 									xGlcd_Write_Text
 										strlen
 										xGlcd_Write_Char
-									xGLCD_Set_Transparency
-								eGlcd_writeText
-									xGlcd_Write_Text
 							dd_Indicator_getLabelXCoord
 							dd_Indicator_getLabelYCoord
 							eGlcd_clearText

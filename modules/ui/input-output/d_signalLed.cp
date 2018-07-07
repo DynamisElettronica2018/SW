@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_signalLed.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_signalLed.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -73,7 +73,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 34 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -81,7 +81,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_signalLed.c"
+#line 11 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_signalLed.c"
 void dSignalLed_init(void) {
   TRISB9_bit  =  0 ;
   TRISB10_bit  =  0 ;

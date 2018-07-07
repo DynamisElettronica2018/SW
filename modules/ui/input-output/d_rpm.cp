@@ -1,5 +1,5 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_rpm.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 
 
 
@@ -20,9 +20,9 @@ void dRpm_disableLedStripeOutput(void);
 void dRpm_enableLedStripeOutput(void);
 
 void dRpm_updateLedStripe(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -35,8 +35,8 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -48,15 +48,15 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
-#line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 9 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_init(unsigned char address, char direction);
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_setPort(unsigned char address, unsigned char port);
-#line 21 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+#line 21 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 unsigned char I2CExpander_readPort(unsigned char address);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
@@ -82,7 +82,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 68 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -177,8 +177,8 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
 
 
@@ -209,8 +209,8 @@ void d_controls_onLeftEncoder(signed char movements);
 void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -267,12 +267,12 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 105 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 125 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 134 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/math.h"
 
@@ -301,7 +301,7 @@ double pow(double x, double y);
 double sinh(double x);
 double cosh(double x);
 double tanh(double x);
-#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
+#line 14 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_rpm.c"
 unsigned int dRpm = 0;
 char dRpm_ledStripeOutputEnable =  0 ;
 

@@ -13562,6 +13562,8 @@ xe_8_bit
 xe_9
 xe_9_bit
 xglcd_char_width
+xglcd_clear_char
+xglcd_clear_text
 xglcd_set_font
 xglcd_set_transparency
 xglcd_text_width

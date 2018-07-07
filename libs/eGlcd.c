@@ -84,13 +84,8 @@ void eGlcd_overwriteChar(char oldChar, char newChar, unsigned char x, unsigned c
 }
 
 void eGlcd_clearChar(char letter, unsigned char x, unsigned char y) {
-    if (BLACK) {
-        xGlcd_Write_Char(letter, x, y, WHITE);
-    } else {
-        xGLCD_Set_Transparency(TRUE);
-        xGlcd_Write_Char(letter, x, y, WHITE);
-        xGLCD_Set_Transparency(FALSE);
-    }
+     if (BLACK)
+        xGlcd_Clear_Char(letter, x, y, WHITE);
 }
 
 void eGlcd_writeChar(char letter, unsigned char x, unsigned char y) {
@@ -107,13 +102,13 @@ void eGlcd_overwriteText(char *oldText, char *newText, unsigned char x, unsigned
 }
 
 void eGlcd_clearText(char *text, unsigned char x, unsigned char y) {
-    if (BLACK) {
-        xGlcd_Write_Text(text, x, y, WHITE);
-    } else {
+    if (BLACK)
+        xGlcd_Clear_Text(text, x, y, WHITE);
+    /*} else {
         xGLCD_Set_Transparency(TRUE);
         xGlcd_Write_Text(text, x, y, WHITE);
         xGLCD_Set_Transparency(FALSE);
-    }
+    } */
 }
 
 void eGlcd_writeText(char *text, unsigned char x, unsigned char y) {
@@ -749,6 +744,35 @@ unsigned short xGlcd_Write_Char(unsigned short ch, unsigned short x, unsigned sh
     return CharWidth;
 }
 
+unsigned short xGlcd_Clear_Char(unsigned short ch, unsigned short x, unsigned short y, unsigned short color) {
+    char byte;
+    const char *CurCharData;
+    unsigned short i, j, CharWidth, CharData;
+    unsigned long cOffset;
+    
+    switch (color)
+    {
+     case WHITE:
+          byte = 0;
+          break;
+     case BLACK:
+          byte = 0xFF;
+          break;
+     default:
+          break;
+    }
+
+    cOffset = xGlcdSelFontWidth * xGlcdSelFontNbRows + 1; // +1 is to jump the first byte associated to the char's width
+    cOffset = cOffset * (ch - xGlcdSelFontOffset);
+    CurCharData = xGlcdSelFont + cOffset;
+    CharWidth = *CurCharData;
+    for (i = 0; i < CharWidth; i++)
+        for (j = 0; j < xGlcdSelFontNbRows; j++) {
+            xGLCD_Write_Data(x + i, y + j * 8, byte);
+        };
+    return CharWidth;
+}
+
 unsigned short xGlcd_Char_Width(unsigned short ch) {
     const char *CurCharDt;
     unsigned long cOffset;
@@ -766,6 +790,18 @@ void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned s
     curChar = text;
     for (i = 0; i < l; i++) {
         posX = posX + xGlcd_Write_Char(*curChar, posX, y, color) + 1; //add 1 blank column
+        curChar++;
+    }
+}
+
+void xGlcd_Clear_Text(char *text, unsigned short x, unsigned short y, unsigned short color) {
+    unsigned short i, l, posX;
+    char *curChar;
+    l = strlen(text);
+    posX = x;
+    curChar = text;
+    for (i = 0; i < l; i++) {
+        posX = posX + xGlcd_Clear_Char(*curChar, posX, y, color) + 1; //add 1 blank column
         curChar++;
     }
 }
