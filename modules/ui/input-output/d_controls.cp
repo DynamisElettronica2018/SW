@@ -38,7 +38,7 @@ void dControls_init(void);
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -821,10 +821,10 @@ void dControls_init(void) {
  d_controls_onReset();
  }
  else if ( RD1_bit  ==  0 ) {
- d_controls_onAux1();
+ d_controls_onStartAcquisition();
  }
  else if ( RB15_bit  ==  0 ) {
- d_controls_onStartAcquisition();
+ d_controls_onAux2();
  }
  clearExternalInterrupt( 8 );
 }
@@ -872,6 +872,9 @@ void d_controls_onReset() {
 }
 #line 415 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
+}
+
+void d_controls_onAux2(void) {
  switch(d_currentOperatingMode)
  {
  case ACC_MODE:
@@ -879,10 +882,6 @@ void d_controls_onDRS() {
  default:
  return;
  }
-}
-
-void d_controls_onAux1(void) {
-
 }
 
 void d_controls_onStartAcquisition(void) {

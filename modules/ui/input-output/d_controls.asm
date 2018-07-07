@@ -675,16 +675,16 @@ L_external438:
 ;d_controls.c,282 :: 		else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
 	BTSC	RD1_bit, BitPos(RD1_bit+0)
 	GOTO	L_external440
-;d_controls.c,283 :: 		d_controls_onAux1();
-	CALL	_d_controls_onAux1
+;d_controls.c,283 :: 		d_controls_onStartAcquisition();
+	CALL	_d_controls_onStartAcquisition
 ;d_controls.c,284 :: 		}
 	GOTO	L_external441
 L_external440:
 ;d_controls.c,285 :: 		else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
 	BTSC	RB15_bit, BitPos(RB15_bit+0)
 	GOTO	L_external442
-;d_controls.c,286 :: 		d_controls_onStartAcquisition();
-	CALL	_d_controls_onStartAcquisition
+;d_controls.c,286 :: 		d_controls_onAux2();
+	CALL	_d_controls_onAux2
 ;d_controls.c,287 :: 		}
 L_external442:
 L_external441:
@@ -849,48 +849,48 @@ L_end_d_controls_onReset:
 _d_controls_onDRS:
 
 ;d_controls.c,415 :: 		void d_controls_onDRS() {
-;d_controls.c,416 :: 		switch(d_currentOperatingMode)
-	GOTO	L_d_controls_onDRS49
-;d_controls.c,418 :: 		case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
-L_d_controls_onDRS51:
-;d_controls.c,419 :: 		dAcc_requestAction();
-	CALL	_dAcc_requestAction
-;d_controls.c,420 :: 		default:
-L_d_controls_onDRS52:
-;d_controls.c,421 :: 		return;
-	GOTO	L_end_d_controls_onDRS
-;d_controls.c,422 :: 		}
-L_d_controls_onDRS49:
-	MOV	#lo_addr(_d_currentOperatingMode), W0
-	MOV.B	[W0], W0
-	CP.B	W0, #4
-	BRA NZ	L__d_controls_onDRS88
-	GOTO	L_d_controls_onDRS51
-L__d_controls_onDRS88:
-	GOTO	L_d_controls_onDRS52
-;d_controls.c,423 :: 		}
+;d_controls.c,416 :: 		}
 L_end_d_controls_onDRS:
 	RETURN
 ; end of _d_controls_onDRS
 
-_d_controls_onAux1:
+_d_controls_onAux2:
 
-;d_controls.c,425 :: 		void d_controls_onAux1(void) {
-;d_controls.c,427 :: 		}
-L_end_d_controls_onAux1:
+;d_controls.c,418 :: 		void d_controls_onAux2(void) {
+;d_controls.c,419 :: 		switch(d_currentOperatingMode)
+	GOTO	L_d_controls_onAux249
+;d_controls.c,421 :: 		case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
+L_d_controls_onAux251:
+;d_controls.c,422 :: 		dAcc_requestAction();
+	CALL	_dAcc_requestAction
+;d_controls.c,423 :: 		default:
+L_d_controls_onAux252:
+;d_controls.c,424 :: 		return;
+	GOTO	L_end_d_controls_onAux2
+;d_controls.c,425 :: 		}
+L_d_controls_onAux249:
+	MOV	#lo_addr(_d_currentOperatingMode), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #4
+	BRA NZ	L__d_controls_onAux289
+	GOTO	L_d_controls_onAux251
+L__d_controls_onAux289:
+	GOTO	L_d_controls_onAux252
+;d_controls.c,426 :: 		}
+L_end_d_controls_onAux2:
 	RETURN
-; end of _d_controls_onAux1
+; end of _d_controls_onAux2
 
 _d_controls_onStartAcquisition:
 
-;d_controls.c,429 :: 		void d_controls_onStartAcquisition(void) {
-;d_controls.c,430 :: 		dDCU_switchAcquisition();
+;d_controls.c,428 :: 		void d_controls_onStartAcquisition(void) {
+;d_controls.c,429 :: 		dDCU_switchAcquisition();
 	PUSH	W10
 	CALL	_dDCU_switchAcquisition
-;d_controls.c,431 :: 		Debug_UART_Write("Start acquisition\r\n");
+;d_controls.c,430 :: 		Debug_UART_Write("Start acquisition\r\n");
 	MOV	#lo_addr(?lstr11_d_controls), W10
 	CALL	_Debug_UART_Write
-;d_controls.c,432 :: 		}
+;d_controls.c,431 :: 		}
 L_end_d_controls_onStartAcquisition:
 	POP	W10
 	RETURN

@@ -354,7 +354,6 @@ external4
 					strcpy
 					dd_printMessage
 			dSignalLed_set
-	d_controls_onAux1
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
@@ -364,6 +363,26 @@ external4
 				dd_GraphicController_fireTimedNotification
 				Can_writeInt
 		Debug_UART_Write
+	d_controls_onAux2
+		dAcc_requestAction
+			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+			dAcc_startAutoAcceleration
+				Can_writeInt
+				dd_printMessage
 	clearExternalInterrupt
 external3
 	d_controls_onStart
@@ -405,20 +424,6 @@ CAN_Interrupt
 		dAcc_hasGCUConfirmed
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
-				dd_Dashboard_print
-				dd_Interface_printMenu
-				dd_Dashboard_init
-				dd_Menu_init
-				d_UI_BoardDebugModeInit
-				d_UI_SettingsModeInit
-				d_UI_DebugModeInit
-				d_UI_CruiseModeInit
-				d_UI_AccModeInit
-				d_UI_BoardDebugModeClose
-				d_UI_SettingsModeClose
-				d_UI_DebugModeClose
-				d_UI_CruiseModeClose
-				d_UI_AccModeClose
 			Can_writeInt
 			dd_printMessage
 	dEfiSense_calculateTPS
@@ -470,11 +475,6 @@ CAN_Interrupt
 	_Long2Float
 external2
 	d_controls_onDRS
-		dAcc_requestAction
-			dd_GraphicController_clearPrompt
-			dAcc_startAutoAcceleration
-				Can_writeInt
-				dd_printMessage
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick

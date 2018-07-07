@@ -280,10 +280,10 @@ onGeneralButtonInterrupt{
        d_controls_onReset();
     }
     else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onAux1();
+       d_controls_onStartAcquisition();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onStartAcquisition();
+       d_controls_onAux2();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
@@ -413,17 +413,16 @@ void d_controls_onReset() {
 ////////////////// DA DEFINIRE
 
 void d_controls_onDRS() {
-    switch(d_currentOperatingMode)
+}
+
+void d_controls_onAux2(void) {
+      switch(d_currentOperatingMode)
      {
          case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
               dAcc_requestAction();
          default:
          return;
      }
-}
-
-void d_controls_onAux1(void) {
-
 }
 
 void d_controls_onStartAcquisition(void) {
