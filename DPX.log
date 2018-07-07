@@ -1,13 +1,13 @@
-0	1	mikroCdsPIC.exe -MSF -DBG -pP30F6012A -DL -SSA -O11111114 -fo80 -N"C:\Users\sofia\Desktop\GIT REPO\SW\DPX.mcpds" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\" -SP"C:\Users\utente\Desktop\git Repo\SW\" -SP"C:\Users\utente\Desktop\git Repo\SW\libs\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\libs\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\" -IP"C:\Users\utente\Desktop\git Repo\SW\libs\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\libs\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\" "DPX.c" "basic.c" "buttons.c" "can.c" "debug.c" "dsPIC.c" "eeprom.c" "eGlcd.c" "glcdPins.c" "i2c_expander.c" "music.c" "d_clutch.c" "d_ebb.c" "d_efiSense.c" "d_gears.c" "dd_dashboard.c" "dd_graphic_controller.c" "dd_indicators.c" "dd_interfaces.c" "dd_menu.c" "buzzer.c" "d_controls.c" "d_hardReset.c" "d_paddle.c" "d_rpm.c" "d_signalLed.c" "d_start.c" "d_warnings.c" "d_acceleration.c" "d_operating_modes.c" "d_ui_controller.c" "d_sensors.c" "d_dcu.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_CMath.mcl" "__Lib_Setjmp.mcl" "__Lib_MemManager.mcl" "__Lib_Conversions.mcl" "__Lib_Sprintf.mcl" "__Lib_PrintOut.mcl" "__Lib_Sprinti.mcl" "__Lib_Sprintl.mcl" "__Lib_Time.mcl" "__Lib_Trigonometry.mcl" "__Lib_Button.mcl" "__Lib_Keypad4x4.mcl" "__Lib_Manchester.mcl" "__Lib_OneWire.mcl" "__Lib_PS2.mcl" "__Lib_Sound.mcl" "__Lib_SoftI2C.mcl" "__Lib_SoftSPI.mcl" "__Lib_SoftUART.mcl" "__Lib_ADC_1_p24FJ_p30.mcl" "__Lib_EEPROM_p30.mcl" "__Lib_FLASH_p30.mcl" "__Lib_I2C_1_p30.mcl" "__Lib_PWM_1.mcl" "__Lib_SPI_12.mcl" "__Lib_UART_12_p30.mcl" "__Lib_CAN_12.mcl" "__Lib_PortExpander.mcl" "__Lib_CANSPI.mcl" "__Lib_CF.mcl" "__Lib_CFFat16.mcl" "__Lib_GlcdFonts.mcl" "__Lib_Glcd.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl" "__Lib_Mmc.mcl" "__Lib_MmcFat16.mcl" "__Lib_MmcFat16Constants.mcl" "__Lib_RS485.mcl" "__Lib_S1D13700.mcl" "__Lib_T6963C.mcl" "__Lib_SPIGlcd.mcl" "__Lib_SPILcd.mcl" "__Lib_SPILcd8.mcl" "__Lib_SPIT6963C.mcl" "__Lib_EthEnc28j60.mcl" "__Lib_EthEnc24j600.mcl" "__Lib_TFT.mcl" "__Lib_TFT_Defs.mcl" "__Lib_TouchPanel_TFT.mcl" "__Lib_TouchPanel.mcl" "__Lib_BitReverseComplex.mcl" "__Lib_FFT.mcl" "__Lib_FirRadix.mcl" "__Lib_IirRadix.mcl" "__Lib_Matrices.mcl" "__Lib_TwiddleFactors.mcl" "__Lib_Q15.mcl" "__Lib_Vectors.mcl"	 
+0	1	mikroCdsPIC.exe -MSF -DBG -pP30F6012A -DL -SSA -O11111114 -fo80 -N"C:\Users\sofia\Desktop\GIT REPO\SW\DPX.mcpds" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\" -SP"C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\" -SP"C:\Users\utente\Desktop\git Repo\SW\" -SP"C:\Users\utente\Desktop\git Repo\SW\libs\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\" -SP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\libs\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\" -SP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\" -IP"C:\Users\utente\Desktop\git Repo\SW\libs\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\fonts\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\input-output\" -IP"C:\Users\utente\Desktop\git Repo\SW\modules\ui\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\libs\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\peripherals\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\fonts\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\" -IP"C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\" "DPX.c" "basic.c" "buttons.c" "can.c" "debug.c" "dsPIC.c" "eeprom.c" "eGlcd.c" "glcdPins.c" "i2c_expander.c" "music.c" "d_clutch.c" "d_ebb.c" "d_efiSense.c" "d_gears.c" "dd_dashboard.c" "dd_graphic_controller.c" "dd_indicators.c" "dd_interfaces.c" "dd_menu.c" "buzzer.c" "d_controls.c" "d_hardReset.c" "d_paddle.c" "d_rpm.c" "d_signalLed.c" "d_start.c" "d_warnings.c" "d_acceleration.c" "d_operating_modes.c" "d_ui_controller.c" "d_sensors.c" "d_dcu.c" "d_autocross.c" "__Lib_Math.mcl" "__Lib_MathDouble.mcl" "__Lib_System.mcl" "__Lib_Delays.mcl" "__Lib_CType.mcl" "__Lib_CString.mcl" "__Lib_CStdlib.mcl" "__Lib_CMath.mcl" "__Lib_Setjmp.mcl" "__Lib_MemManager.mcl" "__Lib_Conversions.mcl" "__Lib_Sprintf.mcl" "__Lib_PrintOut.mcl" "__Lib_Sprinti.mcl" "__Lib_Sprintl.mcl" "__Lib_Time.mcl" "__Lib_Trigonometry.mcl" "__Lib_Button.mcl" "__Lib_Keypad4x4.mcl" "__Lib_Manchester.mcl" "__Lib_OneWire.mcl" "__Lib_PS2.mcl" "__Lib_Sound.mcl" "__Lib_SoftI2C.mcl" "__Lib_SoftSPI.mcl" "__Lib_SoftUART.mcl" "__Lib_ADC_1_p24FJ_p30.mcl" "__Lib_EEPROM_p30.mcl" "__Lib_FLASH_p30.mcl" "__Lib_I2C_1_p30.mcl" "__Lib_PWM_1.mcl" "__Lib_SPI_12.mcl" "__Lib_UART_12_p30.mcl" "__Lib_CAN_12.mcl" "__Lib_PortExpander.mcl" "__Lib_CANSPI.mcl" "__Lib_CF.mcl" "__Lib_CFFat16.mcl" "__Lib_GlcdFonts.mcl" "__Lib_Glcd.mcl" "__Lib_LcdConsts.mcl" "__Lib_Lcd.mcl" "__Lib_Mmc.mcl" "__Lib_MmcFat16.mcl" "__Lib_MmcFat16Constants.mcl" "__Lib_RS485.mcl" "__Lib_S1D13700.mcl" "__Lib_T6963C.mcl" "__Lib_SPIGlcd.mcl" "__Lib_SPILcd.mcl" "__Lib_SPILcd8.mcl" "__Lib_SPIT6963C.mcl" "__Lib_EthEnc28j60.mcl" "__Lib_EthEnc24j600.mcl" "__Lib_TFT.mcl" "__Lib_TFT_Defs.mcl" "__Lib_TouchPanel_TFT.mcl" "__Lib_TouchPanel.mcl" "__Lib_BitReverseComplex.mcl" "__Lib_FFT.mcl" "__Lib_FirRadix.mcl" "__Lib_IirRadix.mcl" "__Lib_Matrices.mcl" "__Lib_TwiddleFactors.mcl" "__Lib_Q15.mcl" "__Lib_Vectors.mcl"	 
 diagnostics: 0	121	Loading...	 
 diagnostics: 0	122	Compilation Started	dd_indicators.h
-diagnostics: 227	123	Compiled Successfully	DPX.c
+diagnostics: 236	123	Compiled Successfully	DPX.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 56	123	Compiled Successfully	basic.c
 diagnostics: 0	122	Compilation Started	buttons.h
 diagnostics: 124	123	Compiled Successfully	buttons.c
 diagnostics: 0	122	Compilation Started	can.h
-diagnostics: 154	123	Compiled Successfully	can.c
+diagnostics: 155	123	Compiled Successfully	can.c
 diagnostics: 0	122	Compilation Started	dynamis_logo.h
 diagnostics: 106	123	Compiled Successfully	debug.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -27,13 +27,13 @@ diagnostics: 34	123	Compiled Successfully	d_clutch.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
 diagnostics: 168	123	Compiled Successfully	d_ebb.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
-diagnostics: 72	123	Compiled Successfully	d_efiSense.c
+diagnostics: 95	123	Compiled Successfully	d_efiSense.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 110	123	Compiled Successfully	d_gears.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 173	123	Compiled Successfully	dd_dashboard.c
 diagnostics: 0	122	Compilation Started	eglcd.h
-diagnostics: 307	123	Compiled Successfully	dd_graphic_controller.c
+diagnostics: 316	123	Compiled Successfully	dd_graphic_controller.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 205	123	Compiled Successfully	dd_indicators.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -43,7 +43,7 @@ diagnostics: 249	123	Compiled Successfully	dd_menu.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 39	123	Compiled Successfully	buzzer.c
 diagnostics: 0	122	Compilation Started	math.h
-diagnostics: 324	123	Compiled Successfully	d_controls.c
+diagnostics: 333	123	Compiled Successfully	d_controls.c
 diagnostics: 0	122	Compilation Started	eeprom.h
 diagnostics: 48	123	Compiled Successfully	d_hardReset.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -59,15 +59,17 @@ diagnostics: 122	123	Compiled Successfully	d_warnings.c
 diagnostics: 0	122	Compilation Started	d_acceleration.h
 diagnostics: 126	123	Compiled Successfully	d_acceleration.c
 diagnostics: 0	122	Compilation Started	d_controls.h
-diagnostics: 268	123	Compiled Successfully	d_operating_modes.c
+diagnostics: 274	123	Compiled Successfully	d_operating_modes.c
 diagnostics: 0	122	Compilation Started	d_controls.h
-diagnostics: 111	123	Compiled Successfully	d_ui_controller.c
+diagnostics: 119	123	Compiled Successfully	d_ui_controller.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 25	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
-diagnostics: 67	123	Compiled Successfully	d_dcu.c
-diagnostics: 0	127	All files Compiled in 7875 ms	 
+diagnostics: 70	123	Compiled Successfully	d_dcu.c
+diagnostics: 0	122	Compilation Started	d_autocross.h
+diagnostics: 94	123	Compiled Successfully	d_autocross.c
+diagnostics: 0	127	All files Compiled in 4016 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 1125 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 9328 ms	 
-diagnostics: 0	103	Finished successfully: 07 lug 2018, 10:48:47	DPX.mcpds
+diagnostics: 0	128	Linked in 875 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 5141 ms	 
+diagnostics: 0	103	Finished successfully: 07 lug 2018, 13:56:50	DPX.mcpds

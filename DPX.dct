@@ -2229,9 +2229,11 @@ d_setgearmotorstate
 d_swtemp_gettempvalue
 d_ui_accmodeinit
 d_ui_applysettings
+d_ui_autocrossmodeinit
 d_ui_boarddebugmodeinit
 d_ui_cruisemodeinit
 d_ui_debugmodeinit
+d_ui_getoperatingmode
 d_ui_onsettingschange
 d_ui_setoperatingmode
 d_ui_settingsmodeclose
@@ -2246,6 +2248,16 @@ dacc_isreleasingclutch
 dacc_startautoacceleration
 dacc_startclutchrelease
 dacc_stopautoacceleration
+dautocross_feedbackgcu
+dautocross_gcuconfirmed
+dautocross_hasgcuconfirmed
+dautocross_init
+dautocross_isautocrossactive
+dautocross_requestaction
+dautocross_startautocross
+dautocross_startclutchrelease
+dautocross_stopautocross
+dautocross_stopautocrossfromsw
 dben
 dben
 dben
@@ -2340,6 +2352,7 @@ dd_getindicatorindex
 dd_getindicatorindexfromcollection
 dd_graphiccontroller_arecolorsinverted
 dd_graphiccontroller_clearnotification
+dd_graphiccontroller_clearprompt
 dd_graphiccontroller_firenotification
 dd_graphiccontroller_firetimednotification
 dd_graphiccontroller_forcefullframeupdate
@@ -2474,6 +2487,7 @@ defisense_calculatewatertemperature
 defisense_dead
 defisense_detectreset
 defisense_die
+defisense_getaccvalue
 defisense_heartbeat
 defisense_isdead
 defisense_tick

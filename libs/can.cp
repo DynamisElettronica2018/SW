@@ -107,6 +107,7 @@ void Can_writeInt(unsigned long int id, int dataOut) {
  Can_write(id);
 }
 
+
 void Can_addIntToWritePacket(int dataOut) {
  Can_addByteToWritePacket((unsigned char) (dataOut >> 8));
  Can_addByteToWritePacket((unsigned char) (dataOut & 0xFF));
@@ -164,7 +165,7 @@ void Can_clearInterrupt(void) {
 }
 
 void Can_initInterrupt(void) {
-#line 150 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
+#line 151 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
  IEC1BITS.C1IE = 1;
  C1INTEBITS.RXB0IE = 1;
  C1INTEBITS.RXB1IE = 1;

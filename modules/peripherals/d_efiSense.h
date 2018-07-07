@@ -21,6 +21,7 @@
 #define EFI_SENSE_SLIP (0.1f)
 #define EFI_SENSE_TPS_RANGE 255
 
+#define EFI_SENSE_MIN_ACC_VALUE 50
 
 void dEfiSense_heartbeat(void);
 
@@ -29,6 +30,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+void dEfiSense_getAccValue(int accValue);
 
 int dEfiSense_calculateTPS (unsigned int value);
 

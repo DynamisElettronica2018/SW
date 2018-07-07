@@ -274,6 +274,8 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 
 void dd_GraphicController_forceFullFrameUpdate(void);

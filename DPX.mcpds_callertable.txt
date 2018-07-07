@@ -175,6 +175,8 @@ main
 					dd_GraphicController_setCollectionInterface
 				d_UI_AccModeInit
 					dd_GraphicController_setCollectionInterface
+				d_UI_AutocrossModeInit
+					dd_GraphicController_setCollectionInterface
 			d_selectorPositionToMode
 			setExternalInterrupt
 				setInterruptPriority
@@ -214,6 +216,7 @@ main
 		dRpm_init
 			I2CExpander_init
 			dRpm_enableLedStripeOutput
+		dAutocross_init
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
@@ -337,15 +340,36 @@ external4
 					EEPROM_readInt
 						EEPROM_Read
 			dSignalLed_set
-	d_controls_onAux1
 	d_controls_onStartAcquisition
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
 				dd_GraphicController_fireTimedNotification
-				Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dAutocross_isAutocrossActive
+				Can_write
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
+	d_controls_onAux1
+		dAutocross_requestAction
+			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_AutocrossModeInit
+			dAutocross_startAutocross
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dDCU_isAcquiring
+				Can_write
+				dd_printMessage
 	clearExternalInterrupt
 external3
 	d_controls_onStart
@@ -378,8 +402,18 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 		dEfiSense_isDead
 		dSignalLed_set
-	dd_Indicator_setIntValueP
-		dd_Indicator_requestPrintUpdateP
+	dEfiSense_getAccValue
+		d_UI_getOperatingMode
+		dd_Indicator_setIntValueP
+			dd_Indicator_requestPrintUpdateP
+		dAutocross_hasGCUConfirmed
+		dAutocross_startClutchRelease
+			dd_GraphicController_clearPrompt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			dDCU_isAcquiring
+			Can_write
+			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 	dEfiSense_calculateWaterTemperature
@@ -412,6 +446,7 @@ CAN_Interrupt
 		_Mul_FP
 		_Float2Longint
 		_Div_FP
+	dd_Indicator_setIntValueP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
@@ -421,6 +456,10 @@ CAN_Interrupt
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+	dAutocross_feedbackGCU
+		dAutocross_stopAutocross
+			dd_printMessage
+			d_UI_AutocrossModeInit
 	_Long2Float
 external2
 	d_controls_onDRS
@@ -515,6 +554,7 @@ timer1_interrupt
 		Lcd_PrintFrame
 		dd_printMessage
 		eGlcd_fill
+		d_UI_getOperatingMode
 		dd_GraphicController_handleNotification
 			dd_printMessage
 			Lcd_PrintFrame
@@ -530,6 +570,7 @@ timer1_interrupt
 		d_UI_DebugModeInit
 		d_UI_CruiseModeInit
 		d_UI_AccModeInit
+		d_UI_AutocrossModeInit
 external0
 	d_controls_onGearUp
 		dGear_requestGearUp

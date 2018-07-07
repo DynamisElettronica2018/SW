@@ -10,18 +10,20 @@
 #include "display/dd_dashboard.h"
 #include "input-output/d_controls.h"
 
+void d_UI_BoardDebugModeInit();
+void d_UI_SettingsModeInit();
+void d_UI_DebugModeInit();
 void d_UI_CruiseModeInit();
 void d_UI_AccModeInit();
-void d_UI_DebugModeInit();
-void d_UI_SettingsModeInit();
-void d_UI_BoardDebugModeInit();
+void d_UI_AutocrossModeInit();
 
 void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
         d_UI_BoardDebugModeInit,
         d_UI_SettingsModeInit,
         d_UI_DebugModeInit,
         d_UI_CruiseModeInit,
-        d_UI_AccModeInit
+        d_UI_AccModeInit,
+        d_UI_AutocrossModeInit
 };
 
 const unsigned char dd_carParametersCount = 21;
@@ -109,7 +111,7 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
 
 
 void d_UI_CruiseModeInit() {
-     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Drive");
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
 }
 
 void d_UI_AccModeInit(){
@@ -122,6 +124,10 @@ void d_UI_DebugModeInit() {
 
 void d_UI_BoardDebugModeInit() {
      dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
+}
+
+void d_UI_AutocrossModeInit() {
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carBoards, dd_carBoardsCount, "Autocross");
 }
 
 

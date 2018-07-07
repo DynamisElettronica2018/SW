@@ -16,6 +16,7 @@
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
 #include "d_dcu.h"
+#include "d_autocross.h"
 
 #define TIMER_2_PERIOD 0.001 //seconds
 
@@ -37,6 +38,7 @@ void d_UIController_init() {
     Debug_UART_Write("Signal Leds initialized.\r\n");
     dRpm_init();
     Debug_UART_Write("rpm initialized.\r\n");
+    dAutocross_init();
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
@@ -52,6 +54,10 @@ void d_UI_setOperatingMode(OperatingMode mode) {
      }
      d_currentOperatingMode = mode;
      d_OperatingMode_init[mode]();
+}
+
+OperatingMode d_UI_getOperatingMode(){
+     return d_currentOperatingMode;
 }
 
 void printf(char* string);
@@ -72,6 +78,7 @@ void d_controls_onLeftEncoder(signed char movements) {
             case DEBUG_MODE:
                  dd_Menu_moveSelection(movements);
                  break;
+            case AUTOCROSS_MODE:
             case CRUISE_MODE:
                  //TC
             case ACC_MODE:
@@ -90,6 +97,7 @@ void d_controls_onRightEncoder(signed char movements) {
             case DEBUG_MODE:
             case ACC_MODE:
               break;
+            case AUTOCROSS_MODE:
             case CRUISE_MODE:
               //EBB
               break;

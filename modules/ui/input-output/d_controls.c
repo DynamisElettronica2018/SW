@@ -17,6 +17,7 @@
 #include "../d_ui_controller.h"
 #include "../../../libs/i2c_expander.h"
 #include "../../../libs/debug.h"
+#include "d_autocross.h"
 
 
 #define BUTTON_ACTIVE_STATE 0
@@ -270,10 +271,10 @@ onGeneralButtonInterrupt{
        d_controls_onReset();
     }
     else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onAux1();
+       d_controls_onStartAcquisition();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-       d_controls_onStartAcquisition();
+       d_controls_onAux1();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
@@ -316,8 +317,16 @@ void d_controls_onReset() {
 void d_controls_onDRS() {
 }
 
+
 void d_controls_onAux1(void) {
+     switch(d_currentOperatingMode){
+         case AUTOCROSS_MODE:
+               dAutocross_requestAction();
+         default:
+         return;
+     }
 }
+
 
 void d_controls_onStartAcquisition(void) {
      dDCU_switchAcquisition();

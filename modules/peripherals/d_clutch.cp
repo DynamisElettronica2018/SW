@@ -290,13 +290,14 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 44 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -347,12 +348,13 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 107 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 127 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit();
+#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
 unsigned char dClutch_actualValue = 0, dClutch_value = 0;

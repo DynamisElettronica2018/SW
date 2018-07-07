@@ -19,6 +19,8 @@
 #include "../libs/debug.h"
 #include "../input-output/d_rpm.h"
 #include "d_clutch.h"
+#include "d_ui_controller.h"
+
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -155,6 +157,10 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     dd_GraphicController_setNotificationFlag();
 }
 
+void dd_GraphicController_clearPrompt(){
+     dd_Interface_print[dd_currentInterface]();
+}
+
 /**
     \param time Time in milliseconds.
 */
@@ -277,6 +283,9 @@ void dd_GraphicController_onTimerInterrupt(void) {
                eGlcd_fill(WHITE);
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
+               if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
+                  dd_printMessage("READY");
+               }
                dd_isFrameUpdateForced = FALSE;
            }
         }

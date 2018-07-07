@@ -26,6 +26,7 @@
 #include "d_sensors.h"
 #include "libs/debug.h"
 #include "dd_graphic_controller.h"
+#include "d_autocross.h"
 
 #include <stdlib.h>
 
@@ -152,7 +153,7 @@ onCanInterrupt{
            dGear_propagate(firstInt);
            dRpm_set(secondInt);
            dEfiSense_heartbeat();
-           dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
+           dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
            dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
@@ -217,6 +218,14 @@ onCanInterrupt{
                 dDCU_isAcquiringSet();
                 dDCU_sentAcquiringSignal();
            }
+           break;
+       case GCU_AUX_ID:
+           //int1 è fb di traction  da NON considerare quando siamo in ACC
+           //
+           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
+           dAutocross_feedbackGCU(fourthInt);
+           break;
+       default:
            break;
        default:
            break;

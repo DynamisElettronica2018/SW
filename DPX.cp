@@ -288,7 +288,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 25 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 26 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_tick(void);
@@ -296,6 +296,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+void dEfiSense_getAccValue(int accValue);
 
 int dEfiSense_calculateTPS (unsigned int value);
 
@@ -559,13 +561,14 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 44 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -616,17 +619,20 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 107 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 127 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit();
+#line 137 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
@@ -696,6 +702,8 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
@@ -715,6 +723,23 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
 
 
@@ -751,7 +776,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 32 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 33 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 
 
@@ -840,7 +865,7 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 126 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 127 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -870,7 +895,7 @@ void main(){
  dGear_propagate(firstInt);
  dRpm_set(secondInt);
  dEfiSense_heartbeat();
- dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
+ dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
  break;
  case  0b01100001100 :
  dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
@@ -899,7 +924,7 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
-#line 190 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 191 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -909,7 +934,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -927,6 +952,14 @@ void main(){
  dDCU_isAcquiringSet();
  dDCU_sentAcquiringSignal();
  }
+ break;
+ case  0b11111110001 :
+
+
+
+ dAutocross_feedbackGCU(fourthInt);
+ break;
+ default:
  break;
  default:
  break;
