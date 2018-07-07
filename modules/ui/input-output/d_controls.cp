@@ -362,6 +362,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -376,6 +377,8 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_indicators.h"
@@ -763,9 +766,6 @@ void dControls_init(void) {
  }
  else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 
-
-
-
  if(movement_sx){
  d_controls_onLeftEncoder(movement_sx);
  }
@@ -775,9 +775,8 @@ void dControls_init(void) {
 
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
-#line 249 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 }
-#line 270 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 239 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -832,8 +831,6 @@ void dControls_init(void) {
 
 
 
-
-
 void d_controls_onGearUp() {
  Debug_UART_Write("Request gear up\r\n");
  dGear_requestGearUp();
@@ -857,7 +854,7 @@ void d_controls_onStart() {
  switchExternalInterruptEdge( 7 );
  }
 }
-#line 410 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 377 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onNeutral() {
  Debug_UART_Write("On neutral\r\n");
  if (!dGear_isNeutralSet()) {
@@ -873,7 +870,7 @@ void d_controls_onReset() {
  Debug_UART_Write("On reset\r\n");
  dHardReset_reset();
 }
-#line 448 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 415 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 void d_controls_onDRS() {
  switch(d_currentOperatingMode)
  {

@@ -421,6 +421,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -435,6 +436,8 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 10 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_CruiseModeInit();

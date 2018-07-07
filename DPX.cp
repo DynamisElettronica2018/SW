@@ -286,8 +286,10 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 24 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 26 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
+
+void dEfiSense_getAccValue(int accValue);
 
 void dEfiSense_tick(void);
 
@@ -696,6 +698,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -710,6 +713,8 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
 
 
@@ -861,7 +866,7 @@ void main(){
  dRpm_set(secondInt);
  dEfiSense_heartbeat();
  dGear_propagate(firstInt);
- dAcc_getAccValue(dEfiSense_calculateTPS(thirdInt));
+ dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
  break;
  case  0b01100001100 :
  dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));

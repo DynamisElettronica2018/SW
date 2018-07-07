@@ -10,6 +10,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -24,6 +25,8 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -471,7 +474,7 @@ int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 22 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 25 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
@@ -545,6 +548,10 @@ void dAcc_requestAction(){
 
 char dAcc_isAutoAccelerationActive(void) {
  return dAcc_autoAcceleration;
+}
+
+unsigned int dAcc_hasGCUConfirmed (void){
+ return dAcc_GCUConfirmed;
 }
 
 char dAcc_isReleasingClutch(void) {

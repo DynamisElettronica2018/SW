@@ -398,10 +398,11 @@ CAN_Interrupt
 		dSignalLed_set
 	dGear_propagate
 		dGear_set
-	dAcc_getAccValue
+	dEfiSense_getAccValue
+		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
 			dd_Indicator_requestPrintUpdateP
-		d_UI_getOperatingMode
+		dAcc_hasGCUConfirmed
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
 				dd_Dashboard_print

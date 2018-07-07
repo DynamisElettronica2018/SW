@@ -97,6 +97,10 @@ char dAcc_isAutoAccelerationActive(void) {
     return dAcc_autoAcceleration;
 }
 
+unsigned int dAcc_hasGCUConfirmed (void){
+   return dAcc_GCUConfirmed;
+}
+
 char dAcc_isReleasingClutch(void) {
     return dAcc_releasingClutch;
 }

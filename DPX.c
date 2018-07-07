@@ -140,7 +140,7 @@ onCanInterrupt{
            dRpm_set(secondInt);
            dEfiSense_heartbeat();
            dGear_propagate(firstInt);
-           dAcc_getAccValue(dEfiSense_calculateTPS(thirdInt));
+           dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
            dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));

@@ -314,11 +314,11 @@ L_CAN_Interrupt19:
 ;DPX.c,142 :: 		dGear_propagate(firstInt);
 	MOV	[W14+0], W10
 	CALL	_dGear_propagate
-;DPX.c,143 :: 		dAcc_getAccValue(dEfiSense_calculateTPS(thirdInt));
+;DPX.c,143 :: 		dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
 	MOV	[W14+4], W10
 	CALL	_dEfiSense_calculateTPS
 	MOV	W0, W10
-	CALL	_dAcc_getAccValue
+	CALL	_dEfiSense_getAccValue
 ;DPX.c,144 :: 		break;
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,145 :: 		case EFI_WATER_TEMPERATURE_ID:

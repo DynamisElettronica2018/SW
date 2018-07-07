@@ -27,7 +27,7 @@ diagnostics: 38	123	Compiled Successfully	d_clutch.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
 diagnostics: 168	123	Compiled Successfully	d_ebb.c
 diagnostics: 0	122	Compilation Started	dd_indicators.h
-diagnostics: 71	123	Compiled Successfully	d_efiSense.c
+diagnostics: 94	123	Compiled Successfully	d_efiSense.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 111	123	Compiled Successfully	d_gears.c
 diagnostics: 0	122	Compilation Started	string.h
@@ -43,7 +43,7 @@ diagnostics: 328	123	Compiled Successfully	dd_menu.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 38	123	Compiled Successfully	buzzer.c
 diagnostics: 0	122	Compilation Started	math.h
-diagnostics: 465	123	Compiled Successfully	d_controls.c
+diagnostics: 432	123	Compiled Successfully	d_controls.c
 diagnostics: 0	122	Compilation Started	eeprom.h
 diagnostics: 50	123	Compiled Successfully	d_hardReset.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -57,17 +57,17 @@ diagnostics: 23	123	Compiled Successfully	d_start.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 122	123	Compiled Successfully	d_warnings.c
 diagnostics: 0	122	Compilation Started	d_acceleration.h
-diagnostics: 99	123	Compiled Successfully	d_acceleration.c
+diagnostics: 106	123	Compiled Successfully	d_acceleration.c
 diagnostics: 0	122	Compilation Started	d_controls.h
 diagnostics: 312	123	Compiled Successfully	d_operating_modes.c
 diagnostics: 0	122	Compilation Started	d_controls.h
-diagnostics: 133	123	Compiled Successfully	d_ui_controller.c
+diagnostics: 126	123	Compiled Successfully	d_ui_controller.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 21	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 64	123	Compiled Successfully	d_dcu.c
-diagnostics: 0	127	All files Compiled in 10531 ms	 
+diagnostics: 0	127	All files Compiled in 4453 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 922 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 11750 ms	 
-diagnostics: 0	103	Finished successfully: 05 lug 2018, 17:43:26	DPX.mcpds
+diagnostics: 0	128	Linked in 1141 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 5938 ms	 
+diagnostics: 0	103	Finished successfully: 07 lug 2018, 14:19:14	DPX.mcpds

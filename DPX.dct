@@ -2250,6 +2250,7 @@ da_bit
 dacc_feedbackgcu
 dacc_gcuconfirmed
 dacc_getaccvalue
+dacc_hasgcuconfirmed
 dacc_init
 dacc_isautoaccelerationactive
 dacc_isreleasingclutch
@@ -2487,6 +2488,7 @@ defisense_calculatewatertemperature
 defisense_dead
 defisense_detectreset
 defisense_die
+defisense_getaccvalue
 defisense_heartbeat
 defisense_isdead
 defisense_tick

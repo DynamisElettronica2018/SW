@@ -550,6 +550,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -564,6 +565,8 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_dcu.h"
 
 
@@ -644,14 +647,9 @@ int d_UI_OperatingModeChanged(){
 
 void printf(char* string);
 
-
-
  void timer1_interrupt() iv IVT_ADDR_T1INTERRUPT ics ICS_AUTO {
-
  dd_GraphicController_onTimerInterrupt();
 }
-
-
 
 
 
@@ -668,7 +666,6 @@ void d_controls_onLeftEncoder(signed char movements) {
  break;
  case CRUISE_MODE:
  case ACC_MODE:
-
  default:
  return;
  }
@@ -684,7 +681,6 @@ void d_controls_onRightEncoder(signed char movements) {
  break;
  case CRUISE_MODE:
  case ACC_MODE:
-
  default:
  return;
  }
@@ -695,7 +691,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 131 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 124 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

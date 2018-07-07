@@ -21,6 +21,7 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
 
@@ -36,5 +37,6 @@ void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 
+void dAcc_startClutchRelease(void);
 
 #endif //DP8_DISPLAY_CONTROLLER_D_ACCELERATION_H
