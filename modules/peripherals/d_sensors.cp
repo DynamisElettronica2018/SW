@@ -241,6 +241,8 @@ void Can_initInterrupt(void);
 
 void dControls_init(void);
 
+void dControls_disableCentralSelector();
+
 void d_controls_onDRS(void);
 
 void d_controls_onAux1(void);

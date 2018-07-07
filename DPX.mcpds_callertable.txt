@@ -66,24 +66,31 @@ main
 				d_UI_SettingsModeClose
 					d_UI_ApplySettings
 				dd_Dashboard_print
+					dd_GraphicController_isFrameUpdateForced
+					eGlcd_clear
+						eGlcd_fill
+							_frameBuffer_Fill
 					dd_Dashboard_printGearLetter
 						dGear_getCurrentGearLetter
 						dd_GraphicController_isFrameUpdateForced
 						xGlcd_Set_Font
 						eGlcd_overwriteChar
 							eGlcd_clearChar
-								xGlcd_Write_Char
+								xGlcd_Clear_Char
 									xGLCD_Write_Data
 										_frameBuffer_Read
 										_frameBuffer_Write
 									_Multiply_32x32
-								xGLCD_Set_Transparency
 							eGlcd_writeChar
 								xGlcd_Write_Char
+									xGLCD_Write_Data
+									_Multiply_32x32
 					dd_Dashboard_printIndicators
+						xGlcd_Set_Font
 						dd_Indicator_isRequestingUpdate
 						dd_GraphicController_isFrameUpdateForced
 						dd_Dashboard_printIndicator
+							dd_GraphicController_isFrameUpdateForced
 							dd_Indicator_drawContainers
 								eGlcd_drawRect
 									ceil
@@ -99,22 +106,21 @@ main
 							dd_Indicator_getNameXCoord
 							dd_Indicator_getNameYCoord
 							xGlcd_Set_Font
-							eGlcd_overwriteText
-								eGlcd_clearText
-									xGlcd_Write_Text
-										strlen
-										xGlcd_Write_Char
-									xGLCD_Set_Transparency
-								eGlcd_writeText
-									xGlcd_Write_Text
+							eGlcd_writeText
+								xGlcd_Write_Text
+									strlen
+									xGlcd_Write_Char
 							dd_Indicator_getLabelXCoord
 							dd_Indicator_getLabelYCoord
 							eGlcd_clearText
+								xGlcd_Clear_Text
+									strlen
+									xGlcd_Clear_Char
+							dd_Indicator_isRequestingUpdate
 							dd_Indicator_parseValueLabel
 								sprintf
 								strcpy
 								strlen
-							eGlcd_writeText
 							dd_Indicator_clearPrintUpdateRequest
 				dd_Interface_printMenu
 					dd_printMenu
@@ -220,8 +226,6 @@ main
 				_Lcd_Init
 					_Lcd_Toggle_Enable
 			eGlcd_clear
-				eGlcd_fill
-					_frameBuffer_Fill
 			xGlcd_Set_Font
 			dHardReset_hasBeenReset
 			dd_GraphicController_startupLogo
@@ -407,6 +411,10 @@ CAN_Interrupt
 		_Div_FP
 		_Mul_FP
 		_Float2Longint
+	dEfiSense_calculateSpeed
+		_Long2Float
+		_Mul_FP
+	dControls_disableCentralSelector
 	dEfiSense_calculateSlip
 		_Long2Float
 		_Mul_FP
@@ -421,6 +429,7 @@ CAN_Interrupt
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+	_Compare_Ge_Fp
 	_Long2Float
 external2
 	d_controls_onDRS

@@ -245,7 +245,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 25 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 27 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_tick(void);
@@ -253,6 +253,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+float dEfiSense_calculateSpeed(unsigned int value);
 
 int dEfiSense_calculateTPS (unsigned int value);
 
@@ -281,6 +283,8 @@ int dEfiSense_calculateSlip(unsigned int value);
 
 
 void dControls_init(void);
+
+void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
@@ -400,6 +404,10 @@ void dEfiSense_die(void) {
 
 char dEfiSense_isDead(void) {
  return dEfiSense_dead;
+}
+
+float dEfiSense_calculateSpeed(unsigned int value){
+ return 0.1*value;
 }
 
 int dEfiSense_calculateTPS (unsigned int value){

@@ -50,8 +50,9 @@ it presents #DASHBOARD_INDICATORS_COUNT number of indicators in
 distinct positions of the display, as defined in #DashboardPosition.
 The dashboard is not interactive, but only serves the purpose of displaying information on screen.
 Typically this information will regard the car's parameters, such as cooling water temperature, EBB
-setting and so on. Of each indicator its name and its value label will be displayed. The labels are
-automatically parsed from the indicators' typed values.
+setting and so on. Of each indicator its name and its value label will be displayed. If the Indicator's "parseValueLabel" field
+is set the indicators' labels are automatically parsed from their typed values. However the initial label is not overwritten
+unless the value has changed since.
 
 Indicators displayed are set together with the interface through dd_GraphicController_setCollectionInterface()
 and are assumed to be ordered matching the positions indexes.

@@ -49,9 +49,13 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
 
 unsigned short xGlcd_Write_Char(unsigned short ch, unsigned short x, unsigned short y, unsigned short color);
 
+unsigned short xGlcd_Clear_Char(unsigned short ch, unsigned short x, unsigned short y, unsigned short color);
+
 unsigned short xGlcd_Char_Width(unsigned short ch);
 
 void xGlcd_Write_Text(char *text, unsigned short x, unsigned short y, unsigned short color);
+
+void xGlcd_Clear_Text(char* text, unsigned short x, unsigned short y, unsigned short color);
 
 unsigned short xGlcd_Text_Width(char *text);
 
@@ -1472,6 +1476,8 @@ void dSignalLed_unset(unsigned char led);
 
 
 void dControls_init(void);
+
+void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 

@@ -288,7 +288,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 25 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 27 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_tick(void);
@@ -296,6 +296,8 @@ void dEfiSense_tick(void);
 void dEfiSense_die(void);
 
 char dEfiSense_isDead(void);
+
+float dEfiSense_calculateSpeed(unsigned int value);
 
 int dEfiSense_calculateTPS (unsigned int value);
 
@@ -536,6 +538,8 @@ void dd_Menu_moveSelection(signed char movements);
 
 
 void dControls_init(void);
+
+void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
@@ -887,6 +891,8 @@ void main(){
  dEfiSense_heartbeat();
  break;
  case  0b01100000110 :
+ if(dEfiSense_calculateSpeed(firstInt)>= 10 )
+ dControls_disableCentralSelector();
  dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
  break;
  case  0b01100001110 :
@@ -899,7 +905,7 @@ void main(){
  case  0b01100010000 :
  dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
  break;
-#line 190 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 192 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -909,7 +915,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 205 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
