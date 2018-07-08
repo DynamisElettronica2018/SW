@@ -221,7 +221,7 @@ void dd_printLogoAnimation() {
     //_Lcd_PrintFrame();
     //delay_ms(200);
 
-    for (k=5; k<=60; k++){
+    for (k=5; k<=120; k++){
         resetTimer32();
         cos_angle = cos(0.10466*k);
         new_y_border = round((cos_angle*17));
@@ -245,7 +245,7 @@ void dd_printLogoAnimation() {
              }
          }
          Lcd_PrintFrame();
-         Delay_Cyc(floor(pow(k*8,2)/30000+new_y_border/10), k*900);
+         Delay_Cyc(floor(pow(k*8,2)/30000+new_y_border/10), k*700);
      }
 }
 

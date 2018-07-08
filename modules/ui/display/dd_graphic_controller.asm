@@ -544,11 +544,11 @@ _dd_printLogoAnimation:
 ;dd_graphic_controller.c,220 :: 		eGlcd_LoadImage(DYNAMIS_LOGO);
 	MOV	#lo_addr(dd_graphic_controller_DYNAMIS_LOGO), W10
 	CALL	_eGlcd_loadImage
-;dd_graphic_controller.c,224 :: 		for (k=5; k<=60; k++){
+;dd_graphic_controller.c,224 :: 		for (k=5; k<=120; k++){
 	MOV	#5, W0
 	MOV	W0, [W14+4]
 L_dd_printLogoAnimation6:
-	MOV	#60, W1
+	MOV	#120, W1
 	ADD	W14, #4, W0
 	CP	W1, [W0]
 	BRA GE	L__dd_printLogoAnimation74
@@ -727,9 +727,9 @@ L_dd_printLogoAnimation20:
 L_dd_printLogoAnimation17:
 ;dd_graphic_controller.c,247 :: 		Lcd_PrintFrame();
 	CALL	_Lcd_PrintFrame
-;dd_graphic_controller.c,248 :: 		Delay_Cyc(floor(pow(k*8,2)/30000+new_y_border/10), k*900);
+;dd_graphic_controller.c,248 :: 		Delay_Cyc(floor(pow(k*8,2)/30000+new_y_border/10), k*700);
 	MOV	[W14+4], W1
-	MOV	#900, W0
+	MOV	#700, W0
 	MUL.SS	W1, W0, W0
 	MOV	W0, [W14+22]
 	MOV	[W14+4], W0
@@ -764,7 +764,7 @@ L_dd_printLogoAnimation17:
 	MOV	W2, W11
 	MOV	W0, W10
 	CALL	_Delay_Cyc
-;dd_graphic_controller.c,224 :: 		for (k=5; k<=60; k++){
+;dd_graphic_controller.c,224 :: 		for (k=5; k<=120; k++){
 	MOV	[W14+4], W1
 	ADD	W14, #4, W0
 	ADD	W1, #1, [W0]

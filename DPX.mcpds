@@ -9,6 +9,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Value=modules\ui\d_ui_controller.c
 =======
 <<<<<<< HEAD
@@ -16,6 +17,9 @@ Value=modules\ui\d_ui_controller.c
 <<<<<<< HEAD
 Value=modules\peripherals\d_ebb.c
 >>>>>>> 2395f818e096581adb1f6219ed8c5efcfa0ea8e4
+=======
+Value=modules\ui\display\dd_menu.c
+>>>>>>> parent of a12713a... Shorter logo.
 =======
 Value=DPX.c
 >>>>>>> 649980e20db92360ed1271f8d504bb92c46ca4bb
