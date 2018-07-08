@@ -87,7 +87,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=8
 File0=DPX.c
 File1=modules\ui\d_ui_controller.c
 File2=modules\ui\display\dd_indicators.h
@@ -95,6 +95,7 @@ File3=modules\ui\d_operating_modes.c
 File4=modules\ui\display\dd_graphic_controller.c
 File5=modules\peripherals\d_drs.c
 File6=modules\ui\d_operating_modes.h
+File7=modules\ui\input-output\d_controls.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

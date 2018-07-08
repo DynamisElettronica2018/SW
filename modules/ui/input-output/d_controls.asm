@@ -95,9 +95,9 @@ _dControls_init:
 	POP	W1
 ;d_controls.c,126 :: 		if (expanderPort == 0) position = CRUISE_MODE_POSITION;
 	CP.B	W1, #0
-	BRA Z	L__dControls_init63
+	BRA Z	L__dControls_init64
 	GOTO	L_dControls_init0
-L__dControls_init63:
+L__dControls_init64:
 ; expanderPort end address is: 2 (W1)
 ; position start address is: 0 (W0)
 	CLR	W0
@@ -334,9 +334,9 @@ _cn_interrupt:
 	ADD.B	W0, W5, W2
 ;d_controls.c,188 :: 		if (movement_dx>4)
 	CP.B	W1, #4
-	BRA GT	L__cn_interrupt67
+	BRA GT	L__cn_interrupt68
 	GOTO	L_cn_interrupt7
-L__cn_interrupt67:
+L__cn_interrupt68:
 ;d_controls.c,190 :: 		movement_dx -= 8;
 ; movement_dx start address is: 2 (W1)
 	SUB.B	W3, #8, W1
@@ -349,9 +349,9 @@ L_cn_interrupt7:
 ; movement_dx start address is: 6 (W3)
 	MOV.B	#252, W0
 	CP.B	W3, W0
-	BRA LT	L__cn_interrupt68
+	BRA LT	L__cn_interrupt69
 	GOTO	L_cn_interrupt9
-L__cn_interrupt68:
+L__cn_interrupt69:
 ;d_controls.c,194 :: 		movement_dx += 8;
 ; movement_dx start address is: 0 (W0)
 	ADD.B	W3, #8, W0
@@ -364,19 +364,19 @@ L_cn_interrupt9:
 ;d_controls.c,196 :: 		else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 ; movement_dx start address is: 6 (W3)
 	CP.B	W3, #4
-	BRA NZ	L__cn_interrupt69
-	GOTO	L__cn_interrupt59
-L__cn_interrupt69:
+	BRA NZ	L__cn_interrupt70
+	GOTO	L__cn_interrupt60
+L__cn_interrupt70:
 	MOV.B	#252, W0
 	CP.B	W3, W0
-	BRA NZ	L__cn_interrupt70
-	GOTO	L__cn_interrupt58
-L__cn_interrupt70:
+	BRA NZ	L__cn_interrupt71
+	GOTO	L__cn_interrupt59
+L__cn_interrupt71:
 	GOTO	L_cn_interrupt13
 ; movement_dx end address is: 6 (W3)
 ; movement_sx end address is: 4 (W2)
+L__cn_interrupt60:
 L__cn_interrupt59:
-L__cn_interrupt58:
 	GOTO	___cn_interrupt__CLEAR_CN_LABEL
 L_cn_interrupt13:
 ; movement_sx start address is: 4 (W2)
@@ -390,9 +390,9 @@ L_cn_interrupt8:
 ;d_controls.c,198 :: 		if (movement_sx>4)
 ; movement_dx start address is: 2 (W1)
 	CP.B	W2, #4
-	BRA GT	L__cn_interrupt71
+	BRA GT	L__cn_interrupt72
 	GOTO	L_cn_interrupt14
-L__cn_interrupt71:
+L__cn_interrupt72:
 ;d_controls.c,200 :: 		movement_sx -= 8;
 ; movement_sx start address is: 0 (W0)
 	SUB.B	W2, #8, W0
@@ -405,9 +405,9 @@ L_cn_interrupt14:
 ; movement_sx start address is: 4 (W2)
 	MOV.B	#252, W0
 	CP.B	W2, W0
-	BRA LT	L__cn_interrupt72
+	BRA LT	L__cn_interrupt73
 	GOTO	L_cn_interrupt16
-L__cn_interrupt72:
+L__cn_interrupt73:
 ;d_controls.c,204 :: 		movement_sx += 8;
 ; movement_sx start address is: 0 (W0)
 	ADD.B	W2, #8, W0
@@ -419,19 +419,19 @@ L_cn_interrupt16:
 ;d_controls.c,206 :: 		else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 ; movement_sx start address is: 4 (W2)
 	CP.B	W1, #4
-	BRA NZ	L__cn_interrupt73
-	GOTO	L__cn_interrupt61
-L__cn_interrupt73:
+	BRA NZ	L__cn_interrupt74
+	GOTO	L__cn_interrupt62
+L__cn_interrupt74:
 	MOV.B	#252, W0
 	CP.B	W1, W0
-	BRA NZ	L__cn_interrupt74
-	GOTO	L__cn_interrupt60
-L__cn_interrupt74:
+	BRA NZ	L__cn_interrupt75
+	GOTO	L__cn_interrupt61
+L__cn_interrupt75:
 	GOTO	L_cn_interrupt20
 ; movement_sx end address is: 4 (W2)
 ; movement_dx end address is: 2 (W1)
+L__cn_interrupt62:
 L__cn_interrupt61:
-L__cn_interrupt60:
 	GOTO	___cn_interrupt__CLEAR_CN_LABEL
 L_cn_interrupt20:
 ; movement_dx start address is: 2 (W1)
@@ -445,9 +445,9 @@ L_cn_interrupt15:
 ;d_controls.c,208 :: 		if(movement_sx){
 ; movement_sx start address is: 0 (W0)
 	CP0.B	W0
-	BRA NZ	L__cn_interrupt75
+	BRA NZ	L__cn_interrupt76
 	GOTO	L_cn_interrupt21
-L__cn_interrupt75:
+L__cn_interrupt76:
 ;d_controls.c,209 :: 		d_controls_onLeftEncoder(movement_sx);
 	PUSH	W1
 ; movement_sx end address is: 0 (W0)
@@ -458,9 +458,9 @@ L__cn_interrupt75:
 L_cn_interrupt21:
 ;d_controls.c,211 :: 		if(movement_dx){
 	CP0.B	W1
-	BRA NZ	L__cn_interrupt76
+	BRA NZ	L__cn_interrupt77
 	GOTO	L_cn_interrupt22
-L__cn_interrupt76:
+L__cn_interrupt77:
 ;d_controls.c,212 :: 		d_controls_onRightEncoder(movement_dx);
 	MOV.B	W1, W10
 ; movement_dx end address is: 2 (W1)
@@ -499,9 +499,9 @@ _external1:
 ;d_controls.c,239 :: 		if(d_isCentralSelectorEnabled)
 	MOV	#lo_addr(d_controls_d_isCentralSelectorEnabled), W0
 	CP0	[W0]
-	BRA NZ	L__external178
+	BRA NZ	L__external179
 	GOTO	L_external123
-L__external178:
+L__external179:
 ;d_controls.c,241 :: 		delay_ms(30);
 	MOV	#4, W8
 	MOV	#3392, W7
@@ -537,9 +537,9 @@ L_external126:
 ;d_controls.c,246 :: 		if (expanderPort == 0) {
 	MOV.B	[W14+0], W0
 	CP.B	W0, #0
-	BRA Z	L__external179
+	BRA Z	L__external180
 	GOTO	L_external128
-L__external179:
+L__external180:
 ;d_controls.c,247 :: 		position = CRUISE_MODE_POSITION;
 	CLR	W0
 	MOV.B	W0, [W14+1]
@@ -752,9 +752,9 @@ _d_controls_onStart:
 	MOV.B	#7, W10
 	CALL	_getExternalInterruptEdge
 	CP.B	W0, #1
-	BRA Z	L__d_controls_onStart86
+	BRA Z	L__d_controls_onStart87
 	GOTO	L_d_controls_onStart44
-L__d_controls_onStart86:
+L__d_controls_onStart87:
 ;d_controls.c,301 :: 		dSignalLed_set(DSIGNAL_LED_2);
 	MOV.B	#2, W10
 	CALL	_dSignalLed_set
@@ -788,15 +788,15 @@ _d_controls_onNeutral:
 	PUSH	W12
 	CALL	_dGear_isNeutralSet
 	CP0.B	W0
-	BRA Z	L__d_controls_onNeutral88
+	BRA Z	L__d_controls_onNeutral89
 	GOTO	L_d_controls_onNeutral46
-L__d_controls_onNeutral88:
+L__d_controls_onNeutral89:
 ;d_controls.c,312 :: 		if (dGear_get() == 1) {
 	CALL	_dGear_get
 	CP.B	W0, #1
-	BRA Z	L__d_controls_onNeutral89
+	BRA Z	L__d_controls_onNeutral90
 	GOTO	L_d_controls_onNeutral47
-L__d_controls_onNeutral89:
+L__d_controls_onNeutral90:
 ;d_controls.c,313 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_UP);
 	MOV	#50, W12
 	MOV	#512, W10
@@ -807,9 +807,9 @@ L__d_controls_onNeutral89:
 L_d_controls_onNeutral47:
 	CALL	_dGear_get
 	CP.B	W0, #2
-	BRA Z	L__d_controls_onNeutral90
+	BRA Z	L__d_controls_onNeutral91
 	GOTO	L_d_controls_onNeutral49
-L__d_controls_onNeutral90:
+L__d_controls_onNeutral91:
 ;d_controls.c,315 :: 		Can_writeInt(SW_GEARSHIFT_ID, GEAR_COMMAND_NEUTRAL_DOWN);
 	MOV	#100, W12
 	MOV	#512, W10
@@ -841,73 +841,82 @@ L_end_d_controls_onReset:
 _d_controls_onDRS:
 
 ;d_controls.c,324 :: 		void d_controls_onDRS() {
-;d_controls.c,325 :: 		d_drs_propagateChange();
+;d_controls.c,325 :: 		if(d_currentOperatingMode!=ACC_MODE){
+	MOV	#lo_addr(_d_currentOperatingMode), W0
+	MOV.B	[W0], W0
+	CP.B	W0, #4
+	BRA NZ	L__d_controls_onDRS94
+	GOTO	L_d_controls_onDRS50
+L__d_controls_onDRS94:
+;d_controls.c,326 :: 		d_drs_propagateChange();
 	CALL	_d_drs_propagateChange
-;d_controls.c,326 :: 		}
+;d_controls.c,327 :: 		}
+L_d_controls_onDRS50:
+;d_controls.c,328 :: 		}
 L_end_d_controls_onDRS:
 	RETURN
 ; end of _d_controls_onDRS
 
 _d_controls_onAux2:
 
-;d_controls.c,328 :: 		void d_controls_onAux2(void) {
-;d_controls.c,329 :: 		switch(d_currentOperatingMode){
-	GOTO	L_d_controls_onAux250
-;d_controls.c,330 :: 		case ACC_MODE:
-L_d_controls_onAux252:
-;d_controls.c,331 :: 		dAcc_requestAction();
-	CALL	_dAcc_requestAction
-;d_controls.c,332 :: 		break;
+;d_controls.c,330 :: 		void d_controls_onAux2(void) {
+;d_controls.c,331 :: 		switch(d_currentOperatingMode){
 	GOTO	L_d_controls_onAux251
-;d_controls.c,333 :: 		case AUTOCROSS_MODE:
+;d_controls.c,332 :: 		case ACC_MODE:
 L_d_controls_onAux253:
-;d_controls.c,334 :: 		dAutocross_requestAction();
-	CALL	_dAutocross_requestAction
-;d_controls.c,335 :: 		break;
-	GOTO	L_d_controls_onAux251
-;d_controls.c,336 :: 		case CRUISE_MODE:
+;d_controls.c,333 :: 		dAcc_requestAction();
+	CALL	_dAcc_requestAction
+;d_controls.c,334 :: 		break;
+	GOTO	L_d_controls_onAux252
+;d_controls.c,335 :: 		case AUTOCROSS_MODE:
 L_d_controls_onAux254:
-;d_controls.c,337 :: 		dEbb_setPositionZero();
-	CALL	_dEbb_setPositionZero
-;d_controls.c,338 :: 		break;
-	GOTO	L_d_controls_onAux251
-;d_controls.c,339 :: 		default:
+;d_controls.c,336 :: 		dAutocross_requestAction();
+	CALL	_dAutocross_requestAction
+;d_controls.c,337 :: 		break;
+	GOTO	L_d_controls_onAux252
+;d_controls.c,338 :: 		case CRUISE_MODE:
 L_d_controls_onAux255:
+;d_controls.c,339 :: 		dEbb_setPositionZero();
+	CALL	_dEbb_setPositionZero
 ;d_controls.c,340 :: 		break;
-	GOTO	L_d_controls_onAux251
-;d_controls.c,341 :: 		}
-L_d_controls_onAux250:
+	GOTO	L_d_controls_onAux252
+;d_controls.c,341 :: 		default:
+L_d_controls_onAux256:
+;d_controls.c,342 :: 		break;
+	GOTO	L_d_controls_onAux252
+;d_controls.c,343 :: 		}
+L_d_controls_onAux251:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	[W0], W0
 	CP.B	W0, #4
-	BRA NZ	L__d_controls_onAux294
-	GOTO	L_d_controls_onAux252
-L__d_controls_onAux294:
+	BRA NZ	L__d_controls_onAux296
+	GOTO	L_d_controls_onAux253
+L__d_controls_onAux296:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	[W0], W0
 	CP.B	W0, #5
-	BRA NZ	L__d_controls_onAux295
-	GOTO	L_d_controls_onAux253
-L__d_controls_onAux295:
+	BRA NZ	L__d_controls_onAux297
+	GOTO	L_d_controls_onAux254
+L__d_controls_onAux297:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	[W0], W0
 	CP.B	W0, #3
-	BRA NZ	L__d_controls_onAux296
-	GOTO	L_d_controls_onAux254
-L__d_controls_onAux296:
+	BRA NZ	L__d_controls_onAux298
 	GOTO	L_d_controls_onAux255
-L_d_controls_onAux251:
-;d_controls.c,342 :: 		}
+L__d_controls_onAux298:
+	GOTO	L_d_controls_onAux256
+L_d_controls_onAux252:
+;d_controls.c,344 :: 		}
 L_end_d_controls_onAux2:
 	RETURN
 ; end of _d_controls_onAux2
 
 _d_controls_onStartAcquisition:
 
-;d_controls.c,345 :: 		void d_controls_onStartAcquisition(void) {
-;d_controls.c,346 :: 		dDCU_switchAcquisition();
+;d_controls.c,347 :: 		void d_controls_onStartAcquisition(void) {
+;d_controls.c,348 :: 		dDCU_switchAcquisition();
 	CALL	_dDCU_switchAcquisition
-;d_controls.c,347 :: 		}
+;d_controls.c,349 :: 		}
 L_end_d_controls_onStartAcquisition:
 	RETURN
 ; end of _d_controls_onStartAcquisition
