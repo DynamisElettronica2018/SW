@@ -180,9 +180,8 @@ onCanInterrupt{
            break;
        case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
-          // da qua in giù la parte dell'ebb è da controllare!!!
-          // dEbb_calibrationState(secondInt);
-          // dEbb_error(thirdInt);
+           dEbb_calibrationState(secondInt);
+           dEbb_error(thirdInt);
            break; //  */
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
@@ -193,10 +192,10 @@ onCanInterrupt{
        case DAU_REAR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
            break;
-      /* case EBB_DEBUG_ID:
+       case EBB_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
-           dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt)); //c'è una conversione da fare??
-           break;  */
+           dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt));
+           break;
        case GCU_DEBUG_1_ID:
            dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_drs_curr.base, (secondInt));

@@ -470,7 +470,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_setPositionZero(void);
@@ -482,6 +482,10 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
+
+void dEbb_calibrationState(unsigned int value);
+
+void dEbb_error(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_gears.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_can.h"

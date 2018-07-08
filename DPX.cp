@@ -420,7 +420,7 @@ void dClutch_send(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_setPositionZero(void);
@@ -432,6 +432,10 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
+
+void dEbb_calibrationState(unsigned int value);
+
+void dEbb_error(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
@@ -980,9 +984,8 @@ void main(){
  break;
  case  0b11100001101 :
  dEbb_setEbbValueFromCAN(firstInt);
-
-
-
+ dEbb_calibrationState(secondInt);
+ dEbb_error(thirdInt);
  break;
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
@@ -993,7 +996,10 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 200 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+ case  0b01100010101 :
+ dd_Indicator_setIntCoupleValueP(&ind_ebb_board.base,(int)firstInt, (int)secondInt);
+ dd_Indicator_setFloatValueP(&ind_ebb_motor_curr.base, (thirdInt));
+ break;
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_drs_curr.base, (secondInt));

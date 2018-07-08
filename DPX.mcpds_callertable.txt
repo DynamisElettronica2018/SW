@@ -495,6 +495,12 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dEbb_setEbbValueFromCAN
 		dd_Indicator_setIntValueP
+	dEbb_calibrationState
+	dEbb_error
+		dd_GraphicController_fireTimedNotification
+		dd_Indicator_setStringValueP
+			strcpy
+			dd_Indicator_requestPrintUpdateP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
@@ -555,6 +561,7 @@ cn_interrupt
 			dEbb_propagateValue
 				Can_writeInt
 				dd_Indicator_setIntValueP
+			dd_Indicator_setStringValueP
 	clearExternalInterrupt
 timer2_interrupt
 	dEfiSense_tick

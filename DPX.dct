@@ -2473,7 +2473,11 @@ ddcu_stopacquisition
 ddcu_switchacquisition
 ddcu_tick
 debb_calibration
+debb_calibrationstate
+debb_error
+debb_erroroccurred
 debb_init
+debb_issetzero
 debb_localvalue
 debb_motorsense
 debb_motorstate

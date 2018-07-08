@@ -17,6 +17,9 @@ unsigned int dEbb_motorSense = 0, stateFlag = 0;
 int dEbb_calibration = EBB_CENTER_CALIBRATION;
 int dEbb_state = EBB_OK;
 int calibrationState = FALSE;
+unsigned int dEbb_isSetZero = FALSE;
+unsigned int dEbb_errorOccurred = FALSE;
+
 char textMessage;
 
 
@@ -80,12 +83,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value){
     // dEbb_printNotification();
 }
 
-void dEbb_setPositionZero(void){
-    Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
-    dEbb_Value = 0;
-    dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
-   // dEbb_propagateEbbChange();
-}
 
 void dEbb_propagateEbbChange(void) {
  switch (dEbb_state){
@@ -114,18 +111,44 @@ void dEbb_propagateValue(signed char value){
 
 void dEbb_move(signed char movements){
       signed char value;
-      value = dEbb_value - movements;
-      if(value > EBB_MAX_VALUE){
-         value = EBB_MAX_VALUE;
-      } else if(value < EBB_MIN_VALUE){
-         value = EBB_MIN_VALUE;
-      }
-      dEbb_Value = value;
-      dEbb_propagateValue(value);
+      if(!dEbb_errorOccurred){
+         value = dEbb_value - movements;
+         if(value > EBB_MAX_VALUE){
+             value = EBB_MAX_VALUE;
+         } else if(value < EBB_MIN_VALUE){
+             value = EBB_MIN_VALUE;
+         }
+         dEbb_Value = value;
+         dEbb_propagateValue(value);
+      }else
+         dd_Indicator_setStringValueP(EBB, "/");
 }
 
 void dEbb_init(void){
       //Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(dEbb_Value + EBB_DAGO_OFFSET));
+}
+
+void dEbb_setPositionZero(void){
+    if(!dEbb_errorOccurred){
+      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
+      dEbb_Value = 0;
+      dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", MESSAGE);
+      dEbb_isSetZero = TRUE;
+    }
+}
+
+void dEbb_calibrationState(unsigned int value){
+      if(dEbb_isSetZero == TRUE && value == TRUE){
+          dEbb_isSetZero = FALSE;
+      }
+}
+
+void dEbb_error(unsigned int value){
+      if(value == EBB_ERROR){
+          dEbb_errorOccurred = EBB_ERROR;
+          dd_GraphicController_fireTimedNotification(1000, "EBB ERROR", ERROR);
+          dd_Indicator_setStringValueP(EBB, "/");
+      }
 }
 
 
@@ -142,25 +165,10 @@ void dEbb_init(void){
     }
 }
 
-void dEbb_error(int value){
-       if( value ==  1 ){
-          dd_printMessage("EBB ERROR");
-       }
-}
-
 int dEbb_isCalibrateing(void) {
     return calibrationState;
 }
 
-void dEbb_calibrationState(int value){
-    if( value == 1 && dEbb_isCalibrateing() == 1 ){
-        dd_printMessage("CALIBRATING EBB");
-    } else if(value == 0 && dEbb_isCalibrateing() == 0 ){
-        dd_printMessage("CALIBRATION DONE");
-    } else {
-        dEbb_error(1);
-    }
-}
 
 void dEbb_calibrateUp(void) {
     Can_writeByte(SW_BRAKE_BIAS_EBB_ID, (unsigned char) EBB_CALIBRATE_UP);

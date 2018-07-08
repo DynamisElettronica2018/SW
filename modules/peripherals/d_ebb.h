@@ -14,6 +14,7 @@
 #define EBB_MIN_VALUE -3
 #define EBB_DAGO_OFFSET 8
 #define EBB_SET_ZERO 100
+#define EBB_ERROR 1
 
 #define EBB_IS_CALIBRATING 100
 #define EBB_OK 112
@@ -44,16 +45,16 @@ void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
 
+void dEbb_calibrationState(unsigned int value);
+
+void dEbb_error(unsigned int value);
+
 /******************************************************************************/
 /*void dEbb_calibrateSwitch(void);
 
 void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
 
 void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
 
 int dEbb_isCalibrateing(void);
 

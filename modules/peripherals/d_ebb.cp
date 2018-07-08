@@ -249,7 +249,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_setPositionZero(void);
@@ -261,6 +261,10 @@ void dEbb_setEbbValueFromCAN(unsigned int value);
 void dEbb_propagateEbbChange(void);
 
 void dEbb_tick(void);
+
+void dEbb_calibrationState(unsigned int value);
+
+void dEbb_error(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
@@ -459,6 +463,9 @@ unsigned int dEbb_motorSense = 0, stateFlag = 0;
 int dEbb_calibration =  100 ;
 int dEbb_state =  112 ;
 int calibrationState =  0 ;
+unsigned int dEbb_isSetZero =  0 ;
+unsigned int dEbb_errorOccurred =  0 ;
+
 char textMessage;
 
 
@@ -522,12 +529,6 @@ void dEbb_setEbbValueFromCAN(unsigned int value){
 
 }
 
-void dEbb_setPositionZero(void){
- Can_writeInt( 0b10000000000 ,  100 );
- dEbb_Value = 0;
- dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
-
-}
 
 void dEbb_propagateEbbChange(void) {
  switch (dEbb_state){
@@ -556,6 +557,7 @@ void dEbb_propagateValue(signed char value){
 
 void dEbb_move(signed char movements){
  signed char value;
+ if(!dEbb_errorOccurred){
  value = dEbb_value - movements;
  if(value >  3 ){
  value =  3 ;
@@ -564,12 +566,37 @@ void dEbb_move(signed char movements){
  }
  dEbb_Value = value;
  dEbb_propagateValue(value);
+ }else
+ dd_Indicator_setStringValueP(EBB, "/");
 }
 
 void dEbb_init(void){
 
 }
-#line 193 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+
+void dEbb_setPositionZero(void){
+ if(!dEbb_errorOccurred){
+ Can_writeInt( 0b10000000000 ,  100 );
+ dEbb_Value = 0;
+ dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", MESSAGE);
+ dEbb_isSetZero =  1 ;
+ }
+}
+
+void dEbb_calibrationState(unsigned int value){
+ if(dEbb_isSetZero ==  1  && value ==  1 ){
+ dEbb_isSetZero =  0 ;
+ }
+}
+
+void dEbb_error(unsigned int value){
+ if(value ==  1 ){
+ dEbb_errorOccurred =  1 ;
+ dd_GraphicController_fireTimedNotification(1000, "EBB ERROR", ERROR);
+ dd_Indicator_setStringValueP(EBB, "/");
+ }
+}
+#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 220 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 228 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }
