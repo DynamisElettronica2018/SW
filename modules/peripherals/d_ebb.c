@@ -135,7 +135,7 @@ void dEbb_move(signed char movements){
 }
 
 void dEbb_init(void){
-      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(dEbb_Value + EBB_DAGO_OFFSET));
+      //Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(dEbb_Value + EBB_DAGO_OFFSET));
 }
 
 

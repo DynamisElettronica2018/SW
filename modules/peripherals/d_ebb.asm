@@ -532,22 +532,8 @@ L_end_dEbb_move:
 _dEbb_init:
 
 ;d_ebb.c,137 :: 		void dEbb_init(void){
-;d_ebb.c,138 :: 		Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(dEbb_Value + EBB_DAGO_OFFSET));
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
-	MOV	#lo_addr(_dEbb_value), W0
-	SE	[W0], W0
-	ADD	W0, #8, W0
-	MOV	W0, W12
-	MOV	#1024, W10
-	MOV	#0, W11
-	CALL	_Can_writeInt
 ;d_ebb.c,139 :: 		}
 L_end_dEbb_init:
-	POP	W12
-	POP	W11
-	POP	W10
 	RETURN
 ; end of _dEbb_init
 

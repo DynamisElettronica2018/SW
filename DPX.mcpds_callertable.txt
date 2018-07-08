@@ -310,14 +310,6 @@ main
 			dd_GraphicController_forceFullFrameUpdate
 		d_traction_control_init
 		dEbb_init
-			Can_writeInt
-				Can_resetWritePacket
-				Can_addIntToWritePacket
-					Can_addByteToWritePacket
-				Can_write
-					CAN1Write
-						CAN1IDToRegs
-					Can_getWriteFlags
 		setTimer
 		d_UI_setOperatingMode
 external4
@@ -326,6 +318,13 @@ external4
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+				Can_addByteToWritePacket
+			Can_write
+				CAN1Write
+					CAN1IDToRegs
+				Can_getWriteFlags
 	d_controls_onReset
 		Debug_UART_Write
 		dHardReset_reset
@@ -481,8 +480,12 @@ cn_interrupt
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
 		d_traction_control_move
+			sprintf
+			Debug_UART_Write
 			d_traction_control_propagateValue
 				Can_writeInt
+				sprintf
+				Debug_UART_Write
 				d_traction_control_printNotification
 					dd_GraphicController_fireTimedNotification
 				dSignalLed_switch

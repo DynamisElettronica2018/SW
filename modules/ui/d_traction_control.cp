@@ -452,6 +452,9 @@ signed char d_tractionValue = 0;
 
 void d_traction_control_printNotification(void){
  switch (d_tractionValue){
+ case 0:
+ dd_GraphicController_fireTimedNotification( 1000 , "TC 0", MESSAGE);
+ break;
  case 1:
  dd_GraphicController_fireTimedNotification( 1000 , "TC 1", MESSAGE);
  break;
@@ -489,25 +492,34 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
  Can_writeInt( 0b01000000011 , (int) value);
- d_tractionValue = value;
+ sprintf(dstr, "value3 %d\r\n", value);
+ Debug_UART_Write(dstr);
  d_traction_control_printNotification();
  dSignalLed_switch( 0 );
 }
 
 void d_traction_control_move(signed char movements){
  signed char value;
- value = d_tractionValue + movements;
+ value = d_tractionValue - movements;
+ sprintf(dstr, "d_tractionvalue %d\r\n", d_tractionValue);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "movements%d\r\n", movements);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "value1 %d\r\n", value);
+ Debug_UART_Write(dstr);
  if(value >  7 ){
  value =  7 ;
  } else if(value <  0 ){
  value =  0 ;
  }
  d_tractionValue = value;
- d_traction_control_propagateValue(value);
+ sprintf(dstr, "value2 %d\r\n", d_tractionValue);
+ Debug_UART_Write(dstr);
+ d_traction_control_propagateValue(d_tractionValue);
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
- d_tractionValue = value;
+
  dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
 
  return;

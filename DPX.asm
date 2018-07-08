@@ -510,9 +510,6 @@ L_CAN_Interrupt32:
 	GOTO	L_CAN_Interrupt18
 ;DPX.c,214 :: 		case GCU_AUX_ID:
 L_CAN_Interrupt33:
-;DPX.c,215 :: 		d_traction_control_setValueFromCAN(firstInt);
-	MOV	[W14+0], W10
-	CALL	_d_traction_control_setValueFromCAN
 ;DPX.c,216 :: 		Buzzer_bip();
 	CALL	_Buzzer_bip
 ;DPX.c,219 :: 		break;

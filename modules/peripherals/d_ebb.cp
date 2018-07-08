@@ -556,7 +556,7 @@ void dEbb_move(signed char movements){
 }
 
 void dEbb_init(void){
- Can_writeInt( 0b10000000000 , (int)(dEbb_Value +  8 ));
+
 }
 #line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {

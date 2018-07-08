@@ -877,7 +877,7 @@ signed char value = 0;
  }
  break;
  case  0b11111110001 :
- d_traction_control_setValueFromCAN(firstInt);
+
  Buzzer_bip();
 
 

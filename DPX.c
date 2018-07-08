@@ -212,7 +212,7 @@ onCanInterrupt{
            }
            break;
        case GCU_AUX_ID:
-           d_traction_control_setValueFromCAN(firstInt);
+          // d_traction_control_setValueFromCAN(firstInt);
            Buzzer_bip();
            //dAcc_feedbackGCU(secondInt);
            //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
