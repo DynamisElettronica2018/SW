@@ -1,8 +1,8 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_ebb.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_ebb.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
@@ -28,7 +28,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -123,19 +123,19 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 extern void dd_Dashboard_init();
 extern void dd_Dashboard_print(void);
-#line 39 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 39 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
 
 
 void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -167,9 +167,9 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -181,9 +181,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -241,7 +241,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 34 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -249,7 +249,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_calibrateSwitch(void);
@@ -283,31 +283,31 @@ void dEbb_propagateEbbChange(void);
 void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
-#line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/../../../libs/basic.h"
+#line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
 } Interface;
-#line 35 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 extern void (*dd_Interface_print[ 3 ])(void);
-#line 43 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 extern void (*dd_Interface_init[ 3 ])(void);
-#line 60 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+#line 69 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 3 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 8 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_ebb.c"
+#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 int dEbb_localValue = 0, dEbb_value = 0, dEbb_motorState = 0;
 
 unsigned int dEbb_motorSense = 0, stateFlag = 0;
@@ -442,5 +442,5 @@ switch (dEbb_state){
 }
 
 void dEbb_tick(void) {
-#line 168 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_ebb.c"
+#line 168 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }
