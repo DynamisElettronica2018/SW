@@ -27,9 +27,9 @@ _dAcc_startAutoAcceleration:
 	PUSH	W12
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W0
 	CP0.B	[W0]
-	BRA Z	L__dAcc_startAutoAcceleration23
+	BRA Z	L__dAcc_startAutoAcceleration16
 	GOTO	L_dAcc_startAutoAcceleration0
-L__dAcc_startAutoAcceleration23:
+L__dAcc_startAutoAcceleration16:
 ;d_acceleration.c,38 :: 		dAcc_autoAcceleration = TRUE;
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W1
 	MOV.B	#1, W0
@@ -89,9 +89,9 @@ _dAcc_feedbackGCU:
 ;d_acceleration.c,52 :: 		void dAcc_feedbackGCU(unsigned int value){
 ;d_acceleration.c,53 :: 		if(value == COMMAND_START_ACCELERATION){
 	CP	W10, #1
-	BRA Z	L__dAcc_feedbackGCU26
+	BRA Z	L__dAcc_feedbackGCU19
 	GOTO	L_dAcc_feedbackGCU1
-L__dAcc_feedbackGCU26:
+L__dAcc_feedbackGCU19:
 ;d_acceleration.c,54 :: 		dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
 	MOV	#1, W0
 	MOV	W0, _dAcc_GCUConfirmed
@@ -99,9 +99,9 @@ L__dAcc_feedbackGCU26:
 	GOTO	L_dAcc_feedbackGCU2
 L_dAcc_feedbackGCU1:
 	CP	W10, #2
-	BRA Z	L__dAcc_feedbackGCU27
+	BRA Z	L__dAcc_feedbackGCU20
 	GOTO	L_dAcc_feedbackGCU3
-L__dAcc_feedbackGCU27:
+L__dAcc_feedbackGCU20:
 ;d_acceleration.c,56 :: 		dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
 	MOV	#2, W0
 	MOV	W0, _dAcc_GCUConfirmed
@@ -109,9 +109,9 @@ L__dAcc_feedbackGCU27:
 	GOTO	L_dAcc_feedbackGCU4
 L_dAcc_feedbackGCU3:
 	CP	W10, #0
-	BRA Z	L__dAcc_feedbackGCU28
+	BRA Z	L__dAcc_feedbackGCU21
 	GOTO	L_dAcc_feedbackGCU5
-L__dAcc_feedbackGCU28:
+L__dAcc_feedbackGCU21:
 ;d_acceleration.c,58 :: 		dAcc_stopAutoAcceleration();
 	CALL	_dAcc_stopAutoAcceleration
 ;d_acceleration.c,59 :: 		}
@@ -123,69 +123,28 @@ L_end_dAcc_feedbackGCU:
 	RETURN
 ; end of _dAcc_feedbackGCU
 
-_dAcc_getAccValue:
-
-;d_acceleration.c,62 :: 		void dAcc_getAccValue(int accValue){    //% di acc
-;d_acceleration.c,63 :: 		dd_Indicator_setintValueP(&ind_tps.base, accValue);
-	PUSH	W11
-	PUSH	W10
-	MOV	W10, W11
-	MOV	#lo_addr(_ind_tps), W10
-	CALL	_dd_Indicator_setIntValueP
-;d_acceleration.c,64 :: 		if(d_UI_getOperatingMode() == ACC_MODE){
-	CALL	_d_UI_getOperatingMode
-	POP	W10
-	CP.B	W0, #4
-	BRA Z	L__dAcc_getAccValue30
-	GOTO	L_dAcc_getAccValue6
-L__dAcc_getAccValue30:
-;d_acceleration.c,65 :: 		if(accValue >= MIN_ACC_VALUE && dAcc_GCUConfirmed == COMMAND_START_ACCELERATION){
-	MOV	#50, W0
-	CP	W10, W0
-	BRA GE	L__dAcc_getAccValue31
-	GOTO	L__dAcc_getAccValue17
-L__dAcc_getAccValue31:
-	MOV	_dAcc_GCUConfirmed, W0
-	CP	W0, #1
-	BRA Z	L__dAcc_getAccValue32
-	GOTO	L__dAcc_getAccValue16
-L__dAcc_getAccValue32:
-L__dAcc_getAccValue15:
-;d_acceleration.c,66 :: 		dAcc_startClutchRelease();
-	CALL	_dAcc_startClutchRelease
-;d_acceleration.c,65 :: 		if(accValue >= MIN_ACC_VALUE && dAcc_GCUConfirmed == COMMAND_START_ACCELERATION){
-L__dAcc_getAccValue17:
-L__dAcc_getAccValue16:
-;d_acceleration.c,68 :: 		}
-L_dAcc_getAccValue6:
-;d_acceleration.c,69 :: 		}
-L_end_dAcc_getAccValue:
-	POP	W11
-	RETURN
-; end of _dAcc_getAccValue
-
 _dAcc_stopAutoAcceleration:
 
-;d_acceleration.c,71 :: 		void dAcc_stopAutoAcceleration(void) {
-;d_acceleration.c,72 :: 		dAcc_autoAcceleration = FALSE;
+;d_acceleration.c,62 :: 		void dAcc_stopAutoAcceleration(void) {
+;d_acceleration.c,63 :: 		dAcc_autoAcceleration = FALSE;
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_acceleration.c,73 :: 		dAcc_releasingClutch = FALSE;
+;d_acceleration.c,64 :: 		dAcc_releasingClutch = FALSE;
 	MOV	#lo_addr(d_acceleration_dAcc_releasingClutch), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_acceleration.c,74 :: 		d_UI_AccModeInit();
+;d_acceleration.c,65 :: 		d_UI_AccModeInit();
 	CALL	_d_UI_AccModeInit
-;d_acceleration.c,75 :: 		}
+;d_acceleration.c,66 :: 		}
 L_end_dAcc_stopAutoAcceleration:
 	RETURN
 ; end of _dAcc_stopAutoAcceleration
 
 _dAcc_stopAutoAccelerationFromSW:
 
-;d_acceleration.c,77 :: 		void dAcc_stopAutoAccelerationFromSW(void){
-;d_acceleration.c,78 :: 		Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_STOP_ACCELERATION);
+;d_acceleration.c,68 :: 		void dAcc_stopAutoAccelerationFromSW(void){
+;d_acceleration.c,69 :: 		Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_STOP_ACCELERATION);
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -193,9 +152,9 @@ _dAcc_stopAutoAccelerationFromSW:
 	MOV	#514, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_acceleration.c,79 :: 		dAcc_stopAutoAcceleration();
+;d_acceleration.c,70 :: 		dAcc_stopAutoAcceleration();
 	CALL	_dAcc_stopAutoAcceleration
-;d_acceleration.c,80 :: 		}
+;d_acceleration.c,71 :: 		}
 L_end_dAcc_stopAutoAccelerationFromSW:
 	POP	W12
 	POP	W11
@@ -205,80 +164,80 @@ L_end_dAcc_stopAutoAccelerationFromSW:
 
 _dAcc_requestAction:
 
-;d_acceleration.c,82 :: 		void dAcc_requestAction(){
-;d_acceleration.c,83 :: 		if(!dAcc_autoAcceleration){
+;d_acceleration.c,73 :: 		void dAcc_requestAction(){
+;d_acceleration.c,74 :: 		if(!dAcc_autoAcceleration){
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W0
 	CP0.B	[W0]
-	BRA Z	L__dAcc_requestAction36
-	GOTO	L_dAcc_requestAction10
-L__dAcc_requestAction36:
-;d_acceleration.c,84 :: 		dd_GraphicController_clearPrompt();
+	BRA Z	L__dAcc_requestAction25
+	GOTO	L_dAcc_requestAction6
+L__dAcc_requestAction25:
+;d_acceleration.c,75 :: 		dd_GraphicController_clearPrompt();
 	CALL	_dd_GraphicController_clearPrompt
-;d_acceleration.c,85 :: 		dAcc_startAutoAcceleration();
+;d_acceleration.c,76 :: 		dAcc_startAutoAcceleration();
 	CALL	_dAcc_startAutoAcceleration
-;d_acceleration.c,86 :: 		}
-	GOTO	L_dAcc_requestAction11
-L_dAcc_requestAction10:
-;d_acceleration.c,87 :: 		else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
+;d_acceleration.c,77 :: 		}
+	GOTO	L_dAcc_requestAction7
+L_dAcc_requestAction6:
+;d_acceleration.c,78 :: 		else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
 	MOV	#lo_addr(d_acceleration_dAcc_readyToGo), W0
 	CP0.B	[W0]
-	BRA NZ	L__dAcc_requestAction37
-	GOTO	L__dAcc_requestAction20
-L__dAcc_requestAction37:
+	BRA NZ	L__dAcc_requestAction26
+	GOTO	L__dAcc_requestAction13
+L__dAcc_requestAction26:
 	MOV	_dAcc_GCUConfirmed, W0
 	CP	W0, #2
-	BRA Z	L__dAcc_requestAction38
-	GOTO	L__dAcc_requestAction19
-L__dAcc_requestAction38:
-L__dAcc_requestAction18:
-;d_acceleration.c,88 :: 		dd_GraphicController_clearPrompt();
+	BRA Z	L__dAcc_requestAction27
+	GOTO	L__dAcc_requestAction12
+L__dAcc_requestAction27:
+L__dAcc_requestAction11:
+;d_acceleration.c,79 :: 		dd_GraphicController_clearPrompt();
 	CALL	_dd_GraphicController_clearPrompt
-;d_acceleration.c,89 :: 		dAcc_readyToGo = FALSE;
+;d_acceleration.c,80 :: 		dAcc_readyToGo = FALSE;
 	MOV	#lo_addr(d_acceleration_dAcc_readyToGo), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_acceleration.c,90 :: 		dAcc_releasingClutch = TRUE;
+;d_acceleration.c,81 :: 		dAcc_releasingClutch = TRUE;
 	MOV	#lo_addr(d_acceleration_dAcc_releasingClutch), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_acceleration.c,87 :: 		else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
-L__dAcc_requestAction20:
-L__dAcc_requestAction19:
-;d_acceleration.c,91 :: 		}
-L_dAcc_requestAction11:
-;d_acceleration.c,92 :: 		}
+;d_acceleration.c,78 :: 		else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
+L__dAcc_requestAction13:
+L__dAcc_requestAction12:
+;d_acceleration.c,82 :: 		}
+L_dAcc_requestAction7:
+;d_acceleration.c,83 :: 		}
 L_end_dAcc_requestAction:
 	RETURN
 ; end of _dAcc_requestAction
 
 _dAcc_isAutoAccelerationActive:
 
-;d_acceleration.c,94 :: 		char dAcc_isAutoAccelerationActive(void) {
-;d_acceleration.c,95 :: 		return dAcc_autoAcceleration;
+;d_acceleration.c,85 :: 		char dAcc_isAutoAccelerationActive(void) {
+;d_acceleration.c,86 :: 		return dAcc_autoAcceleration;
 	MOV	#lo_addr(d_acceleration_dAcc_autoAcceleration), W0
 	MOV.B	[W0], W0
-;d_acceleration.c,96 :: 		}
+;d_acceleration.c,87 :: 		}
 L_end_dAcc_isAutoAccelerationActive:
 	RETURN
 ; end of _dAcc_isAutoAccelerationActive
 
 _dAcc_hasGCUConfirmed:
 
-;d_acceleration.c,98 :: 		unsigned int dAcc_hasGCUConfirmed (void){
-;d_acceleration.c,99 :: 		return dAcc_GCUConfirmed;
+;d_acceleration.c,89 :: 		unsigned int dAcc_hasGCUConfirmed (void){
+;d_acceleration.c,90 :: 		return dAcc_GCUConfirmed;
 	MOV	_dAcc_GCUConfirmed, W0
-;d_acceleration.c,100 :: 		}
+;d_acceleration.c,91 :: 		}
 L_end_dAcc_hasGCUConfirmed:
 	RETURN
 ; end of _dAcc_hasGCUConfirmed
 
 _dAcc_isReleasingClutch:
 
-;d_acceleration.c,102 :: 		char dAcc_isReleasingClutch(void) {
-;d_acceleration.c,103 :: 		return dAcc_releasingClutch;
+;d_acceleration.c,93 :: 		char dAcc_isReleasingClutch(void) {
+;d_acceleration.c,94 :: 		return dAcc_releasingClutch;
 	MOV	#lo_addr(d_acceleration_dAcc_releasingClutch), W0
 	MOV.B	[W0], W0
-;d_acceleration.c,104 :: 		}
+;d_acceleration.c,95 :: 		}
 L_end_dAcc_isReleasingClutch:
 	RETURN
 ; end of _dAcc_isReleasingClutch

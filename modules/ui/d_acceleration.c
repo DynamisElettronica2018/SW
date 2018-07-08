@@ -59,15 +59,6 @@ void dAcc_feedbackGCU(unsigned int value){
     }
 }
 
-void dAcc_getAccValue(int accValue){    //% di acc
-     dd_Indicator_setintValueP(&ind_tps.base, accValue);
-     if(d_UI_getOperatingMode() == ACC_MODE){
-       if(accValue >= MIN_ACC_VALUE && dAcc_GCUConfirmed == COMMAND_START_ACCELERATION){
-         dAcc_startClutchRelease();
-       }
-     }
-}
-
 void dAcc_stopAutoAcceleration(void) {
      dAcc_autoAcceleration = FALSE;
      dAcc_releasingClutch = FALSE;

@@ -434,8 +434,6 @@ void dAcc_requestAction();
 
 char dAcc_isAutoAccelerationActive(void);
 
-void dAcc_getAccValue(int accValue);
-
 char dAcc_isReleasingClutch(void);
 
 void dAcc_feedbackGCU(unsigned int value);

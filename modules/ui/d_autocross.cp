@@ -1,30 +1,21 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-typedef enum aac_notifications{
- MEX_ON,
- MEX_READY,
- MEX_GO,
- MEX_OFF,
-}aac_notifications;
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
 
-void dAcc_init(void);
 
-unsigned int dAcc_hasGCUConfirmed (void);
 
-void dAcc_requestAction();
 
-char dAcc_isAutoAccelerationActive(void);
 
-char dAcc_isReleasingClutch(void);
+void dAutocross_init(void);
 
-void dAcc_feedbackGCU(unsigned int value);
+void dAutocross_requestAction(void);
 
-void dAcc_stopAutoAccelerationFromSW(void);
+char dAutocross_isAutocrossActive(void);
 
-void dAcc_stopAutoAcceleration(void);
+unsigned int dAutocross_hasGCUConfirmed(void);
 
-void dAcc_startClutchRelease(void);
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -235,6 +226,12 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+<<<<<<< HEAD
+=======
+
+void dd_GraphicController_clearPrompt(void);
+
+>>>>>>> autocross
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -399,15 +396,30 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+<<<<<<< HEAD
+
 void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+
+
+
+
+
+=======
+
+
+
+
+
+>>>>>>> autocross
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -458,15 +470,16 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
-#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 117 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 120 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 131 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit();
+#line 140 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 171 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 
 void d_UI_AccModeClose(void);
@@ -478,76 +491,112 @@ OperatingMode d_UI_getOperatingMode(void);
 int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 25 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
-static char dAcc_autoAcceleration =  0 ;
-static char dAcc_releasingClutch =  0 ;
-static char dAcc_readyToGo =  0 ;
-unsigned int dAcc_GCUConfirmed =  0 ;
 
-void dAcc_init(void) {
- dAcc_autoAcceleration =  0 ;
- dAcc_releasingClutch =  0 ;
- dAcc_GCUConfirmed =  0 ;
+OperatingMode d_UI_getOperatingMode(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_dcu.h"
+
+
+
+
+
+
+
+
+
+
+void dDCU_init();
+
+void dDCU_switchAcquisition(void);
+
+void dDCU_startAcquisition(void);
+
+void dDCU_stopAcquisition(void);
+
+void dDCU_isAcquiringSet(void);
+
+char dDCU_isAcquiring(void);
+
+void dDCU_sentAcquiringSignal(void);
+
+void dDCU_tick(void);
+#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
+static char dAutocross_isActive =  0 ;
+static char dAutocross_releasingClutch =  0 ;
+static char dAutocross_readyToGo =  0 ;
+unsigned int dAutocross_GCUConfirmed =  0 ;
+
+void dAutocross_init(void) {
+ dAutocross_isActive =  0 ;
+ dAutocross_releasingClutch =  0 ;
+ dAutocross_GCUConfirmed =  0 ;
 }
 
-void dAcc_startAutoAcceleration(void){
- if(!dAcc_autoAcceleration){
- dAcc_autoAcceleration =  1 ;
- dAcc_releasingClutch =  0 ;
- Can_writeInt( 0b01000000010 ,  1 );
+unsigned int dAutocross_hasGCUConfirmed(){
+ return dAutocross_GCUConfirmed;
+}
+
+void dAutocross_startAutocross(void){
+ if(!dAutocross_isActive){
+ dAutocross_isActive =  1 ;
+ dAutocross_releasingClutch =  0 ;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(dDCU_isAcquiring());
+ Can_addIntToWritePacket( 1 );
+ Can_write( 0b11111110000 );
  dd_printMessage("STEADY");
  }
 }
 
-void dAcc_startClutchRelease(void){
+void dAutocross_startClutchRelease(void){
  dd_GraphicController_clearPrompt();
- Can_writeInt( 0b01000000010 ,  2 );
- dAcc_readyToGo =  1 ;
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(dDCU_isAcquiring());
+ Can_addIntToWritePacket( 2 );
+ Can_write( 0b11111110000 );
+ dAutocross_readyToGo =  1 ;
  dd_printMessage("GO");
 }
 
-void dAcc_feedbackGCU(unsigned int value){
+void dAutocross_stopAutocross(void) {
+ dAutocross_isActive =  0 ;
+ dAutocross_releasingClutch =  0 ;
+ dd_printMessage("STOP");
+ delay_ms(2000);
+ d_UI_AutocrossModeInit();
+}
+
+
+void dAutocross_feedbackGCU(unsigned int value){
  if(value ==  1 ){
- dAcc_GCUConfirmed =  1 ;
+ dAutocross_GCUConfirmed =  1 ;
  } else if (value ==  2 ){
- dAcc_GCUConfirmed =  2 ;
+ dAutocross_GCUConfirmed =  2 ;
  } else if (value ==  0 ){
- dAcc_stopAutoAcceleration();
+ dAutocross_stopAutocross();
  }
 }
 
-void dAcc_stopAutoAcceleration(void) {
- dAcc_autoAcceleration =  0 ;
- dAcc_releasingClutch =  0 ;
- d_UI_AccModeInit();
+void dAutocross_stopAutocrossFromSW(void){
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(dDCU_isAcquiring());
+ Can_addIntToWritePacket( 0 );
+ Can_write( 0b11111110000 );
+ dAutocross_stopAutocross();
 }
 
-void dAcc_stopAutoAccelerationFromSW(void){
- Can_writeInt( 0b01000000010 ,  0 );
- dAcc_stopAutoAcceleration();
-}
-
-void dAcc_requestAction(){
- if(!dAcc_autoAcceleration){
+void dAutocross_requestAction(){
+ if(!dAutocross_isActive){
  dd_GraphicController_clearPrompt();
- dAcc_startAutoAcceleration();
+ dAutocross_startAutocross();
  }
- else if (dAcc_readyToGo && dAcc_GCUConfirmed ==  2 ){
+ else if (dAutocross_readyToGo && dAutocross_GCUConfirmed ==  2 ){
  dd_GraphicController_clearPrompt();
- dAcc_readyToGo =  0 ;
- dAcc_releasingClutch =  1 ;
+ dAutocross_readyToGo =  0 ;
+ dAutocross_releasingClutch =  1 ;
  }
 }
 
-char dAcc_isAutoAccelerationActive(void) {
- return dAcc_autoAcceleration;
-}
-
-unsigned int dAcc_hasGCUConfirmed (void){
- return dAcc_GCUConfirmed;
-}
-
-char dAcc_isReleasingClutch(void) {
- return dAcc_releasingClutch;
+char dAutocross_isAutocrossActive(void) {
+ return dAutocross_isActive;
 }

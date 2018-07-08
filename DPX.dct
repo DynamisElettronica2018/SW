@@ -2248,7 +2248,6 @@ da
 da_bit
 dacc_feedbackgcu
 dacc_gcuconfirmed
-dacc_getaccvalue
 dacc_hasgcuconfirmed
 dacc_init
 dacc_isautoaccelerationactive
