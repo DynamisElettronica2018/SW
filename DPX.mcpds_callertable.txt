@@ -134,7 +134,9 @@ main
 							eGlcd_fillPage
 								_frameBuffer_Write
 							dd_Menu_makeLineText
+								dd_Indicator_isRequestingUpdate
 								dd_Indicator_parseValueLabel
+								dd_Indicator_clearPrintUpdateRequest
 								dd_MenuLine_getScrollingOverflow
 								dd_MenuLine_getScrollOffset
 									dd_MenuLine_hasToScroll
@@ -146,7 +148,6 @@ main
 								dd_MenuLine_hasToScroll
 							xGlcd_Set_Font
 							xGlcd_Write_Text
-							dd_Indicator_clearPrintUpdateRequest
 				dd_Dashboard_init
 				dd_Menu_init
 					dd_Menu_reset

@@ -1,7 +1,7 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/dsPIC.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/dsPIC.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/dspic.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
+#line 15 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,7 +13,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 184 "c:/users/utente/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -71,7 +71,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 7 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/dsPIC.c"
+#line 7 "C:/Users/utente/Desktop/git Repo/SW/libs/dsPIC.c"
 const double INSTRUCTION_PERIOD = 4.0 /  80 ;
 const unsigned int PRESCALER_VALUES[] = {1, 8, 64, 256};
 
@@ -232,7 +232,7 @@ void clearExternalInterrupt(unsigned char device) {
  break;
  }
 }
-#line 171 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/dsPIC.c"
+#line 171 "C:/Users/utente/Desktop/git Repo/SW/libs/dsPIC.c"
 void setTimer(unsigned char device, double timePeriod) {
  unsigned char prescalerIndex;
  setInterruptPriority(device,  4 );
@@ -319,7 +319,7 @@ unsigned char getTimerPrescaler(double timePeriod) {
 
  return i;
 }
-#line 261 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/dsPIC.c"
+#line 261 "C:/Users/utente/Desktop/git Repo/SW/libs/dsPIC.c"
 double getExactTimerPrescaler(double timePeriod) {
 
  return (timePeriod * 1000000) / (INSTRUCTION_PERIOD *  65535 );

@@ -131,8 +131,6 @@ void dd_printMenuLine(unsigned char lineIndex) {
 
     xGlcd_Set_Font(DD_UniformTerminal_Font);
     xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
-
-    dd_Indicator_clearPrintUpdateRequest(lineIndex);
 }
 
 void dd_printMenu() {
@@ -198,7 +196,10 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
     unsigned char descriptionLength, valueWidth, visibleDescriptionWidth;
     Indicator* item;
     
-    dd_Indicator_parseValueLabel(lineIndex);  //Too much overkill, find another strategy.
+    if(dd_Indicator_isRequestingUpdate(lineIndex)){
+        dd_Indicator_parseValueLabel(lineIndex);
+        dd_Indicator_clearPrintUpdateRequest(lineIndex);
+    }
     item = dd_currentIndicators[lineIndex];
     valueWidth = item->labelLength;
     // make condition check on scrolling necessity before calling these
