@@ -1684,9 +1684,12 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
  dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit( 1000 );
- dd_printLogoAnimation();
- dd_onStartup = 1;
 
+
+
+ eGlcd_LoadImage(DYNAMIS_LOGO);
+
+ dd_onStartup = 1;
 }
 
 void dd_GraphicController_turnOnBacklight(void) {
@@ -1772,7 +1775,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
 void dd_GraphicController_clearPrompt(){
  dd_Interface_print[dd_currentInterface]();
 }
-#line 159 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 162 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_setNotificationFlag();
@@ -1904,7 +1907,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 296 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 299 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1932,5 +1935,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 334 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 337 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }

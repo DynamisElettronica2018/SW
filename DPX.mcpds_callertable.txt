@@ -67,7 +67,14 @@ main
 					dd_GraphicController_isFrameUpdateForced
 					eGlcd_clear
 						eGlcd_fill
-							_frameBuffer_Fill
+							Glcd_Fill
+								Glcd_Set_Page
+									Write_To_Pins
+									Strobe
+										Delay_10us
+								Glcd_Write_Data
+									Write_To_Pins
+									Strobe
 					dd_Dashboard_printGearLetter
 						dGear_getCurrentGearLetter
 						dd_GraphicController_isFrameUpdateForced
@@ -76,8 +83,15 @@ main
 							eGlcd_clearChar
 								xGlcd_Clear_Char
 									xGLCD_Write_Data
-										_frameBuffer_Read
-										_frameBuffer_Write
+										Glcd_Set_Side
+										Glcd_Set_X
+											Write_To_Pins
+											Strobe
+										Glcd_Set_Page
+										Glcd_Read_Data
+											Delay_1us
+											Delay_10us
+										Glcd_Write_Data
 									_Multiply_32x32
 							eGlcd_writeChar
 								xGlcd_Write_Char
@@ -96,8 +110,11 @@ main
 										_Long2Float
 										_Compare_Le_Fp
 										_AddSub_FP
-									_frameBuffer_Read
-									_frameBuffer_Write
+									Glcd_Set_Side
+									Glcd_Set_Page
+									Glcd_Set_X
+									Glcd_Read_Data
+									Glcd_Write_Data
 									_Long2Float
 									_Div_FP
 									_Float2Longint
@@ -130,7 +147,10 @@ main
 						dd_printMenuLine
 							dd_Menu_isLineSelected
 							eGlcd_fillPage
-								_frameBuffer_Write
+								Glcd_Set_Side
+								Glcd_Set_Page
+								Glcd_Set_X
+								Glcd_Write_Data
 							dd_Menu_makeLineText
 								dd_Indicator_isRequestingUpdate
 								dd_Indicator_parseValueLabel
@@ -251,80 +271,22 @@ main
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
-				_Lcd_Init
-					_Lcd_Toggle_Enable
+				Glcd_Init
+					Delay_1us
+					Write_To_Pins
+					Strobe
 			eGlcd_clear
 			xGlcd_Set_Font
 			dHardReset_hasBeenReset
 			dd_GraphicController_startupLogo
 				dd_GraphicController_getTmrCounterLimit
-				dd_printLogoAnimation
-					eGlcd_loadImage
-						_frameBuffer_LoadImage
-					resetTimer32
-					cos
-						sin
-							floor
-							eval_poly
-								_Mul_FP
-								_AddSub_FP
-							_Compare_Le_Fp
-							_Mul_FP
-							_Sub_FP
-							_Compare_Ge_Fp
-							_Div_FP
-						_Compare_Ge_Fp
-						_AddSub_FP
-						_Sub_FP
-					round
-						floor
-						ceil
-						_Float2Longint
-						_Long2Float
-						_Sub_FP
-						_Compare_Le_Fp
-					Lcd_PrintFrame
-						_Lcd_Init
-						_Lcd_ResetYAddr
-							_Lcd_Toggle_Enable
-						_Lcd_SetPage
-							_Lcd_SetDataPort
-								_Lcd_Toggle_Enable
-						_Lcd_WriteData
-							_Lcd_SetDataPort
-						_Lcd_Change_Side
-					Delay_Cyc
-					floor
-					pow
-						log
-							frexp
-							eval_poly
-							_Compare_Le_Fp
-							_Mul_FP
-							_Sub_FP
-							_Long2Float
-							_AddSub_FP
-						exp
-							floor
-							ldexp
-								_Compare_Le_Fp
-							eval_poly
-							_Compare_Le_Fp
-							_Compare_Ge_Fp
-							_Mul_FP
-							_Float2Longint
-							_Long2Float
-							_Sub_FP
-							_Div_FP
-						_Compare_Le_Fp
-						_Float2Longint
-						_Long2Float
-						_Mul_FP
-					_Long2Float
-					_Mul_FP
-					_Div_FP
-					_AddSub_FP
-					_Float2Longint
+				eGlcd_loadImage
+					Glcd_Image
+						Glcd_Set_Side
+						Glcd_Set_Page
+						Glcd_Set_X
+						Glcd_Write_Data
+						__AddToFarPointer
 			dd_GraphicController_timerSetup
 				setInterruptPriority
 				setTimer

@@ -64,9 +64,12 @@ void dd_printLogoAnimation();
 
 void dd_GraphicController_startupLogo(void) {
     dd_onStartupCounterLimit = dd_GraphicController_getTmrCounterLimit(STARTUP_LOGO_PERIOD);
-    dd_printLogoAnimation();
+    #ifdef FRAME_BUFFER_ENABLED
+        dd_printLogoAnimation();
+    #else
+        eGlcd_LoadImage(DYNAMIS_LOGO);
+    #endif
     dd_onStartup = 1;
-    //eGlcd_LoadImage(DYNAMIS_LOGO);
 }
 
 void dd_GraphicController_turnOnBacklight(void) {

@@ -77,7 +77,6 @@ void eGlcd_fill(unsigned char color) {
         #endif
 }
 
-
 void eGlcd_overwriteChar(char oldChar, char newChar, unsigned char x, unsigned char y) {
     eGlcd_clearChar(oldChar, x, y);
     eGlcd_writeChar(newChar, x, y);
@@ -303,6 +302,7 @@ void _Lcd_WriteData(){
 }
 
 void Lcd_PrintFrame() {
+     #ifdef FRAME_BUFFER_ENABLED
      asm {
 
         CALL __Lcd_Init
@@ -345,6 +345,8 @@ void Lcd_PrintFrame() {
  _frame_buff_page = 0;
  _frame_buff_y = 0;
  _frame_buff_side = 0;
+ 
+ #endif
 }
 
 
@@ -584,6 +586,7 @@ void eGlcd_fillPage(unsigned char page, char color)
      #ifdef FRAME_BUFFER_ENABLED
      _frame_buff_page = page;
      #else
+     Glcd_Set_Side(0);
      Glcd_Set_Page(page);
      #endif
      for(k=0; k<=1; k++)      ///< Iterate two glcd sides.
@@ -643,7 +646,7 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
               _frame_buff_page = tmp;
               dataR = _frameBuffer_Read();
         #else
-                     Glcd_Set_Side(pX);
+                      Glcd_Set_Side(pX);
                       Glcd_Set_X(xx);
                       Glcd_Set_Page(tmp);
                       dataR = Glcd_Read_Data();
