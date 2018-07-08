@@ -10,6 +10,7 @@
 #include "../../libs/basic.h"
 #include "d_signalLed.h"
 #include "debug.h"
+#include "d_autocross.h"
 
 #define DCU_ACQUISITION_NOTIF_DURATION  1500 //ms
 
@@ -41,7 +42,10 @@ void dDCU_startAcquisition(void) {
 void dDCU_stopAcquisition(void) {
     d_DCU_isAcquiring = FALSE;
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
-    Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
+    Can_resetWritePacket();
+    Can_addIntToWritePacket(COMMAND_DCU_STOP_ACQUISITION);
+    Can_addIntToWritePacket(dAutocross_isAutocrossActive());
+    Can_write(SW_AUX_ID);
 }
 
 void dDCU_tick(void){
@@ -57,8 +61,7 @@ void dDCU_isAcquiringSet(){
      d_DCU_isAcquiring = TRUE;
 }
 
-char dDCU_isAcquiring()
-{
+char dDCU_isAcquiring(){
       return d_DCU_isAcquiring;
 }
 

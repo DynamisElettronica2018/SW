@@ -19,19 +19,21 @@
 *   while clockwise rotations add +1, and are referred to as right.
 */
 //!@{
-#define ACC_MODE_POSITION        1
-#define CRUISE_MODE_POSITION     0
-#define DEBUG_MODE_POSITION      -1
-#define SETTINGS_MODE_POSITION   -2
+
+#define AUTOCROSS_MODE_POSITION      2
+#define ACC_MODE_POSITION            1
+#define CRUISE_MODE_POSITION         0
+#define DEBUG_MODE_POSITION         -1
+#define SETTINGS_MODE_POSITION      -2
 #define BOARD_DEBUG_MODE_POSITION   -3
 
-#define FIRST_MODE_POSITION         ACC_MODE_POSITION
+#define FIRST_MODE_POSITION         AUTOCROSS_MODE_POSITION
 #define LAST_MODE_POSITION          BOARD_DEBUG_MODE_POSITION
 
 //!@}
 
 #define LEFTMOST_OPMODE_POSITION        BOARD_DEBUG_MODE_POSITION        //!< Position of the last operating mode, rotating counter clockwise from top.
-#define OPERATING_MODES_COUNT 5       //!< Number of operating modes defined in #OperatingMode
+#define OPERATING_MODES_COUNT 6       //!< Number of operating modes defined in #OperatingMode
 
 /**        \brief Operating Mode definitions.
 *        
@@ -45,7 +47,8 @@ typedef enum {
     SETTINGS_MODE,
     DEBUG_MODE,
     CRUISE_MODE,
-    ACC_MODE
+    ACC_MODE,
+    AUTOCROSS_MODE
 } OperatingMode;
 /// [Operating mode definitions]
 
@@ -55,6 +58,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -70,7 +74,7 @@ extern FloatIndicator ind_th2o_dx_out;
 //extern FloatIndicator ind_oil_temp_in;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -103,15 +107,9 @@ extern IntegerIndicator ind_gear_motor;
 */
 //!@{
 extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
-
 /**        \brief Groups operating mode methods called on exiting the specific mode.
 */
-/*extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
-        d_UI_SettingsModeClose(),
-        NULL,
-        NULL,
-        NULL
-} */
+extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void);
 //!@}
 
 /////////////////////////////////////////
@@ -122,8 +120,9 @@ extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
 *        
 *        Executes and saves all settings' changes.
 */
-void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
 
 /**        \brief Invoked when value of a setting is changed.
 *        
@@ -162,5 +161,8 @@ void d_UI_onSettingsChange(signed char movements);
 *        \sa d_ui_controller.h
 */
 
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
 
 #endif /* D_UI_OPERATING_MODES */

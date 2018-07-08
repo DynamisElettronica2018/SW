@@ -17,6 +17,7 @@
 #include "../d_ui_controller.h"
 #include "../../../libs/i2c_expander.h"
 #include "../../../libs/debug.h"
+#include "d_autocross.h"
 
 
 #define BUTTON_ACTIVE_STATE 0
@@ -177,12 +178,12 @@ onCNInterrupt{
    old_port_sx = a + (b << 1) + (c << 2);
    old_port_dx = d + (e << 1) + (f << 2);
 
-   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
    new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
 
-    movement_dx = new_port_dx - old_port_dx;
-    movement_sx = - new_port_sx + old_port_sx;
-   
+   movement_dx = new_port_dx - old_port_dx;
+   movement_sx = - new_port_sx + old_port_sx;
+
    if (movement_dx>4)
    {
       movement_dx -= 8;
@@ -203,7 +204,6 @@ onCNInterrupt{
    }
    else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 
-   
    if(movement_sx){
          d_controls_onLeftEncoder(movement_sx);
    }
@@ -248,7 +248,7 @@ onRotarySwitchInterrupt{
            Debug_UART_Write(dstr);
         }
         else
-        position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
+           position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
         d_controls_onSelectorSwitched(position);
     }
     clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
@@ -277,10 +277,10 @@ onGeneralButtonInterrupt{
        d_controls_onReset();
     }
     else if (AUX_1_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-        d_controls_onStartAcquisition();
+       d_controls_onStartAcquisition();
     }
     else if (AUX_2_BUTTON_PIN == BUTTON_ACTIVE_STATE) {
-        d_controls_onAux1();
+       d_controls_onAux2();
     }
     clearExternalInterrupt(GENERAL_BUTTON_INTERRUPT);
 }
@@ -323,8 +323,22 @@ void d_controls_onReset() {
 void d_controls_onDRS() {
 }
 
-void d_controls_onAux1(void) {
+void d_controls_onAux2(void) {
+      switch(d_currentOperatingMode){
+         case ACC_MODE:
+              dAcc_requestAction();
+              break;
+         case AUTOCROSS_MODE:
+               dAutocross_requestAction();
+               break;
+         case CRUISE_MODE:
+               dEbb_setPositionZero();
+               break;
+         default:
+               break;
+     }
 }
+
 
 void d_controls_onStartAcquisition(void) {
      dDCU_switchAcquisition();

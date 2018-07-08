@@ -4,7 +4,7 @@
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -1220,10 +1220,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -1244,7 +1245,10 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 

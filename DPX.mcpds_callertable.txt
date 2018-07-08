@@ -63,8 +63,6 @@ main
 			Debug_UART_Write
 			log2
 			d_UI_setOperatingMode
-				d_UI_SettingsModeClose
-					d_UI_ApplySettings
 				dd_Dashboard_print
 					dd_GraphicController_isFrameUpdateForced
 					eGlcd_clear
@@ -182,7 +180,35 @@ main
 				d_UI_CruiseModeInit
 					dd_GraphicController_setCollectionInterface
 				d_UI_AccModeInit
+					Debug_UART_Write
 					dd_GraphicController_setCollectionInterface
+				d_UI_AutocrossModeInit
+					dd_GraphicController_setCollectionInterface
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+					d_UI_ApplySettings
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+					dAcc_stopAutoAccelerationFromSW
+						Can_writeInt
+							Can_resetWritePacket
+							Can_addIntToWritePacket
+								Can_addByteToWritePacket
+							Can_write
+								CAN1Write
+									CAN1IDToRegs
+								Can_getWriteFlags
+						dAcc_stopAutoAcceleration
+							d_UI_AccModeInit
+				d_UI_AutocrossModeClose
+					dAutocross_stopAutocrossFromSW
+						Can_resetWritePacket
+						Can_addIntToWritePacket
+						dDCU_isAcquiring
+						Can_write
+						dAutocross_stopAutocross
+							d_UI_AutocrossModeInit
 			d_selectorPositionToMode
 			setExternalInterrupt
 				setInterruptPriority
@@ -221,6 +247,7 @@ main
 		dRpm_init
 			I2CExpander_init
 			dRpm_enableLedStripeOutput
+		dAutocross_init
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
@@ -302,10 +329,14 @@ main
 				setInterruptPriority
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
+		dAcc_init
+		d_traction_control_init
+		dEbb_init
 		setInterruptPriority
 		setTimer
 	dd_GraphicController_fireTimedNotification
 		dd_GraphicController_getTmrCounterLimit
+		dd_GraphicController_setNotificationFlag
 		dd_GraphicController_fireNotification
 			strcpy
 			dd_printMessage
@@ -316,20 +347,12 @@ main
 						_Multiply_32x32
 				eGlcd_drawRect
 				eGlcd_writeText
-			dd_GraphicController_setNotificationFlag
 	dHardReset_unsetFlag
 external4
 	d_controls_onNeutral
 		dGear_isNeutralSet
 		dGear_get
 		Can_writeInt
-			Can_resetWritePacket
-			Can_addIntToWritePacket
-				Can_addByteToWritePacket
-			Can_write
-				CAN1Write
-					CAN1IDToRegs
-				Can_getWriteFlags
 	d_controls_onReset
 		dHardReset_reset
 			dHardReset_setFlag
@@ -347,11 +370,46 @@ external4
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
 				dd_GraphicController_fireTimedNotification
-				Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dAutocross_isAutocrossActive
+				Can_write
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
-	d_controls_onAux1
+	d_controls_onAux2
+		dAcc_requestAction
+			dd_GraphicController_clearPrompt
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_AutocrossModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+				d_UI_AutocrossModeClose
+			dAcc_startAutoAcceleration
+				Can_writeInt
+				dd_printMessage
+		dAutocross_requestAction
+			dd_GraphicController_clearPrompt
+			dAutocross_startAutocross
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dDCU_isAcquiring
+				Can_write
+				dd_printMessage
+		dEbb_setPositionZero
+			Can_writeInt
+			dd_GraphicController_fireTimedNotification
 	clearExternalInterrupt
 external3
 	d_controls_onStart
@@ -384,8 +442,23 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 		dEfiSense_isDead
 		dSignalLed_set
-	dd_Indicator_setIntValueP
-		dd_Indicator_requestPrintUpdateP
+	dEfiSense_getAccValue
+		d_UI_getOperatingMode
+		dd_Indicator_setIntValueP
+			dd_Indicator_requestPrintUpdateP
+		dAcc_hasGCUConfirmed
+		dAcc_startClutchRelease
+			dd_GraphicController_clearPrompt
+			Can_writeInt
+			dd_printMessage
+		dAutocross_hasGCUConfirmed
+		dAutocross_startClutchRelease
+			dd_GraphicController_clearPrompt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			dDCU_isAcquiring
+			Can_write
+			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 	dEfiSense_calculateWaterTemperature
@@ -422,15 +495,25 @@ CAN_Interrupt
 		_Mul_FP
 		_Float2Longint
 		_Div_FP
+	dd_Indicator_setIntValueP
 	dEfiSense_calculatePressure
 		_Long2Float
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
+	dEbb_setEbbValueFromCAN
+		dd_Indicator_setIntValueP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+	d_traction_control_setValueFromCAN
+		dd_Indicator_setIntValueP
+	dAcc_feedbackGCU
+		dAcc_stopAutoAcceleration
+	dAutocross_feedbackGCU
+		dAutocross_stopAutocross
+	Buzzer_bip
 	_Compare_Ge_Fp
 	_Long2Float
 external2
@@ -449,10 +532,6 @@ external1
 	clearExternalInterrupt
 cn_interrupt
 	d_controls_onLeftEncoder
-		dd_Menu_moveSelection
-			dd_Menu_scroll
-				Debug_UART_Write
-	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -466,6 +545,24 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
+		d_traction_control_move
+			sprintf
+			Debug_UART_Write
+			d_traction_control_propagateValue
+				Can_writeInt
+				sprintf
+				Debug_UART_Write
+				dSignalLed_switch
+	d_controls_onRightEncoder
+		dd_Menu_moveSelection
+			dd_Menu_scroll
+				Debug_UART_Write
+		dEbb_move
+			sprintf
+			Debug_UART_Write
+			dEbb_propagateValue
+				Can_writeInt
+				dd_Indicator_setIntValueP
 	clearExternalInterrupt
 timer2_interrupt
 	dEfiSense_tick
@@ -474,7 +571,6 @@ timer2_interrupt
 				dd_getIndicatorIndex
 				dd_Indicator_requestPrintUpdate
 			dEfiSense_isDead
-			dSignalLed_unset
 		dHardReset_reset
 	dPaddle_readSample
 		ADC1_Read
@@ -522,10 +618,13 @@ timer2_interrupt
 		dd_GraphicController_fireTimedNotification
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
+		dSignalLed_set
+		dSignalLed_unset
 		eGlcd_clear
 		Lcd_PrintFrame
 		dd_printMessage
 		eGlcd_fill
+		d_UI_getOperatingMode
 		dd_GraphicController_handleNotification
 			dd_printMessage
 			Lcd_PrintFrame
@@ -541,6 +640,13 @@ timer1_interrupt
 		d_UI_DebugModeInit
 		d_UI_CruiseModeInit
 		d_UI_AccModeInit
+		d_UI_AutocrossModeInit
+		d_UI_BoardDebugModeClose
+		d_UI_SettingsModeClose
+		d_UI_DebugModeClose
+		d_UI_CruiseModeClose
+		d_UI_AccModeClose
+		d_UI_AutocrossModeClose
 external0
 	d_controls_onGearUp
 		dGear_requestGearUp

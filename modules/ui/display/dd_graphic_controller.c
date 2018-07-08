@@ -19,6 +19,7 @@
 #include "../libs/debug.h"
 #include "../input-output/d_rpm.h"
 #include "d_clutch.h"
+#include "d_ui_controller.h"
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -42,7 +43,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
-static char dd_onScreenNotificationFlag = FALSE;
+char dd_notificationIsTimed = FALSE;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -130,17 +131,11 @@ void dd_GraphicController_saveCurrentInterface(void) {
 }
 
 void dd_GraphicController_setNotificationFlag (void){
-     dd_onScreenNotificationFlag = TRUE;
      dd_notificationFlag = TRUE;
 }
 
 void dd_GraphicController_unsetNotificationFlag (void){
      dd_notificationFlag = FALSE;
-     dd_onScreenNotificationFlag = FALSE;
-}
-
-int dd_GraphicController_getNotificationFlag(void){
-     return ((int)dd_onScreenNotificationFlag);
 }
 
 void dd_GraphicController_clearNotification(void) {
@@ -152,7 +147,10 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     strcpy(dd_notificationText, text);
     dd_printMessage(dd_notificationText);
-    dd_GraphicController_setNotificationFlag();
+}
+
+void dd_GraphicController_clearPrompt(){
+     dd_Interface_print[dd_currentInterface]();
 }
 
 /**
@@ -160,7 +158,19 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
 */
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
     dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
+    dd_GraphicController_setNotificationFlag();
+    dd_notificationIsTimed = 1;
     dd_GraphicController_fireNotification(text, type);
+}
+
+void dd_GraphicController_firePromptNotification(char *text) {
+    if(dd_notificationFlag)
+        dd_GraphicController_clearNotification();
+    else
+        eGlcd_clear();
+    
+    dd_notificationIsTimed = 0;
+    dd_GraphicController_fireNotification(text, PROMPT);
 }
 
 void dd_GraphicController_handleNotification(void) {
@@ -240,7 +250,21 @@ void dd_printLogoAnimation() {
 }
 
 int __counter = 0;
-void dd_GraphicController_onTimerInterrupt(void) {
+
+void dd_GraphicController_onTimerInterrupt(void) 
+{
+    if ( __counter == 10 )
+    {
+       dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
+    }
+    if (__counter == 20)
+    {
+       dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
+     __counter = 0;
+    }
+
+   __counter++;
+   
     if(dd_onStartup)
     {
         dd_tmr1Counter++;
@@ -277,6 +301,9 @@ void dd_GraphicController_onTimerInterrupt(void) {
                eGlcd_fill(WHITE);
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
+               if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
+                  dd_printMessage("READY");
+               }
                dd_isFrameUpdateForced = FALSE;
            }
         }

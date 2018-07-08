@@ -84,6 +84,7 @@ void Can_writeInt(unsigned long int id, int dataOut) {
     Can_write(id);
 }
 
+
 void Can_addIntToWritePacket(int dataOut) {
     Can_addByteToWritePacket((unsigned char) (dataOut >> 8));
     Can_addByteToWritePacket((unsigned char) (dataOut & 0xFF));

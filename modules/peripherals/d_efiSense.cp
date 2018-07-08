@@ -5,7 +5,7 @@
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -248,6 +248,8 @@ unsigned int dHardReset_getCounter(void);
 #line 27 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
+void dEfiSense_getAccValue(int accValue);
+
 void dEfiSense_tick(void);
 
 void dEfiSense_die(void);
@@ -255,6 +257,8 @@ void dEfiSense_die(void);
 char dEfiSense_isDead(void);
 
 float dEfiSense_calculateSpeed(unsigned int value);
+
+void dEfiSense_getAccValue(int accValue);
 
 int dEfiSense_calculateTPS (unsigned int value);
 
@@ -288,7 +292,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -308,13 +312,14 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -324,6 +329,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -339,7 +345,7 @@ extern FloatIndicator ind_th2o_dx_out;
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -365,14 +371,112 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 109 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 112 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 123 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 133 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 9 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_efiSense.c"
+#line 164 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+void Can_init(void);
+
+unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+void Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
+#line 13 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 
@@ -396,10 +500,29 @@ void dEfiSense_tick(void) {
  }
 }
 
+void dEfiSense_getAccValue(int accValue){
+ OperatingMode currentOperatingMode;
+ currentOperatingMode = d_UI_getOperatingMode();
+ dd_Indicator_setintValueP(&ind_tps.base, accValue);
+ switch (currentOperatingMode){
+ case ACC_MODE:
+ if(accValue >=  50  && dAcc_hasGCUConfirmed() ==  1 ){
+ dAcc_startClutchRelease();
+ }
+ break;
+ case AUTOCROSS_MODE:
+ if(accValue >=  50  && dAutocross_hasGCUConfirmed() ==  1 ){
+ dAutocross_startClutchRelease();
+ }
+ break;
+ default:
+ break;
+ }
+}
+
 void dEfiSense_die(void) {
  dEfiSense_dead =  1 ;
  dd_Indicator_setBoolValue(EFI_STATUS, !dEfiSense_isDead());
- dSignalLed_unset( 3 );
 }
 
 char dEfiSense_isDead(void) {

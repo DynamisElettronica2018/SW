@@ -65,7 +65,7 @@ void xGLCD_Set_Transparency(char active);
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -210,10 +210,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -234,7 +235,10 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -1481,7 +1485,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -1553,12 +1557,99 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+void dClutch_injectActualValue(unsigned char value);
 
 unsigned char dClutch_get(void);
 
 void dClutch_send(void);
-#line 29 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE,
+ AUTOCROSS_MODE
+} OperatingMode;
+
+
+
+
+
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_th2o;
+extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
+extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern IntegerIndicator ind_adc1_read;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_oil_temp_out;
+extern IntegerIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 109 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 112 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 123 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 133 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 164 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
+#line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 30 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[ 20 ] = "";
@@ -1575,7 +1666,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
-static char dd_onScreenNotificationFlag =  0 ;
+char dd_notificationIsTimed =  0 ;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -1583,7 +1674,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 57 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 58 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1660,17 +1751,11 @@ void dd_GraphicController_saveCurrentInterface(void) {
 }
 
 void dd_GraphicController_setNotificationFlag (void){
- dd_onScreenNotificationFlag =  1 ;
  dd_notificationFlag =  1 ;
 }
 
 void dd_GraphicController_unsetNotificationFlag (void){
  dd_notificationFlag =  0 ;
- dd_onScreenNotificationFlag =  0 ;
-}
-
-int dd_GraphicController_getNotificationFlag(void){
- return ((int)dd_onScreenNotificationFlag);
 }
 
 void dd_GraphicController_clearNotification(void) {
@@ -1682,12 +1767,27 @@ void dd_GraphicController_clearNotification(void) {
 void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
  dd_printMessage(dd_notificationText);
- dd_GraphicController_setNotificationFlag();
 }
-#line 161 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+
+void dd_GraphicController_clearPrompt(){
+ dd_Interface_print[dd_currentInterface]();
+}
+#line 159 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
+ dd_GraphicController_setNotificationFlag();
+ dd_notificationIsTimed = 1;
  dd_GraphicController_fireNotification(text, type);
+}
+
+void dd_GraphicController_firePromptNotification(char *text) {
+ if(dd_notificationFlag)
+ dd_GraphicController_clearNotification();
+ else
+ eGlcd_clear();
+
+ dd_notificationIsTimed = 0;
+ dd_GraphicController_fireNotification(text, PROMPT);
 }
 
 void dd_GraphicController_handleNotification(void) {
@@ -1767,7 +1867,21 @@ void dd_printLogoAnimation() {
 }
 
 int __counter = 0;
-void dd_GraphicController_onTimerInterrupt(void) {
+
+void dd_GraphicController_onTimerInterrupt(void)
+{
+ if ( __counter == 10 )
+ {
+ dSignalLed_set( 1 );
+ }
+ if (__counter == 20)
+ {
+ dSignalLed_unset( 1 );
+ __counter = 0;
+ }
+
+ __counter++;
+
  if(dd_onStartup)
  {
  dd_tmr1Counter++;
@@ -1790,7 +1904,7 @@ void dd_GraphicController_onTimerInterrupt(void) {
  }
  else if (dd_onInterfaceChange)
  {
-#line 272 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 296 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1799,6 +1913,9 @@ void dd_GraphicController_onTimerInterrupt(void) {
  eGlcd_fill(WHITE);
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
+ if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
+ dd_printMessage("READY");
+ }
  dd_isFrameUpdateForced =  0 ;
  }
  }
@@ -1815,5 +1932,5 @@ void dd_GraphicController_onTimerInterrupt(void) {
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 307 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
+#line 334 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_graphic_controller.c"
 }

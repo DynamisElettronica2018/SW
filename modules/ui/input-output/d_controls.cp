@@ -40,7 +40,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -98,7 +98,7 @@ void Can_initInterrupt(void);
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -243,10 +243,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -267,7 +268,10 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -324,6 +328,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
 
@@ -355,7 +361,7 @@ void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-#line 22 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -364,16 +370,22 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 46 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-void dAcc_startAutoAcceleration(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
 
 char dAcc_isAutoAccelerationActive(void);
 
 char dAcc_isReleasingClutch(void);
 
-void dAcc_startClutchRelease(void);
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_indicators.h"
@@ -458,38 +470,16 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 void dEbb_init(void);
 
-void dEbb_calibrateSwitch(void);
+void dEbb_setPositionZero(void);
 
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
-
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
+void dEbb_move(signed char movements);
 
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_gears.h"
@@ -535,13 +525,14 @@ char d_canSetGear(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -551,6 +542,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -566,7 +558,7 @@ extern FloatIndicator ind_th2o_dx_out;
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -592,17 +584,30 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 109 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 112 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 123 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 133 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
+#line 164 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
 #line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../d_ui_controller.h"
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 #line 9 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_init(unsigned char address, char direction);
@@ -625,7 +630,26 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 76 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 77 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
 static unsigned char old_encoder_left_pin0 = 0;
 static unsigned char old_encoder_left_pin1 = 0;
 static unsigned char old_encoder_left_pin2 = 0;
@@ -677,7 +701,7 @@ void dControls_init(void) {
  if (expanderPort == 0) position =  0 ;
  else
  position = log2(expanderPort) -  3 ;
-#line 129 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 130 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
  setExternalInterrupt( 7 ,  1 );
@@ -703,7 +727,7 @@ void dControls_disableCentralSelector()
  }
  clearExternalInterrupt( 4 );
 }
-#line 160 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
+#line 161 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -724,8 +748,8 @@ void dControls_disableCentralSelector()
  old_port_sx = a + (b << 1) + (c << 2);
  old_port_dx = d + (e << 1) + (f << 2);
 
- new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
  new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+ new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
 
  movement_dx = new_port_dx - old_port_dx;
  movement_sx = - new_port_sx + old_port_sx;
@@ -749,7 +773,6 @@ void dControls_disableCentralSelector()
  movement_sx += 8;
  }
  else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-
 
  if(movement_sx){
  d_controls_onLeftEncoder(movement_sx);
@@ -810,7 +833,7 @@ void dControls_disableCentralSelector()
  d_controls_onStartAcquisition();
  }
  else if ( RB15_bit  ==  0 ) {
- d_controls_onAux1();
+ d_controls_onAux2();
  }
  clearExternalInterrupt( 8 );
 }
@@ -853,8 +876,22 @@ void d_controls_onReset() {
 void d_controls_onDRS() {
 }
 
-void d_controls_onAux1(void) {
+void d_controls_onAux2(void) {
+ switch(d_currentOperatingMode){
+ case ACC_MODE:
+ dAcc_requestAction();
+ break;
+ case AUTOCROSS_MODE:
+ dAutocross_requestAction();
+ break;
+ case CRUISE_MODE:
+ dEbb_setPositionZero();
+ break;
+ default:
+ break;
+ }
 }
+
 
 void d_controls_onStartAcquisition(void) {
  dDCU_switchAcquisition();

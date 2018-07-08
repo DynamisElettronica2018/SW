@@ -25,12 +25,14 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -221,10 +223,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -245,7 +248,10 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -350,7 +356,26 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 16 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_dcu.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 17 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_dcu.c"
 static char d_DCU_isAcquiring =  0 ;
 static unsigned int d_DCU_isAliveCounter = 0;
 
@@ -379,7 +404,10 @@ void dDCU_startAcquisition(void) {
 void dDCU_stopAcquisition(void) {
  d_DCU_isAcquiring =  0 ;
  dd_GraphicController_fireTimedNotification( 1500 , "Stop ACQ.", MESSAGE);
- Can_writeInt( 0b11111110000 ,  2 );
+ Can_resetWritePacket();
+ Can_addIntToWritePacket( 2 );
+ Can_addIntToWritePacket(dAutocross_isAutocrossActive());
+ Can_write( 0b11111110000 );
 }
 
 void dDCU_tick(void){
@@ -395,8 +423,7 @@ void dDCU_isAcquiringSet(){
  d_DCU_isAcquiring =  1 ;
 }
 
-char dDCU_isAcquiring()
-{
+char dDCU_isAcquiring(){
  return d_DCU_isAcquiring;
 }
 

@@ -24,9 +24,11 @@
 #include "modules/ui/display/dd_interfaces.h"
 #include "modules/ui/d_operating_modes.h"
 #include "d_sensors.h"
+#include "d_traction_control.h"
 #include "libs/debug.h"
 #include "dd_graphic_controller.h"
-
+#include "d_acceleration.h"
+#include "d_autocross.h"
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
@@ -55,8 +57,8 @@ void main(){
     }
 }
 
+
 //on TIMER_2_PERIOD interval (1000Hz)
-  unsigned int value1 = 500, value2 = 50;
 onTimer2Interrupt{
     clearTimer2();
     //Buttons_tick();
@@ -65,10 +67,8 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
-
-    //Buzzer_bip();
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
@@ -117,10 +117,6 @@ onCanInterrupt{
     unsigned long int id;
     char dataBuffer[8];
     unsigned int dataLen = 0, flags = 0;
-     // Debug_UART_Write("in can interrupt\r\n");
-    /*if(C1INTFbits.ERRIF == 1){
-        dSignalLed_set(DSIGNAL_LED_GREEN);
-    }   */
     //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
     //IEC1BITS.C1IE = 0;
     Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
@@ -152,7 +148,7 @@ onCanInterrupt{
            dGear_propagate(firstInt);
            dRpm_set(secondInt);
            dEfiSense_heartbeat();
-           dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
+           dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
            dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
@@ -181,14 +177,14 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
            break;
        case GCU_CLUTCH_FB_SW_ID:
-           dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+           dClutch_injectActualValue((unsigned char)firstInt);
            break;
-      /*case EBB_BIAS_ID:
+       case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
-           dEbb_propagateEbbChange();
-           dEbb_calibrationState(secondInt);
-           dEbb_error(thirdInt);
-           break;   */
+          // da qua in giù la parte dell'ebb è da controllare!!!
+          // dEbb_calibrationState(secondInt);
+          // dEbb_error(thirdInt);
+           break; //  */
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
            break;
@@ -219,6 +215,13 @@ onCanInterrupt{
                 dDCU_isAcquiringSet();
                 dDCU_sentAcquiringSignal();
            }
+           break;
+       case GCU_AUX_ID:
+           d_traction_control_setValueFromCAN(firstInt);
+           dAcc_feedbackGCU(secondInt);
+           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
+           dAutocross_feedbackGCU(fourthInt);
+           Buzzer_bip();
            break;
        default:
            break;

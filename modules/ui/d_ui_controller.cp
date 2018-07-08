@@ -15,7 +15,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -38,7 +38,7 @@ void d_controls_onSelectorSwitched(signed char position);
 #line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -156,13 +156,14 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 43 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -172,6 +173,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -187,7 +189,7 @@ extern FloatIndicator ind_th2o_dx_out;
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -213,17 +215,30 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 109 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 112 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 123 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 133 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
+#line 164 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
 #line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/libs/../libs/dspic.h"
 #line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
 #line 15 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
@@ -313,10 +328,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -337,7 +353,10 @@ Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
 #line 54 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -532,6 +551,32 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_dcu.h"
 
 
@@ -558,9 +603,60 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
-#line 22 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
-OperatingMode d_currentOperatingMode = CRUISE_MODE;
 
+void dDCU_isAcquiringSet(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_traction_control.h"
+
+
+
+
+
+
+
+void d_traction_control_move(signed char movements);
+
+void d_traction_control_init(void);
+
+void d_traction_control_setValueFromCAN(unsigned int value);
+
+void d_traction_control_propagateValue(signed char value);
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 35 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+void dEbb_init(void);
+
+void dEbb_setPositionZero(void);
+
+void dEbb_move(signed char movements);
+
+void dEbb_setEbbValueFromCAN(unsigned int value);
+
+void dEbb_propagateEbbChange(void);
+
+void dEbb_tick(void);
+#line 26 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+OperatingMode d_currentOperatingMode = CRUISE_MODE;
 void d_UI_setOperatingMode(OperatingMode mode);
 
 void d_UIController_init() {
@@ -577,27 +673,33 @@ void d_UIController_init() {
  Debug_UART_Write("Signal Leds initialized.\r\n");
  dRpm_init();
  Debug_UART_Write("rpm initialized.\r\n");
+ dAutocross_init();
+ Debug_UART_Write("autocross initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
+ dAcc_init();
+ Debug_UART_Write("acceleration module initialized.\r\n");
+ d_traction_control_init();
+ Debug_UART_Write("traction control initialized.\r\n");
+ dEbb_init();
+ Debug_UART_Write("ebb initialized.\r\n");
  setInterruptPriority( 2 ,  4 );
  setTimer( 2 ,  0.001 );
- Debug_UART_Write("Timer2 initialized.\r\n");
-
+ Debug_UART_Write("ui controller initialized.\r\n");
 
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
- switch(d_currentOperatingMode) {
- case SETTINGS_MODE:
- d_UI_SettingsModeClose();
- }
+ d_OperatingMode_close[d_currentOperatingMode]();
  d_currentOperatingMode = mode;
  d_OperatingMode_init[mode]();
 }
 
+OperatingMode d_UI_getOperatingMode(){
+ return d_currentOperatingMode;
+}
+
 void printf(char* string);
-
-
 
  void timer1_interrupt() iv IVT_ADDR_T1INTERRUPT ics ICS_AUTO {
  dd_GraphicController_onTimerInterrupt();
@@ -606,15 +708,20 @@ void printf(char* string);
 
 
 
+
 void d_controls_onLeftEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
+ d_UI_onSettingsChange(movements);
+ break;
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
- dd_Menu_moveSelection(movements);
- break;
- case CRUISE_MODE:
 
+ break;
+ case AUTOCROSS_MODE:
+ case CRUISE_MODE:
+ d_traction_control_move(movements);
+ break;
  case ACC_MODE:
  break;
  default:
@@ -625,14 +732,17 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
- d_UI_onSettingsChange(movements);
- break;
+
+
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
- case ACC_MODE:
+ dd_Menu_moveSelection(movements);
  break;
+ case AUTOCROSS_MODE:
  case CRUISE_MODE:
-
+ dEbb_move(movements);
+ break;
+ case ACC_MODE:
  break;
  default:
  return;
@@ -640,11 +750,11 @@ void d_controls_onRightEncoder(signed char movements) {
 }
 
 OperatingMode d_selectorPositionToMode(signed char position){
- if (position >  1  || position <  -3  )
+ if (position >  2  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 110 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 127 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

@@ -140,20 +140,20 @@ L_end_Can_writeInt:
 
 _Can_addIntToWritePacket:
 
-;can.c,87 :: 		void Can_addIntToWritePacket(int dataOut) {
-;can.c,88 :: 		Can_addByteToWritePacket((unsigned char) (dataOut >> 8));
+;can.c,88 :: 		void Can_addIntToWritePacket(int dataOut) {
+;can.c,89 :: 		Can_addByteToWritePacket((unsigned char) (dataOut >> 8));
 	PUSH	W10
 	ASR	W10, #8, W0
 	PUSH	W10
 	MOV.B	W0, W10
 	CALL	_Can_addByteToWritePacket
 	POP	W10
-;can.c,89 :: 		Can_addByteToWritePacket((unsigned char) (dataOut & 0xFF));
+;can.c,90 :: 		Can_addByteToWritePacket((unsigned char) (dataOut & 0xFF));
 	MOV	#255, W0
 	AND	W10, W0, W0
 	MOV.B	W0, W10
 	CALL	_Can_addByteToWritePacket
-;can.c,90 :: 		}
+;can.c,91 :: 		}
 L_end_Can_addIntToWritePacket:
 	POP	W10
 	RETURN
@@ -161,33 +161,33 @@ L_end_Can_addIntToWritePacket:
 
 _Can_addByteToWritePacket:
 
-;can.c,92 :: 		void Can_addByteToWritePacket(unsigned char dataOut) {
-;can.c,93 :: 		can_dataOutBuffer[can_dataOutLength] = dataOut;
+;can.c,93 :: 		void Can_addByteToWritePacket(unsigned char dataOut) {
+;can.c,94 :: 		can_dataOutBuffer[can_dataOutLength] = dataOut;
 	MOV	#lo_addr(_can_dataOutBuffer), W1
 	MOV	#lo_addr(_can_dataOutLength), W0
 	ADD	W1, [W0], W0
 	MOV.B	W10, [W0]
-;can.c,94 :: 		can_dataOutLength += 1;
+;can.c,95 :: 		can_dataOutLength += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_can_dataOutLength), W0
 	ADD	W1, [W0], [W0]
-;can.c,95 :: 		}
+;can.c,96 :: 		}
 L_end_Can_addByteToWritePacket:
 	RETURN
 ; end of _Can_addByteToWritePacket
 
 _Can_write:
 
-;can.c,97 :: 		void Can_write(unsigned long int id) {
-;can.c,98 :: 		unsigned int sent, i = 0, j = 0;
+;can.c,98 :: 		void Can_write(unsigned long int id) {
+;can.c,99 :: 		unsigned int sent, i = 0, j = 0;
 	PUSH	W12
 	PUSH	W13
 ; i start address is: 14 (W7)
 	CLR	W7
 ; i end address is: 14 (W7)
-;can.c,99 :: 		do {
+;can.c,100 :: 		do {
 L_Can_write3:
-;can.c,100 :: 		sent = CAN1Write(id, can_dataOutBuffer, CAN_PACKET_SIZE, Can_getWriteFlags());
+;can.c,101 :: 		sent = CAN1Write(id, can_dataOutBuffer, CAN_PACKET_SIZE, Can_getWriteFlags());
 ; i start address is: 14 (W7)
 	CALL	_Can_getWriteFlags
 	PUSH.D	W10
@@ -197,9 +197,9 @@ L_Can_write3:
 	CALL	_CAN1Write
 	SUB	#2, W15
 	POP.D	W10
-;can.c,101 :: 		i += 1;
+;can.c,102 :: 		i += 1;
 	INC	W7
-;can.c,102 :: 		} while ((sent == 0) && (i < CAN_RETRY_LIMIT));
+;can.c,103 :: 		} while ((sent == 0) && (i < CAN_RETRY_LIMIT));
 	CP	W0, #0
 	BRA Z	L__Can_write24
 	GOTO	L__Can_write14
@@ -212,20 +212,20 @@ L__Can_write25:
 	GOTO	L_Can_write3
 L__Can_write14:
 L__Can_write13:
-;can.c,103 :: 		if (i == CAN_RETRY_LIMIT) {
+;can.c,104 :: 		if (i == CAN_RETRY_LIMIT) {
 	MOV	#50, W0
 	CP	W7, W0
 	BRA Z	L__Can_write26
 	GOTO	L_Can_write8
 L__Can_write26:
 ; i end address is: 14 (W7)
-;can.c,104 :: 		can_err++;
+;can.c,105 :: 		can_err++;
 	MOV	#1, W1
 	MOV	#lo_addr(_can_err), W0
 	ADD	W1, [W0], [W0]
-;can.c,105 :: 		}
-L_Can_write8:
 ;can.c,106 :: 		}
+L_Can_write8:
+;can.c,107 :: 		}
 L_end_Can_write:
 	POP	W13
 	POP	W12
@@ -234,18 +234,18 @@ L_end_Can_write:
 
 _Can_setWritePriority:
 
-;can.c,108 :: 		void Can_setWritePriority(unsigned int txPriority) {
-;can.c,109 :: 		can_txPriority = txPriority;
+;can.c,109 :: 		void Can_setWritePriority(unsigned int txPriority) {
+;can.c,110 :: 		can_txPriority = txPriority;
 	MOV	W10, _can_txPriority
-;can.c,110 :: 		}
+;can.c,111 :: 		}
 L_end_Can_setWritePriority:
 	RETURN
 ; end of _Can_setWritePriority
 
 _Can_resetWritePacket:
 
-;can.c,112 :: 		void Can_resetWritePacket(void) {
-;can.c,113 :: 		for (can_dataOutLength = 0; can_dataOutLength < CAN_PACKET_SIZE; can_dataOutLength += 1) {
+;can.c,113 :: 		void Can_resetWritePacket(void) {
+;can.c,114 :: 		for (can_dataOutLength = 0; can_dataOutLength < CAN_PACKET_SIZE; can_dataOutLength += 1) {
 	CLR	W0
 	MOV	W0, _can_dataOutLength
 L_Can_resetWritePacket9:
@@ -254,43 +254,43 @@ L_Can_resetWritePacket9:
 	BRA LTU	L__Can_resetWritePacket29
 	GOTO	L_Can_resetWritePacket10
 L__Can_resetWritePacket29:
-;can.c,114 :: 		can_dataOutBuffer[can_dataOutLength] = 0;
+;can.c,115 :: 		can_dataOutBuffer[can_dataOutLength] = 0;
 	MOV	#lo_addr(_can_dataOutBuffer), W1
 	MOV	#lo_addr(_can_dataOutLength), W0
 	ADD	W1, [W0], W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;can.c,113 :: 		for (can_dataOutLength = 0; can_dataOutLength < CAN_PACKET_SIZE; can_dataOutLength += 1) {
+;can.c,114 :: 		for (can_dataOutLength = 0; can_dataOutLength < CAN_PACKET_SIZE; can_dataOutLength += 1) {
 	MOV	#1, W1
 	MOV	#lo_addr(_can_dataOutLength), W0
 	ADD	W1, [W0], [W0]
-;can.c,115 :: 		}
+;can.c,116 :: 		}
 	GOTO	L_Can_resetWritePacket9
 L_Can_resetWritePacket10:
-;can.c,116 :: 		can_dataOutLength = 0;
+;can.c,117 :: 		can_dataOutLength = 0;
 	CLR	W0
 	MOV	W0, _can_dataOutLength
-;can.c,117 :: 		}
+;can.c,118 :: 		}
 L_end_Can_resetWritePacket:
 	RETURN
 ; end of _Can_resetWritePacket
 
 _Can_getWriteFlags:
 
-;can.c,119 :: 		unsigned int Can_getWriteFlags(void) {
-;can.c,120 :: 		return CAN_DEFAULT_FLAGS & can_txPriority;
+;can.c,120 :: 		unsigned int Can_getWriteFlags(void) {
+;can.c,121 :: 		return CAN_DEFAULT_FLAGS & can_txPriority;
 	MOV	#255, W1
 	MOV	#lo_addr(_can_txPriority), W0
 	AND	W1, [W0], W0
-;can.c,121 :: 		}
+;can.c,122 :: 		}
 L_end_Can_getWriteFlags:
 	RETURN
 ; end of _Can_getWriteFlags
 
 _Can_B0hasBeenReceived:
 
-;can.c,123 :: 		unsigned char Can_B0hasBeenReceived(void) {
-;can.c,124 :: 		return CAN_INTERRUPT_ONB0_OCCURRED == 1;
+;can.c,124 :: 		unsigned char Can_B0hasBeenReceived(void) {
+;can.c,125 :: 		return CAN_INTERRUPT_ONB0_OCCURRED == 1;
 	CLR.B	W0
 	BTSC	C1INTFbits, #0
 	INC.B	W0
@@ -299,15 +299,15 @@ _Can_B0hasBeenReceived:
 	BRA NZ	L__Can_B0hasBeenReceived32
 	INC.B	W0
 L__Can_B0hasBeenReceived32:
-;can.c,125 :: 		}
+;can.c,126 :: 		}
 L_end_Can_B0hasBeenReceived:
 	RETURN
 ; end of _Can_B0hasBeenReceived
 
 _Can_B1hasBeenReceived:
 
-;can.c,127 :: 		unsigned char Can_B1hasBeenReceived(void) {
-;can.c,128 :: 		return CAN_INTERRUPT_ONB1_OCCURRED == 1;
+;can.c,128 :: 		unsigned char Can_B1hasBeenReceived(void) {
+;can.c,129 :: 		return CAN_INTERRUPT_ONB1_OCCURRED == 1;
 	CLR.B	W0
 	BTSC	C1INTFbits, #1
 	INC.B	W0
@@ -316,51 +316,51 @@ _Can_B1hasBeenReceived:
 	BRA NZ	L__Can_B1hasBeenReceived34
 	INC.B	W0
 L__Can_B1hasBeenReceived34:
-;can.c,129 :: 		}
+;can.c,130 :: 		}
 L_end_Can_B1hasBeenReceived:
 	RETURN
 ; end of _Can_B1hasBeenReceived
 
 _Can_clearB0Flag:
 
-;can.c,131 :: 		void Can_clearB0Flag(void) {
-;can.c,132 :: 		CAN_INTERRUPT_ONB0_OCCURRED = 0;
+;can.c,132 :: 		void Can_clearB0Flag(void) {
+;can.c,133 :: 		CAN_INTERRUPT_ONB0_OCCURRED = 0;
 	BCLR	C1INTFbits, #0
-;can.c,133 :: 		}
+;can.c,134 :: 		}
 L_end_Can_clearB0Flag:
 	RETURN
 ; end of _Can_clearB0Flag
 
 _Can_clearB1Flag:
 
-;can.c,135 :: 		void Can_clearB1Flag(void) {
-;can.c,136 :: 		CAN_INTERRUPT_ONB1_OCCURRED = 0;
+;can.c,136 :: 		void Can_clearB1Flag(void) {
+;can.c,137 :: 		CAN_INTERRUPT_ONB1_OCCURRED = 0;
 	BCLR	C1INTFbits, #1
-;can.c,137 :: 		}
+;can.c,138 :: 		}
 L_end_Can_clearB1Flag:
 	RETURN
 ; end of _Can_clearB1Flag
 
 _Can_clearInterrupt:
 
-;can.c,139 :: 		void Can_clearInterrupt(void) {
-;can.c,140 :: 		CAN_INTERRUPT_OCCURRED = 0;
+;can.c,140 :: 		void Can_clearInterrupt(void) {
+;can.c,141 :: 		CAN_INTERRUPT_OCCURRED = 0;
 	BCLR	IFS1bits, #11
-;can.c,141 :: 		}
+;can.c,142 :: 		}
 L_end_Can_clearInterrupt:
 	RETURN
 ; end of _Can_clearInterrupt
 
 _Can_initInterrupt:
 
-;can.c,143 :: 		void Can_initInterrupt(void) {
-;can.c,150 :: 		IEC1BITS.C1IE = 1;
+;can.c,144 :: 		void Can_initInterrupt(void) {
+;can.c,151 :: 		IEC1BITS.C1IE = 1;
 	BSET	IEC1bits, #11
-;can.c,151 :: 		C1INTEBITS.RXB0IE = 1;
+;can.c,152 :: 		C1INTEBITS.RXB0IE = 1;
 	BSET.B	C1INTEbits, #0
-;can.c,152 :: 		C1INTEBITS.RXB1IE = 1;
+;can.c,153 :: 		C1INTEBITS.RXB1IE = 1;
 	BSET.B	C1INTEbits, #1
-;can.c,154 :: 		}
+;can.c,155 :: 		}
 L_end_Can_initInterrupt:
 	RETURN
 ; end of _Can_initInterrupt
