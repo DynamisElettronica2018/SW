@@ -259,20 +259,28 @@ _dEbb_setEbbValueFromCAN:
 
 ;d_ebb.c,77 :: 		void dEbb_setEbbValueFromCAN(unsigned int value){
 ;d_ebb.c,78 :: 		dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
+	PUSH	W10
+	PUSH	W11
 	SUB	W10, #8, W1
 	MOV	#lo_addr(_dEbb_value), W0
 	MOV.B	W1, [W0]
-;d_ebb.c,79 :: 		dEbb_printNotification();
-	CALL	_dEbb_printNotification
-;d_ebb.c,80 :: 		}
+;d_ebb.c,79 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+	SE	W1, W0
+	ADD	W0, #8, W0
+	MOV	W0, W11
+	MOV	#lo_addr(_ind_ebb), W10
+	CALL	_dd_Indicator_setIntValueP
+;d_ebb.c,81 :: 		}
 L_end_dEbb_setEbbValueFromCAN:
+	POP	W11
+	POP	W10
 	RETURN
 ; end of _dEbb_setEbbValueFromCAN
 
 _dEbb_setPositionZero:
 
-;d_ebb.c,82 :: 		void dEbb_setPositionZero(void){
-;d_ebb.c,83 :: 		Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
+;d_ebb.c,83 :: 		void dEbb_setPositionZero(void){
+;d_ebb.c,84 :: 		Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -280,18 +288,16 @@ _dEbb_setPositionZero:
 	MOV	#1024, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_ebb.c,84 :: 		dEbb_Value = 0;
+;d_ebb.c,85 :: 		dEbb_Value = 0;
 	MOV	#lo_addr(_dEbb_value), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_ebb.c,85 :: 		dd_GraphicController_fireTimedNotification(1000, "CALIBRATION", ERROR);
+;d_ebb.c,86 :: 		dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
 	MOV.B	#2, W12
 	MOV	#lo_addr(?lstr16_d_ebb), W11
 	MOV	#1000, W10
 	CALL	_dd_GraphicController_fireTimedNotification
-;d_ebb.c,86 :: 		dEbb_propagateEbbChange();
-	CALL	_dEbb_propagateEbbChange
-;d_ebb.c,87 :: 		}
+;d_ebb.c,88 :: 		}
 L_end_dEbb_setPositionZero:
 	POP	W12
 	POP	W11
@@ -301,53 +307,53 @@ L_end_dEbb_setPositionZero:
 
 _dEbb_propagateEbbChange:
 
-;d_ebb.c,89 :: 		void dEbb_propagateEbbChange(void) {
-;d_ebb.c,90 :: 		switch (dEbb_state){
+;d_ebb.c,90 :: 		void dEbb_propagateEbbChange(void) {
+;d_ebb.c,91 :: 		switch (dEbb_state){
 	PUSH	W10
 	PUSH	W11
 	GOTO	L_dEbb_propagateEbbChange18
-;d_ebb.c,91 :: 		case EBB_IS_CALIBRATING:
+;d_ebb.c,92 :: 		case EBB_IS_CALIBRATING:
 L_dEbb_propagateEbbChange20:
-;d_ebb.c,92 :: 		dd_Indicator_setStringValue(EBB, "=0=");
+;d_ebb.c,93 :: 		dd_Indicator_setStringValue(EBB, "=0=");
 	MOV	#lo_addr(?lstr17_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,93 :: 		break;
+;d_ebb.c,94 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange19
-;d_ebb.c,94 :: 		case EBB_MOTOR_STOPPED:
+;d_ebb.c,95 :: 		case EBB_MOTOR_STOPPED:
 L_dEbb_propagateEbbChange21:
-;d_ebb.c,95 :: 		dd_Indicator_setStringValue(EBB, "/");
+;d_ebb.c,96 :: 		dd_Indicator_setStringValue(EBB, "/");
 	MOV	#lo_addr(?lstr18_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,96 :: 		break;
+;d_ebb.c,97 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange19
-;d_ebb.c,97 :: 		case EBB_LOW_VOLTAGE_STOP:
+;d_ebb.c,98 :: 		case EBB_LOW_VOLTAGE_STOP:
 L_dEbb_propagateEbbChange22:
-;d_ebb.c,98 :: 		dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
+;d_ebb.c,99 :: 		dd_Indicator_setStringValue(EBB, ";");  //(Low Voltage Symbol)
 	MOV	#lo_addr(?lstr19_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,99 :: 		break;
+;d_ebb.c,100 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange19
-;d_ebb.c,100 :: 		case EBB_MOTOR_ROTATEING:
+;d_ebb.c,101 :: 		case EBB_MOTOR_ROTATEING:
 L_dEbb_propagateEbbChange23:
-;d_ebb.c,101 :: 		dd_Indicator_setStringValue(EBB, "...");
+;d_ebb.c,102 :: 		dd_Indicator_setStringValue(EBB, "...");
 	MOV	#lo_addr(?lstr20_d_ebb), W11
 	CLR	W10
 	CALL	_dd_Indicator_setStringValue
-;d_ebb.c,102 :: 		break;
+;d_ebb.c,103 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange19
-;d_ebb.c,103 :: 		default:
+;d_ebb.c,104 :: 		default:
 L_dEbb_propagateEbbChange24:
-;d_ebb.c,104 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+;d_ebb.c,105 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	ADD	W0, #8, W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_ebb.c,105 :: 		sprintf(dstr, "indicator value %d\r\n", dEbb_value+EBB_DAGO_OFFSET);
+;d_ebb.c,106 :: 		sprintf(dstr, "indicator value %d\r\n", dEbb_value+EBB_DAGO_OFFSET);
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	ADD	W0, #8, W0
@@ -358,12 +364,12 @@ L_dEbb_propagateEbbChange24:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_ebb.c,106 :: 		Debug_UART_Write(dstr);
+;d_ebb.c,107 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_ebb.c,107 :: 		break;
+;d_ebb.c,108 :: 		break;
 	GOTO	L_dEbb_propagateEbbChange19
-;d_ebb.c,108 :: 		}
+;d_ebb.c,109 :: 		}
 L_dEbb_propagateEbbChange18:
 	MOV	#100, W1
 	MOV	#lo_addr(_dEbb_state), W0
@@ -390,7 +396,7 @@ L__dEbb_propagateEbbChange49:
 L__dEbb_propagateEbbChange50:
 	GOTO	L_dEbb_propagateEbbChange24
 L_dEbb_propagateEbbChange19:
-;d_ebb.c,109 :: 		}
+;d_ebb.c,110 :: 		}
 L_end_dEbb_propagateEbbChange:
 	POP	W11
 	POP	W10
@@ -399,8 +405,8 @@ L_end_dEbb_propagateEbbChange:
 
 _dEbb_propagateValue:
 
-;d_ebb.c,111 :: 		void dEbb_propagateValue(signed char value){
-;d_ebb.c,112 :: 		Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
+;d_ebb.c,112 :: 		void dEbb_propagateValue(signed char value){
+;d_ebb.c,113 :: 		Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -410,9 +416,13 @@ _dEbb_propagateValue:
 	MOV	#1024, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_ebb.c,113 :: 		dEbb_propagateEbbChange();
-	CALL	_dEbb_propagateEbbChange
-;d_ebb.c,114 :: 		}
+;d_ebb.c,114 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+	MOV	#lo_addr(_dEbb_value), W0
+	SE	[W0], W0
+	MOV	W0, W11
+	MOV	#lo_addr(_ind_ebb), W10
+	CALL	_dd_Indicator_setIntValueP
+;d_ebb.c,115 :: 		}
 L_end_dEbb_propagateValue:
 	POP	W12
 	POP	W11
@@ -423,14 +433,14 @@ L_end_dEbb_propagateValue:
 _dEbb_move:
 	LNK	#2
 
-;d_ebb.c,116 :: 		void dEbb_move(signed char movements){
-;d_ebb.c,118 :: 		value = dEbb_value - movements;
+;d_ebb.c,117 :: 		void dEbb_move(signed char movements){
+;d_ebb.c,119 :: 		value = dEbb_value - movements;
 	PUSH	W10
 	PUSH	W11
 	MOV	#lo_addr(_dEbb_value), W1
 	ADD	W14, #0, W0
 	SUBR.B	W10, [W1], [W0]
-;d_ebb.c,119 :: 		sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
+;d_ebb.c,120 :: 		sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	PUSH	W10
@@ -441,11 +451,11 @@ _dEbb_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_ebb.c,120 :: 		Debug_UART_Write(dstr);
+;d_ebb.c,121 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
 	POP	W10
-;d_ebb.c,121 :: 		sprintf(dstr, "movements%d\r\n", movements);
+;d_ebb.c,122 :: 		sprintf(dstr, "movements%d\r\n", movements);
 	MOV.B	W10, W0
 	SE	W0, W0
 	PUSH	W0
@@ -455,10 +465,10 @@ _dEbb_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_ebb.c,122 :: 		Debug_UART_Write(dstr);
+;d_ebb.c,123 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_ebb.c,123 :: 		sprintf(dstr, "value1 %d\r\n", value);
+;d_ebb.c,124 :: 		sprintf(dstr, "value1 %d\r\n", value);
 	ADD	W14, #0, W0
 	SE	[W0], W0
 	PUSH	W0
@@ -468,38 +478,38 @@ _dEbb_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_ebb.c,124 :: 		Debug_UART_Write(dstr);
+;d_ebb.c,125 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_ebb.c,125 :: 		if(value > EBB_MAX_VALUE){
+;d_ebb.c,126 :: 		if(value > EBB_MAX_VALUE){
 	MOV.B	[W14+0], W0
-	CP.B	W0, #7
+	CP.B	W0, #3
 	BRA GT	L__dEbb_move53
 	GOTO	L_dEbb_move25
 L__dEbb_move53:
-;d_ebb.c,126 :: 		value = EBB_MAX_VALUE;
-	MOV.B	#7, W0
+;d_ebb.c,127 :: 		value = EBB_MAX_VALUE;
+	MOV.B	#3, W0
 	MOV.B	W0, [W14+0]
-;d_ebb.c,127 :: 		} else if(value < EBB_MIN_VALUE){
+;d_ebb.c,128 :: 		} else if(value < EBB_MIN_VALUE){
 	GOTO	L_dEbb_move26
 L_dEbb_move25:
 	MOV.B	[W14+0], W1
-	MOV.B	#249, W0
+	MOV.B	#253, W0
 	CP.B	W1, W0
 	BRA LT	L__dEbb_move54
 	GOTO	L_dEbb_move27
 L__dEbb_move54:
-;d_ebb.c,128 :: 		value = EBB_MIN_VALUE;
-	MOV.B	#249, W0
+;d_ebb.c,129 :: 		value = EBB_MIN_VALUE;
+	MOV.B	#253, W0
 	MOV.B	W0, [W14+0]
-;d_ebb.c,129 :: 		}
+;d_ebb.c,130 :: 		}
 L_dEbb_move27:
 L_dEbb_move26:
-;d_ebb.c,130 :: 		dEbb_Value = value;
+;d_ebb.c,131 :: 		dEbb_Value = value;
 	MOV	#lo_addr(_dEbb_value), W1
 	MOV.B	[W14+0], W0
 	MOV.B	W0, [W1]
-;d_ebb.c,131 :: 		sprintf(dstr, "value %d\r\n", value);
+;d_ebb.c,132 :: 		sprintf(dstr, "value %d\r\n", value);
 	ADD	W14, #0, W0
 	SE	[W0], W0
 	PUSH	W0
@@ -509,19 +519,19 @@ L_dEbb_move26:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_ebb.c,132 :: 		Debug_UART_Write(dstr);
+;d_ebb.c,133 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_ebb.c,133 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+;d_ebb.c,134 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_ebb.c,134 :: 		dEbb_propagateValue(value);
+;d_ebb.c,135 :: 		dEbb_propagateValue(value);
 	MOV.B	[W14+0], W10
 	CALL	_dEbb_propagateValue
-;d_ebb.c,135 :: 		}
+;d_ebb.c,136 :: 		}
 L_end_dEbb_move:
 	POP	W11
 	POP	W10
@@ -531,16 +541,16 @@ L_end_dEbb_move:
 
 _dEbb_init:
 
-;d_ebb.c,137 :: 		void dEbb_init(void){
-;d_ebb.c,139 :: 		}
+;d_ebb.c,138 :: 		void dEbb_init(void){
+;d_ebb.c,140 :: 		}
 L_end_dEbb_init:
 	RETURN
 ; end of _dEbb_init
 
 _dEbb_tick:
 
-;d_ebb.c,203 :: 		void dEbb_tick(void) {
-;d_ebb.c,230 :: 		}
+;d_ebb.c,204 :: 		void dEbb_tick(void) {
+;d_ebb.c,231 :: 		}
 L_end_dEbb_tick:
 	RETURN
 ; end of _dEbb_tick

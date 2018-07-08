@@ -7,7 +7,7 @@ Value=0
 Value=0
 [ACTIVE_TAB]
 <<<<<<< HEAD
-Value=DPX.c
+Value=modules\peripherals\d_dcu.c
 =======
 Value=modules\ui\display\dd_graphic_controller.c
 >>>>>>> origin/can_module
@@ -61,7 +61,7 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=9
 File0=DPX.c
 File1=modules\peripherals\d_ebb.c
 File2=modules\peripherals\d_ebb.h
@@ -69,6 +69,8 @@ File3=modules\ui\d_traction_control.c
 File4=modules\ui\d_traction_control.h
 File5=modules\ui\input-output\d_controls.c
 File6=DPX.asm
+File7=modules\peripherals\d_can.h
+File8=modules\peripherals\d_dcu.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

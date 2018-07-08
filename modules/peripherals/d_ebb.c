@@ -76,14 +76,15 @@ void dEbb_printNotification(void){
 
 void dEbb_setEbbValueFromCAN(unsigned int value){
      dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
-     dEbb_printNotification();
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+    // dEbb_printNotification();
 }
 
 void dEbb_setPositionZero(void){
     Can_writeInt(SW_BRAKE_BIAS_EBB_ID, EBB_SET_ZERO);
     dEbb_Value = 0;
-    dd_GraphicController_fireTimedNotification(1000, "CALIBRATION", ERROR);
-    dEbb_propagateEbbChange();
+    dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
+   // dEbb_propagateEbbChange();
 }
 
 void dEbb_propagateEbbChange(void) {
@@ -110,7 +111,7 @@ void dEbb_propagateEbbChange(void) {
 
 void dEbb_propagateValue(signed char value){
      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
-     dEbb_propagateEbbChange();
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 }
 
 void dEbb_move(signed char movements){

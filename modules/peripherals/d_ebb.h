@@ -16,8 +16,8 @@
 //calibrazione tra 10 e 20
 
 //#define EBB_CENTER_CALIBRATION 15
-#define EBB_MAX_VALUE 7
-#define EBB_MIN_VALUE -7
+#define EBB_MAX_VALUE 3
+#define EBB_MIN_VALUE -3
 #define EBB_DAGO_OFFSET 8
 #define EBB_SET_ZERO 100
 

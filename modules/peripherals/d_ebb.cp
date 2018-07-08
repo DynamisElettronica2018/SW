@@ -497,14 +497,15 @@ void dEbb_printNotification(void){
 
 void dEbb_setEbbValueFromCAN(unsigned int value){
  dEbb_Value = (int)(value -  8 );
- dEbb_printNotification();
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+ 8 ));
+
 }
 
 void dEbb_setPositionZero(void){
  Can_writeInt( 0b10000000000 ,  100 );
  dEbb_Value = 0;
- dd_GraphicController_fireTimedNotification(1000, "CALIBRATION", ERROR);
- dEbb_propagateEbbChange();
+ dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
+
 }
 
 void dEbb_propagateEbbChange(void) {
@@ -531,7 +532,7 @@ void dEbb_propagateEbbChange(void) {
 
 void dEbb_propagateValue(signed char value){
  Can_writeInt( 0b10000000000 , (int)(value +  8 ));
- dEbb_propagateEbbChange();
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 }
 
 void dEbb_move(signed char movements){
@@ -543,10 +544,10 @@ void dEbb_move(signed char movements){
  Debug_UART_Write(dstr);
  sprintf(dstr, "value1 %d\r\n", value);
  Debug_UART_Write(dstr);
- if(value >  7 ){
- value =  7 ;
- } else if(value <  -7 ){
- value =  -7 ;
+ if(value >  3 ){
+ value =  3 ;
+ } else if(value <  -3 ){
+ value =  -3 ;
  }
  dEbb_Value = value;
  sprintf(dstr, "value %d\r\n", value);
@@ -558,7 +559,7 @@ void dEbb_move(signed char movements){
 void dEbb_init(void){
 
 }
-#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 231 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }
