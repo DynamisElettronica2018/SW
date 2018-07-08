@@ -35,7 +35,7 @@
 #define SW_ACCELERATION_GCU_ID          0b01000000010 //514
 #define SW_TRACTION_CONTROL_GCU_ID      0b01000000011 //515
 #define SW_BRAKE_BIAS_EBB_ID            0b10000000000 //1024
-#define SW_GENERAL_GCU_ID               0b01000000101 //517
+#define SW_DRS_GCU_ID                   0b01000000101 //517
 
 
 /************************** DCU ***************************/

@@ -1116,6 +1116,7 @@ base
 base
 base
 base
+base
 bbitsavailable
 bblocksinonepass
 bcd2dec
@@ -2219,6 +2220,9 @@ d_controls_onstartacquisition
 d_currentgear
 d_currentoperatingmode
 d_dashboardsetting_updatevalue
+d_drs_propagatechange
+d_drs_setvaluefromcan
+d_drs_status
 d_ebb
 d_gearmotorstate
 d_getgearmotorstate
@@ -2562,6 +2566,8 @@ description
 description
 description
 description
+description
+descriptionlength
 descriptionlength
 descriptionlength
 descriptionlength
@@ -5023,6 +5029,7 @@ id
 id
 id
 id
+id
 idle
 idle
 idle_bit
@@ -5065,6 +5072,7 @@ ind_dau_fr_board
 ind_dau_r_board
 ind_dcu_board
 ind_drs
+ind_drs_curr
 ind_ebb
 ind_ebb_board
 ind_ebb_motor_curr
@@ -5318,6 +5326,7 @@ isvisible
 isvisible
 isvisible
 isvisible
+isvisible
 isxdigit
 ivrie
 ivrie
@@ -5461,6 +5470,8 @@ label
 label
 label
 label
+label
+labellength
 labellength
 labellength
 labellength
@@ -5916,6 +5927,8 @@ name
 name
 name
 name
+name
+namelength
 namelength
 namelength
 namelength
@@ -6989,6 +7002,7 @@ parsevaluelabel
 parsevaluelabel
 parsevaluelabel
 parsevaluelabel
+parsevaluelabel
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
 pcfg_0
@@ -7104,6 +7118,7 @@ pdsel1
 pen
 pen
 pen_bit
+pendingprintupdate
 pendingprintupdate
 pendingprintupdate
 pendingprintupdate
@@ -12825,6 +12840,8 @@ value
 value
 value
 value
+value
+valuetype
 valuetype
 valuetype
 valuetype

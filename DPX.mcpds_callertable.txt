@@ -511,6 +511,9 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dAcc_feedbackGCU
 		dAcc_stopAutoAcceleration
+	d_drs_setValueFromCAN
+		dd_Indicator_setIntValueP
+		Buzzer_bip
 	dAutocross_feedbackGCU
 		dAutocross_stopAutocross
 	Buzzer_bip
@@ -518,6 +521,12 @@ CAN_Interrupt
 	_Long2Float
 external2
 	d_controls_onDRS
+		d_drs_propagateChange
+			Can_writeByte
+				Can_resetWritePacket
+				Can_addByteToWritePacket
+				Can_write
+			dd_GraphicController_fireTimedNotification
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick
@@ -586,9 +595,6 @@ timer2_interrupt
 	dPaddle_getValue
 	dClutch_send
 		Can_writeByte
-			Can_resetWritePacket
-			Can_addByteToWritePacket
-			Can_write
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
 		Can_writeByte

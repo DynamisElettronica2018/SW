@@ -46,7 +46,7 @@ void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
         d_UI_AutocrossModeClose
 };
 
-const unsigned char dd_carParametersCount = 22;
+const unsigned char dd_carParametersCount = 23;
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
 
 /********************************* INDICATORS *********************************/
@@ -54,6 +54,7 @@ IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3, FALSE, TRUE, TRUE, INT, 1, 
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 IntegerIndicator ind_traction_control = {TRACTION_CONTROL, "TC", "Traction Control", 2, 16, TRUE, TRUE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_drs = {DRS, "DRS", "DRS", 3, 3, TRUE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3, FALSE, FALSE, TRUE, INT, 1, "?", 0};
@@ -86,7 +87,7 @@ IntegerIndicator ind_gcu_temp = {GCU_TEMP, "GCU.T", "GCU Temp.", 5, 9,FALSE, TRU
 IntegerIndicator ind_H2O_pump = {H2O_PUMP, "H20 PUMP", "H20 Pump Curr.", 8, 14, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 IntegerIndicator ind_H2O_fans = {H2O_FANS, "H20 FANS", "H20 Fans Curr.", 8, 14, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
-IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
+IntegerIndicator ind_drs_curr = {DRS_CURR, "I DRS", "Drs Curr.", 5, 9, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 
@@ -96,6 +97,7 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i pri
       (Indicator*)&ind_traction_control,
       (Indicator*)&ind_vbat,
       (Indicator*)&ind_tps,
+      (Indicator*)&ind_drs,
       (Indicator*)&ind_oil_press,
       (Indicator*)&ind_adc1_read,
       (Indicator*)&ind_rpm,
@@ -126,7 +128,7 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
       (Indicator*)&ind_H2O_pump,
       (Indicator*)&ind_H2O_fans,
       (Indicator*)&ind_clutch,
-      (Indicator*)&ind_drs,
+      (Indicator*)&ind_drs_curr,
       (Indicator*)&ind_gear_motor,
       (Indicator*)&ind_fuel_pump
 };

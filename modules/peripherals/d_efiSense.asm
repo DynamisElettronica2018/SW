@@ -178,7 +178,7 @@ _dEfiSense_die:
 	INC.B	W0
 L__dEfiSense_die34:
 	MOV.B	W0, W11
-	MOV.B	#12, W10
+	MOV.B	#13, W10
 	CALL	_dd_Indicator_setBoolValue
 ;d_efiSense.c,59 :: 		}
 L_end_dEfiSense_die:

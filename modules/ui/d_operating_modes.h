@@ -65,6 +65,7 @@ extern IntegerIndicator ind_rpm;
 extern IntegerIndicator ind_clutch_pos;
 extern IntegerIndicator ind_clutch_fb;
 extern IntegerIndicator ind_adc1_read;
+extern IntegerIndicator ind_drs;
 extern BooleanIndicator ind_efi_status;
 extern IntegerIndicator ind_efi_crash_counter;
 extern FloatIndicator ind_th2o_sx_in;
@@ -98,7 +99,7 @@ extern IntegerIndicator ind_fuel_pump;
 extern IntegerIndicator ind_H2O_pump;
 extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
-extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
 
 
