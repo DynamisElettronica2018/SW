@@ -117,9 +117,10 @@ char dd_MenuLine_hasToScroll(unsigned char lineIndex);
 char dd_Menu_isLineSelected(unsigned char lineIndex);
 void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 
+char debug_str[25];
 void dd_printMenuLine(unsigned char lineIndex) {
      unsigned char lineNumber, color;
-    char lineText[MAX_MENU_WIDTH + 1]; //Adding 1 in so we can clean our border char
+    char lineText[MAX_MENU_WIDTH + 1 + 1]; //Adding 1 in so we can clean our border char and + 1 for temination character
     
     lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
     if (dd_Menu_isLineSelected(lineIndex)) {
@@ -129,6 +130,9 @@ void dd_printMenuLine(unsigned char lineIndex) {
     }
     eGlcd_fillPage(lineNumber, !color);
     dd_Menu_makeLineText(lineText, lineIndex);
+    
+    //sprintf(dstr, "   Line text: \"%s\".\r\n", lineText);
+    //Debug_UART_Write(dstr);
     
     xGlcd_Set_Font(MENU_FONT);
     xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
@@ -142,6 +146,8 @@ void dd_printMenu() {
     dd_Menu_DescriptionScrollingTicks++;
     for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
         if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+           //sprintf(dstr, "Printing menu line: %d.\r\n", i);
+           //Debug_UART_Write(dstr);
            dd_printMenuLine(i);
         }
     }
@@ -258,6 +264,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
     }
     //necessary?
     lineText[lineCharIndex] = ' ';
+    lineText[lineCharIndex+1] = '\0';
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {

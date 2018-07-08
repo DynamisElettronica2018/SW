@@ -2482,6 +2482,7 @@ debb_setpositionzero
 debb_state
 debb_tick
 debb_value
+debug_str
 debug_timer4_init
 debug_uart_init
 debug_uart_write

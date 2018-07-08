@@ -316,8 +316,8 @@ L_end_dd_Menu_selectedLine:
 _dd_printMenuLine:
 	LNK	#22
 
-;dd_menu.c,120 :: 		void dd_printMenuLine(unsigned char lineIndex) {
-;dd_menu.c,124 :: 		lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
+;dd_menu.c,121 :: 		void dd_printMenuLine(unsigned char lineIndex) {
+;dd_menu.c,125 :: 		lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -329,24 +329,24 @@ _dd_printMenuLine:
 	MOV	#lo_addr(dd_menu_dd_Menu_Y_OFFSET), W1
 	ADD	W14, #0, W0
 	ADD.B	W2, [W1], [W0]
-;dd_menu.c,125 :: 		if (dd_Menu_isLineSelected(lineIndex)) {
+;dd_menu.c,126 :: 		if (dd_Menu_isLineSelected(lineIndex)) {
 	CALL	_dd_Menu_isLineSelected
 	CP0.B	W0
 	BRA NZ	L__dd_printMenuLine78
 	GOTO	L_dd_printMenuLine14
 L__dd_printMenuLine78:
-;dd_menu.c,126 :: 		color = WHITE;
+;dd_menu.c,127 :: 		color = WHITE;
 	MOV.B	#_WHITE, W0
 	MOV.B	W0, [W14+1]
-;dd_menu.c,127 :: 		} else {
+;dd_menu.c,128 :: 		} else {
 	GOTO	L_dd_printMenuLine15
 L_dd_printMenuLine14:
-;dd_menu.c,128 :: 		color = BLACK;
+;dd_menu.c,129 :: 		color = BLACK;
 	MOV.B	#_BLACK, W0
 	MOV.B	W0, [W14+1]
-;dd_menu.c,129 :: 		}
+;dd_menu.c,130 :: 		}
 L_dd_printMenuLine15:
-;dd_menu.c,130 :: 		eGlcd_fillPage(lineNumber, !color);
+;dd_menu.c,131 :: 		eGlcd_fillPage(lineNumber, !color);
 	MOV.B	[W14+1], W0
 	CP0.B	W0
 	CLR.B	W0
@@ -358,18 +358,18 @@ L__dd_printMenuLine79:
 	MOV.B	[W14+0], W10
 	CALL	_eGlcd_fillPage
 	POP	W10
-;dd_menu.c,131 :: 		dd_Menu_makeLineText(lineText, lineIndex);
+;dd_menu.c,132 :: 		dd_Menu_makeLineText(lineText, lineIndex);
 	ADD	W14, #2, W0
 	MOV.B	W10, W11
 	MOV	W0, W10
 	CALL	_dd_Menu_makeLineText
-;dd_menu.c,133 :: 		xGlcd_Set_Font(MENU_FONT);
+;dd_menu.c,137 :: 		xGlcd_Set_Font(MENU_FONT);
 	MOV	#32, W13
 	MOV.B	#8, W12
 	MOV.B	#6, W11
 	MOV	#lo_addr(dd_menu_DynamisFont_UniformTerminal6x8), W10
 	CALL	_xGlcd_Set_Font
-;dd_menu.c,134 :: 		xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
+;dd_menu.c,138 :: 		xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 	ADD	W14, #0, W0
 	ZE	[W0], W0
 	SL	W0, #3, W1
@@ -379,7 +379,7 @@ L__dd_printMenuLine79:
 	CLR	W11
 	MOV	W0, W10
 	CALL	_xGlcd_Write_Text
-;dd_menu.c,135 :: 		}
+;dd_menu.c,139 :: 		}
 L_end_dd_printMenuLine:
 	POP	W13
 	POP	W12
@@ -392,8 +392,8 @@ L_end_dd_printMenuLine:
 _dd_printMenu:
 	LNK	#2
 
-;dd_menu.c,137 :: 		void dd_printMenu() {
-;dd_menu.c,140 :: 		(dd_Menu_Height_param<=dd_currentIndicatorsCount ? dd_Menu_Height_param : dd_currentIndicatorsCount);
+;dd_menu.c,141 :: 		void dd_printMenu() {
+;dd_menu.c,144 :: 		(dd_Menu_Height_param<=dd_currentIndicatorsCount ? dd_Menu_Height_param : dd_currentIndicatorsCount);
 	PUSH	W10
 	MOV	#lo_addr(dd_menu_dd_Menu_Height_param), W0
 	MOV.B	[W0], W1
@@ -420,11 +420,11 @@ L_dd_printMenu17:
 ; ?FLOC___dd_printMenu?T59 end address is: 4 (W2)
 	ADD	W1, W0, W0
 	MOV.B	W0, [W14+1]
-;dd_menu.c,142 :: 		dd_Menu_DescriptionScrollingTicks++;
+;dd_menu.c,146 :: 		dd_Menu_DescriptionScrollingTicks++;
 	MOV	#1, W1
 	MOV	#lo_addr(dd_menu_dd_Menu_DescriptionScrollingTicks), W0
 	ADD	W1, [W0], [W0]
-;dd_menu.c,143 :: 		for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
+;dd_menu.c,147 :: 		for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
 	MOV	#lo_addr(dd_menu_dd_Menu_FirstLineIndex), W0
 	MOV.B	[W0], W0
 	MOV.B	W0, [W14+0]
@@ -435,7 +435,7 @@ L_dd_printMenu18:
 	BRA LTU	L__dd_printMenu82
 	GOTO	L_dd_printMenu19
 L__dd_printMenu82:
-;dd_menu.c,144 :: 		if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+;dd_menu.c,148 :: 		if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
 	MOV.B	[W14+0], W10
 	CALL	_dd_Indicator_isRequestingUpdate
 	CP0.B	W0
@@ -457,19 +457,19 @@ L__dd_printMenu85:
 L__dd_printMenu58:
 L__dd_printMenu57:
 L__dd_printMenu56:
-;dd_menu.c,145 :: 		dd_printMenuLine(i);
+;dd_menu.c,151 :: 		dd_printMenuLine(i);
 	MOV.B	[W14+0], W10
 	CALL	_dd_printMenuLine
-;dd_menu.c,146 :: 		}
+;dd_menu.c,152 :: 		}
 L_dd_printMenu23:
-;dd_menu.c,143 :: 		for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
+;dd_menu.c,147 :: 		for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
 	MOV.B	[W14+0], W1
 	ADD	W14, #0, W0
 	ADD.B	W1, #1, [W0]
-;dd_menu.c,147 :: 		}
+;dd_menu.c,153 :: 		}
 	GOTO	L_dd_printMenu18
 L_dd_printMenu19:
-;dd_menu.c,148 :: 		}
+;dd_menu.c,154 :: 		}
 L_end_dd_printMenu:
 	POP	W10
 	ULNK
@@ -478,8 +478,8 @@ L_end_dd_printMenu:
 
 _dd_MenuLine_getVisibleDescriptionWidth:
 
-;dd_menu.c,152 :: 		unsigned char dd_MenuLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
-;dd_menu.c,154 :: 		labelLength = dd_currentIndicators[lineIndex]->labelLength;
+;dd_menu.c,158 :: 		unsigned char dd_MenuLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
+;dd_menu.c,160 :: 		labelLength = dd_currentIndicators[lineIndex]->labelLength;
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
@@ -488,13 +488,13 @@ _dd_MenuLine_getVisibleDescriptionWidth:
 	ADD	W0, #9, W0
 ; labelLength start address is: 4 (W2)
 	MOV.B	[W0], W2
-;dd_menu.c,155 :: 		if (labelLength > 0) {
+;dd_menu.c,161 :: 		if (labelLength > 0) {
 	MOV.B	[W0], W0
 	CP.B	W0, #0
 	BRA GTU	L__dd_MenuLine_getVisibleDescriptionWidth87
 	GOTO	L_dd_MenuLine_getVisibleDescriptionWidth24
 L__dd_MenuLine_getVisibleDescriptionWidth87:
-;dd_menu.c,156 :: 		return (unsigned char) (dd_Menu_Width - labelLength - MENU_DESCRIPTION_VALUE_SPACING);
+;dd_menu.c,162 :: 		return (unsigned char) (dd_Menu_Width - labelLength - MENU_DESCRIPTION_VALUE_SPACING);
 	MOV	#lo_addr(dd_menu_dd_Menu_Width), W0
 	ZE	[W0], W1
 	ZE	W2, W0
@@ -502,12 +502,12 @@ L__dd_MenuLine_getVisibleDescriptionWidth87:
 	SUB	W1, W0, W0
 	DEC	W0
 	GOTO	L_end_dd_MenuLine_getVisibleDescriptionWidth
-;dd_menu.c,157 :: 		} else {
+;dd_menu.c,163 :: 		} else {
 L_dd_MenuLine_getVisibleDescriptionWidth24:
-;dd_menu.c,158 :: 		return dd_Menu_Width;
+;dd_menu.c,164 :: 		return dd_Menu_Width;
 	MOV	#lo_addr(dd_menu_dd_Menu_Width), W0
 	MOV.B	[W0], W0
-;dd_menu.c,160 :: 		}
+;dd_menu.c,166 :: 		}
 L_end_dd_MenuLine_getVisibleDescriptionWidth:
 	RETURN
 ; end of _dd_MenuLine_getVisibleDescriptionWidth
@@ -515,10 +515,10 @@ L_end_dd_MenuLine_getVisibleDescriptionWidth:
 _dd_MenuLine_hasToScroll:
 	LNK	#2
 
-;dd_menu.c,164 :: 		unsigned char dd_MenuLine_hasToScroll(unsigned char lineIndex) {
-;dd_menu.c,165 :: 		return dd_Menu_isLineSelected(lineIndex) &&
+;dd_menu.c,170 :: 		unsigned char dd_MenuLine_hasToScroll(unsigned char lineIndex) {
+;dd_menu.c,171 :: 		return dd_Menu_isLineSelected(lineIndex) &&
 	CALL	_dd_Menu_isLineSelected
-;dd_menu.c,166 :: 		dd_currentIndicators[lineIndex]->descriptionLength > dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
+;dd_menu.c,172 :: 		dd_currentIndicators[lineIndex]->descriptionLength > dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
 	CP0.B	W0
 	BRA NZ	L__dd_MenuLine_hasToScroll89
 	GOTO	L_dd_MenuLine_hasToScroll27
@@ -541,7 +541,7 @@ L__dd_MenuLine_hasToScroll90:
 L_dd_MenuLine_hasToScroll27:
 	CLR	W0
 L_dd_MenuLine_hasToScroll26:
-;dd_menu.c,167 :: 		}
+;dd_menu.c,173 :: 		}
 L_end_dd_MenuLine_hasToScroll:
 	ULNK
 	RETURN
@@ -549,14 +549,14 @@ L_end_dd_MenuLine_hasToScroll:
 
 _dd_MenuLine_getScrollingOverflow:
 
-;dd_menu.c,170 :: 		int dd_MenuLine_getScrollingOverflow(unsigned char lineIndex) {
-;dd_menu.c,171 :: 		if (dd_MenuLine_hasToScroll(lineIndex))
+;dd_menu.c,176 :: 		int dd_MenuLine_getScrollingOverflow(unsigned char lineIndex) {
+;dd_menu.c,177 :: 		if (dd_MenuLine_hasToScroll(lineIndex))
 	CALL	_dd_MenuLine_hasToScroll
 	CP0.B	W0
 	BRA NZ	L__dd_MenuLine_getScrollingOverflow92
 	GOTO	L_dd_MenuLine_getScrollingOverflow28
 L__dd_MenuLine_getScrollingOverflow92:
-;dd_menu.c,172 :: 		return dd_currentIndicators[lineIndex]->descriptionLength + DESCRIPTION_SCROLLING_SPACING;
+;dd_menu.c,178 :: 		return dd_currentIndicators[lineIndex]->descriptionLength + DESCRIPTION_SCROLLING_SPACING;
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
@@ -567,23 +567,23 @@ L__dd_MenuLine_getScrollingOverflow92:
 	ADD	W0, #4, W0
 	GOTO	L_end_dd_MenuLine_getScrollingOverflow
 L_dd_MenuLine_getScrollingOverflow28:
-;dd_menu.c,174 :: 		return 0;
+;dd_menu.c,180 :: 		return 0;
 	CLR	W0
-;dd_menu.c,175 :: 		}
+;dd_menu.c,181 :: 		}
 L_end_dd_MenuLine_getScrollingOverflow:
 	RETURN
 ; end of _dd_MenuLine_getScrollingOverflow
 
 _dd_MenuLine_getScrollOffset:
 
-;dd_menu.c,179 :: 		int dd_MenuLine_getScrollOffset(unsigned char lineIndex) {
-;dd_menu.c,182 :: 		if (dd_MenuLine_hasToScroll(lineIndex)) {
+;dd_menu.c,185 :: 		int dd_MenuLine_getScrollOffset(unsigned char lineIndex) {
+;dd_menu.c,188 :: 		if (dd_MenuLine_hasToScroll(lineIndex)) {
 	CALL	_dd_MenuLine_hasToScroll
 	CP0.B	W0
 	BRA NZ	L__dd_MenuLine_getScrollOffset94
 	GOTO	L_dd_MenuLine_getScrollOffset30
 L__dd_MenuLine_getScrollOffset94:
-;dd_menu.c,184 :: 		offset = (int) (FRAME_PERIOD * dd_Menu_DescriptionScrollingTicks * DESCRIPTION_SCROLLING_SPEED);
+;dd_menu.c,190 :: 		offset = (int) (FRAME_PERIOD * dd_Menu_DescriptionScrollingTicks * DESCRIPTION_SCROLLING_SPEED);
 	PUSH	W10
 	MOV	dd_menu_dd_Menu_DescriptionScrollingTicks, W0
 	ASR	W0, #15, W1
@@ -599,37 +599,37 @@ L__dd_MenuLine_getScrollOffset94:
 	POP	W10
 ; offset start address is: 6 (W3)
 	MOV	W0, W3
-;dd_menu.c,185 :: 		if (offset >= dd_MenuLine_getScrollingOverflow(lineIndex)) {
+;dd_menu.c,191 :: 		if (offset >= dd_MenuLine_getScrollingOverflow(lineIndex)) {
 	CALL	_dd_MenuLine_getScrollingOverflow
 	CP	W3, W0
 	BRA GE	L__dd_MenuLine_getScrollOffset95
 	GOTO	L__dd_MenuLine_getScrollOffset50
 L__dd_MenuLine_getScrollOffset95:
 ; offset end address is: 6 (W3)
-;dd_menu.c,186 :: 		offset = 0;
+;dd_menu.c,192 :: 		offset = 0;
 ; offset start address is: 2 (W1)
 	CLR	W1
-;dd_menu.c,187 :: 		dd_Menu_DescriptionScrollingTicks = 0;
+;dd_menu.c,193 :: 		dd_Menu_DescriptionScrollingTicks = 0;
 	CLR	W0
 	MOV	W0, dd_menu_dd_Menu_DescriptionScrollingTicks
 ; offset end address is: 2 (W1)
-;dd_menu.c,188 :: 		}
+;dd_menu.c,194 :: 		}
 	GOTO	L_dd_MenuLine_getScrollOffset31
 L__dd_MenuLine_getScrollOffset50:
-;dd_menu.c,185 :: 		if (offset >= dd_MenuLine_getScrollingOverflow(lineIndex)) {
+;dd_menu.c,191 :: 		if (offset >= dd_MenuLine_getScrollingOverflow(lineIndex)) {
 	MOV	W3, W1
-;dd_menu.c,188 :: 		}
+;dd_menu.c,194 :: 		}
 L_dd_MenuLine_getScrollOffset31:
-;dd_menu.c,189 :: 		return offset;
+;dd_menu.c,195 :: 		return offset;
 ; offset start address is: 2 (W1)
 	MOV	W1, W0
 ; offset end address is: 2 (W1)
 	GOTO	L_end_dd_MenuLine_getScrollOffset
-;dd_menu.c,190 :: 		} else {
+;dd_menu.c,196 :: 		} else {
 L_dd_MenuLine_getScrollOffset30:
-;dd_menu.c,191 :: 		return 0;
+;dd_menu.c,197 :: 		return 0;
 	CLR	W0
-;dd_menu.c,193 :: 		}
+;dd_menu.c,199 :: 		}
 L_end_dd_MenuLine_getScrollOffset:
 	RETURN
 ; end of _dd_MenuLine_getScrollOffset
@@ -637,8 +637,8 @@ L_end_dd_MenuLine_getScrollOffset:
 _dd_Menu_makeLineText:
 	LNK	#8
 
-;dd_menu.c,195 :: 		void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
-;dd_menu.c,201 :: 		if(dd_Indicator_isRequestingUpdate(lineIndex)){
+;dd_menu.c,201 :: 		void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
+;dd_menu.c,207 :: 		if(dd_Indicator_isRequestingUpdate(lineIndex)){
 	PUSH.D	W10
 	MOV.B	W11, W10
 	CALL	_dd_Indicator_isRequestingUpdate
@@ -647,55 +647,55 @@ _dd_Menu_makeLineText:
 	BRA NZ	L__dd_Menu_makeLineText97
 	GOTO	L_dd_Menu_makeLineText33
 L__dd_Menu_makeLineText97:
-;dd_menu.c,202 :: 		dd_Indicator_parseValueLabel(lineIndex);
+;dd_menu.c,208 :: 		dd_Indicator_parseValueLabel(lineIndex);
 	PUSH.D	W10
 	MOV.B	W11, W10
 	CALL	_dd_Indicator_parseValueLabel
 	POP.D	W10
-;dd_menu.c,203 :: 		dd_Indicator_clearPrintUpdateRequest(lineIndex);
+;dd_menu.c,209 :: 		dd_Indicator_clearPrintUpdateRequest(lineIndex);
 	PUSH.D	W10
 	MOV.B	W11, W10
 	CALL	_dd_Indicator_clearPrintUpdateRequest
 	POP.D	W10
-;dd_menu.c,204 :: 		}
+;dd_menu.c,210 :: 		}
 L_dd_Menu_makeLineText33:
-;dd_menu.c,205 :: 		item = dd_currentIndicators[lineIndex];
+;dd_menu.c,211 :: 		item = dd_currentIndicators[lineIndex];
 	ZE	W11, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_dd_currentIndicators), W0
 	ADD	W1, [W0], W0
 	MOV	[W0], W0
 	MOV	W0, [W14+6]
-;dd_menu.c,206 :: 		labelLength = item->labelLength;
+;dd_menu.c,212 :: 		labelLength = item->labelLength;
 	ADD	W0, #9, W0
 	MOV.B	[W0], W0
 	MOV.B	W0, [W14+4]
-;dd_menu.c,208 :: 		scrollingOverflow = dd_MenuLine_getScrollingOverflow(lineIndex);
+;dd_menu.c,214 :: 		scrollingOverflow = dd_MenuLine_getScrollingOverflow(lineIndex);
 	PUSH	W10
 	MOV.B	W11, W10
 	CALL	_dd_MenuLine_getScrollingOverflow
 	POP	W10
 	MOV	W0, [W14+2]
-;dd_menu.c,209 :: 		scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
+;dd_menu.c,215 :: 		scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
 	PUSH.D	W10
 	MOV.B	W11, W10
 	CALL	_dd_MenuLine_getScrollOffset
 	POP.D	W10
 ; scrollingOffset start address is: 6 (W3)
 	MOV	W0, W3
-;dd_menu.c,211 :: 		descriptionLength = item->descriptionLength;
+;dd_menu.c,217 :: 		descriptionLength = item->descriptionLength;
 	MOV	[W14+6], W0
 	ADD	W0, #7, W0
 ; descriptionLength start address is: 12 (W6)
 	MOV.B	[W0], W6
-;dd_menu.c,212 :: 		visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
+;dd_menu.c,218 :: 		visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
 	PUSH	W10
 	MOV.B	W11, W10
 	CALL	_dd_MenuLine_getVisibleDescriptionWidth
 	POP	W10
 ; visibleDescriptionWidth start address is: 8 (W4)
 	MOV.B	W0, W4
-;dd_menu.c,225 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+;dd_menu.c,231 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
 ; lineCharIndex start address is: 10 (W5)
 	CLR	W5
 ; scrollingOffset end address is: 6 (W3)
@@ -717,18 +717,18 @@ L_dd_Menu_makeLineText34:
 L__dd_Menu_makeLineText98:
 ; descriptionLength end address is: 12 (W6)
 ; scrollingOffset end address is: 14 (W7)
-;dd_menu.c,226 :: 		i = lineCharIndex + scrollingOffset;
+;dd_menu.c,232 :: 		i = lineCharIndex + scrollingOffset;
 ; scrollingOffset start address is: 14 (W7)
 ; descriptionLength start address is: 12 (W6)
 	ADD	W5, W7, W1
 	MOV	W1, [W14+0]
-;dd_menu.c,228 :: 		if (i < descriptionLength) {
+;dd_menu.c,234 :: 		if (i < descriptionLength) {
 	ZE	W6, W0
 	CP	W1, W0
 	BRA LT	L__dd_Menu_makeLineText99
 	GOTO	L_dd_Menu_makeLineText37
 L__dd_Menu_makeLineText99:
-;dd_menu.c,230 :: 		lineText[lineCharIndex] = (item->description)[i];
+;dd_menu.c,236 :: 		lineText[lineCharIndex] = (item->description)[i];
 	ADD	W10, W5, W2
 	MOV	[W14+6], W0
 	ADD	W0, #4, W0
@@ -736,10 +736,10 @@ L__dd_Menu_makeLineText99:
 	ADD	W14, #0, W0
 	ADD	W1, [W0], W0
 	MOV.B	[W0], [W2]
-;dd_menu.c,231 :: 		}
+;dd_menu.c,237 :: 		}
 	GOTO	L_dd_Menu_makeLineText38
 L_dd_Menu_makeLineText37:
-;dd_menu.c,236 :: 		else if (i < scrollingOverflow || !dd_MenuLine_hasToScroll(lineIndex)) {
+;dd_menu.c,242 :: 		else if (i < scrollingOverflow || !dd_MenuLine_hasToScroll(lineIndex)) {
 	MOV	[W14+0], W1
 	ADD	W14, #2, W0
 	CP	W1, [W0]
@@ -757,14 +757,14 @@ L__dd_Menu_makeLineText101:
 	GOTO	L_dd_Menu_makeLineText41
 L__dd_Menu_makeLineText53:
 L__dd_Menu_makeLineText52:
-;dd_menu.c,239 :: 		lineText[lineCharIndex] = ' ';
+;dd_menu.c,245 :: 		lineText[lineCharIndex] = ' ';
 	ADD	W10, W5, W1
 	MOV.B	#32, W0
 	MOV.B	W0, [W1]
-;dd_menu.c,240 :: 		}
+;dd_menu.c,246 :: 		}
 	GOTO	L_dd_Menu_makeLineText42
 L_dd_Menu_makeLineText41:
-;dd_menu.c,244 :: 		lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
+;dd_menu.c,250 :: 		lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
 	ADD	W10, W5, W3
 	MOV	[W14+6], W0
 	ADD	W0, #4, W2
@@ -773,14 +773,14 @@ L_dd_Menu_makeLineText41:
 	SUB	W1, [W0], W0
 	ADD	W0, [W2], W0
 	MOV.B	[W0], [W3]
-;dd_menu.c,245 :: 		}
+;dd_menu.c,251 :: 		}
 L_dd_Menu_makeLineText42:
 L_dd_Menu_makeLineText38:
-;dd_menu.c,225 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
+;dd_menu.c,231 :: 		for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
 ; lineCharIndex start address is: 0 (W0)
 	ADD	W5, #1, W0
 ; lineCharIndex end address is: 10 (W5)
-;dd_menu.c,246 :: 		}
+;dd_menu.c,252 :: 		}
 ; visibleDescriptionWidth end address is: 8 (W4)
 ; descriptionLength end address is: 12 (W6)
 ; scrollingOffset end address is: 14 (W7)
@@ -788,14 +788,14 @@ L_dd_Menu_makeLineText38:
 	MOV	W0, W5
 	GOTO	L_dd_Menu_makeLineText34
 L_dd_Menu_makeLineText35:
-;dd_menu.c,249 :: 		if (labelLength > 0) {
+;dd_menu.c,255 :: 		if (labelLength > 0) {
 ; lineCharIndex start address is: 10 (W5)
 	MOV.B	[W14+4], W0
 	CP.B	W0, #0
 	BRA GTU	L__dd_Menu_makeLineText102
 	GOTO	L__dd_Menu_makeLineText54
 L__dd_Menu_makeLineText102:
-;dd_menu.c,250 :: 		for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
+;dd_menu.c,256 :: 		for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
 	CLR	W0
 	MOV	W0, [W14+0]
 ; lineCharIndex end address is: 10 (W5)
@@ -806,24 +806,24 @@ L_dd_Menu_makeLineText44:
 	BRA LT	L__dd_Menu_makeLineText103
 	GOTO	L_dd_Menu_makeLineText45
 L__dd_Menu_makeLineText103:
-;dd_menu.c,251 :: 		lineText[lineCharIndex] = ' ';
+;dd_menu.c,257 :: 		lineText[lineCharIndex] = ' ';
 	ADD	W10, W5, W1
 	MOV.B	#32, W0
 	MOV.B	W0, [W1]
-;dd_menu.c,252 :: 		lineCharIndex++;
+;dd_menu.c,258 :: 		lineCharIndex++;
 ; lineCharIndex start address is: 4 (W2)
 	ADD	W5, #1, W2
 ; lineCharIndex end address is: 10 (W5)
-;dd_menu.c,250 :: 		for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
+;dd_menu.c,256 :: 		for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
 	MOV	[W14+0], W1
 	ADD	W14, #0, W0
 	ADD	W1, #1, [W0]
-;dd_menu.c,253 :: 		}
+;dd_menu.c,259 :: 		}
 	MOV	W2, W5
 ; lineCharIndex end address is: 4 (W2)
 	GOTO	L_dd_Menu_makeLineText44
 L_dd_Menu_makeLineText45:
-;dd_menu.c,254 :: 		for (i = 0; i < labelLength; i++) {
+;dd_menu.c,260 :: 		for (i = 0; i < labelLength; i++) {
 ; lineCharIndex start address is: 10 (W5)
 	CLR	W0
 	MOV	W0, [W14+0]
@@ -838,43 +838,48 @@ L_dd_Menu_makeLineText47:
 	BRA GT	L__dd_Menu_makeLineText104
 	GOTO	L_dd_Menu_makeLineText48
 L__dd_Menu_makeLineText104:
-;dd_menu.c,255 :: 		lineText[lineCharIndex] = (item->label)[i];
+;dd_menu.c,261 :: 		lineText[lineCharIndex] = (item->label)[i];
 	ADD	W10, W3, W2
 	MOV	[W14+6], W0
 	ADD	W0, #10, W1
 	ADD	W14, #0, W0
 	ADD	W1, [W0], W0
 	MOV.B	[W0], [W2]
-;dd_menu.c,256 :: 		lineCharIndex++;
+;dd_menu.c,262 :: 		lineCharIndex++;
 ; lineCharIndex start address is: 10 (W5)
 	ADD	W3, #1, W5
 ; lineCharIndex end address is: 6 (W3)
-;dd_menu.c,254 :: 		for (i = 0; i < labelLength; i++) {
+;dd_menu.c,260 :: 		for (i = 0; i < labelLength; i++) {
 	MOV	[W14+0], W1
 	ADD	W14, #0, W0
 	ADD	W1, #1, [W0]
-;dd_menu.c,257 :: 		}
+;dd_menu.c,263 :: 		}
 	MOV	W5, W3
 ; lineCharIndex end address is: 10 (W5)
 	GOTO	L_dd_Menu_makeLineText47
 L_dd_Menu_makeLineText48:
-;dd_menu.c,258 :: 		}
+;dd_menu.c,264 :: 		}
 ; lineCharIndex start address is: 6 (W3)
-	MOV	W3, W0
+	MOV	W3, W2
 	GOTO	L_dd_Menu_makeLineText43
 ; lineCharIndex end address is: 6 (W3)
 L__dd_Menu_makeLineText54:
-;dd_menu.c,249 :: 		if (labelLength > 0) {
-	MOV	W5, W0
-;dd_menu.c,258 :: 		}
+;dd_menu.c,255 :: 		if (labelLength > 0) {
+	MOV	W5, W2
+;dd_menu.c,264 :: 		}
 L_dd_Menu_makeLineText43:
-;dd_menu.c,260 :: 		lineText[lineCharIndex] = ' ';
-; lineCharIndex start address is: 0 (W0)
-	ADD	W10, W0, W1
-; lineCharIndex end address is: 0 (W0)
+;dd_menu.c,266 :: 		lineText[lineCharIndex] = ' ';
+; lineCharIndex start address is: 4 (W2)
+	ADD	W10, W2, W1
 	MOV.B	#32, W0
 	MOV.B	W0, [W1]
-;dd_menu.c,261 :: 		}
+;dd_menu.c,267 :: 		lineText[lineCharIndex+1] = '\0';
+	ADD	W2, #1, W0
+; lineCharIndex end address is: 4 (W2)
+	ADD	W10, W0, W1
+	CLR	W0
+	MOV.B	W0, [W1]
+;dd_menu.c,268 :: 		}
 L_end_dd_Menu_makeLineText:
 	ULNK
 	RETURN
@@ -882,8 +887,8 @@ L_end_dd_Menu_makeLineText:
 
 _dd_Menu_isLineSelected:
 
-;dd_menu.c,263 :: 		char dd_Menu_isLineSelected(unsigned char lineIndex) {
-;dd_menu.c,264 :: 		return dd_Menu_SelectedLineIndex == lineIndex;
+;dd_menu.c,270 :: 		char dd_Menu_isLineSelected(unsigned char lineIndex) {
+;dd_menu.c,271 :: 		return dd_Menu_SelectedLineIndex == lineIndex;
 	MOV	#lo_addr(dd_menu_dd_Menu_SelectedLineIndex), W0
 	SE	[W0], W1
 	ZE	W10, W0
@@ -892,7 +897,7 @@ _dd_Menu_isLineSelected:
 	BRA NZ	L__dd_Menu_isLineSelected106
 	INC.B	W0
 L__dd_Menu_isLineSelected106:
-;dd_menu.c,265 :: 		}
+;dd_menu.c,272 :: 		}
 L_end_dd_Menu_isLineSelected:
 	RETURN
 ; end of _dd_Menu_isLineSelected

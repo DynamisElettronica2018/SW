@@ -1376,9 +1376,10 @@ char dd_MenuLine_hasToScroll(unsigned char lineIndex);
 char dd_Menu_isLineSelected(unsigned char lineIndex);
 void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 
+char debug_str[25];
 void dd_printMenuLine(unsigned char lineIndex) {
  unsigned char lineNumber, color;
- char lineText[MAX_MENU_WIDTH + 1];
+ char lineText[MAX_MENU_WIDTH + 1 + 1];
 
  lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
  if (dd_Menu_isLineSelected(lineIndex)) {
@@ -1388,6 +1389,9 @@ void dd_printMenuLine(unsigned char lineIndex) {
  }
  eGlcd_fillPage(lineNumber, !color);
  dd_Menu_makeLineText(lineText, lineIndex);
+
+
+
 
  xGlcd_Set_Font( DynamisFont_UniformTerminal6x8, 6 , 8 , 32 );
  xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
@@ -1401,6 +1405,8 @@ void dd_printMenu() {
  dd_Menu_DescriptionScrollingTicks++;
  for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
  if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
+
+
  dd_printMenuLine(i);
  }
  }
@@ -1469,7 +1475,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
 
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 225 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 231 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
@@ -1506,6 +1512,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  }
 
  lineText[lineCharIndex] = ' ';
+ lineText[lineCharIndex+1] = '\0';
 }
 
 char dd_Menu_isLineSelected(unsigned char lineIndex) {
