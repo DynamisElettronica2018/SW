@@ -439,8 +439,6 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
-	d_traction_control_setValueFromCAN
-		dd_Indicator_setIntValueP
 	dEbb_setEbbValueFromCAN
 		dEbb_printNotification
 			dd_GraphicController_fireTimedNotification
@@ -450,6 +448,8 @@ CAN_Interrupt
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
 		Debug_UART_Write
+	d_traction_control_setValueFromCAN
+		dd_Indicator_setIntValueP
 	Buzzer_bip
 external2
 	d_controls_onDRS
@@ -486,8 +486,6 @@ cn_interrupt
 				Can_writeInt
 				sprintf
 				Debug_UART_Write
-				d_traction_control_printNotification
-					dd_GraphicController_fireTimedNotification
 				dSignalLed_switch
 	d_controls_onRightEncoder
 		dd_Menu_moveSelection

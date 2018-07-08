@@ -412,113 +412,113 @@ L_CAN_Interrupt24:
 ;DPX.c,174 :: 		dClutch_injectActualValue((unsigned char)firstInt);
 	MOV.B	[W14+0], W10
 	CALL	_dClutch_injectActualValue
-;DPX.c,175 :: 		d_traction_control_setValueFromCAN(secondInt);
-	MOV	[W14+2], W10
-	CALL	_d_traction_control_setValueFromCAN
-;DPX.c,176 :: 		break;
+;DPX.c,175 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,177 :: 		case EBB_BIAS_ID:
+;DPX.c,176 :: 		case EBB_BIAS_ID:
 L_CAN_Interrupt25:
-;DPX.c,178 :: 		dEbb_setEbbValueFromCAN(firstInt);
+;DPX.c,177 :: 		dEbb_setEbbValueFromCAN(firstInt);
 	MOV	[W14+0], W10
 	CALL	_dEbb_setEbbValueFromCAN
-;DPX.c,182 :: 		break; //  */
+;DPX.c,181 :: 		break; //  */
 	GOTO	L_CAN_Interrupt18
-;DPX.c,183 :: 		case DAU_FR_DEBUG_ID:
+;DPX.c,182 :: 		case DAU_FR_DEBUG_ID:
 L_CAN_Interrupt26:
-;DPX.c,184 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
+;DPX.c,183 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt); //è da capire come gestire questi perchè la temp è nel primo byte e la curr nel secondo e se ci sono conversioni da fare
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_fr_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,185 :: 		break;
+;DPX.c,184 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,186 :: 		case DAU_FL_DEBUG_ID:
+;DPX.c,185 :: 		case DAU_FL_DEBUG_ID:
 L_CAN_Interrupt27:
-;DPX.c,187 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
+;DPX.c,186 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_fl_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,188 :: 		break;
+;DPX.c,187 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,189 :: 		case DAU_REAR_DEBUG_ID:
+;DPX.c,188 :: 		case DAU_REAR_DEBUG_ID:
 L_CAN_Interrupt28:
-;DPX.c,190 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
+;DPX.c,189 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_r_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,191 :: 		break;
+;DPX.c,190 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,196 :: 		case GCU_DEBUG_1_ID:
+;DPX.c,195 :: 		case GCU_DEBUG_1_ID:
 L_CAN_Interrupt29:
-;DPX.c,197 :: 		dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
+;DPX.c,196 :: 		dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gcu_temp), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,198 :: 		dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
+;DPX.c,197 :: 		dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
 	MOV	[W14+2], W11
 	MOV	#lo_addr(_ind_H2O_fans), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,199 :: 		dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+;DPX.c,198 :: 		dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
 	MOV	[W14+4], W11
 	MOV	#lo_addr(_ind_H2O_pump), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,200 :: 		dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
+;DPX.c,199 :: 		dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
 	MOV	[W14+6], W11
 	MOV	#lo_addr(_ind_fuel_pump), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,201 :: 		break; //*/
+;DPX.c,200 :: 		break; //*/
 	GOTO	L_CAN_Interrupt18
-;DPX.c,202 :: 		case GCU_DEBUG_2_ID:
+;DPX.c,201 :: 		case GCU_DEBUG_2_ID:
 L_CAN_Interrupt30:
-;DPX.c,203 :: 		dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+;DPX.c,202 :: 		dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gear_motor), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,204 :: 		dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
+;DPX.c,203 :: 		dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
 	MOV	[W14+2], W11
 	MOV	#lo_addr(_ind_clutch), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,205 :: 		dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+;DPX.c,204 :: 		dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
 	MOV	[W14+4], W11
 	MOV	#lo_addr(_ind_drs), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,206 :: 		break;
+;DPX.c,205 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,207 :: 		case DCU_DEBUG_ID:
+;DPX.c,206 :: 		case DCU_DEBUG_ID:
 L_CAN_Interrupt31:
-;DPX.c,208 :: 		dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+;DPX.c,207 :: 		dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dcu_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,209 :: 		if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+;DPX.c,208 :: 		if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
 	MOV	[W14+4], W0
 	CP	W0, #1
 	BRA Z	L__CAN_Interrupt52
 	GOTO	L_CAN_Interrupt32
 L__CAN_Interrupt52:
-;DPX.c,210 :: 		dDCU_isAcquiringSet();
+;DPX.c,209 :: 		dDCU_isAcquiringSet();
 	CALL	_dDCU_isAcquiringSet
-;DPX.c,211 :: 		dDCU_sentAcquiringSignal();
+;DPX.c,210 :: 		dDCU_sentAcquiringSignal();
 	CALL	_dDCU_sentAcquiringSignal
-;DPX.c,212 :: 		}
+;DPX.c,211 :: 		}
 L_CAN_Interrupt32:
-;DPX.c,213 :: 		break;
+;DPX.c,212 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,214 :: 		case GCU_AUX_ID:
+;DPX.c,213 :: 		case GCU_AUX_ID:
 L_CAN_Interrupt33:
-;DPX.c,216 :: 		Buzzer_bip();
+;DPX.c,214 :: 		d_traction_control_setValueFromCAN(firstInt);
+	MOV	[W14+0], W10
+	CALL	_d_traction_control_setValueFromCAN
+;DPX.c,215 :: 		Buzzer_bip();
 	CALL	_Buzzer_bip
-;DPX.c,219 :: 		break;
+;DPX.c,218 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,220 :: 		default:
+;DPX.c,219 :: 		default:
 L_CAN_Interrupt34:
-;DPX.c,221 :: 		break;
+;DPX.c,220 :: 		break;
 	GOTO	L_CAN_Interrupt18
-;DPX.c,222 :: 		}
+;DPX.c,221 :: 		}
 L_CAN_Interrupt17:
 	MOV	#773, W1
 	MOV	#0, W2
@@ -634,7 +634,7 @@ L__CAN_Interrupt65:
 L__CAN_Interrupt66:
 	GOTO	L_CAN_Interrupt34
 L_CAN_Interrupt18:
-;DPX.c,226 :: 		}
+;DPX.c,225 :: 		}
 L_end_CAN_Interrupt:
 	POP	W13
 	POP	W12

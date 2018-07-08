@@ -215,12 +215,10 @@ _d_traction_control_propagateValue:
 ;d_traction_control.c,59 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_traction_control.c,60 :: 		d_traction_control_printNotification();
-	CALL	_d_traction_control_printNotification
-;d_traction_control.c,61 :: 		dSignalLed_switch(DSIGNAL_LED_BLUE);
+;d_traction_control.c,60 :: 		dSignalLed_switch(DSIGNAL_LED_BLUE);
 	CLR	W10
 	CALL	_dSignalLed_switch
-;d_traction_control.c,62 :: 		}
+;d_traction_control.c,61 :: 		}
 L_end_d_traction_control_propagateValue:
 	POP	W12
 	POP	W11
@@ -231,13 +229,13 @@ L_end_d_traction_control_propagateValue:
 _d_traction_control_move:
 	LNK	#2
 
-;d_traction_control.c,64 :: 		void d_traction_control_move(signed char movements){
-;d_traction_control.c,66 :: 		value = d_tractionValue - movements;
+;d_traction_control.c,63 :: 		void d_traction_control_move(signed char movements){
+;d_traction_control.c,65 :: 		value = d_tractionValue - movements;
 	PUSH	W10
 	MOV	#lo_addr(_d_tractionValue), W1
 	ADD	W14, #0, W0
 	SUBR.B	W10, [W1], [W0]
-;d_traction_control.c,67 :: 		sprintf(dstr, "d_tractionvalue %d\r\n", d_tractionValue);
+;d_traction_control.c,66 :: 		sprintf(dstr, "d_tractionvalue %d\r\n", d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0
 	SE	[W0], W0
 	PUSH	W10
@@ -248,11 +246,11 @@ _d_traction_control_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_traction_control.c,68 :: 		Debug_UART_Write(dstr);
+;d_traction_control.c,67 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
 	POP	W10
-;d_traction_control.c,69 :: 		sprintf(dstr, "movements%d\r\n", movements);
+;d_traction_control.c,68 :: 		sprintf(dstr, "movements%d\r\n", movements);
 	MOV.B	W10, W0
 	SE	W0, W0
 	PUSH	W0
@@ -262,10 +260,10 @@ _d_traction_control_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_traction_control.c,70 :: 		Debug_UART_Write(dstr);
+;d_traction_control.c,69 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_traction_control.c,71 :: 		sprintf(dstr, "value1 %d\r\n", value);
+;d_traction_control.c,70 :: 		sprintf(dstr, "value1 %d\r\n", value);
 	ADD	W14, #0, W0
 	SE	[W0], W0
 	PUSH	W0
@@ -275,19 +273,19 @@ _d_traction_control_move:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_traction_control.c,72 :: 		Debug_UART_Write(dstr);
+;d_traction_control.c,71 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_traction_control.c,73 :: 		if(value > TRACTION_MAX_VALUE){
+;d_traction_control.c,72 :: 		if(value > TRACTION_MAX_VALUE){
 	MOV.B	[W14+0], W0
 	CP.B	W0, #7
 	BRA GT	L__d_traction_control_move31
 	GOTO	L_d_traction_control_move14
 L__d_traction_control_move31:
-;d_traction_control.c,74 :: 		value = TRACTION_MAX_VALUE;
+;d_traction_control.c,73 :: 		value = TRACTION_MAX_VALUE;
 	MOV.B	#7, W0
 	MOV.B	W0, [W14+0]
-;d_traction_control.c,75 :: 		} else if(value < TRACTION_MIN_VALUE){
+;d_traction_control.c,74 :: 		} else if(value < TRACTION_MIN_VALUE){
 	GOTO	L_d_traction_control_move15
 L_d_traction_control_move14:
 	MOV.B	[W14+0], W0
@@ -295,17 +293,17 @@ L_d_traction_control_move14:
 	BRA LT	L__d_traction_control_move32
 	GOTO	L_d_traction_control_move16
 L__d_traction_control_move32:
-;d_traction_control.c,76 :: 		value = TRACTION_MIN_VALUE;
+;d_traction_control.c,75 :: 		value = TRACTION_MIN_VALUE;
 	CLR	W0
 	MOV.B	W0, [W14+0]
-;d_traction_control.c,77 :: 		}
+;d_traction_control.c,76 :: 		}
 L_d_traction_control_move16:
 L_d_traction_control_move15:
-;d_traction_control.c,78 :: 		d_tractionValue = value;
+;d_traction_control.c,77 :: 		d_tractionValue = value;
 	MOV	#lo_addr(_d_tractionValue), W1
 	MOV.B	[W14+0], W0
 	MOV.B	W0, [W1]
-;d_traction_control.c,79 :: 		sprintf(dstr, "value2 %d\r\n", d_tractionValue);
+;d_traction_control.c,78 :: 		sprintf(dstr, "value2 %d\r\n", d_tractionValue);
 	ADD	W14, #0, W0
 	SE	[W0], W0
 	PUSH	W0
@@ -315,14 +313,14 @@ L_d_traction_control_move15:
 	PUSH	W0
 	CALL	_sprintf
 	SUB	#6, W15
-;d_traction_control.c,80 :: 		Debug_UART_Write(dstr);
+;d_traction_control.c,79 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_traction_control.c,81 :: 		d_traction_control_propagateValue(d_tractionValue);
+;d_traction_control.c,80 :: 		d_traction_control_propagateValue(d_tractionValue);
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	[W0], W10
 	CALL	_d_traction_control_propagateValue
-;d_traction_control.c,82 :: 		}
+;d_traction_control.c,81 :: 		}
 L_end_d_traction_control_move:
 	POP	W10
 	ULNK
@@ -331,17 +329,19 @@ L_end_d_traction_control_move:
 
 _d_traction_control_setValueFromCAN:
 
-;d_traction_control.c,84 :: 		void d_traction_control_setValueFromCAN(unsigned int value){
-;d_traction_control.c,86 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+;d_traction_control.c,83 :: 		void d_traction_control_setValueFromCAN(unsigned int value){
+;d_traction_control.c,84 :: 		d_tractionValue = value;
 	PUSH	W10
 	PUSH	W11
 	MOV	#lo_addr(_d_tractionValue), W0
-	SE	[W0], W11
+	MOV.B	W10, [W0]
+;d_traction_control.c,85 :: 		dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+	SE	W10, W11
 	MOV	#lo_addr(_ind_traction_control), W10
 	CALL	_dd_Indicator_setIntValueP
-;d_traction_control.c,89 :: 		}
-;d_traction_control.c,88 :: 		return;
-;d_traction_control.c,89 :: 		}
+;d_traction_control.c,88 :: 		}
+;d_traction_control.c,87 :: 		return;
+;d_traction_control.c,88 :: 		}
 L_end_d_traction_control_setValueFromCAN:
 	POP	W11
 	POP	W10
@@ -350,8 +350,8 @@ L_end_d_traction_control_setValueFromCAN:
 
 _d_traction_control_init:
 
-;d_traction_control.c,91 :: 		void d_traction_control_init(void){
-;d_traction_control.c,93 :: 		}
+;d_traction_control.c,90 :: 		void d_traction_control_init(void){
+;d_traction_control.c,92 :: 		}
 L_end_d_traction_control_init:
 	RETURN
 ; end of _d_traction_control_init

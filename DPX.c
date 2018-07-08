@@ -172,12 +172,11 @@ onCanInterrupt{
            break;
        case GCU_CLUTCH_FB_SW_ID:
            dClutch_injectActualValue((unsigned char)firstInt);
-           d_traction_control_setValueFromCAN(secondInt);
            break;
        case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
           // da qua in giù la parte dell'ebb è da controllare!!!
-//           dEbb_calibrationState(secondInt);
+          // dEbb_calibrationState(secondInt);
           // dEbb_error(thirdInt);
            break; //  */
        case DAU_FR_DEBUG_ID:
@@ -212,7 +211,7 @@ onCanInterrupt{
            }
            break;
        case GCU_AUX_ID:
-          // d_traction_control_setValueFromCAN(firstInt);
+           d_traction_control_setValueFromCAN(firstInt);
            Buzzer_bip();
            //dAcc_feedbackGCU(secondInt);
            //int3 è fb di drs da NON Cconsiderare quando siamo in ACC

@@ -840,7 +840,6 @@ signed char value = 0;
  break;
  case  0b01100010000 :
  dClutch_injectActualValue((unsigned char)firstInt);
- d_traction_control_setValueFromCAN(secondInt);
  break;
  case  0b11100001101 :
  dEbb_setEbbValueFromCAN(firstInt);
@@ -857,7 +856,7 @@ signed char value = 0;
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 196 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 195 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -877,7 +876,7 @@ signed char value = 0;
  }
  break;
  case  0b11111110001 :
-
+ d_traction_control_setValueFromCAN(firstInt);
  Buzzer_bip();
 
 

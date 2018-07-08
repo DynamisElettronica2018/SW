@@ -61,13 +61,14 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=6
+Count=7
 File0=DPX.c
 File1=modules\peripherals\d_ebb.c
 File2=modules\peripherals\d_ebb.h
 File3=modules\ui\d_traction_control.c
 File4=modules\ui\d_traction_control.h
 File5=modules\ui\input-output\d_controls.c
+File6=DPX.asm
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

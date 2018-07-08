@@ -494,7 +494,6 @@ void d_traction_control_propagateValue(signed char value){
  Can_writeInt( 0b01000000011 , (int) value);
  sprintf(dstr, "value3 %d\r\n", value);
  Debug_UART_Write(dstr);
- d_traction_control_printNotification();
  dSignalLed_switch( 0 );
 }
 
@@ -519,7 +518,7 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
-
+ d_tractionValue = value;
  dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
 
  return;
