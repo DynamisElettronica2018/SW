@@ -1115,6 +1115,7 @@ base
 base
 base
 base
+base
 bbitsavailable
 bblocksinonepass
 bcd2dec
@@ -2218,6 +2219,7 @@ d_controls_onstartacquisition
 d_currentgear
 d_currentoperatingmode
 d_dashboardsetting_updatevalue
+d_ebb
 d_gearmotorstate
 d_getgearmotorstate
 d_isneutralset
@@ -2228,6 +2230,12 @@ d_selectorpositiontomode
 d_sensors_sendswtemp
 d_setgearmotorstate
 d_swtemp_gettempvalue
+d_traction_control_init
+d_traction_control_move
+d_traction_control_printnotification
+d_traction_control_propagatevalue
+d_traction_control_setvaluefromcan
+d_tractionvalue
 d_ui_accmodeclose
 d_ui_accmodeinit
 d_ui_applysettings
@@ -2460,26 +2468,17 @@ ddcu_startacquisition
 ddcu_stopacquisition
 ddcu_switchacquisition
 ddcu_tick
-debb_calibratedown
-debb_calibratepause
-debb_calibratestop
-debb_calibrateswitch
-debb_calibrateup
 debb_calibration
-debb_calibrationstate
-debb_decrease
-debb_error
-debb_increase
 debb_init
-debb_iscalibrateing
 debb_localvalue
 debb_motorsense
 debb_motorstate
+debb_move
+debb_printnotification
 debb_propagateebbchange
-debb_propagatesteeringwheelchange
-debb_setebbmotorsensefromcan
-debb_setebbmotorstatefromcan
+debb_propagatevalue
 debb_setebbvaluefromcan
+debb_setpositionzero
 debb_state
 debb_tick
 debb_value
@@ -2562,6 +2561,8 @@ description
 description
 description
 description
+description
+descriptionlength
 descriptionlength
 descriptionlength
 descriptionlength
@@ -5021,6 +5022,7 @@ id
 id
 id
 id
+id
 idle
 idle
 idle_bit
@@ -5087,6 +5089,7 @@ ind_th2o_dx_out
 ind_th2o_sx_in
 ind_th2o_sx_out
 ind_tps
+ind_traction_control
 ind_vbat
 inittimer32
 instruction_period
@@ -5314,6 +5317,7 @@ isvisible
 isvisible
 isvisible
 isvisible
+isvisible
 isxdigit
 ivrie
 ivrie
@@ -5456,6 +5460,8 @@ label
 label
 label
 label
+label
+labellength
 labellength
 labellength
 labellength
@@ -5909,6 +5915,8 @@ name
 name
 name
 name
+name
+namelength
 namelength
 namelength
 namelength
@@ -6980,6 +6988,7 @@ parsevaluelabel
 parsevaluelabel
 parsevaluelabel
 parsevaluelabel
+parsevaluelabel
 pbcurrenthuffsymboltable
 pbcurrenthuffsymlentable
 pcfg_0
@@ -7095,6 +7104,7 @@ pdsel1
 pen
 pen
 pen_bit
+pendingprintupdate
 pendingprintupdate
 pendingprintupdate
 pendingprintupdate
@@ -12814,8 +12824,8 @@ value
 value
 value
 value
-value1
-value2
+value
+valuetype
 valuetype
 valuetype
 valuetype

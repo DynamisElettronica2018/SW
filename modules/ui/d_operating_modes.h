@@ -58,6 +58,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -73,7 +74,7 @@ extern FloatIndicator ind_th2o_dx_out;
 //extern FloatIndicator ind_oil_temp_in;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;

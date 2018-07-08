@@ -3,7 +3,7 @@
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -234,6 +234,8 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
@@ -409,7 +411,7 @@ void dPaddle_readSample(void);
 #line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
 void dClutch_set(unsigned char value);
 
-void dClutch_injectActualValue(unsigned int clutch_check, unsigned char value);
+void dClutch_injectActualValue(unsigned char value);
 
 unsigned char dClutch_get(void);
 
@@ -418,38 +420,16 @@ void dClutch_send(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
-void dEbb_calibrateSwitch(void);
+void dEbb_setPositionZero(void);
 
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
-
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
+void dEbb_move(signed char movements);
 
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
@@ -584,6 +564,7 @@ typedef enum {
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
 extern FloatIndicator ind_oil_press;
 extern FloatIndicator ind_vbat;
 extern IntegerIndicator ind_rpm;
@@ -599,7 +580,7 @@ extern FloatIndicator ind_th2o_dx_out;
 
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
-extern FloatIndicator ind_efi_slip;
+extern IntegerIndicator ind_efi_slip;
 extern IntegerIndicator ind_launch_control;
 extern FloatIndicator ind_fuel_press;
 extern FloatIndicator ind_ebb_motor_curr;
@@ -625,17 +606,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 109 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 112 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 133 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 164 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -686,6 +667,21 @@ void dd_printMessage(char * title);
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_traction_control.h"
+
+
+
+
+
+
+
+void d_traction_control_move(signed char movements);
+
+void d_traction_control_init(void);
+
+void d_traction_control_setValueFromCAN(unsigned int value);
+
+void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
 #line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
@@ -822,7 +818,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 33 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 34 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 
 
@@ -850,7 +846,7 @@ void main(){
 }
 
 
- unsigned int value1 = 500, value2 = 50;
+
  void timer2_interrupt() iv IVT_ADDR_T2INTERRUPT ics ICS_AUTO {
   IFS0bits.T2IF  = 0 ;
 
@@ -861,9 +857,6 @@ void main(){
  timer2_counter3 += 1;
  timer2_counter4 += 1;
  timer2_counter5 += 1;
-
-
-
 
 
  if (timer2_counter0 >= 5) {
@@ -912,7 +905,8 @@ void main(){
  unsigned long int id;
  char dataBuffer[8];
  unsigned int dataLen = 0, flags = 0;
-#line 128 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+
+
  Can_clearInterrupt();
  dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
@@ -971,9 +965,14 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
  break;
  case  0b01100010000 :
- dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+ dClutch_injectActualValue((unsigned char)firstInt);
  break;
-#line 194 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+ case  0b11100001101 :
+ dEbb_setEbbValueFromCAN(firstInt);
+
+
+
+ break;
  case  0b01100010001 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
  break;
@@ -983,7 +982,7 @@ void main(){
  case  0b01100010011 :
  dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
  break;
-#line 207 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  case  0b01100010110 :
  dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
  dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
@@ -1003,10 +1002,11 @@ void main(){
  }
  break;
  case  0b11111110001 :
-
+ d_traction_control_setValueFromCAN(firstInt);
  dAcc_feedbackGCU(secondInt);
 
  dAutocross_feedbackGCU(fourthInt);
+ Buzzer_bip();
  break;
  default:
  break;

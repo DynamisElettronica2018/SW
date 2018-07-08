@@ -18,6 +18,8 @@
 #include "d_acceleration.h"
 #include "d_dcu.h"
 #include "d_autocross.h"
+#include "d_traction_control.h"
+#include "d_ebb.h"
 
 #define TIMER_2_PERIOD 0.001 //seconds
 
@@ -39,12 +41,18 @@ void d_UIController_init() {
     dRpm_init();
     Debug_UART_Write("rpm initialized.\r\n");
     dAutocross_init();
+    Debug_UART_Write("autocross initialized.\r\n");
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
     dAcc_init();
-    Debug_UART_Write("Acceleration module initialized.\r\n");
+    Debug_UART_Write("acceleration module initialized.\r\n");
+    d_traction_control_init();
+    Debug_UART_Write("traction control initialized.\r\n");
+    dEbb_init();
+    Debug_UART_Write("ebb initialized.\r\n");
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
-    Debug_UART_Write("graphic controller initialized.\r\n");
+    Debug_UART_Write("ui controller initialized.\r\n");
+    //d_UI_setOperatingMode(CRUISE_MODE);
 }
 
 void d_UI_setOperatingMode(OperatingMode mode) {
@@ -70,13 +78,16 @@ onTimer1Interrupt{
 void d_controls_onLeftEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
+                 d_UI_onSettingsChange(movements);
+                 break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 dd_Menu_moveSelection(movements);
+                 //dd_Menu_moveSelection(movements);
                  break;
             case AUTOCROSS_MODE:
             case CRUISE_MODE:
-                 //TC
+                 d_traction_control_move(movements);
+                 break;
             case ACC_MODE:
                  break;
             default:
@@ -87,15 +98,17 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
-              d_UI_onSettingsChange(movements);
-              break;
+              //d_UI_onSettingsChange(movements);
+              //break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-            case ACC_MODE:
+                dd_Menu_moveSelection(movements);
               break;
             case AUTOCROSS_MODE:
             case CRUISE_MODE:
-              //EBB
+                dEbb_move(movements);
+                break;
+            case ACC_MODE:
               break;
             default:
                  return;

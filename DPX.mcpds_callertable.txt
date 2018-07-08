@@ -330,6 +330,8 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		dAcc_init
+		d_traction_control_init
+		dEbb_init
 		setTimer
 	dd_GraphicController_fireTimedNotification
 		dd_GraphicController_getTmrCounterLimit
@@ -404,6 +406,9 @@ external4
 				dDCU_isAcquiring
 				Can_write
 				dd_printMessage
+		dEbb_setPositionZero
+			Can_writeInt
+			dd_GraphicController_fireTimedNotification
 	clearExternalInterrupt
 external3
 	d_controls_onStart
@@ -495,14 +500,19 @@ CAN_Interrupt
 		_Div_FP
 	dClutch_injectActualValue
 		dd_Indicator_setIntValueP
+	dEbb_setEbbValueFromCAN
+		dd_Indicator_setIntValueP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+	d_traction_control_setValueFromCAN
+		dd_Indicator_setIntValueP
 	dAcc_feedbackGCU
 		dAcc_stopAutoAcceleration
 	dAutocross_feedbackGCU
 		dAutocross_stopAutocross
+	Buzzer_bip
 	_Compare_Ge_Fp
 	_Long2Float
 external2
@@ -521,10 +531,6 @@ external1
 	clearExternalInterrupt
 cn_interrupt
 	d_controls_onLeftEncoder
-		dd_Menu_moveSelection
-			dd_Menu_scroll
-				Debug_UART_Write
-	d_controls_onRightEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
 			dd_GraphicController_invertColors
@@ -538,6 +544,24 @@ cn_interrupt
 			dd_Indicator_setBoolValueP
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
+		d_traction_control_move
+			sprintf
+			Debug_UART_Write
+			d_traction_control_propagateValue
+				Can_writeInt
+				sprintf
+				Debug_UART_Write
+				dSignalLed_switch
+	d_controls_onRightEncoder
+		dd_Menu_moveSelection
+			dd_Menu_scroll
+				Debug_UART_Write
+		dEbb_move
+			sprintf
+			Debug_UART_Write
+			dEbb_propagateValue
+				Can_writeInt
+				dd_Indicator_setIntValueP
 	clearExternalInterrupt
 timer2_interrupt
 	dEfiSense_tick
@@ -546,7 +570,6 @@ timer2_interrupt
 				dd_getIndicatorIndex
 				dd_Indicator_requestPrintUpdate
 			dEfiSense_isDead
-			dSignalLed_unset
 		dHardReset_reset
 	dPaddle_readSample
 		ADC1_Read

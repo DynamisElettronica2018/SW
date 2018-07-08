@@ -5,7 +5,7 @@
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -249,38 +249,16 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
-void dEbb_calibrateSwitch(void);
+void dEbb_setPositionZero(void);
 
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
-
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
+void dEbb_move(signed char movements);
 
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
@@ -308,122 +286,250 @@ extern const char dd_notificationTitles[ 4 ][ 20 ];
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 8 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
-int dEbb_localValue = 0, dEbb_value = 0, dEbb_motorState = 0;
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void dControls_disableCentralSelector();
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux2(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE,
+ AUTOCROSS_MODE
+} OperatingMode;
+
+
+
+
+
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_th2o;
+extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
+extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern IntegerIndicator ind_adc1_read;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_oil_temp_out;
+extern IntegerIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs;
+extern IntegerIndicator ind_gear_motor;
+#line 109 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 112 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 133 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 164 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+extern Indicator** dd_currentIndicators;
+
+extern unsigned char dd_currentIndicatorsCount;
+
+extern char dd_currentInterfaceTitle[ 20 ];
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_init(void);
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
+
+Interface dd_GraphicController_getInterface(void);
+
+int dd_GraphicController_getNotificationFlag(void);
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
+void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_forceFullFrameUpdate(void);
+
+void dd_GraphicController_forceNextFrameUpdate(void);
+
+char dd_GraphicController_isFrameUpdateForced(void);
+
+void dd_GraphicController_releaseFullFrameUpdate(void);
+
+void dd_GraphicController_invertColors(void);
+
+char dd_GraphicController_areColorsInverted(void);
+
+void dd_GraphicController_queueColorInversion(void);
+
+char dd_GraphicController_isColorInversionQueued(void);
+
+void dd_GraphicController_onTimerInterrupt(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+extern char dstr[100];
+
+void Debug_UART_Init();
+void Debug_Timer4_Init();
+void Debug_UART_Write(char* text);
+void Debug_UART_WriteChar(char c);
+void printf(char* string);
+void initTimer32(void);
+void resetTimer32(void);
+double getExecTime(void);
+void stopTimer32();
+void startTimer32();
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+int dEbb_localValue = 0, dEbb_motorState = 0;
+signed char dEbb_value = 0;
 
 unsigned int dEbb_motorSense = 0, stateFlag = 0;
-int dEbb_calibration =  15 ;
+int dEbb_calibration =  100 ;
 int dEbb_state =  112 ;
 int calibrationState =  0 ;
 char textMessage;
 
-void dEbb_init(void) {
- dd_Indicator_setIntValue(EBB, dEbb_value);
-}
 
-void dEbb_calibrateSwitch(void) {
- if (dEbb_isCalibrateing() ==  1 ){
- dEbb_calibrateStop();
- calibrationState =  0 ;
- dSignalLed_switch( 3 );
- } else if (dEbb_isCalibrateing() ==  0 ) {
- calibrationState =  1 ;
- dSignalLed_switch( 3 );
- }
-}
+signed char d_ebb = 0;
 
-void dEbb_error(int value){
- if( value == 1 ){
- dd_printMessage("EBB ERROR");
- }
-}
-
-int dEbb_isCalibrateing(void) {
- return calibrationState;
-}
-
-void dEbb_calibrationState(int value){
- if( value == 1 && dEbb_isCalibrateing() == 1 ){
- dd_printMessage("CALIBRATING EBB");
- } else if(value == 0 && dEbb_isCalibrateing() == 0 ){
- dd_printMessage("CALIBRATION DONE");
- } else {
- dEbb_error(1);
- }
-}
-
-void dEbb_calibrateUp(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  101 );
-}
-
-void dEbb_calibrateDown(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  99 );
-}
-
-void dEbb_calibratePause(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  100 );
-}
-
-void dEbb_calibrateStop(void) {
- Can_writeByte( 0b10000000000 , (unsigned char)  4 );
- dEbb_localValue = 0;
-
-}
-
-void dEbb_increase(void) {
- if (dEbb_state !=  100 ) {
- if (dEbb_localValue >  -3 ) {
- dEbb_localValue -= 1;
- dEbb_propagateSteeringWheelChange( 1 );
- }
- }
-}
-
-void dEbb_decrease(void) {
- if (dEbb_state !=  100 ) {
- if (dEbb_localValue <  3 ) {
- dEbb_localValue += 1;
- dEbb_propagateSteeringWheelChange( 0 );
- }
- }
-}
-
-void dEbb_setEbbValueFromCAN(unsigned int value) {
- switch (value){
- case  100 :
- dEbb_state =  100 ;
+void dEbb_printNotification(void){
+ switch (dEbb_value){
+ case -7:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -7", MESSAGE);
  break;
- case  122 :
- dEbb_state =  122 ;
+ case -6:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -6", MESSAGE);
  break;
- case  124 :
- dEbb_state =  124 ;
+ case -5:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -5", MESSAGE);
  break;
- case  10 :
- dEbb_state =  10 ;
+ case -4:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -4", MESSAGE);
+ break;
+ case -3:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -3", MESSAGE);
+ break;
+ case -2:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -2", MESSAGE);
+ break;
+ case -1:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB -1", MESSAGE);
+ break;
+ case 0:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 0", MESSAGE);
+ break;
+ case 1:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 1", MESSAGE);
+ break;
+ case 2:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 2", MESSAGE);
+ break;
+ case 3:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 3", MESSAGE);
+ break;
+ case 4:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 4", MESSAGE);
+ break;
+ case 5:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 5", MESSAGE);
+ break;
+ case 6:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 6", MESSAGE);
+ break;
+ case 7:
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB 7", MESSAGE);
  break;
  default:
- dEbb_state =  112 ;
- dEbb_value = value -  4 ;
- dEbb_localValue = dEbb_value;
  break;
  }
 }
 
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState) {
- dEbb_motorState = motorState;
+void dEbb_setEbbValueFromCAN(unsigned int value){
+ dEbb_Value = (int)(value -  8 );
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+
 }
 
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense) {
- dEbb_motorSense = motorSense;
-}
+void dEbb_setPositionZero(void){
+ Can_writeInt( 0b10000000000 ,  100 );
+ dEbb_Value = 0;
+ dd_GraphicController_fireTimedNotification(1000, "CALIBRATE", ERROR);
 
-void dEbb_propagateSteeringWheelChange(unsigned char action) {
- Can_writeByte( 0b10000000000 , (unsigned char) (dEbb_localValue +  4 ));
 }
 
 void dEbb_propagateEbbChange(void) {
-switch (dEbb_state){
+ switch (dEbb_state){
  case  100 :
  dd_Indicator_setStringValue(EBB, "=0=");
  break;
@@ -437,11 +543,42 @@ switch (dEbb_state){
  dd_Indicator_setStringValue(EBB, "...");
  break;
  default:
- dd_Indicator_setIntValue(EBB, -dEbb_value);
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+ sprintf(dstr, "indicator value %d\r\n", dEbb_value+ 8 );
+ Debug_UART_Write(dstr);
  break;
  }
 }
 
+void dEbb_propagateValue(signed char value){
+ Can_writeInt( 0b10000000000 , (int)(value +  8 ));
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+}
+
+void dEbb_move(signed char movements){
+ signed char value;
+ value = dEbb_value - movements;
+ sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "movements%d\r\n", movements);
+ Debug_UART_Write(dstr);
+ sprintf(dstr, "value1 %d\r\n", value);
+ Debug_UART_Write(dstr);
+ if(value >  3 ){
+ value =  3 ;
+ } else if(value <  -3 ){
+ value =  -3 ;
+ }
+ dEbb_Value = value;
+ sprintf(dstr, "value %d\r\n", value);
+ Debug_UART_Write(dstr);
+ dEbb_propagateValue(value);
+}
+
+void dEbb_init(void){
+
+}
+#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 168 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

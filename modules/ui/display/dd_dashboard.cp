@@ -29,7 +29,7 @@ char * strtok(char * s1, char * s2);
 #line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
- EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1,
+ EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
@@ -378,38 +378,16 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_ebb.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_ebb.h"
 void dEbb_init(void);
 
-void dEbb_calibrateSwitch(void);
+void dEbb_setPositionZero(void);
 
-void dEbb_calibrationState(int value);
-
-void dEbb_error(int value);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);
-
-void dEbb_increase(void);
-
-void dEbb_decrease(void);
+void dEbb_move(signed char movements);
 
 void dEbb_setEbbValueFromCAN(unsigned int value);
 
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
 void dEbb_propagateEbbChange(void);
-
-void dEbb_propagateSteeringWheelChange(unsigned char action);
 
 void dEbb_tick(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
