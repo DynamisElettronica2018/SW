@@ -18,6 +18,7 @@
 #include "../../../libs/i2c_expander.h"
 #include "../../../libs/debug.h"
 #include "d_autocross.h"
+#include "d_drs.h"
 
 
 #define BUTTON_ACTIVE_STATE 0
@@ -321,6 +322,7 @@ void d_controls_onReset() {
 }
 
 void d_controls_onDRS() {
+      d_drs_switchValue();
 }
 
 void d_controls_onAux2(void) {

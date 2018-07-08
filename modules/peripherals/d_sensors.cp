@@ -1,7 +1,7 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_sensors.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,9 +13,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -73,8 +73,8 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
-#line 18 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -100,7 +100,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -195,9 +195,9 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -229,9 +229,9 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/libs/can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
 
 
@@ -264,8 +264,8 @@ void d_controls_onLeftEncoder(signed char movements);
 void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -324,25 +324,25 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 109 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 109 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 112 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 112 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 123 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 123 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 133 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 133 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 164 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 164 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
-#line 19 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 19 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);
-#line 11 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_sensors.c"
+#line 11 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
 unsigned int d_SWTemp_getTempValue(){
  unsigned int analogValue, voltage, temp;
  analogValue = ADC1_Read( 12 );
