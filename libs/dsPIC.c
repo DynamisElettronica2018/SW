@@ -170,7 +170,7 @@ void clearExternalInterrupt(unsigned char device) {
 */
 void setTimer(unsigned char device, double timePeriod) {
     unsigned char prescalerIndex;
-    setInterruptPriority(device, MEDIUM_PRIORITY);
+    //setInterruptPriority(device, MEDIUM_PRIORITY);
     //TimePeriod = TimerPeriod * TimerPrescaler * InstructionPeriod
     prescalerIndex = getTimerPrescaler(timePeriod);
     switch (device) {

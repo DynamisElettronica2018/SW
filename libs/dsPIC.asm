@@ -597,17 +597,10 @@ L_end_clearExternalInterrupt:
 _setTimer:
 
 ;dsPIC.c,171 :: 		void setTimer(unsigned char device, double timePeriod) {
-;dsPIC.c,173 :: 		setInterruptPriority(device, MEDIUM_PRIORITY);
+;dsPIC.c,175 :: 		prescalerIndex = getTimerPrescaler(timePeriod);
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
-	PUSH	W11
-	PUSH	W12
-	MOV.B	#4, W11
-	CALL	_setInterruptPriority
-	POP	W12
-	POP	W11
-;dsPIC.c,175 :: 		prescalerIndex = getTimerPrescaler(timePeriod);
 	PUSH	W11
 	PUSH	W12
 	PUSH	W10

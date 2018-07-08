@@ -39,8 +39,9 @@ void d_UIController_init() {
     Debug_UART_Write("rpm initialized.\r\n");
     dd_GraphicController_init();
     Debug_UART_Write("graphic controller initialized.\r\n");
+    setInterruptPriority(TIMER2_DEVICE, MEDIUM_PRIORITY);
     setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
-    Debug_UART_Write("graphic controller initialized.\r\n");
+    Debug_UART_Write("Timer2 initialized.\r\n");
     //d_UI_setOperatingMode(CRUISE_MODE);
 
 }

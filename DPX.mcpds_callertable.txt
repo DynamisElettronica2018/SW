@@ -138,6 +138,7 @@ main
 								dd_Indicator_parseValueLabel
 								dd_Indicator_clearPrintUpdateRequest
 								dd_MenuLine_getScrollingOverflow
+									dd_MenuLine_hasToScroll
 								dd_MenuLine_getScrollOffset
 									dd_MenuLine_hasToScroll
 									dd_MenuLine_getScrollingOverflow
@@ -203,7 +204,6 @@ main
 		dPaddle_init
 		Buzzer_init
 			setTimer
-				setInterruptPriority
 				getTimerPrescaler
 					getExactTimerPrescaler
 						_Mul_FP
@@ -302,6 +302,7 @@ main
 				setInterruptPriority
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
+		setInterruptPriority
 		setTimer
 	dd_GraphicController_fireTimedNotification
 		dd_GraphicController_getTmrCounterLimit

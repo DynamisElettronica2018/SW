@@ -200,6 +200,6 @@ void dd_Indicator_parseValueLabel(unsigned char indicatorIndex) {
             default:
                 break;
         }
-    indicator->labelLength = (unsigned char) strlen(indicator->label);
+        indicator->labelLength = (unsigned char) strlen(indicator->label);
     }
 }

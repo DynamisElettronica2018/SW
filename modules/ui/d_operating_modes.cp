@@ -415,7 +415,7 @@ const unsigned char dd_carBoardsCount = 13;
 IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
-FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_oil_press = {OIL_PRESS, "P.OIL", "Oil Press.", 5, 10,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 FloatIndicator ind_vbat = {VBAT, "V.BAT", "Batt. Voltage", 5, 13,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 IntegerIndicator ind_rpm = {RPM, "RPM", "Rpm", 3, 3,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
 IntegerIndicator ind_clutch_pos = {CLUTCH_POSITION, "CL", "Clutch", 2, 6,  0 ,  0 ,  1 ,  1 , 1, "?", 0};
@@ -435,21 +435,21 @@ FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUELP", "Fuel Pump Press.", 5, 16,
 FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Current", 5, 17,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 
 
-IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9,  0 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9,  0 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12,  0 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12,  0 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntCoupleIndicator ind_dau_r_board = {DAU_R_BOARD, "DAU REAR", "Dau Rear Board", 8, 14,  0 ,  1 ,  1 ,  4 , 1, "  ?    ?", {0,0} };
-IntegerIndicator ind_sw_board = {SW_BOARD, "SW", "SW Temp.", 3, 8,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntCoupleIndicator ind_ebb_board = {EBB_BOARD, "EBB", "Ebb Board", 3, 9,  0 ,  1 ,  1 ,  4 , 8, "  ?    ?", {0,0} };
+IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9,  0 ,  1 ,  1 ,  4 , 8, "  ?    ?", {0,0} };
+IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12,  0 ,  1 ,  1 ,  4 , 8, "  ?    ?", {0,0} };
+IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12,  0 ,  1 ,  1 ,  4 , 8, "  ?    ?", {0,0} };
+IntCoupleIndicator ind_dau_r_board = {DAU_R_BOARD, "DAU REAR", "Dau Rear Board", 8, 14,  0 ,  1 ,  1 ,  4 , 8, "  ?    ?", {0,0} };
+IntegerIndicator ind_sw_board = {SW_BOARD, "SW", "SW Temp.", 3, 8,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
 IntegerIndicator ind_gcu_temp = {GCU_TEMP, "GCU.T", "GCU Temp.", 5, 9, 0 ,  1 ,  1 ,  1 , 1, "?", 0};
 
 
-IntegerIndicator ind_H2O_pump = {H2O_PUMP, "H20 PUMP", "H20 Pump Curr.", 8, 14,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-IntegerIndicator ind_H2O_fans = {H2O_FANS, "H20 FANS", "H20 Fans Curr.", 8, 14,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
-IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  0 ,  1 ,  1 ,  1 , 1, "  ?    ?", 0 };
+IntegerIndicator ind_H2O_pump = {H2O_PUMP, "H20 PUMP", "H20 Pump Curr.", 8, 14,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
+IntegerIndicator ind_H2O_fans = {H2O_FANS, "H20 FANS", "H20 Fans Curr.", 8, 14,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
+IntegerIndicator ind_clutch = {CLUTCH, "CLUTCH", "Clutch Curr.", 6, 12,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
+IntegerIndicator ind_drs = {DRS, "DRS", "Drs Curr.", 3, 9,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
+IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.", 10, 16,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
+IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
  (Indicator*)&ind_oil_temp_in,

@@ -235,7 +235,7 @@ void clearExternalInterrupt(unsigned char device) {
 #line 171 "C:/Users/utente/Desktop/git Repo/SW/libs/dsPIC.c"
 void setTimer(unsigned char device, double timePeriod) {
  unsigned char prescalerIndex;
- setInterruptPriority(device,  4 );
+
 
  prescalerIndex = getTimerPrescaler(timePeriod);
  switch (device) {

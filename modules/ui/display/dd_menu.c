@@ -120,6 +120,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 void dd_printMenuLine(unsigned char lineIndex) {
      unsigned char lineNumber, color;
     char lineText[MAX_MENU_WIDTH + 1]; //Adding 1 in so we can clean our border char
+    
     lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
     if (dd_Menu_isLineSelected(lineIndex)) {
        color = WHITE;
@@ -128,8 +129,8 @@ void dd_printMenuLine(unsigned char lineIndex) {
     }
     eGlcd_fillPage(lineNumber, !color);
     dd_Menu_makeLineText(lineText, lineIndex);
-
-    xGlcd_Set_Font(DD_UniformTerminal_Font);
+    
+    xGlcd_Set_Font(MENU_FONT);
     xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 }
 
@@ -147,8 +148,7 @@ void dd_printMenu() {
 }
 
 //Menu line width is priority of the value label, while the remaining available
-//space is left to the description label. This function computes the width of the
-//description label which is visible statically on screen.
+//space is left to the description label. This function computes the static space available on screen.
 unsigned char dd_MenuLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
     unsigned char labelLength;
     labelLength = dd_currentIndicators[lineIndex]->labelLength;
@@ -160,15 +160,18 @@ unsigned char dd_MenuLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
 }
 
 //Scrolling occurs only when line is selected, and if the description width
-//is major than that available statically on screen.
+//is major than the static space available on screen.
 unsigned char dd_MenuLine_hasToScroll(unsigned char lineIndex) {
     return dd_Menu_isLineSelected(lineIndex) &&
            dd_currentIndicators[lineIndex]->descriptionLength > dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
 }
 
-// returns the number of characters after which the text returns from the other side
+// returns the number of characters after which the text returns from the other side (overflows)
 int dd_MenuLine_getScrollingOverflow(unsigned char lineIndex) {
-    return dd_currentIndicators[lineIndex]->descriptionLength + DESCRIPTION_SCROLLING_SPACING;
+    if (dd_MenuLine_hasToScroll(lineIndex))
+        return dd_currentIndicators[lineIndex]->descriptionLength + DESCRIPTION_SCROLLING_SPACING;
+    else
+        return 0;
 }
 
 //offset is reset when whole description, including DESCRIPTION_SCROLLING_SPACING
@@ -190,10 +193,9 @@ int dd_MenuLine_getScrollOffset(unsigned char lineIndex) {
 }
 
 void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
-    char debug[100];
-    
+
     int lineCharIndex, i, scrollingOffset, scrollingOverflow;
-    unsigned char descriptionLength, valueWidth, visibleDescriptionWidth;
+    unsigned char descriptionLength, labelLength, visibleDescriptionWidth;
     Indicator* item;
     
     if(dd_Indicator_isRequestingUpdate(lineIndex)){
@@ -201,14 +203,17 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
         dd_Indicator_clearPrintUpdateRequest(lineIndex);
     }
     item = dd_currentIndicators[lineIndex];
-    valueWidth = item->labelLength;
+    labelLength = item->labelLength;
     // make condition check on scrolling necessity before calling these
     scrollingOverflow = dd_MenuLine_getScrollingOverflow(lineIndex);
     scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
+    
     descriptionLength = item->descriptionLength;
     visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
+    
     /*
-    lineText è formata dalla porzione di description label da visualizzare, e spazi in alternativa
+    lineText è formata dalla porzione di description label da visualizzare,
+    e spazi per riempire eventuali buchi tra description e value
     + MENU_DESCRIPTION_VALUE_SPACING di separazione tra questo e il value label
     + infine il value label
     e uno spazio di terminazione
@@ -216,32 +221,42 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
     
     //description label portion
     //at any time the visible portion of the description has dd_MenuLine_getVisibleDescriptionWidth() length
+    // i is used to index chars inside the description label
     for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
         i = lineCharIndex + scrollingOffset;
-        //print visible description characters
+        //if i is inside the description label
         if (i < descriptionLength) {
+            //print visible character
             lineText[lineCharIndex] = (item->description)[i];
         }
-        //fills white spaces either for scrolling overflow spacing, or to fill empty space
-        //between description and value labels
+        //if i is outside the description but inside the descr. plus overflow spaces
+        //or it is not a label which has to scroll, which implies that outside
+        //of the description label all available visibleDescriptionWidth has to be filled with
+        //spaces till the value label
         else if (i < scrollingOverflow || !dd_MenuLine_hasToScroll(lineIndex)) {
+            //fills white spaces either for scrolling overflow spacing, or to fill empty space
+            //between description and value labels
             lineText[lineCharIndex] = ' ';
-        } else {
+        } 
+        //if the menu line has to scroll and we are beyond the scrollingOverflow then we
+        // have to.. overflow
+        else {
             lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
         }
     }
 
     //value label portion
-    if (valueWidth > 0) {
+    if (labelLength > 0) {
         for (i = 0; i < MENU_DESCRIPTION_VALUE_SPACING; i++) {
             lineText[lineCharIndex] = ' ';
-            lineCharIndex += 1;
+            lineCharIndex++;
         }
-        for (i = 0; i < valueWidth; i++) {
+        for (i = 0; i < labelLength; i++) {
             lineText[lineCharIndex] = (item->label)[i];
-            lineCharIndex += 1;
+            lineCharIndex++;
         }
     }
+    //necessary?
     lineText[lineCharIndex] = ' ';
 }
 

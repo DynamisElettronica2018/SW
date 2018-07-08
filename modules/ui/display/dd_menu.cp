@@ -1375,6 +1375,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex);
 void dd_printMenuLine(unsigned char lineIndex) {
  unsigned char lineNumber, color;
  char lineText[MAX_MENU_WIDTH + 1];
+
  lineNumber = lineIndex - dd_Menu_FirstLineIndex + dd_Menu_Y_OFFSET;
  if (dd_Menu_isLineSelected(lineIndex)) {
  color = WHITE;
@@ -1403,7 +1404,6 @@ void dd_printMenu() {
 
 
 
-
 unsigned char dd_MenuLine_getVisibleDescriptionWidth(unsigned char lineIndex) {
  unsigned char labelLength;
  labelLength = dd_currentIndicators[lineIndex]->labelLength;
@@ -1423,7 +1423,10 @@ unsigned char dd_MenuLine_hasToScroll(unsigned char lineIndex) {
 
 
 int dd_MenuLine_getScrollingOverflow(unsigned char lineIndex) {
+ if (dd_MenuLine_hasToScroll(lineIndex))
  return dd_currentIndicators[lineIndex]->descriptionLength +  4 ;
+ else
+ return 0;
 }
 
 
@@ -1445,10 +1448,9 @@ int dd_MenuLine_getScrollOffset(unsigned char lineIndex) {
 }
 
 void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
- char debug[100];
 
  int lineCharIndex, i, scrollingOffset, scrollingOverflow;
- unsigned char descriptionLength, valueWidth, visibleDescriptionWidth;
+ unsigned char descriptionLength, labelLength, visibleDescriptionWidth;
  Indicator* item;
 
  if(dd_Indicator_isRequestingUpdate(lineIndex)){
@@ -1456,39 +1458,49 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
  dd_Indicator_clearPrintUpdateRequest(lineIndex);
  }
  item = dd_currentIndicators[lineIndex];
- valueWidth = item->labelLength;
+ labelLength = item->labelLength;
 
  scrollingOverflow = dd_MenuLine_getScrollingOverflow(lineIndex);
  scrollingOffset = dd_MenuLine_getScrollOffset(lineIndex);
+
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 219 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 225 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
  if (i < descriptionLength) {
+
  lineText[lineCharIndex] = (item->description)[i];
  }
 
 
+
+
  else if (i < scrollingOverflow || !dd_MenuLine_hasToScroll(lineIndex)) {
+
+
  lineText[lineCharIndex] = ' ';
- } else {
+ }
+
+
+ else {
  lineText[lineCharIndex] = (item->description)[i - scrollingOverflow];
  }
  }
 
 
- if (valueWidth > 0) {
+ if (labelLength > 0) {
  for (i = 0; i <  1 ; i++) {
  lineText[lineCharIndex] = ' ';
- lineCharIndex += 1;
+ lineCharIndex++;
  }
- for (i = 0; i < valueWidth; i++) {
+ for (i = 0; i < labelLength; i++) {
  lineText[lineCharIndex] = (item->label)[i];
- lineCharIndex += 1;
+ lineCharIndex++;
  }
  }
+
  lineText[lineCharIndex] = ' ';
 }
 

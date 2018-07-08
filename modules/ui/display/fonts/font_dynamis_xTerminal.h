@@ -122,7 +122,7 @@ static const unsigned short DynamisFont_xTerminal6x8[] = {
 };
 
 /// ALL CHARACTERS HAVE UNIFORM WIDTH.. THIS MAKES IT ADEQUATE FOR THE MENU INTERFACE
-
+/// 96 CHARACTERS
 static const unsigned short DynamisFont_UniformTerminal6x8[] = {
         0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,  // Code for char
         0x06, 0x00, 0x00, 0x06, 0x5F, 0x06, 0x00,  // Code for char !

@@ -42,15 +42,19 @@ _d_UIController_init:
 ;d_ui_controller.c,41 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
 	MOV	#lo_addr(?lstr7_d_ui_controller), W10
 	CALL	_Debug_UART_Write
-;d_ui_controller.c,42 :: 		setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
+;d_ui_controller.c,42 :: 		setInterruptPriority(TIMER2_DEVICE, MEDIUM_PRIORITY);
+	MOV.B	#4, W11
+	MOV.B	#2, W10
+	CALL	_setInterruptPriority
+;d_ui_controller.c,43 :: 		setTimer(TIMER2_DEVICE, TIMER_2_PERIOD);
 	MOV	#4719, W11
 	MOV	#14979, W12
 	MOV.B	#2, W10
 	CALL	_setTimer
-;d_ui_controller.c,43 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
+;d_ui_controller.c,44 :: 		Debug_UART_Write("Timer2 initialized.\r\n");
 	MOV	#lo_addr(?lstr8_d_ui_controller), W10
 	CALL	_Debug_UART_Write
-;d_ui_controller.c,46 :: 		}
+;d_ui_controller.c,47 :: 		}
 L_end_d_UIController_init:
 	POP	W12
 	POP	W11
@@ -60,16 +64,16 @@ L_end_d_UIController_init:
 
 _d_UI_setOperatingMode:
 
-;d_ui_controller.c,48 :: 		void d_UI_setOperatingMode(OperatingMode mode) {
-;d_ui_controller.c,49 :: 		switch(d_currentOperatingMode) {
+;d_ui_controller.c,49 :: 		void d_UI_setOperatingMode(OperatingMode mode) {
+;d_ui_controller.c,50 :: 		switch(d_currentOperatingMode) {
 	GOTO	L_d_UI_setOperatingMode0
-;d_ui_controller.c,50 :: 		case SETTINGS_MODE:
+;d_ui_controller.c,51 :: 		case SETTINGS_MODE:
 L_d_UI_setOperatingMode2:
-;d_ui_controller.c,51 :: 		d_UI_SettingsModeClose();
+;d_ui_controller.c,52 :: 		d_UI_SettingsModeClose();
 	PUSH	W10
 	CALL	_d_UI_SettingsModeClose
 	POP	W10
-;d_ui_controller.c,52 :: 		}
+;d_ui_controller.c,53 :: 		}
 	GOTO	L_d_UI_setOperatingMode1
 L_d_UI_setOperatingMode0:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
@@ -79,17 +83,17 @@ L_d_UI_setOperatingMode0:
 	GOTO	L_d_UI_setOperatingMode2
 L__d_UI_setOperatingMode27:
 L_d_UI_setOperatingMode1:
-;d_ui_controller.c,53 :: 		d_currentOperatingMode = mode;
+;d_ui_controller.c,54 :: 		d_currentOperatingMode = mode;
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	W10, [W0]
-;d_ui_controller.c,54 :: 		d_OperatingMode_init[mode]();
+;d_ui_controller.c,55 :: 		d_OperatingMode_init[mode]();
 	ZE	W10, W0
 	SL	W0, #1, W1
 	MOV	#lo_addr(_d_OperatingMode_init), W0
 	ADD	W0, W1, W0
 	MOV	[W0], W0
 	CALL	W0
-;d_ui_controller.c,55 :: 		}
+;d_ui_controller.c,56 :: 		}
 L_end_d_UI_setOperatingMode:
 	RETURN
 ; end of _d_UI_setOperatingMode
@@ -102,10 +106,10 @@ _timer1_interrupt:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;d_ui_controller.c,61 :: 		onTimer1Interrupt{
-;d_ui_controller.c,62 :: 		dd_GraphicController_onTimerInterrupt();
+;d_ui_controller.c,62 :: 		onTimer1Interrupt{
+;d_ui_controller.c,63 :: 		dd_GraphicController_onTimerInterrupt();
 	CALL	_dd_GraphicController_onTimerInterrupt
-;d_ui_controller.c,63 :: 		}
+;d_ui_controller.c,64 :: 		}
 L_end_timer1_interrupt:
 	MOV	#26, W0
 	REPEAT	#12
@@ -118,30 +122,30 @@ L_end_timer1_interrupt:
 
 _d_controls_onLeftEncoder:
 
-;d_ui_controller.c,68 :: 		void d_controls_onLeftEncoder(signed char movements) {
-;d_ui_controller.c,69 :: 		switch (d_currentOperatingMode) {
+;d_ui_controller.c,69 :: 		void d_controls_onLeftEncoder(signed char movements) {
+;d_ui_controller.c,70 :: 		switch (d_currentOperatingMode) {
 	GOTO	L_d_controls_onLeftEncoder3
-;d_ui_controller.c,70 :: 		case SETTINGS_MODE:
+;d_ui_controller.c,71 :: 		case SETTINGS_MODE:
 L_d_controls_onLeftEncoder5:
-;d_ui_controller.c,71 :: 		case BOARD_DEBUG_MODE:
+;d_ui_controller.c,72 :: 		case BOARD_DEBUG_MODE:
 L_d_controls_onLeftEncoder6:
-;d_ui_controller.c,72 :: 		case DEBUG_MODE:
+;d_ui_controller.c,73 :: 		case DEBUG_MODE:
 L_d_controls_onLeftEncoder7:
-;d_ui_controller.c,73 :: 		dd_Menu_moveSelection(movements);
+;d_ui_controller.c,74 :: 		dd_Menu_moveSelection(movements);
 	CALL	_dd_Menu_moveSelection
-;d_ui_controller.c,74 :: 		break;
+;d_ui_controller.c,75 :: 		break;
 	GOTO	L_d_controls_onLeftEncoder4
-;d_ui_controller.c,75 :: 		case CRUISE_MODE:
+;d_ui_controller.c,76 :: 		case CRUISE_MODE:
 L_d_controls_onLeftEncoder8:
-;d_ui_controller.c,77 :: 		case ACC_MODE:
+;d_ui_controller.c,78 :: 		case ACC_MODE:
 L_d_controls_onLeftEncoder9:
-;d_ui_controller.c,78 :: 		break;
+;d_ui_controller.c,79 :: 		break;
 	GOTO	L_d_controls_onLeftEncoder4
-;d_ui_controller.c,79 :: 		default:
+;d_ui_controller.c,80 :: 		default:
 L_d_controls_onLeftEncoder10:
-;d_ui_controller.c,80 :: 		return;
+;d_ui_controller.c,81 :: 		return;
 	GOTO	L_end_d_controls_onLeftEncoder
-;d_ui_controller.c,81 :: 		}
+;d_ui_controller.c,82 :: 		}
 L_d_controls_onLeftEncoder3:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	[W0], W0
@@ -175,39 +179,39 @@ L__d_controls_onLeftEncoder33:
 L__d_controls_onLeftEncoder34:
 	GOTO	L_d_controls_onLeftEncoder10
 L_d_controls_onLeftEncoder4:
-;d_ui_controller.c,82 :: 		}
+;d_ui_controller.c,83 :: 		}
 L_end_d_controls_onLeftEncoder:
 	RETURN
 ; end of _d_controls_onLeftEncoder
 
 _d_controls_onRightEncoder:
 
-;d_ui_controller.c,84 :: 		void d_controls_onRightEncoder(signed char movements) {
-;d_ui_controller.c,85 :: 		switch (d_currentOperatingMode) {
+;d_ui_controller.c,85 :: 		void d_controls_onRightEncoder(signed char movements) {
+;d_ui_controller.c,86 :: 		switch (d_currentOperatingMode) {
 	GOTO	L_d_controls_onRightEncoder11
-;d_ui_controller.c,86 :: 		case SETTINGS_MODE:
+;d_ui_controller.c,87 :: 		case SETTINGS_MODE:
 L_d_controls_onRightEncoder13:
-;d_ui_controller.c,87 :: 		d_UI_onSettingsChange(movements);
+;d_ui_controller.c,88 :: 		d_UI_onSettingsChange(movements);
 	CALL	_d_UI_onSettingsChange
-;d_ui_controller.c,88 :: 		break;
+;d_ui_controller.c,89 :: 		break;
 	GOTO	L_d_controls_onRightEncoder12
-;d_ui_controller.c,89 :: 		case BOARD_DEBUG_MODE:
+;d_ui_controller.c,90 :: 		case BOARD_DEBUG_MODE:
 L_d_controls_onRightEncoder14:
-;d_ui_controller.c,90 :: 		case DEBUG_MODE:
+;d_ui_controller.c,91 :: 		case DEBUG_MODE:
 L_d_controls_onRightEncoder15:
-;d_ui_controller.c,91 :: 		case ACC_MODE:
+;d_ui_controller.c,92 :: 		case ACC_MODE:
 L_d_controls_onRightEncoder16:
-;d_ui_controller.c,92 :: 		break;
+;d_ui_controller.c,93 :: 		break;
 	GOTO	L_d_controls_onRightEncoder12
-;d_ui_controller.c,93 :: 		case CRUISE_MODE:
+;d_ui_controller.c,94 :: 		case CRUISE_MODE:
 L_d_controls_onRightEncoder17:
-;d_ui_controller.c,95 :: 		break;
+;d_ui_controller.c,96 :: 		break;
 	GOTO	L_d_controls_onRightEncoder12
-;d_ui_controller.c,96 :: 		default:
+;d_ui_controller.c,97 :: 		default:
 L_d_controls_onRightEncoder18:
-;d_ui_controller.c,97 :: 		return;
+;d_ui_controller.c,98 :: 		return;
 	GOTO	L_end_d_controls_onRightEncoder
-;d_ui_controller.c,98 :: 		}
+;d_ui_controller.c,99 :: 		}
 L_d_controls_onRightEncoder11:
 	MOV	#lo_addr(_d_currentOperatingMode), W0
 	MOV.B	[W0], W0
@@ -241,15 +245,15 @@ L__d_controls_onRightEncoder39:
 L__d_controls_onRightEncoder40:
 	GOTO	L_d_controls_onRightEncoder18
 L_d_controls_onRightEncoder12:
-;d_ui_controller.c,99 :: 		}
+;d_ui_controller.c,100 :: 		}
 L_end_d_controls_onRightEncoder:
 	RETURN
 ; end of _d_controls_onRightEncoder
 
 _d_selectorPositionToMode:
 
-;d_ui_controller.c,101 :: 		OperatingMode d_selectorPositionToMode(signed char position){
-;d_ui_controller.c,102 :: 		if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )
+;d_ui_controller.c,102 :: 		OperatingMode d_selectorPositionToMode(signed char position){
+;d_ui_controller.c,103 :: 		if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )
 	CP.B	W10, #1
 	BRA LE	L__d_selectorPositionToMode42
 	GOTO	L__d_selectorPositionToMode24
@@ -262,27 +266,27 @@ L__d_selectorPositionToMode43:
 	GOTO	L_d_selectorPositionToMode21
 L__d_selectorPositionToMode24:
 L__d_selectorPositionToMode23:
-;d_ui_controller.c,103 :: 		position = CRUISE_MODE_POSITION;
+;d_ui_controller.c,104 :: 		position = CRUISE_MODE_POSITION;
 	CLR	W10
 L_d_selectorPositionToMode21:
-;d_ui_controller.c,104 :: 		return position-LEFTMOST_OPMODE_POSITION;
+;d_ui_controller.c,105 :: 		return position-LEFTMOST_OPMODE_POSITION;
 	SE	W10, W1
 	MOV	#65533, W0
 	SUB	W1, W0, W0
-;d_ui_controller.c,105 :: 		}
+;d_ui_controller.c,106 :: 		}
 L_end_d_selectorPositionToMode:
 	RETURN
 ; end of _d_selectorPositionToMode
 
 _d_controls_onSelectorSwitched:
 
-;d_ui_controller.c,109 :: 		void d_controls_onSelectorSwitched(signed char position) {
-;d_ui_controller.c,110 :: 		d_UI_setOperatingMode(d_selectorPositionToMode(position));
+;d_ui_controller.c,110 :: 		void d_controls_onSelectorSwitched(signed char position) {
+;d_ui_controller.c,111 :: 		d_UI_setOperatingMode(d_selectorPositionToMode(position));
 	PUSH	W10
 	CALL	_d_selectorPositionToMode
 	MOV.B	W0, W10
 	CALL	_d_UI_setOperatingMode
-;d_ui_controller.c,111 :: 		}
+;d_ui_controller.c,112 :: 		}
 L_end_d_controls_onSelectorSwitched:
 	POP	W10
 	RETURN

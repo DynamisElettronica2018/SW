@@ -579,8 +579,9 @@ void d_UIController_init() {
  Debug_UART_Write("rpm initialized.\r\n");
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
+ setInterruptPriority( 2 ,  4 );
  setTimer( 2 ,  0.001 );
- Debug_UART_Write("graphic controller initialized.\r\n");
+ Debug_UART_Write("Timer2 initialized.\r\n");
 
 
 }
@@ -643,7 +644,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 109 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
+#line 110 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }
