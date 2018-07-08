@@ -39,25 +39,15 @@ unsigned char I2CExpander_readPort(unsigned char address)
 {
      unsigned char value = 0;
      char error = 2;
-     Debug_UART_Write("About to read I2C\r\n");
      I2C1_Start();
-     Debug_UART_Write("About to read 1 I2C\r\n");
      error = I2C1_Write(address);
      // set access to input port
-     sprintf(dstr, "About to read 2 I2C error: %d\r\n", error);
-     Debug_UART_Write(dstr);
      I2C1_Write(0);
      // read input port
-     Debug_UART_Write("About to read 3 I2C\r\n");
      I2C1_Restart();
-     Debug_UART_Write("About to read 4 I2C\r\n");
      I2C1_Write(address|0b00000001);
      // read port with not acknowledge signal
-     Debug_UART_Write("So near to reading I2C...\r\n");
      value = I2C1_Read(0);
      I2C1_Stop();
-     Debug_UART_Write("I2C Read Value\r\n");
-     sprintf(dstr, "%d\r\n", value);
-     Debug_UART_Write(dstr);
      return value;
 }

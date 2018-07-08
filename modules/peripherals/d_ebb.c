@@ -103,8 +103,6 @@ void dEbb_propagateEbbChange(void) {
         break;
     default:
         dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-        sprintf(dstr, "indicator value %d\r\n", dEbb_value+EBB_DAGO_OFFSET);
-        Debug_UART_Write(dstr);
         break;
     }
 }
@@ -117,20 +115,12 @@ void dEbb_propagateValue(signed char value){
 void dEbb_move(signed char movements){
       signed char value;
       value = dEbb_value - movements;
-      sprintf(dstr, "DEbb_value %d\r\n", dEbb_value);
-      Debug_UART_Write(dstr);
-      sprintf(dstr, "movements%d\r\n", movements);
-      Debug_UART_Write(dstr);
-      sprintf(dstr, "value1 %d\r\n", value);
-      Debug_UART_Write(dstr);
       if(value > EBB_MAX_VALUE){
          value = EBB_MAX_VALUE;
       } else if(value < EBB_MIN_VALUE){
          value = EBB_MIN_VALUE;
       }
       dEbb_Value = value;
-      sprintf(dstr, "value %d\r\n", value);
-      Debug_UART_Write(dstr);
       dEbb_propagateValue(value);
 }
 

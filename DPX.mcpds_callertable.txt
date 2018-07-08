@@ -28,39 +28,13 @@ main
 				I2C1_Stop
 					I2C1_Is_Finished
 			I2CExpander_readPort
-				Debug_UART_Write
-					UART2_Write_Text
-						UART2_Write
 				I2C1_Start
 				I2C1_Write
-				sprintf
-					_doprntf
-						isdigit
-						scale
-							_Mul_FP
-						fround
-							_Mul_FP
-						_Divide_32x32
-						_Modulus_32x32
-						_Compare_Le_Fp
-							_Compare_Fp
-						_Mul_FP
-						_Compare_Ge_Fp
-							_Compare_Fp
-						_Div_FP
-						_Float2Longword
-						_Long2Float
-						_Sub_FP
-							_AddSub_FP
-						_AddSub_FP
-						_Float2Longint
 				I2C1_Restart
 					I2C1_Is_Finished
 				I2C1_Read
 					I2C1_Is_Finished
 				I2C1_Stop
-			sprintf
-			Debug_UART_Write
 			log2
 			d_UI_setOperatingMode
 				dd_Dashboard_print
@@ -95,6 +69,7 @@ main
 										_Float2Longint
 										_Long2Float
 										_Compare_Le_Fp
+											_Compare_Fp
 										_AddSub_FP
 									_frameBuffer_Read
 									_frameBuffer_Write
@@ -117,6 +92,25 @@ main
 							dd_Indicator_isRequestingUpdate
 							dd_Indicator_parseValueLabel
 								sprintf
+									_doprntf
+										isdigit
+										scale
+											_Mul_FP
+										fround
+											_Mul_FP
+										_Divide_32x32
+										_Modulus_32x32
+										_Compare_Le_Fp
+										_Mul_FP
+										_Compare_Ge_Fp
+											_Compare_Fp
+										_Div_FP
+										_Float2Longword
+										_Long2Float
+										_Sub_FP
+											_AddSub_FP
+										_AddSub_FP
+										_Float2Longint
 								strcpy
 								strlen
 							dd_Indicator_clearPrintUpdateRequest
@@ -180,7 +174,6 @@ main
 				d_UI_CruiseModeInit
 					dd_GraphicController_setCollectionInterface
 				d_UI_AccModeInit
-					Debug_UART_Write
 					dd_GraphicController_setCollectionInterface
 				d_UI_AutocrossModeInit
 					dd_GraphicController_setCollectionInterface
@@ -225,7 +218,6 @@ main
 			CAN1SetFilter
 			Can_initInterrupt
 			Can_setWritePriority
-		Debug_UART_Write
 		dDCU_init
 		dPaddle_init
 		Buzzer_init
@@ -511,6 +503,9 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dAcc_feedbackGCU
 		dAcc_stopAutoAcceleration
+	d_drs_setValueFromCAN
+		dd_Indicator_setIntValueP
+		Buzzer_bip
 	dAutocross_feedbackGCU
 		dAutocross_stopAutocross
 	Buzzer_bip
@@ -518,13 +513,17 @@ CAN_Interrupt
 	_Long2Float
 external2
 	d_controls_onDRS
+		d_drs_propagateChange
+			Can_writeByte
+				Can_resetWritePacket
+				Can_addByteToWritePacket
+				Can_write
+			dd_GraphicController_fireTimedNotification
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick
 external1
 	I2CExpander_readPort
-	sprintf
-	Debug_UART_Write
 	log2
 	d_controls_onSelectorSwitched
 		d_UI_setOperatingMode
@@ -546,20 +545,13 @@ cn_interrupt
 			dGear_disableShiftCheck
 			d_DashboardSetting_updateValue
 		d_traction_control_move
-			sprintf
-			Debug_UART_Write
 			d_traction_control_propagateValue
 				Can_writeInt
-				sprintf
-				Debug_UART_Write
 				dSignalLed_switch
 	d_controls_onRightEncoder
 		dd_Menu_moveSelection
 			dd_Menu_scroll
-				Debug_UART_Write
 		dEbb_move
-			sprintf
-			Debug_UART_Write
 			dEbb_propagateValue
 				Can_writeInt
 				dd_Indicator_setIntValueP
@@ -586,9 +578,6 @@ timer2_interrupt
 	dPaddle_getValue
 	dClutch_send
 		Can_writeByte
-			Can_resetWritePacket
-			Can_addByteToWritePacket
-			Can_write
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
 		Can_writeByte
@@ -613,7 +602,6 @@ timer2_interrupt
 		Can_writeInt
 		dd_Indicator_setIntValueP
 	dDCU_isAcquiring
-	Debug_UART_Write
 	dDCU_tick
 		dd_GraphicController_fireTimedNotification
 timer1_interrupt

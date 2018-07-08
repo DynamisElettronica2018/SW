@@ -1,18 +1,18 @@
 
 _d_UI_CruiseModeInit:
 
-;d_operating_modes.c,135 :: 		void d_UI_CruiseModeInit() {
-;d_operating_modes.c,136 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
+;d_operating_modes.c,137 :: 		void d_UI_CruiseModeInit() {
+;d_operating_modes.c,138 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
 	PUSH	W13
-	MOV	#lo_addr(?lstr71_d_operating_modes), W13
-	MOV.B	#22, W12
+	MOV	#lo_addr(?lstr73_d_operating_modes), W13
+	MOV.B	#23, W12
 	MOV	#lo_addr(d_operating_modes_dd_carParameters), W11
 	CLR	W10
 	CALL	_dd_GraphicController_setCollectionInterface
-;d_operating_modes.c,137 :: 		}
+;d_operating_modes.c,139 :: 		}
 L_end_d_UI_CruiseModeInit:
 	POP	W13
 	POP	W12
@@ -23,23 +23,17 @@ L_end_d_UI_CruiseModeInit:
 
 _d_UI_AccModeInit:
 
-;d_operating_modes.c,139 :: 		void d_UI_AccModeInit(){
-;d_operating_modes.c,140 :: 		Debug_UART_Write("Acceleration mode entered.\r\n");
+;d_operating_modes.c,141 :: 		void d_UI_AccModeInit(){
+;d_operating_modes.c,142 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
 	PUSH	W13
-	MOV	#lo_addr(?lstr72_d_operating_modes), W10
-	CALL	_Debug_UART_Write
-;d_operating_modes.c,141 :: 		dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
-	MOV	#lo_addr(?lstr73_d_operating_modes), W13
-	MOV.B	#22, W12
+	MOV	#lo_addr(?lstr74_d_operating_modes), W13
+	MOV.B	#23, W12
 	MOV	#lo_addr(d_operating_modes_dd_carParameters), W11
 	CLR	W10
 	CALL	_dd_GraphicController_setCollectionInterface
-;d_operating_modes.c,142 :: 		Debug_UART_Write("Acceleration start prompt set.\r\n");
-	MOV	#lo_addr(?lstr74_d_operating_modes), W10
-	CALL	_Debug_UART_Write
 ;d_operating_modes.c,143 :: 		}
 L_end_d_UI_AccModeInit:
 	POP	W13
@@ -58,7 +52,7 @@ _d_UI_DebugModeInit:
 	PUSH	W12
 	PUSH	W13
 	MOV	#lo_addr(?lstr75_d_operating_modes), W13
-	MOV.B	#22, W12
+	MOV.B	#23, W12
 	MOV	#lo_addr(d_operating_modes_dd_carParameters), W11
 	MOV.B	#1, W10
 	CALL	_dd_GraphicController_setCollectionInterface
@@ -102,7 +96,7 @@ _d_UI_AutocrossModeInit:
 	PUSH	W12
 	PUSH	W13
 	MOV	#lo_addr(?lstr77_d_operating_modes), W13
-	MOV.B	#22, W12
+	MOV.B	#23, W12
 	MOV	#lo_addr(d_operating_modes_dd_carParameters), W11
 	CLR	W10
 	CALL	_dd_GraphicController_setCollectionInterface
@@ -326,14 +320,15 @@ L_d_UI_onSettingsChange6:
 	GOTO	L_d_UI_onSettingsChange1
 ;d_operating_modes.c,269 :: 		}
 L_d_UI_onSettingsChange0:
-	MOV	[W14+4], W1
-	MOV.B	[W1], W0
-	CP.B	W0, #31
+	MOV	[W14+4], W2
+	MOV.B	[W2], W1
+	MOV.B	#32, W0
+	CP.B	W1, W0
 	BRA NZ	L__d_UI_onSettingsChange31
 	GOTO	L_d_UI_onSettingsChange2
 L__d_UI_onSettingsChange31:
-	MOV.B	[W1], W0
-	CP.B	W0, #30
+	MOV.B	[W2], W0
+	CP.B	W0, #31
 	BRA NZ	L__d_UI_onSettingsChange32
 	GOTO	L_d_UI_onSettingsChange3
 L__d_UI_onSettingsChange32:
@@ -356,13 +351,13 @@ L__d_UI_onSettingsChange33:
 ; dashboardIndicatorIndex start address is: 2 (W1)
 	MOV	W0, W1
 ;d_operating_modes.c,279 :: 		if (dashboardIndicatorIndex >= dd_carParametersCount) {
-	CP	W0, #22
+	CP	W0, #23
 	BRA GE	L__d_UI_onSettingsChange34
 	GOTO	L_d_UI_onSettingsChange8
 L__d_UI_onSettingsChange34:
 ;d_operating_modes.c,280 :: 		dashboardIndicatorIndex -= dd_carParametersCount;
 ; dashboardIndicatorIndex start address is: 0 (W0)
-	SUB	W1, #22, W0
+	SUB	W1, #23, W0
 ; dashboardIndicatorIndex end address is: 2 (W1)
 ;d_operating_modes.c,281 :: 		}
 ; dashboardIndicatorIndex end address is: 0 (W0)
@@ -376,7 +371,7 @@ L_d_UI_onSettingsChange8:
 L__d_UI_onSettingsChange35:
 ;d_operating_modes.c,283 :: 		dashboardIndicatorIndex += dd_carParametersCount;
 ; dashboardIndicatorIndex start address is: 0 (W0)
-	ADD	W1, #22, W0
+	ADD	W1, #23, W0
 ; dashboardIndicatorIndex end address is: 2 (W1)
 ; dashboardIndicatorIndex end address is: 0 (W0)
 ;d_operating_modes.c,284 :: 		}

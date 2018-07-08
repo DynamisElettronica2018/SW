@@ -55,28 +55,18 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_propagateValue(signed char value){
       Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
-      sprintf(dstr, "value3 %d\r\n", value);
-      Debug_UART_Write(dstr);
       dSignalLed_switch(DSIGNAL_LED_BLUE);
 }
 
 void d_traction_control_move(signed char movements){
       signed char value;
       value = d_tractionValue - movements;
-      sprintf(dstr, "d_tractionvalue %d\r\n", d_tractionValue);
-      Debug_UART_Write(dstr);
-      sprintf(dstr, "movements%d\r\n", movements);
-      Debug_UART_Write(dstr);
-      sprintf(dstr, "value1 %d\r\n", value);
-      Debug_UART_Write(dstr);
       if(value > TRACTION_MAX_VALUE){
          value = TRACTION_MAX_VALUE;
       } else if(value < TRACTION_MIN_VALUE){
          value = TRACTION_MIN_VALUE;
       }
       d_tractionValue = value;
-      sprintf(dstr, "value2 %d\r\n", d_tractionValue);
-      Debug_UART_Write(dstr);
       d_traction_control_propagateValue(d_tractionValue);
 }
 

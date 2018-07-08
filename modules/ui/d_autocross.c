@@ -47,7 +47,7 @@ void dAutocross_startClutchRelease(void){
         Can_addIntToWritePacket(COMMAND_AUTOCROSS_START_CLUTCH_RELEASE);
         Can_write(SW_AUX_ID);
         dAutocross_readyToGo = TRUE;
-        dd_printMessage("GO");
+        dd_printMessage("GOOOOO!!!");
 }
 
 void dAutocross_stopAutocross(void) {

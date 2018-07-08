@@ -73,7 +73,7 @@ _dAcc_startClutchRelease:
 	MOV	#lo_addr(d_acceleration_dAcc_readyToGo), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_acceleration.c,49 :: 		dd_printMessage("GO");
+;d_acceleration.c,49 :: 		dd_printMessage("GOOOOO!!!");
 	MOV	#lo_addr(?lstr2_d_acceleration), W10
 	CALL	_dd_printMessage
 ;d_acceleration.c,50 :: 		}

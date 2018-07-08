@@ -18,6 +18,7 @@
 #include "../../../libs/i2c_expander.h"
 #include "../../../libs/debug.h"
 #include "d_autocross.h"
+#include "d_drs.h"
 
 
 #define BUTTON_ACTIVE_STATE 0
@@ -112,21 +113,14 @@ void dControls_init(void) {
    old_encoder_right_pin1 = ENCODER_RIGHT_PIN1;
    old_encoder_right_pin2 = ENCODER_RIGHT_PIN2;
    
-//   sprintf(dstr, "Init Encoder pins: left %d%d%d, right %d%d%d", old_encoder_left_pin2, old_encoder_left_pin1, old_encoder_left_pin0, old_encoder_right_pin2, old_encoder_right_pin1, old_encoder_right_pin0);
-//   Debug_UART_Write(dstr);
-
    I2CBRG = I2CBRG_REGISTER_VALUE;
    I2C1_Init(I2C_BAUD_RATE);
    I2CExpander_init(I2C_ADDRESS_ROTARY_SWITCH, INPUT);
    
    expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
-   sprintf(dstr, "Port: %d\r\n", expanderPort);
-    Debug_UART_Write(dstr);
    if (expanderPort == 0) position = CRUISE_MODE_POSITION;
    else
         position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
-   /*sprintf(dstr, "Position: %d\n", position);
-   Debug_UART_Write(dstr);*/
    d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
    setExternalInterrupt(START_INTERRUPT, INTERRUPT_EDGE);
@@ -135,7 +129,6 @@ void dControls_init(void) {
    setExternalInterrupt(DRS_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(GENERAL_BUTTON_INTERRUPT, INTERRUPT_EDGE);
    setExternalInterrupt(ENCODER_INTERRUPT, INTERRUPT_EDGE);
-   Debug_UART_Write("FINISHED");
 }
 
 void dControls_disableCentralSelector()
@@ -240,12 +233,8 @@ onRotarySwitchInterrupt{
         delay_ms(30);
         Delay_ms(STRANGE_BUTTON_DELAY);
         expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
-        sprintf(dstr, "Port: %d\r\n", expanderPort);
-        Debug_UART_Write(dstr);
         if (expanderPort == 0) {
            position = CRUISE_MODE_POSITION;
-           sprintf(dstr, "Position: %d\r\n", position);
-           Debug_UART_Write(dstr);
         }
         else
            position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
@@ -321,6 +310,7 @@ void d_controls_onReset() {
 }
 
 void d_controls_onDRS() {
+     d_drs_propagateChange();
 }
 
 void d_controls_onAux2(void) {

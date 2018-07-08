@@ -80,7 +80,6 @@ void dd_Menu_scroll(signed char movements) {
         dd_Menu_FirstLineIndex = dd_currentIndicatorsCount - 1 - dd_Menu_Height_param;
     }
     else if (dd_Menu_FirstLineIndex < 0) {
-         Debug_UART_Write("FirstLineIndex = 0\r\n");
          dd_Menu_FirstLineIndex = 0;
     }
     for (i = dd_Menu_FirstLineIndex; i < dd_Menu_FirstLineIndex + dd_Menu_Height_param; i++) {

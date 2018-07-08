@@ -29,6 +29,7 @@
 #include "dd_graphic_controller.h"
 #include "d_acceleration.h"
 #include "d_autocross.h"
+#include "d_drs.h"
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
@@ -99,9 +100,7 @@ onTimer2Interrupt{
     // TIMER_2_PERIOD*1000 = 1s (1Hz)
     if (timer2_counter5 >= 1000) {
         d_sensors_sendSWTemp();
-        if(dDCU_isAcquiring())
-        {
-           Debug_UART_Write("DCU Tick\r\n");
+        if(dDCU_isAcquiring()){
            dDCU_tick();
         }
         //dWarinings_check();
@@ -200,14 +199,14 @@ onCanInterrupt{
            break;  */
        case GCU_DEBUG_1_ID:
            dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
-           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
-           dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
-           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
+           dd_Indicator_setIntValueP(&ind_drs_curr.base, (secondInt));
+           dd_Indicator_setIntValueP(&ind_fuel_pump.base, (thirdInt));
            break; //*/
        case GCU_DEBUG_2_ID:
            dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
-           dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+           dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));
            break;
        case DCU_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
@@ -219,7 +218,7 @@ onCanInterrupt{
        case GCU_AUX_ID:
            d_traction_control_setValueFromCAN(firstInt);
            dAcc_feedbackGCU(secondInt);
-           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
+           d_drs_setValuefromCAN(thirdInt);
            dAutocross_feedbackGCU(fourthInt);
            Buzzer_bip();
            break;

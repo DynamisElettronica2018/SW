@@ -46,7 +46,7 @@ void dAcc_startClutchRelease(void){
         dd_GraphicController_clearPrompt();
         Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_START_CLUTCH_RELEASE);
         dAcc_readyToGo = TRUE;
-        dd_printMessage("GO");
+        dd_printMessage("GOOOOO!!!");
 }
 
 void dAcc_feedbackGCU(unsigned int value){

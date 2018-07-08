@@ -96,7 +96,7 @@ _dAutocross_startClutchRelease:
 	MOV	#lo_addr(d_autocross_dAutocross_readyToGo), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_autocross.c,50 :: 		dd_printMessage("GO");
+;d_autocross.c,50 :: 		dd_printMessage("GOOOOO!!!");
 	MOV	#lo_addr(?lstr2_d_autocross), W10
 	CALL	_dd_printMessage
 ;d_autocross.c,51 :: 		}

@@ -10,7 +10,11 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=modules\ui\d_operating_modes.c
+<<<<<<< HEAD
+Value=DPX.c
+=======
+Value=modules\peripherals\d_drs.c
+>>>>>>> drs2
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -44,7 +48,7 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=35
+Count=36
 File0=DPX.c
 File1=libs\basic.c
 File2=libs\buttons.c
@@ -80,20 +84,16 @@ File31=modules\peripherals\d_sensors.c
 File32=modules\peripherals\d_dcu.c
 File33=modules\ui\d_autocross.c
 File34=modules\ui\d_traction_control.c
+File35=modules\peripherals\d_drs.c
 [BINARIES]
 Count=0
 [IMAGES]
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=7
+Count=2
 File0=DPX.c
-File1=modules\ui\display\dd_menu.c
-File2=modules\ui\display\dd_global_defines.h
-File3=modules\ui\display\fonts\font_dynamis_xTerminal.h
-File4=libs\eGlcd.c
-File5=modules\ui\display\dd_interfaces.c
-File6=modules\ui\d_operating_modes.c
+File1=modules\ui\d_operating_modes.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -104,8 +104,8 @@ Count=0
 Count=16
 Path0=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\defs\
 Path1=C:\Users\Public\Documents\Mikroelektronika\mikroC PRO for dsPIC\uses\
-Path2=C:\Users\utente\Desktop\git Repo\SW\
-Path3=C:\Users\sofia\Desktop\GIT REPO\SW\
+Path2=C:\Users\sofia\Desktop\GIT REPO\SW\
+Path3=C:\Users\utente\Desktop\git Repo\SW\
 Path4=C:\Users\utente\Desktop\git Repo\SW\libs\
 Path5=C:\Users\utente\Desktop\git Repo\SW\modules\peripherals\
 Path6=C:\Users\utente\Desktop\git Repo\SW\modules\ui\display\
@@ -133,7 +133,7 @@ Path9=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\display\
 Path10=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\input-output\
 Path11=C:\Users\sofia\Desktop\GIT REPO\SW\modules\ui\
 [HEADERS]
-Count=42
+Count=43
 File0=libs\basic.h
 File1=libs\buttons.h
 File2=libs\can.h
@@ -176,6 +176,7 @@ File38=modules\peripherals\d_sensors.h
 File39=modules\peripherals\d_dcu.h
 File40=modules\ui\d_autocross.h
 File41=modules\ui\d_traction_control.h
+File42=modules\peripherals\d_drs.h
 [PLDS]
 Count=0
 [Useses]

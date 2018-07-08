@@ -61,89 +61,41 @@ L_end_I2CExpander_setPort:
 ; end of _I2CExpander_setPort
 
 _I2CExpander_readPort:
-	LNK	#2
 
 ;i2c_expander.c,38 :: 		unsigned char I2CExpander_readPort(unsigned char address)
 ;i2c_expander.c,40 :: 		unsigned char value = 0;
 	PUSH	W10
 ;i2c_expander.c,41 :: 		char error = 2;
-;i2c_expander.c,42 :: 		Debug_UART_Write("About to read I2C\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr1_i2c_expander), W10
-	CALL	_Debug_UART_Write
-	POP	W10
-;i2c_expander.c,43 :: 		I2C1_Start();
+;i2c_expander.c,42 :: 		I2C1_Start();
 	CALL	_I2C1_Start
-;i2c_expander.c,44 :: 		Debug_UART_Write("About to read 1 I2C\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr2_i2c_expander), W10
-	CALL	_Debug_UART_Write
-	POP	W10
-;i2c_expander.c,45 :: 		error = I2C1_Write(address);
+;i2c_expander.c,43 :: 		error = I2C1_Write(address);
 	CALL	_I2C1_Write
-;i2c_expander.c,47 :: 		sprintf(dstr, "About to read 2 I2C error: %d\r\n", error);
+;i2c_expander.c,45 :: 		I2C1_Write(0);
 	PUSH	W10
-	PUSH	W0
-	MOV	#lo_addr(?lstr_3_i2c_expander), W0
-	PUSH	W0
-	MOV	#lo_addr(_dstr), W0
-	PUSH	W0
-	CALL	_sprintf
-	SUB	#6, W15
-;i2c_expander.c,48 :: 		Debug_UART_Write(dstr);
-	MOV	#lo_addr(_dstr), W10
-	CALL	_Debug_UART_Write
-;i2c_expander.c,49 :: 		I2C1_Write(0);
 	CLR	W10
 	CALL	_I2C1_Write
-;i2c_expander.c,51 :: 		Debug_UART_Write("About to read 3 I2C\r\n");
-	MOV	#lo_addr(?lstr4_i2c_expander), W10
-	CALL	_Debug_UART_Write
 	POP	W10
-;i2c_expander.c,52 :: 		I2C1_Restart();
+;i2c_expander.c,47 :: 		I2C1_Restart();
 	CALL	_I2C1_Restart
-;i2c_expander.c,53 :: 		Debug_UART_Write("About to read 4 I2C\r\n");
-	PUSH	W10
-	MOV	#lo_addr(?lstr5_i2c_expander), W10
-	CALL	_Debug_UART_Write
-	POP	W10
-;i2c_expander.c,54 :: 		I2C1_Write(address|0b00000001);
+;i2c_expander.c,48 :: 		I2C1_Write(address|0b00000001);
 	ZE	W10, W0
 	IOR	W0, #1, W0
 	MOV.B	W0, W10
 	CALL	_I2C1_Write
-;i2c_expander.c,56 :: 		Debug_UART_Write("So near to reading I2C...\r\n");
-	MOV	#lo_addr(?lstr6_i2c_expander), W10
-	CALL	_Debug_UART_Write
-;i2c_expander.c,57 :: 		value = I2C1_Read(0);
+;i2c_expander.c,50 :: 		value = I2C1_Read(0);
 	CLR	W10
 	CALL	_I2C1_Read
-	MOV.B	W0, [W14+0]
-;i2c_expander.c,58 :: 		I2C1_Stop();
+; value start address is: 2 (W1)
+	MOV.B	W0, W1
+;i2c_expander.c,51 :: 		I2C1_Stop();
 	CALL	_I2C1_Stop
-;i2c_expander.c,59 :: 		Debug_UART_Write("I2C Read Value\r\n");
-	MOV	#lo_addr(?lstr7_i2c_expander), W10
-	CALL	_Debug_UART_Write
-;i2c_expander.c,60 :: 		sprintf(dstr, "%d\r\n", value);
-	ADD	W14, #0, W0
-	ZE	[W0], W0
-	PUSH	W0
-	MOV	#lo_addr(?lstr_8_i2c_expander), W0
-	PUSH	W0
-	MOV	#lo_addr(_dstr), W0
-	PUSH	W0
-	CALL	_sprintf
-	SUB	#6, W15
-;i2c_expander.c,61 :: 		Debug_UART_Write(dstr);
-	MOV	#lo_addr(_dstr), W10
-	CALL	_Debug_UART_Write
-;i2c_expander.c,62 :: 		return value;
-	MOV.B	[W14+0], W0
-;i2c_expander.c,63 :: 		}
-;i2c_expander.c,62 :: 		return value;
-;i2c_expander.c,63 :: 		}
+;i2c_expander.c,52 :: 		return value;
+	MOV.B	W1, W0
+; value end address is: 2 (W1)
+;i2c_expander.c,53 :: 		}
+;i2c_expander.c,52 :: 		return value;
+;i2c_expander.c,53 :: 		}
 L_end_I2CExpander_readPort:
 	POP	W10
-	ULNK
 	RETURN
 ; end of _I2CExpander_readPort

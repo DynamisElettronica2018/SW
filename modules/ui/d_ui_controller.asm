@@ -9,59 +9,26 @@ _d_UIController_init:
 	CALL	_dControls_init
 ;d_ui_controller.c,31 :: 		Can_init();
 	CALL	_Can_init
-;d_ui_controller.c,32 :: 		Debug_UART_Write("can initialized.\r\n");
-	MOV	#lo_addr(?lstr1_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,33 :: 		dDCU_init();
 	CALL	_dDCU_init
-;d_ui_controller.c,34 :: 		Debug_UART_Write("DCU initialized.\r\n");
-	MOV	#lo_addr(?lstr2_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,35 :: 		dPaddle_init();
 	CALL	_dPaddle_init
-;d_ui_controller.c,36 :: 		Debug_UART_Write("Paddle initialized.\r\n");
-	MOV	#lo_addr(?lstr3_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,37 :: 		Buzzer_init();
 	CALL	_Buzzer_init
-;d_ui_controller.c,38 :: 		Debug_UART_Write("Buzzer initialized.\r\n");
-	MOV	#lo_addr(?lstr4_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,39 :: 		dSignalLed_init();
 	CALL	_dSignalLed_init
-;d_ui_controller.c,40 :: 		Debug_UART_Write("Signal Leds initialized.\r\n");
-	MOV	#lo_addr(?lstr5_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,41 :: 		dRpm_init();
 	CALL	_dRpm_init
-;d_ui_controller.c,42 :: 		Debug_UART_Write("rpm initialized.\r\n");
-	MOV	#lo_addr(?lstr6_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,43 :: 		dAutocross_init();
 	CALL	_dAutocross_init
-;d_ui_controller.c,44 :: 		Debug_UART_Write("autocross initialized.\r\n");
-	MOV	#lo_addr(?lstr7_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,45 :: 		dd_GraphicController_init();
 	CALL	_dd_GraphicController_init
-;d_ui_controller.c,46 :: 		Debug_UART_Write("graphic controller initialized.\r\n");
-	MOV	#lo_addr(?lstr8_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,47 :: 		dAcc_init();
 	CALL	_dAcc_init
-;d_ui_controller.c,48 :: 		Debug_UART_Write("acceleration module initialized.\r\n");
-	MOV	#lo_addr(?lstr9_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,49 :: 		d_traction_control_init();
 	CALL	_d_traction_control_init
-;d_ui_controller.c,50 :: 		Debug_UART_Write("traction control initialized.\r\n");
-	MOV	#lo_addr(?lstr10_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,51 :: 		dEbb_init();
 	CALL	_dEbb_init
-;d_ui_controller.c,52 :: 		Debug_UART_Write("ebb initialized.\r\n");
-	MOV	#lo_addr(?lstr11_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,53 :: 		setInterruptPriority(TIMER2_DEVICE, MEDIUM_PRIORITY);
 	MOV.B	#4, W11
 	MOV.B	#2, W10
@@ -71,9 +38,6 @@ _d_UIController_init:
 	MOV	#14979, W12
 	MOV.B	#2, W10
 	CALL	_setTimer
-;d_ui_controller.c,55 :: 		Debug_UART_Write("ui controller initialized.\r\n");
-	MOV	#lo_addr(?lstr12_d_ui_controller), W10
-	CALL	_Debug_UART_Write
 ;d_ui_controller.c,57 :: 		}
 L_end_d_UIController_init:
 	POP	W12
