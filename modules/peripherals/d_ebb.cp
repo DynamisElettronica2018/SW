@@ -249,7 +249,7 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 41 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_setPositionZero(void);
@@ -497,7 +497,7 @@ void dEbb_printNotification(void){
 
 void dEbb_setEbbValueFromCAN(unsigned int value){
  dEbb_Value = (int)(value -  8 );
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+ 8 ));
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 
 }
 
@@ -523,7 +523,7 @@ void dEbb_propagateEbbChange(void) {
  dd_Indicator_setStringValue(EBB, "...");
  break;
  default:
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+ 8 ));
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
  sprintf(dstr, "indicator value %d\r\n", dEbb_value+ 8 );
  Debug_UART_Write(dstr);
  break;
@@ -532,7 +532,7 @@ void dEbb_propagateEbbChange(void) {
 
 void dEbb_propagateValue(signed char value){
  Can_writeInt( 0b10000000000 , (int)(value +  8 ));
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
 }
 
 void dEbb_move(signed char movements){
@@ -552,14 +552,13 @@ void dEbb_move(signed char movements){
  dEbb_Value = value;
  sprintf(dstr, "value %d\r\n", value);
  Debug_UART_Write(dstr);
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
  dEbb_propagateValue(value);
 }
 
 void dEbb_init(void){
 
 }
-#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 231 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

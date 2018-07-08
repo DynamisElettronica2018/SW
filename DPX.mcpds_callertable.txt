@@ -485,7 +485,6 @@ cn_interrupt
 		dEbb_move
 			sprintf
 			Debug_UART_Write
-			dd_Indicator_setIntValueP
 			dEbb_propagateValue
 				Can_writeInt
 				dd_Indicator_setIntValueP

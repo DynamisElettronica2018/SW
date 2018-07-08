@@ -570,7 +570,7 @@ void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 41 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_ebb.h"
 void dEbb_init(void);
 
 void dEbb_setPositionZero(void);

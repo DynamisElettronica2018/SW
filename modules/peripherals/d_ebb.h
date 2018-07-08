@@ -9,12 +9,6 @@
 #include "d_can.h"
 #include "../ui/input-output/d_signalLed.h"
 
-//Devo scrivergli ebb target 10Hz
-//cosa è ebb target. (unisgned int? ahah) sarà signed.
-//tra 0 e 8 indica bilancio
-//se eeb target vale 15, il signorino deve calibrare
-//calibrazione tra 10 e 20
-
 //#define EBB_CENTER_CALIBRATION 15
 #define EBB_MAX_VALUE 3
 #define EBB_MIN_VALUE -3

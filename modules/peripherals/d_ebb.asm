@@ -264,9 +264,8 @@ _dEbb_setEbbValueFromCAN:
 	SUB	W10, #8, W1
 	MOV	#lo_addr(_dEbb_value), W0
 	MOV.B	W1, [W0]
-;d_ebb.c,79 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+;d_ebb.c,79 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 	SE	W1, W0
-	ADD	W0, #8, W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
@@ -346,10 +345,9 @@ L_dEbb_propagateEbbChange23:
 	GOTO	L_dEbb_propagateEbbChange19
 ;d_ebb.c,104 :: 		default:
 L_dEbb_propagateEbbChange24:
-;d_ebb.c,105 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+;d_ebb.c,105 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
 	MOV	#lo_addr(_dEbb_value), W0
 	SE	[W0], W0
-	ADD	W0, #8, W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
@@ -412,13 +410,14 @@ _dEbb_propagateValue:
 	PUSH	W12
 	SE	W10, W0
 	ADD	W0, #8, W0
+	PUSH	W10
 	MOV	W0, W12
 	MOV	#1024, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_ebb.c,114 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-	MOV	#lo_addr(_dEbb_value), W0
-	SE	[W0], W0
+	POP	W10
+;d_ebb.c,114 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+	SE	W10, W0
 	MOV	W0, W11
 	MOV	#lo_addr(_ind_ebb), W10
 	CALL	_dd_Indicator_setIntValueP
@@ -436,7 +435,6 @@ _dEbb_move:
 ;d_ebb.c,117 :: 		void dEbb_move(signed char movements){
 ;d_ebb.c,119 :: 		value = dEbb_value - movements;
 	PUSH	W10
-	PUSH	W11
 	MOV	#lo_addr(_dEbb_value), W1
 	ADD	W14, #0, W0
 	SUBR.B	W10, [W1], [W0]
@@ -522,18 +520,11 @@ L_dEbb_move26:
 ;d_ebb.c,133 :: 		Debug_UART_Write(dstr);
 	MOV	#lo_addr(_dstr), W10
 	CALL	_Debug_UART_Write
-;d_ebb.c,134 :: 		dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-	MOV	#lo_addr(_dEbb_value), W0
-	SE	[W0], W0
-	MOV	W0, W11
-	MOV	#lo_addr(_ind_ebb), W10
-	CALL	_dd_Indicator_setIntValueP
-;d_ebb.c,135 :: 		dEbb_propagateValue(value);
+;d_ebb.c,134 :: 		dEbb_propagateValue(value);
 	MOV.B	[W14+0], W10
 	CALL	_dEbb_propagateValue
-;d_ebb.c,136 :: 		}
+;d_ebb.c,135 :: 		}
 L_end_dEbb_move:
-	POP	W11
 	POP	W10
 	ULNK
 	RETURN
@@ -541,16 +532,16 @@ L_end_dEbb_move:
 
 _dEbb_init:
 
-;d_ebb.c,138 :: 		void dEbb_init(void){
-;d_ebb.c,140 :: 		}
+;d_ebb.c,137 :: 		void dEbb_init(void){
+;d_ebb.c,139 :: 		}
 L_end_dEbb_init:
 	RETURN
 ; end of _dEbb_init
 
 _dEbb_tick:
 
-;d_ebb.c,204 :: 		void dEbb_tick(void) {
-;d_ebb.c,231 :: 		}
+;d_ebb.c,203 :: 		void dEbb_tick(void) {
+;d_ebb.c,230 :: 		}
 L_end_dEbb_tick:
 	RETURN
 ; end of _dEbb_tick

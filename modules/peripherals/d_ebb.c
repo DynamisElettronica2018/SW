@@ -76,7 +76,7 @@ void dEbb_printNotification(void){
 
 void dEbb_setEbbValueFromCAN(unsigned int value){
      dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
-     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
     // dEbb_printNotification();
 }
 
@@ -102,7 +102,7 @@ void dEbb_propagateEbbChange(void) {
         dd_Indicator_setStringValue(EBB, "...");
         break;
     default:
-        dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value+EBB_DAGO_OFFSET));
+        dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
         sprintf(dstr, "indicator value %d\r\n", dEbb_value+EBB_DAGO_OFFSET);
         Debug_UART_Write(dstr);
         break;
@@ -111,7 +111,7 @@ void dEbb_propagateEbbChange(void) {
 
 void dEbb_propagateValue(signed char value){
      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
-     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
 }
 
 void dEbb_move(signed char movements){
@@ -131,7 +131,6 @@ void dEbb_move(signed char movements){
       dEbb_Value = value;
       sprintf(dstr, "value %d\r\n", value);
       Debug_UART_Write(dstr);
-      dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
       dEbb_propagateValue(value);
 }
 
