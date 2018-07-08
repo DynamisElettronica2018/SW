@@ -322,9 +322,7 @@ void d_controls_onReset() {
 }
 
 void d_controls_onDRS() {
-     if(d_currentOperatingMode!=ACC_MODE){
-          d_drs_propagateChange();
-     }
+     d_drs_propagateChange();
 }
 
 void d_controls_onAux2(void) {

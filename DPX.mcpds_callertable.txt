@@ -513,7 +513,6 @@ CAN_Interrupt
 		dAcc_stopAutoAcceleration
 	d_drs_setValueFromCAN
 		dd_Indicator_setIntValueP
-		dd_GraphicController_fireTimedNotification
 		Buzzer_bip
 	dAutocross_feedbackGCU
 		dAutocross_stopAutocross
@@ -527,6 +526,7 @@ external2
 				Can_resetWritePacket
 				Can_addByteToWritePacket
 				Can_write
+			dd_GraphicController_fireTimedNotification
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick

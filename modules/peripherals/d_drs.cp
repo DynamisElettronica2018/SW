@@ -445,22 +445,20 @@ void dd_GraphicController_onTimerInterrupt(void);
 char d_drs_status =  0 ;
 
 void d_drs_propagateChange(void){
- if(d_drs_status ==  1 ){
+ if(d_drs_status== 1 ){
  Can_writeByte( 0b01000000101 ,  0 );
  d_drs_status =  0 ;
- }else if(d_drs_status ==  0 ){
+ dd_GraphicController_fireTimedNotification( 500 , "DRS CLOSE", MESSAGE);
+ }else if(d_drs_status== 0 ){
  Can_writeByte( 0b01000000101 ,  1 );
  d_drs_status =  1 ;
+ dd_GraphicController_fireTimedNotification( 500 , "DRS OPEN", MESSAGE);
  }
 }
 
 void d_drs_setValueFromCAN(unsigned int value){
- if(d_drs_status == value && d_drs_status ==  1 ){
+ if(d_drs_status==value){
  dd_Indicator_setIntValueP(&ind_drs.base, value);
- dd_GraphicController_fireTimedNotification( 500 , "DRS OPEN", MESSAGE);
- }else if(d_drs_status == value && d_drs_status ==  0 ){
- dd_Indicator_setIntValueP(&ind_drs.base, value);
- dd_GraphicController_fireTimedNotification( 500 , "DRS CLOSE", MESSAGE);
  }else
  Buzzer_bip();
 }
