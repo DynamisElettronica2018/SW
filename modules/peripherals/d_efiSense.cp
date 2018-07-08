@@ -248,6 +248,8 @@ unsigned int dHardReset_getCounter(void);
 #line 27 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
+void dEfiSense_getAccValue(int accValue);
+
 void dEfiSense_tick(void);
 
 void dEfiSense_die(void);
@@ -288,7 +290,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -308,7 +310,9 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AccModeInit(void);
+#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -365,14 +369,91 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 5 ])(void);
+#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+void dAcc_getAccValue(int accValue);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+void Can_init(void);
+
+unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+
+void Can_writeByte(unsigned long int id, unsigned char dataOut);
+
+void Can_writeInt(unsigned long int id, int dataOut);
+
+void Can_addIntToWritePacket(int dataOut);
+
+void Can_addByteToWritePacket(unsigned char dataOut);
+
+void Can_write(unsigned long int id);
+
+void Can_setWritePriority(unsigned int txPriority);
+
+void Can_resetWritePacket(void);
+
+unsigned int Can_getWriteFlags(void);
+
+unsigned char Can_B0hasBeenReceived(void);
+
+unsigned char Can_B1hasBeenReceived(void);
+
+void Can_clearB0Flag(void);
+
+void Can_clearB1Flag(void);
+
+void Can_clearInterrupt(void);
+
+void Can_initInterrupt(void);
+#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 
@@ -393,6 +474,22 @@ void dEfiSense_tick(void) {
  dHardReset_reset();
  }
  }
+ }
+}
+
+void dEfiSense_getAccValue(int accValue){
+ OperatingMode currentOperatingMode;
+ currentOperatingMode = d_UI_getOperatingMode();
+ dd_Indicator_setintValueP(&ind_tps.base, accValue);
+ switch (currentOperatingMode){
+ case ACC_MODE:
+ if(accValue >=  50  && dAcc_hasGCUConfirmed() ==  1 ){
+ dAcc_startClutchRelease();
+ }
+ break;
+#line 50 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+ default:
+ break;
  }
 }
 

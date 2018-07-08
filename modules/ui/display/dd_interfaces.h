@@ -44,7 +44,7 @@ extern void (*dd_Interface_init[INTERFACES_TOTAL_COUNT])(void);
 //!@}
 
 #define MAX_NOTIFICATION_LENGTH 20
-#define NOTIFICATION_TYPES_COUNT 3      //!< Number of notification types defined in #NotificationType.
+#define NOTIFICATION_TYPES_COUNT 4      //!< Number of notification types defined in #NotificationType.
 
 /*      !!!IMPORTANT!!!
         Order of notifications in enum and dd_notificationTitles
@@ -60,7 +60,8 @@ extern void (*dd_Interface_init[INTERFACES_TOTAL_COUNT])(void);
 typedef enum {
         MESSAGE,        //!< Simple harmless notification.
         WARNING,         //!< Notifies a warning which can potentially lead to errors.
-        ERROR                 //!< Error occurred notification.
+        ERROR,                //!< Error occurred notification.
+        PROMPT                //!< Requests for an action to be taken.
 } NotificationType;
 
 /**        Stores interface titles associated with each #NotificationType, which are accessed by 

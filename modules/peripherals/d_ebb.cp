@@ -298,10 +298,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];

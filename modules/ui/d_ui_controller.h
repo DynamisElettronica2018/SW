@@ -13,6 +13,10 @@
 */
 void d_UIController_init();
 
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
 OperatingMode d_selectorPositionToMode(signed char position);
 
 /**        \file d_ui_controller.h

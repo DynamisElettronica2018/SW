@@ -261,10 +261,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -284,8 +285,10 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 

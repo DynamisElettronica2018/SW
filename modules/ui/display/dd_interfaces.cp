@@ -26,10 +26,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -1248,8 +1249,10 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -1281,10 +1284,11 @@ void (*dd_Interface_init[ 3 ])(void) = {
  dd_Menu_init
 } ;
 
-const char dd_notificationTitles[ 3 ][ 20 ] = {
+const char dd_notificationTitles[ 4 ][ 20 ] = {
  "Message",
  "Warning",
- "Error"
+ "Error",
+ "Prompt"
 };
 
 char dd_notificationText[ 20 ] = "";
@@ -1305,7 +1309,7 @@ unsigned char dd_Interface_getTitleY(void) {
 
 void dd_Interface_drawTitleContainers(void) {
   Glcd_Rectangle_Round_Edges( 1 , 1 , 128  - 1  * 2, 16  + 3  * 2, 3 , BLACK ); ;
-#line 70 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
+#line 71 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
 }
 
 void dd_Interface_drawTitle(char *title) {

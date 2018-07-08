@@ -19,6 +19,9 @@
 *   while clockwise rotations add +1, and are referred to as right.
 */
 //!@{
+
+void d_UI_AccModeInit(void);
+
 #define ACC_MODE_POSITION        1
 #define CRUISE_MODE_POSITION     0
 #define DEBUG_MODE_POSITION      -1
@@ -103,15 +106,9 @@ extern IntegerIndicator ind_gear_motor;
 */
 //!@{
 extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
-
 /**        \brief Groups operating mode methods called on exiting the specific mode.
 */
-/*extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
-        d_UI_SettingsModeClose(),
-        NULL,
-        NULL,
-        NULL
-} */
+extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void);
 //!@}
 
 /////////////////////////////////////////
@@ -122,7 +119,6 @@ extern void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void);
 *        
 *        Executes and saves all settings' changes.
 */
-void d_UI_SettingsModeClose();
 void d_UI_setOperatingMode(OperatingMode mode);
 
 /**        \brief Invoked when value of a setting is changed.
@@ -162,5 +158,8 @@ void d_UI_onSettingsChange(signed char movements);
 *        \sa d_ui_controller.h
 */
 
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
 
 #endif /* D_UI_OPERATING_MODES */

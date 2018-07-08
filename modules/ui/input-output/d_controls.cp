@@ -40,7 +40,7 @@ void dControls_disableCentralSelector();
 
 void d_controls_onDRS(void);
 
-void d_controls_onAux1(void);
+void d_controls_onAux2(void);
 
 void d_controls_onStartAcquisition(void);
 
@@ -243,10 +243,11 @@ extern void (*dd_Interface_init[ 3 ])(void);
 typedef enum {
  MESSAGE,
  WARNING,
- ERROR
+ ERROR,
+ PROMPT
 } NotificationType;
-#line 69 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
-extern const char dd_notificationTitles[ 3 ][ 20 ];
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
@@ -266,8 +267,10 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
+void dd_GraphicController_firePromptNotification(char *text);
+void dd_GraphicController_clearPrompt();
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -355,7 +358,7 @@ void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -364,16 +367,24 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-void dAcc_startAutoAcceleration(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
 
 char dAcc_isAutoAccelerationActive(void);
 
+void dAcc_getAccValue(int accValue);
+
 char dAcc_isReleasingClutch(void);
 
-void dAcc_startClutchRelease(void);
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/d_ebb.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../peripherals/../ui/display/dd_indicators.h"
@@ -535,7 +546,9 @@ char d_canSetGear(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_AccModeInit(void);
+#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -592,15 +605,24 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 105 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 5 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-void d_UI_SettingsModeClose();
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 5 ])(void);
+#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
+#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+
+void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_ui_controller.h"
 void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
@@ -750,7 +772,6 @@ void dControls_disableCentralSelector()
  }
  else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
 
-
  if(movement_sx){
  d_controls_onLeftEncoder(movement_sx);
  }
@@ -761,7 +782,7 @@ void dControls_disableCentralSelector()
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
 }
-#line 235 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 234 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -810,7 +831,7 @@ void dControls_disableCentralSelector()
  d_controls_onStartAcquisition();
  }
  else if ( RB15_bit  ==  0 ) {
- d_controls_onAux1();
+ d_controls_onAux2();
  }
  clearExternalInterrupt( 8 );
 }
@@ -853,7 +874,13 @@ void d_controls_onReset() {
 void d_controls_onDRS() {
 }
 
-void d_controls_onAux1(void) {
+void d_controls_onAux2(void) {
+ switch(d_currentOperatingMode){
+ case ACC_MODE:
+ dAcc_requestAction();
+ default:
+ return;
+ }
 }
 
 void d_controls_onStartAcquisition(void) {

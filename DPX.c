@@ -26,6 +26,8 @@
 #include "d_sensors.h"
 #include "libs/debug.h"
 #include "dd_graphic_controller.h"
+#include "d_acceleration.h"
+
 
 #include <stdlib.h>
 
@@ -65,10 +67,11 @@ onTimer2Interrupt{
     timer2_counter1 += 1;
     timer2_counter2 += 1;
     timer2_counter3 += 1;
-    //timer2_counter4 += 1;
+    timer2_counter4 += 1;
     timer2_counter5 += 1;
 
     //Buzzer_bip();
+
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
@@ -152,7 +155,7 @@ onCanInterrupt{
            dGear_propagate(firstInt);
            dRpm_set(secondInt);
            dEfiSense_heartbeat();
-           dd_Indicator_setintValueP(&ind_tps.base, dEfiSense_calculateTPS(thirdInt));
+           dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
            break;
        case EFI_WATER_TEMPERATURE_ID:
            dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
@@ -220,6 +223,10 @@ onCanInterrupt{
                 dDCU_sentAcquiringSignal();
            }
            break;
+       case GCU_AUX_ID:
+           //int1 è fb di traction  da NON considerare quando siamo in ACC
+           dAcc_feedbackGCU(secondInt);
+           //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
        default:
            break;
     }

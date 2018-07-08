@@ -8,6 +8,8 @@
 #include "display/dd_menu.h"
 #include "../peripherals/d_gears.h"
 #include "display/dd_dashboard.h"
+#include "debug.h"
+#include "d_acceleration.h"
 #include "input-output/d_controls.h"
 
 void d_UI_CruiseModeInit();
@@ -15,6 +17,12 @@ void d_UI_AccModeInit();
 void d_UI_DebugModeInit();
 void d_UI_SettingsModeInit();
 void d_UI_BoardDebugModeInit();
+
+void d_UI_CruiseModeClose();
+void d_UI_AccModeClose();
+void d_UI_DebugModeClose();
+void d_UI_SettingsModeClose();
+void d_UI_BoardDebugModeClose();
 
 void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
         d_UI_BoardDebugModeInit,
@@ -25,6 +33,14 @@ void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
 };
 
 const unsigned char dd_carParametersCount = 21;
+void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
+        d_UI_BoardDebugModeClose,
+        d_UI_SettingsModeClose,
+        d_UI_DebugModeClose,
+        d_UI_CruiseModeClose,
+        d_UI_AccModeClose
+};
+
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
 
 /********************************* INDICATORS *********************************/
@@ -56,7 +72,7 @@ IntCoupleIndicator ind_dcu_board = {DCU_BOARD, "DCU", "Dcu Board", 3, 9, FALSE, 
 IntCoupleIndicator ind_dau_fl_board = {DAU_FL_BOARD, "DAU FL", "Dau FL Board", 6, 12, FALSE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_fr_board = {DAU_FR_BOARD, "DAU FR", "Dau FR Board", 6, 12, FALSE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
 IntCoupleIndicator ind_dau_r_board  = {DAU_R_BOARD, "DAU REAR", "Dau Rear Board", 8, 14, FALSE, TRUE, TRUE, INT_COUPLE, 1, "  ?    ?", {0,0} };
-IntegerIndicator ind_sw_board  = {SW_BOARD, "SW", "SW Temp.", 3, 8, FALSE, TRUE, TRUE, INT, 1, "  ?    ?", 0 };
+IntegerIndicator ind_sw_board  = {SW_BOARD, "SW", "SW Temp.", 3, 8, FALSE, TRUE, TRUE, INT, 1, "  ?  ", 0 };
 IntegerIndicator ind_gcu_temp = {GCU_TEMP, "GCU.T", "GCU Temp.", 5, 9,FALSE, TRUE, TRUE, INT, 1, "?", 0};
 
 /*********************************** SENSORS **********************************/
@@ -71,8 +87,8 @@ static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i pri
       (Indicator*)&ind_oil_temp_in,                                      //dashboard standard:  EBB, TH20, VBAT, TOIL
       (Indicator*)&ind_th2o,
       (Indicator*)&ind_vbat,
-      (Indicator*)&ind_oil_press,
       (Indicator*)&ind_tps,
+      (Indicator*)&ind_oil_press,
       (Indicator*)&ind_adc1_read,
       (Indicator*)&ind_rpm,
       (Indicator*)&ind_clutch_pos,
@@ -109,11 +125,13 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
 
 
 void d_UI_CruiseModeInit() {
-     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Drive");
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
 }
 
 void d_UI_AccModeInit(){
-     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration ");
+     Debug_UART_Write("Acceleration mode entered.\r\n");
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Acceleration");
+     Debug_UART_Write("Acceleration start prompt set.\r\n");
 }
 
 void d_UI_DebugModeInit() {
@@ -124,6 +142,18 @@ void d_UI_BoardDebugModeInit() {
      dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
 }
 
+void d_UI_CruiseModeClose(){
+}
+
+void d_UI_AccModeClose(){
+     dAcc_stopAutoAccelerationFromSW();
+}
+
+void d_UI_DebugModeClose(){
+}
+
+void d_UI_BoardDebugModeClose(){
+}
 
 
 /* * * * * * * * * * * * * *   S E T T I N G S     M O D E   * * * * * * * * * * * * * * * * * * * */
