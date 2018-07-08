@@ -234,7 +234,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -1565,15 +1566,14 @@ void dClutch_send(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -1625,16 +1625,18 @@ extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
 #line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
+extern void (*d_OperatingMode_init[ 6 ])(void);
 #line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
+extern void (*d_OperatingMode_close[ 6 ])(void);
 #line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -1644,6 +1646,8 @@ OperatingMode d_UI_getOperatingMode(void);
 int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 30 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
@@ -1763,7 +1767,11 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  strcpy(dd_notificationText, text);
  dd_printMessage(dd_notificationText);
 }
-#line 155 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+
+void dd_GraphicController_clearPrompt(){
+ dd_Interface_print[dd_currentInterface]();
+}
+#line 159 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_setNotificationFlag();
@@ -1779,11 +1787,6 @@ void dd_GraphicController_firePromptNotification(char *text) {
 
  dd_notificationIsTimed = 0;
  dd_GraphicController_fireNotification(text, PROMPT);
-}
-
-void dd_GraphicController_clearPrompt()
-{
- dd_Interface_print[dd_currentInterface]();
 }
 
 void dd_GraphicController_handleNotification(void) {
@@ -1900,7 +1903,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 297 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 296 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1909,7 +1912,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  eGlcd_fill(WHITE);
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
- if (d_UI_getOperatingMode() == ACC_MODE){
+ if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
  dd_printMessage("READY");
  }
  dd_isFrameUpdateForced =  0 ;
@@ -1928,5 +1931,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 335 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 334 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

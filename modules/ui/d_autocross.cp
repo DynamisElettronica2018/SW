@@ -16,6 +16,8 @@ unsigned int dAutocross_hasGCUConfirmed(void);
 void dAutocross_startClutchRelease(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -225,13 +227,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
-<<<<<<< HEAD
-=======
-
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
-
->>>>>>> autocross
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -396,23 +393,7 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 22 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-<<<<<<< HEAD
-
-void d_UI_AccModeInit(void);
-
-
-
-
-
-=======
-
-
-
-
-
->>>>>>> autocross
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -470,18 +451,19 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
-#line 117 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 120 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 131 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-void d_UI_AutocrossModeInit();
-#line 140 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 171 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -561,8 +543,6 @@ void dAutocross_startClutchRelease(void){
 void dAutocross_stopAutocross(void) {
  dAutocross_isActive =  0 ;
  dAutocross_releasingClutch =  0 ;
- dd_printMessage("STOP");
- delay_ms(2000);
  d_UI_AutocrossModeInit();
 }
 

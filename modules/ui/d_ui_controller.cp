@@ -156,15 +156,14 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -216,16 +215,18 @@ extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
 #line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
+extern void (*d_OperatingMode_init[ 6 ])(void);
 #line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
+extern void (*d_OperatingMode_close[ 6 ])(void);
 #line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
@@ -235,6 +236,8 @@ OperatingMode d_UI_getOperatingMode(void);
 int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 #line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
@@ -348,7 +351,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -547,7 +551,7 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -598,7 +602,26 @@ char dDCU_isAcquiring(void);
 void dDCU_sentAcquiringSignal(void);
 
 void dDCU_tick(void);
-#line 23 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 OperatingMode d_currentOperatingMode = CRUISE_MODE;
 void d_UI_setOperatingMode(OperatingMode mode);
 
@@ -616,6 +639,7 @@ void d_UIController_init() {
  Debug_UART_Write("Signal Leds initialized.\r\n");
  dRpm_init();
  Debug_UART_Write("rpm initialized.\r\n");
+ dAutocross_init();
  dd_GraphicController_init();
  Debug_UART_Write("graphic controller initialized.\r\n");
  dAcc_init();
@@ -651,6 +675,7 @@ void d_controls_onLeftEncoder(signed char movements) {
  case DEBUG_MODE:
  dd_Menu_moveSelection(movements);
  break;
+ case AUTOCROSS_MODE:
  case CRUISE_MODE:
 
  case ACC_MODE:
@@ -669,6 +694,7 @@ void d_controls_onRightEncoder(signed char movements) {
  case DEBUG_MODE:
  case ACC_MODE:
  break;
+ case AUTOCROSS_MODE:
  case CRUISE_MODE:
 
  break;
@@ -678,11 +704,11 @@ void d_controls_onRightEncoder(signed char movements) {
 }
 
 OperatingMode d_selectorPositionToMode(signed char position){
- if (position >  1  || position <  -3  )
+ if (position >  2  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 109 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 113 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

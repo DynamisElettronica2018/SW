@@ -20,21 +20,20 @@
 */
 //!@{
 
-void d_UI_AccModeInit(void);
-
-#define ACC_MODE_POSITION        1
-#define CRUISE_MODE_POSITION     0
-#define DEBUG_MODE_POSITION      -1
-#define SETTINGS_MODE_POSITION   -2
+#define AUTOCROSS_MODE_POSITION      2
+#define ACC_MODE_POSITION            1
+#define CRUISE_MODE_POSITION         0
+#define DEBUG_MODE_POSITION         -1
+#define SETTINGS_MODE_POSITION      -2
 #define BOARD_DEBUG_MODE_POSITION   -3
 
-#define FIRST_MODE_POSITION         ACC_MODE_POSITION
+#define FIRST_MODE_POSITION         AUTOCROSS_MODE_POSITION
 #define LAST_MODE_POSITION          BOARD_DEBUG_MODE_POSITION
 
 //!@}
 
 #define LEFTMOST_OPMODE_POSITION        BOARD_DEBUG_MODE_POSITION        //!< Position of the last operating mode, rotating counter clockwise from top.
-#define OPERATING_MODES_COUNT 5       //!< Number of operating modes defined in #OperatingMode
+#define OPERATING_MODES_COUNT 6       //!< Number of operating modes defined in #OperatingMode
 
 /**        \brief Operating Mode definitions.
 *        
@@ -48,7 +47,8 @@ typedef enum {
     SETTINGS_MODE,
     DEBUG_MODE,
     CRUISE_MODE,
-    ACC_MODE
+    ACC_MODE,
+    AUTOCROSS_MODE
 } OperatingMode;
 /// [Operating mode definitions]
 
@@ -120,6 +120,8 @@ extern void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void);
 *        Executes and saves all settings' changes.
 */
 void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
 
 /**        \brief Invoked when value of a setting is changed.
 *        
@@ -159,7 +161,7 @@ void d_UI_onSettingsChange(signed char movements);
 */
 
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 
 #endif /* D_UI_OPERATING_MODES */

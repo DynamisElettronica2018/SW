@@ -181,6 +181,8 @@ main
 				d_UI_AccModeInit
 					Debug_UART_Write
 					dd_GraphicController_setCollectionInterface
+				d_UI_AutocrossModeInit
+					dd_GraphicController_setCollectionInterface
 				d_UI_BoardDebugModeClose
 				d_UI_SettingsModeClose
 					d_UI_ApplySettings
@@ -198,6 +200,14 @@ main
 								Can_getWriteFlags
 						dAcc_stopAutoAcceleration
 							d_UI_AccModeInit
+				d_UI_AutocrossModeClose
+					dAutocross_stopAutocrossFromSW
+						Can_resetWritePacket
+						Can_addIntToWritePacket
+						dDCU_isAcquiring
+						Can_write
+						dAutocross_stopAutocross
+							d_UI_AutocrossModeInit
 			d_selectorPositionToMode
 			setExternalInterrupt
 				setInterruptPriority
@@ -237,6 +247,7 @@ main
 		dRpm_init
 			I2CExpander_init
 			dRpm_enableLedStripeOutput
+		dAutocross_init
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
@@ -356,7 +367,10 @@ external4
 		dDCU_switchAcquisition
 			dDCU_stopAcquisition
 				dd_GraphicController_fireTimedNotification
-				Can_writeInt
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dAutocross_isAutocrossActive
+				Can_write
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
@@ -372,13 +386,23 @@ external4
 				d_UI_DebugModeInit
 				d_UI_CruiseModeInit
 				d_UI_AccModeInit
+				d_UI_AutocrossModeInit
 				d_UI_BoardDebugModeClose
 				d_UI_SettingsModeClose
 				d_UI_DebugModeClose
 				d_UI_CruiseModeClose
 				d_UI_AccModeClose
+				d_UI_AutocrossModeClose
 			dAcc_startAutoAcceleration
 				Can_writeInt
+				dd_printMessage
+		dAutocross_requestAction
+			dd_GraphicController_clearPrompt
+			dAutocross_startAutocross
+				Can_resetWritePacket
+				Can_addIntToWritePacket
+				dDCU_isAcquiring
+				Can_write
 				dd_printMessage
 	clearExternalInterrupt
 external3
@@ -420,6 +444,14 @@ CAN_Interrupt
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
 			Can_writeInt
+			dd_printMessage
+		dAutocross_hasGCUConfirmed
+		dAutocross_startClutchRelease
+			dd_GraphicController_clearPrompt
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			dDCU_isAcquiring
+			Can_write
 			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
@@ -469,6 +501,8 @@ CAN_Interrupt
 	dDCU_sentAcquiringSignal
 	dAcc_feedbackGCU
 		dAcc_stopAutoAcceleration
+	dAutocross_feedbackGCU
+		dAutocross_stopAutocross
 	_Compare_Ge_Fp
 	_Long2Float
 external2
@@ -582,11 +616,13 @@ timer1_interrupt
 		d_UI_DebugModeInit
 		d_UI_CruiseModeInit
 		d_UI_AccModeInit
+		d_UI_AutocrossModeInit
 		d_UI_BoardDebugModeClose
 		d_UI_SettingsModeClose
 		d_UI_DebugModeClose
 		d_UI_CruiseModeClose
 		d_UI_AccModeClose
+		d_UI_AutocrossModeClose
 external0
 	d_controls_onGearUp
 		dGear_requestGearUp

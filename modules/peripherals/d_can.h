@@ -111,11 +111,16 @@
 #define EBB_FILTER_DAUFR                0b11001010000
 
 
-/*********************** ACQUISITION ***********************/
+/******************************** ACQUISITION *********************************/
 
 #define COMMAND_DCU_START_ACQUISITION 1
 #define COMMAND_DCU_STOP_ACQUISITION 2
 #define COMMAND_DCU_IS_ACQUIRING 1
+
+/****************************** AUTOCROSS MODE ********************************/
+#define COMMAND_AUTOCROSS_START_CLUTCH_RELEASE 2
+#define COMMAND_START_AUTOCROSS 1
+#define COMMAND_STOP_AUTOCROSS  0
 
 
 /********************* ACCELERATION MODE *******************/

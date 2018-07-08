@@ -27,8 +27,7 @@
 #include "libs/debug.h"
 #include "dd_graphic_controller.h"
 #include "d_acceleration.h"
-
-
+#include "d_autocross.h"
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
@@ -227,6 +226,8 @@ onCanInterrupt{
            //int1 è fb di traction  da NON considerare quando siamo in ACC
            dAcc_feedbackGCU(secondInt);
            //int3 è fb di drs da NON Cconsiderare quando siamo in ACC
+           dAutocross_feedbackGCU(fourthInt);
+           break;
        default:
            break;
     }

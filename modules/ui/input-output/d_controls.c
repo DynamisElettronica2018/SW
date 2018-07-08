@@ -17,6 +17,7 @@
 #include "../d_ui_controller.h"
 #include "../../../libs/i2c_expander.h"
 #include "../../../libs/debug.h"
+#include "d_autocross.h"
 
 
 #define BUTTON_ACTIVE_STATE 0
@@ -324,12 +325,17 @@ void d_controls_onDRS() {
 
 void d_controls_onAux2(void) {
       switch(d_currentOperatingMode){
-         case ACC_MODE:                      //ha senso perchè nell'acceleration mode, il DRS è settato da GCU totalmente aperto
+         case ACC_MODE:
               dAcc_requestAction();
+              break;
+         case AUTOCROSS_MODE:
+               dAutocross_requestAction();
+               break;
          default:
-         return;
+               break;
      }
 }
+
 
 void d_controls_onStartAcquisition(void) {
      dDCU_switchAcquisition();

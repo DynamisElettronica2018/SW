@@ -11,25 +11,29 @@
 #include "debug.h"
 #include "d_acceleration.h"
 #include "input-output/d_controls.h"
+#include "d_autocross.h"
 
+void d_UI_BoardDebugModeInit();
+void d_UI_SettingsModeInit();
+void d_UI_DebugModeInit();
 void d_UI_CruiseModeInit();
 void d_UI_AccModeInit();
-void d_UI_DebugModeInit();
-void d_UI_SettingsModeInit();
-void d_UI_BoardDebugModeInit();
+void d_UI_AutocrossModeInit();
 
 void d_UI_CruiseModeClose();
 void d_UI_AccModeClose();
 void d_UI_DebugModeClose();
 void d_UI_SettingsModeClose();
 void d_UI_BoardDebugModeClose();
+void d_UI_AutocrossModeClose();
 
 void (*d_OperatingMode_init[OPERATING_MODES_COUNT])(void) = {
         d_UI_BoardDebugModeInit,
         d_UI_SettingsModeInit,
         d_UI_DebugModeInit,
         d_UI_CruiseModeInit,
-        d_UI_AccModeInit
+        d_UI_AccModeInit,
+        d_UI_AutocrossModeInit
 };
 
 const unsigned char dd_carParametersCount = 21;
@@ -38,7 +42,8 @@ void (*d_OperatingMode_close[OPERATING_MODES_COUNT])(void) = {
         d_UI_SettingsModeClose,
         d_UI_DebugModeClose,
         d_UI_CruiseModeClose,
-        d_UI_AccModeClose
+        d_UI_AccModeClose,
+        d_UI_AutocrossModeClose
 };
 
 const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sensori
@@ -142,6 +147,11 @@ void d_UI_BoardDebugModeInit() {
      dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
 }
 
+void d_UI_AutocrossModeInit() {
+     dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Autocross");
+}
+
+
 void d_UI_CruiseModeClose(){
 }
 
@@ -155,6 +165,9 @@ void d_UI_DebugModeClose(){
 void d_UI_BoardDebugModeClose(){
 }
 
+void d_UI_AutocrossModeClose(){
+     dAutocross_stopAutocrossFromSW();
+}
 
 /* * * * * * * * * * * * * *   S E T T I N G S     M O D E   * * * * * * * * * * * * * * * * * * * */
 

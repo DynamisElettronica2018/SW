@@ -36,6 +36,8 @@ char dEfiSense_isDead(void);
 
 float dEfiSense_calculateSpeed(unsigned int value);
 
+void dEfiSense_getAccValue(int accValue);
+
 int dEfiSense_calculateTPS (unsigned int value);
 
 float dEfiSense_calculateOilInTemperature (unsigned int value);

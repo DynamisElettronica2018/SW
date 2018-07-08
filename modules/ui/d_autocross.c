@@ -53,8 +53,6 @@ void dAutocross_startClutchRelease(void){
 void dAutocross_stopAutocross(void) {
      dAutocross_isActive = FALSE;
      dAutocross_releasingClutch = FALSE;
-     dd_printMessage("STOP");
-     delay_ms(2000);
      d_UI_AutocrossModeInit();
 }
 

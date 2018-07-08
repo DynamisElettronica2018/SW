@@ -267,7 +267,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -358,7 +359,7 @@ void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -544,15 +545,14 @@ char d_canSetGear(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -604,16 +604,18 @@ extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
 #line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
+extern void (*d_OperatingMode_init[ 6 ])(void);
 #line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
+extern void (*d_OperatingMode_close[ 6 ])(void);
 #line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_ui_controller.h"
 void d_UIController_init();
@@ -623,6 +625,8 @@ OperatingMode d_UI_getOperatingMode(void);
 int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 #line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 void I2CExpander_init(unsigned char address, char direction);
@@ -645,7 +649,26 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 76 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 77 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 static unsigned char old_encoder_left_pin0 = 0;
 static unsigned char old_encoder_left_pin1 = 0;
 static unsigned char old_encoder_left_pin2 = 0;
@@ -697,7 +720,7 @@ void dControls_init(void) {
  if (expanderPort == 0) position =  0 ;
  else
  position = log2(expanderPort) -  3 ;
-#line 129 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 130 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 
  setExternalInterrupt( 7 ,  1 );
@@ -723,7 +746,7 @@ void dControls_disableCentralSelector()
  }
  clearExternalInterrupt( 4 );
 }
-#line 160 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 161 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
  signed char movement_dx = 0, movement_sx = 0;
  char a, b ,c, d, e, f;
@@ -780,7 +803,7 @@ void dControls_disableCentralSelector()
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
 }
-#line 234 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 235 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
@@ -876,10 +899,15 @@ void d_controls_onAux2(void) {
  switch(d_currentOperatingMode){
  case ACC_MODE:
  dAcc_requestAction();
+ break;
+ case AUTOCROSS_MODE:
+ dAutocross_requestAction();
+ break;
  default:
- return;
+ break;
  }
 }
+
 
 void d_controls_onStartAcquisition(void) {
  dDCU_switchAcquisition();

@@ -2231,6 +2231,8 @@ d_swtemp_gettempvalue
 d_ui_accmodeclose
 d_ui_accmodeinit
 d_ui_applysettings
+d_ui_autocrossmodeclose
+d_ui_autocrossmodeinit
 d_ui_boarddebugmodeclose
 d_ui_boarddebugmodeinit
 d_ui_cruisemodeclose
@@ -2257,6 +2259,16 @@ dacc_startautoacceleration
 dacc_startclutchrelease
 dacc_stopautoacceleration
 dacc_stopautoaccelerationfromsw
+dautocross_feedbackgcu
+dautocross_gcuconfirmed
+dautocross_hasgcuconfirmed
+dautocross_init
+dautocross_isautocrossactive
+dautocross_requestaction
+dautocross_startautocross
+dautocross_startclutchrelease
+dautocross_stopautocross
+dautocross_stopautocrossfromsw
 dben
 dben
 dben

@@ -7,6 +7,7 @@
 #include "d_operating_modes.h"
 #include "d_ui_controller.h"
 #include "d_acceleration.h"
+#include "d_autocross.h"
 #include "d_can.h"
 
 unsigned int dEfiSense_ticks = EFI_SENSE_DEADTIME;
@@ -38,15 +39,15 @@ void dEfiSense_getAccValue(int accValue){    //% di acc
      dd_Indicator_setintValueP(&ind_tps.base, accValue);
      switch (currentOperatingMode){
             case ACC_MODE:
-               if(accValue >= MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
+               if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
                dAcc_startClutchRelease();
                }
                break;
-           /* case AUTOCROSS_MODE:
+            case AUTOCROSS_MODE:
                if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAutocross_hasGCUConfirmed() == COMMAND_START_AUTOCROSS){
                   dAutocross_startClutchRelease();
                }
-               break;  */
+               break;
             default:
                break;
      }

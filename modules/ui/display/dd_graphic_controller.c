@@ -149,6 +149,10 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     dd_printMessage(dd_notificationText);
 }
 
+void dd_GraphicController_clearPrompt(){
+     dd_Interface_print[dd_currentInterface]();
+}
+
 /**
     \param time Time in milliseconds.
 */
@@ -167,11 +171,6 @@ void dd_GraphicController_firePromptNotification(char *text) {
     
     dd_notificationIsTimed = 0;
     dd_GraphicController_fireNotification(text, PROMPT);
-}
-
-void dd_GraphicController_clearPrompt()
-{
-     dd_Interface_print[dd_currentInterface]();
 }
 
 void dd_GraphicController_handleNotification(void) {
@@ -302,7 +301,7 @@ void dd_GraphicController_onTimerInterrupt(void)
                eGlcd_fill(WHITE);
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
-               if (d_UI_getOperatingMode() == ACC_MODE){
+               if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
                   dd_printMessage("READY");
                }
                dd_isFrameUpdateForced = FALSE;

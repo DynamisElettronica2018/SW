@@ -245,7 +245,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -353,7 +354,26 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_dcu.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_dcu.c"
 static char d_DCU_isAcquiring =  0 ;
 static unsigned int d_DCU_isAliveCounter = 0;
 
@@ -382,7 +402,10 @@ void dDCU_startAcquisition(void) {
 void dDCU_stopAcquisition(void) {
  d_DCU_isAcquiring =  0 ;
  dd_GraphicController_fireTimedNotification( 1500 , "Stop ACQ.", MESSAGE);
- Can_writeInt( 0b11111110000 ,  2 );
+ Can_resetWritePacket();
+ Can_addIntToWritePacket( 2 );
+ Can_addIntToWritePacket(dAutocross_isAutocrossActive());
+ Can_write( 0b11111110000 );
 }
 
 void dDCU_tick(void){
@@ -398,8 +421,7 @@ void dDCU_isAcquiringSet(){
  d_DCU_isAcquiring =  1 ;
 }
 
-char dDCU_isAcquiring()
-{
+char dDCU_isAcquiring(){
  return d_DCU_isAcquiring;
 }
 

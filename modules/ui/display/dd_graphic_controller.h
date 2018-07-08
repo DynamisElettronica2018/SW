@@ -50,6 +50,8 @@ int dd_GraphicController_getNotificationFlag(void);
 *        \param text The string to be displayed.
 *        \param type The type of the notification.
 */
+
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();

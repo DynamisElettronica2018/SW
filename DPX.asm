@@ -8,21 +8,21 @@ _main:
 	MOV	#4, W0
 	IOR	68
 
-;DPX.c,38 :: 		void main(){
-;DPX.c,40 :: 		setAllPinAsDigital();
+;DPX.c,37 :: 		void main(){
+;DPX.c,39 :: 		setAllPinAsDigital();
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
 	CALL	_setAllPinAsDigital
-;DPX.c,41 :: 		Debug_UART_Init();
+;DPX.c,40 :: 		Debug_UART_Init();
 	CALL	_Debug_UART_Init
-;DPX.c,43 :: 		if (!dHardReset_hasBeenReset())
+;DPX.c,42 :: 		if (!dHardReset_hasBeenReset())
 	CALL	_dHardReset_hasBeenReset
 	CP0.B	W0
 	BRA Z	L__main38
 	GOTO	L_main0
 L__main38:
-;DPX.c,45 :: 		delay_ms(250);
+;DPX.c,44 :: 		delay_ms(250);
 	MOV	#26, W8
 	MOV	#28274, W7
 L_main1:
@@ -30,30 +30,30 @@ L_main1:
 	BRA NZ	L_main1
 	DEC	W8
 	BRA NZ	L_main1
-;DPX.c,46 :: 		}
+;DPX.c,45 :: 		}
 L_main0:
-;DPX.c,48 :: 		d_UIController_init();
+;DPX.c,47 :: 		d_UIController_init();
 	CALL	_d_UIController_init
-;DPX.c,50 :: 		if(dHardReset_hasBeenReset()){
+;DPX.c,49 :: 		if(dHardReset_hasBeenReset()){
 	CALL	_dHardReset_hasBeenReset
 	CP0.B	W0
 	BRA NZ	L__main39
 	GOTO	L_main3
 L__main39:
-;DPX.c,51 :: 		dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
+;DPX.c,50 :: 		dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
 	MOV.B	#1, W12
 	MOV	#lo_addr(?lstr1_DPX), W11
 	MOV	#1000, W10
 	CALL	_dd_GraphicController_fireTimedNotification
-;DPX.c,52 :: 		dHardReset_unsetFlag();
+;DPX.c,51 :: 		dHardReset_unsetFlag();
 	CALL	_dHardReset_unsetFlag
-;DPX.c,53 :: 		}
+;DPX.c,52 :: 		}
 L_main3:
-;DPX.c,55 :: 		while(1){
+;DPX.c,54 :: 		while(1){
 L_main4:
-;DPX.c,57 :: 		}
+;DPX.c,56 :: 		}
 	GOTO	L_main4
-;DPX.c,58 :: 		}
+;DPX.c,57 :: 		}
 L_end_main:
 	POP	W12
 	POP	W11
@@ -70,137 +70,137 @@ _timer2_interrupt:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;DPX.c,62 :: 		onTimer2Interrupt{
-;DPX.c,63 :: 		clearTimer2();
+;DPX.c,61 :: 		onTimer2Interrupt{
+;DPX.c,62 :: 		clearTimer2();
 	PUSH	W10
 	BCLR	IFS0bits, #6
-;DPX.c,65 :: 		dEfiSense_tick();
+;DPX.c,64 :: 		dEfiSense_tick();
 	CALL	_dEfiSense_tick
-;DPX.c,66 :: 		timer2_counter0 += 1;
+;DPX.c,65 :: 		timer2_counter0 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter0), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,67 :: 		timer2_counter1 += 1;
+;DPX.c,66 :: 		timer2_counter1 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter1), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,68 :: 		timer2_counter2 += 1;
+;DPX.c,67 :: 		timer2_counter2 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter2), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,69 :: 		timer2_counter3 += 1;
+;DPX.c,68 :: 		timer2_counter3 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter3), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,70 :: 		timer2_counter4 += 1;
+;DPX.c,69 :: 		timer2_counter4 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter4), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,71 :: 		timer2_counter5 += 1;
+;DPX.c,70 :: 		timer2_counter5 += 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_timer2_counter5), W0
 	ADD	W1, [W0], [W0]
-;DPX.c,77 :: 		if (timer2_counter0 >= 5) {
+;DPX.c,76 :: 		if (timer2_counter0 >= 5) {
 	MOV	_timer2_counter0, W0
 	CP	W0, #5
 	BRA GE	L__timer2_interrupt42
 	GOTO	L_timer2_interrupt6
 L__timer2_interrupt42:
-;DPX.c,78 :: 		dPaddle_readSample();
+;DPX.c,77 :: 		dPaddle_readSample();
 	CALL	_dPaddle_readSample
-;DPX.c,79 :: 		timer2_counter0 = 0;
+;DPX.c,78 :: 		timer2_counter0 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter0
-;DPX.c,80 :: 		}
+;DPX.c,79 :: 		}
 L_timer2_interrupt6:
-;DPX.c,82 :: 		if (timer2_counter2 >= 10) {
+;DPX.c,81 :: 		if (timer2_counter2 >= 10) {
 	MOV	_timer2_counter2, W0
 	CP	W0, #10
 	BRA GE	L__timer2_interrupt43
 	GOTO	L_timer2_interrupt7
 L__timer2_interrupt43:
-;DPX.c,83 :: 		dClutch_set(dPaddle_getValue());
+;DPX.c,82 :: 		dClutch_set(dPaddle_getValue());
 	CALL	_dPaddle_getValue
 	MOV.B	W0, W10
 	CALL	_dClutch_set
-;DPX.c,84 :: 		dClutch_send();
+;DPX.c,83 :: 		dClutch_send();
 	CALL	_dClutch_send
-;DPX.c,85 :: 		timer2_counter2 = 0;
+;DPX.c,84 :: 		timer2_counter2 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter2
-;DPX.c,86 :: 		}
+;DPX.c,85 :: 		}
 L_timer2_interrupt7:
-;DPX.c,88 :: 		if (timer2_counter1 >= 25) {
+;DPX.c,87 :: 		if (timer2_counter1 >= 25) {
 	MOV	_timer2_counter1, W0
 	CP	W0, #25
 	BRA GE	L__timer2_interrupt44
 	GOTO	L_timer2_interrupt8
 L__timer2_interrupt44:
-;DPX.c,89 :: 		if (dStart_isSwitchedOn()) {
+;DPX.c,88 :: 		if (dStart_isSwitchedOn()) {
 	CALL	_dStart_isSwitchedOn
 	CP0.B	W0
 	BRA NZ	L__timer2_interrupt45
 	GOTO	L_timer2_interrupt9
 L__timer2_interrupt45:
-;DPX.c,90 :: 		dStart_sendStartMessage();
+;DPX.c,89 :: 		dStart_sendStartMessage();
 	CALL	_dStart_sendStartMessage
-;DPX.c,91 :: 		}
+;DPX.c,90 :: 		}
 L_timer2_interrupt9:
-;DPX.c,92 :: 		timer2_counter1 = 0;
+;DPX.c,91 :: 		timer2_counter1 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter1
-;DPX.c,93 :: 		}
+;DPX.c,92 :: 		}
 L_timer2_interrupt8:
-;DPX.c,95 :: 		if (timer2_counter3 >= 100) {
+;DPX.c,94 :: 		if (timer2_counter3 >= 100) {
 	MOV	#100, W1
 	MOV	#lo_addr(_timer2_counter3), W0
 	CP	W1, [W0]
 	BRA LE	L__timer2_interrupt46
 	GOTO	L_timer2_interrupt10
 L__timer2_interrupt46:
-;DPX.c,96 :: 		if (dRpm_canUpdateLedStripe()) {
+;DPX.c,95 :: 		if (dRpm_canUpdateLedStripe()) {
 	CALL	_dRpm_canUpdateLedStripe
 	CP0.B	W0
 	BRA NZ	L__timer2_interrupt47
 	GOTO	L_timer2_interrupt11
 L__timer2_interrupt47:
-;DPX.c,97 :: 		dRpm_updateLedStripe();
+;DPX.c,96 :: 		dRpm_updateLedStripe();
 	CALL	_dRpm_updateLedStripe
-;DPX.c,98 :: 		}
+;DPX.c,97 :: 		}
 L_timer2_interrupt11:
-;DPX.c,100 :: 		timer2_counter3 = 0;
+;DPX.c,99 :: 		timer2_counter3 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter3
-;DPX.c,101 :: 		}
+;DPX.c,100 :: 		}
 L_timer2_interrupt10:
-;DPX.c,103 :: 		if (timer2_counter5 >= 1000) {
+;DPX.c,102 :: 		if (timer2_counter5 >= 1000) {
 	MOV	_timer2_counter5, W1
 	MOV	#1000, W0
 	CP	W1, W0
 	BRA GE	L__timer2_interrupt48
 	GOTO	L_timer2_interrupt12
 L__timer2_interrupt48:
-;DPX.c,104 :: 		d_sensors_sendSWTemp();
+;DPX.c,103 :: 		d_sensors_sendSWTemp();
 	CALL	_d_sensors_sendSWTemp
-;DPX.c,105 :: 		if(dDCU_isAcquiring())
+;DPX.c,104 :: 		if(dDCU_isAcquiring())
 	CALL	_dDCU_isAcquiring
 	CP0.B	W0
 	BRA NZ	L__timer2_interrupt49
 	GOTO	L_timer2_interrupt13
 L__timer2_interrupt49:
-;DPX.c,107 :: 		Debug_UART_Write("DCU Tick\r\n");
+;DPX.c,106 :: 		Debug_UART_Write("DCU Tick\r\n");
 	MOV	#lo_addr(?lstr2_DPX), W10
 	CALL	_Debug_UART_Write
-;DPX.c,108 :: 		dDCU_tick();
+;DPX.c,107 :: 		dDCU_tick();
 	CALL	_dDCU_tick
-;DPX.c,109 :: 		}
+;DPX.c,108 :: 		}
 L_timer2_interrupt13:
-;DPX.c,111 :: 		timer2_counter5 = 0;
+;DPX.c,110 :: 		timer2_counter5 = 0;
 	CLR	W0
 	MOV	W0, _timer2_counter5
-;DPX.c,112 :: 		}
+;DPX.c,111 :: 		}
 L_timer2_interrupt12:
-;DPX.c,113 :: 		}
+;DPX.c,112 :: 		}
 L_end_timer2_interrupt:
 	POP	W10
 	MOV	#26, W0
@@ -221,8 +221,8 @@ _CAN_Interrupt:
 	REPEAT	#12
 	PUSH	[W0++]
 
-;DPX.c,117 :: 		onCanInterrupt{
-;DPX.c,122 :: 		unsigned int dataLen = 0, flags = 0;
+;DPX.c,116 :: 		onCanInterrupt{
+;DPX.c,121 :: 		unsigned int dataLen = 0, flags = 0;
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -231,12 +231,12 @@ _CAN_Interrupt:
 	MOV	W0, [W14+20]
 	MOV	#0, W0
 	MOV	W0, [W14+22]
-;DPX.c,129 :: 		Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
+;DPX.c,128 :: 		Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
 	CALL	_Can_clearInterrupt
-;DPX.c,130 :: 		dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
+;DPX.c,129 :: 		dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
 	MOV.B	#1, W10
 	CALL	_dSignalLed_switch
-;DPX.c,131 :: 		Can_read(&id, dataBuffer, &dataLen, &flags);
+;DPX.c,130 :: 		Can_read(&id, dataBuffer, &dataLen, &flags);
 	ADD	W14, #22, W3
 	ADD	W14, #20, W2
 	ADD	W14, #12, W1
@@ -246,13 +246,13 @@ _CAN_Interrupt:
 	MOV	W1, W11
 	MOV	W0, W10
 	CALL	_Can_read
-;DPX.c,140 :: 		if (dataLen >= 2) {
+;DPX.c,139 :: 		if (dataLen >= 2) {
 	MOV	[W14+20], W0
 	CP	W0, #2
 	BRA GEU	L__CAN_Interrupt51
 	GOTO	L_CAN_Interrupt14
 L__CAN_Interrupt51:
-;DPX.c,141 :: 		firstInt = (unsigned int) ((dataBuffer[0] << 8) | (dataBuffer[1] & 0xFF));
+;DPX.c,140 :: 		firstInt = (unsigned int) ((dataBuffer[0] << 8) | (dataBuffer[1] & 0xFF));
 	ADD	W14, #12, W1
 	MOV.B	[W1], W0
 	ZE	W0, W0
@@ -263,15 +263,15 @@ L__CAN_Interrupt51:
 	AND	W1, W0, W1
 	ADD	W14, #0, W0
 	IOR	W2, W1, [W0]
-;DPX.c,142 :: 		}
+;DPX.c,141 :: 		}
 L_CAN_Interrupt14:
-;DPX.c,143 :: 		if (dataLen >= 4) {
+;DPX.c,142 :: 		if (dataLen >= 4) {
 	MOV	[W14+20], W0
 	CP	W0, #4
 	BRA GEU	L__CAN_Interrupt52
 	GOTO	L_CAN_Interrupt15
 L__CAN_Interrupt52:
-;DPX.c,144 :: 		secondInt = (unsigned int) ((dataBuffer[2] << 8) | (dataBuffer[3] & 0xFF));
+;DPX.c,143 :: 		secondInt = (unsigned int) ((dataBuffer[2] << 8) | (dataBuffer[3] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #2, W0
 	MOV.B	[W0], W0
@@ -283,15 +283,15 @@ L__CAN_Interrupt52:
 	AND	W1, W0, W1
 	ADD	W14, #2, W0
 	IOR	W2, W1, [W0]
-;DPX.c,145 :: 		}
+;DPX.c,144 :: 		}
 L_CAN_Interrupt15:
-;DPX.c,146 :: 		if (dataLen >= 6) {
+;DPX.c,145 :: 		if (dataLen >= 6) {
 	MOV	[W14+20], W0
 	CP	W0, #6
 	BRA GEU	L__CAN_Interrupt53
 	GOTO	L_CAN_Interrupt16
 L__CAN_Interrupt53:
-;DPX.c,147 :: 		thirdInt = (unsigned int) ((dataBuffer[4] << 8) | (dataBuffer[5] & 0xFF));
+;DPX.c,146 :: 		thirdInt = (unsigned int) ((dataBuffer[4] << 8) | (dataBuffer[5] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #4, W0
 	MOV.B	[W0], W0
@@ -303,15 +303,15 @@ L__CAN_Interrupt53:
 	AND	W1, W0, W1
 	ADD	W14, #4, W0
 	IOR	W2, W1, [W0]
-;DPX.c,148 :: 		}
+;DPX.c,147 :: 		}
 L_CAN_Interrupt16:
-;DPX.c,149 :: 		if (dataLen >= 8) {
+;DPX.c,148 :: 		if (dataLen >= 8) {
 	MOV	[W14+20], W0
 	CP	W0, #8
 	BRA GEU	L__CAN_Interrupt54
 	GOTO	L_CAN_Interrupt17
 L__CAN_Interrupt54:
-;DPX.c,150 :: 		fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
+;DPX.c,149 :: 		fourthInt = (unsigned int) ((dataBuffer[6] << 8) | (dataBuffer[7] & 0xFF));
 	ADD	W14, #12, W1
 	ADD	W1, #6, W0
 	MOV.B	[W0], W0
@@ -323,98 +323,98 @@ L__CAN_Interrupt54:
 	AND	W1, W0, W1
 	ADD	W14, #6, W0
 	IOR	W2, W1, [W0]
-;DPX.c,151 :: 		}
+;DPX.c,150 :: 		}
 L_CAN_Interrupt17:
-;DPX.c,153 :: 		switch (id) {
+;DPX.c,152 :: 		switch (id) {
 	GOTO	L_CAN_Interrupt18
-;DPX.c,154 :: 		case EFI_GEAR_RPM_TPS_APPS_ID:
+;DPX.c,153 :: 		case EFI_GEAR_RPM_TPS_APPS_ID:
 L_CAN_Interrupt20:
-;DPX.c,155 :: 		dGear_propagate(firstInt);
+;DPX.c,154 :: 		dGear_propagate(firstInt);
 	MOV	[W14+0], W10
 	CALL	_dGear_propagate
-;DPX.c,156 :: 		dRpm_set(secondInt);
+;DPX.c,155 :: 		dRpm_set(secondInt);
 	MOV	[W14+2], W10
 	CALL	_dRpm_set
-;DPX.c,157 :: 		dEfiSense_heartbeat();
+;DPX.c,156 :: 		dEfiSense_heartbeat();
 	CALL	_dEfiSense_heartbeat
-;DPX.c,158 :: 		dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
+;DPX.c,157 :: 		dEfiSense_getAccValue(dEfiSense_calculateTPS(thirdInt));
 	MOV	[W14+4], W10
 	CALL	_dEfiSense_calculateTPS
 	MOV	W0, W10
 	CALL	_dEfiSense_getAccValue
-;DPX.c,159 :: 		break;
+;DPX.c,158 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,160 :: 		case EFI_WATER_TEMPERATURE_ID:
+;DPX.c,159 :: 		case EFI_WATER_TEMPERATURE_ID:
 L_CAN_Interrupt21:
-;DPX.c,161 :: 		dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
+;DPX.c,160 :: 		dd_Indicator_setFloatValueP(&ind_th2o_sx_in.base, dEfiSense_calculateWaterTemperature(firstInt));
 	MOV	[W14+0], W10
 	CALL	_dEfiSense_calculateWaterTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_th2o_sx_in), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,162 :: 		dd_Indicator_setFloatValueP(&ind_th2o_sx_out.base, dEfiSense_calculateWaterTemperature(secondInt));
+;DPX.c,161 :: 		dd_Indicator_setFloatValueP(&ind_th2o_sx_out.base, dEfiSense_calculateWaterTemperature(secondInt));
 	MOV	[W14+2], W10
 	CALL	_dEfiSense_calculateWaterTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_th2o_sx_out), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,163 :: 		dd_Indicator_setFloatValueP(&ind_th2o_dx_in.base, dEfiSense_calculateWaterTemperature(thirdInt));
+;DPX.c,162 :: 		dd_Indicator_setFloatValueP(&ind_th2o_dx_in.base, dEfiSense_calculateWaterTemperature(thirdInt));
 	MOV	[W14+4], W10
 	CALL	_dEfiSense_calculateWaterTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_th2o_dx_in), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,164 :: 		dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
+;DPX.c,163 :: 		dd_Indicator_setFloatValueP(&ind_th2o_dx_out.base, dEfiSense_calculateWaterTemperature(fourthInt));
 	MOV	[W14+6], W10
 	CALL	_dEfiSense_calculateWaterTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_th2o_dx_out), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,165 :: 		dEfiSense_heartbeat();
+;DPX.c,164 :: 		dEfiSense_heartbeat();
 	CALL	_dEfiSense_heartbeat
-;DPX.c,166 :: 		break;
+;DPX.c,165 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,167 :: 		case EFI_OIL_T_ENGINE_BAT_ID:
+;DPX.c,166 :: 		case EFI_OIL_T_ENGINE_BAT_ID:
 L_CAN_Interrupt22:
-;DPX.c,168 :: 		dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
+;DPX.c,167 :: 		dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
 	MOV	[W14+0], W10
 	CALL	_dEfiSense_calculateOilInTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_oil_temp_in), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,169 :: 		dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
+;DPX.c,168 :: 		dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
 	MOV	[W14+2], W10
 	CALL	_dEfiSense_calculateOilOutTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_oil_temp_out), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,170 :: 		dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+;DPX.c,169 :: 		dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
 	MOV	[W14+4], W10
 	CALL	_dEfiSense_calculateTemperature
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_th2o), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,171 :: 		dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
+;DPX.c,170 :: 		dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
 	MOV	[W14+6], W10
 	CALL	_dEfiSense_calculateVoltage
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_vbat), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,172 :: 		dEfiSense_heartbeat();
+;DPX.c,171 :: 		dEfiSense_heartbeat();
 	CALL	_dEfiSense_heartbeat
-;DPX.c,173 :: 		break;
+;DPX.c,172 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,174 :: 		case EFI_TRACTION_CONTROL_ID:
+;DPX.c,173 :: 		case EFI_TRACTION_CONTROL_ID:
 L_CAN_Interrupt23:
-;DPX.c,175 :: 		if(dEfiSense_calculateSpeed(firstInt)>=EFI_SENSE_MIN_SPEED)
+;DPX.c,174 :: 		if(dEfiSense_calculateSpeed(firstInt)>=EFI_SENSE_MIN_SPEED)
 	MOV	[W14+0], W10
 	CALL	_dEfiSense_calculateSpeed
 	MOV	#0, W2
@@ -429,10 +429,10 @@ L__CAN_Interrupt55:
 	BRA NZ	L__CAN_Interrupt56
 	GOTO	L_CAN_Interrupt24
 L__CAN_Interrupt56:
-;DPX.c,176 :: 		dControls_disableCentralSelector();
+;DPX.c,175 :: 		dControls_disableCentralSelector();
 	CALL	_dControls_disableCentralSelector
 L_CAN_Interrupt24:
-;DPX.c,177 :: 		dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
+;DPX.c,176 :: 		dd_Indicator_setFloatValueP(&ind_efi_slip.base, dEfiSense_calculateSlip(thirdInt));
 	MOV	[W14+4], W10
 	CALL	_dEfiSense_calculateSlip
 	ASR	W0, #15, W1
@@ -442,136 +442,141 @@ L_CAN_Interrupt24:
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_efi_slip), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,178 :: 		break;
+;DPX.c,177 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,179 :: 		case EFI_FUEL_FAN_H2O_LAUNCH_ID:
+;DPX.c,178 :: 		case EFI_FUEL_FAN_H2O_LAUNCH_ID:
 L_CAN_Interrupt25:
-;DPX.c,180 :: 		dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt);
+;DPX.c,179 :: 		dd_Indicator_setIntValueP(&ind_launch_control.base, fourthInt);
 	MOV	[W14+6], W11
 	MOV	#lo_addr(_ind_launch_control), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,181 :: 		break;
+;DPX.c,180 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,182 :: 		case EFI_PRESSURES_LAMBDA_SMOT_ID:
+;DPX.c,181 :: 		case EFI_PRESSURES_LAMBDA_SMOT_ID:
 L_CAN_Interrupt26:
-;DPX.c,183 :: 		dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
+;DPX.c,182 :: 		dd_Indicator_setFloatValueP(&ind_fuel_press.base, dEfiSense_calculatePressure(firstInt));
 	MOV	[W14+0], W10
 	CALL	_dEfiSense_calculatePressure
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_fuel_press), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,184 :: 		dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
+;DPX.c,183 :: 		dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
 	MOV	[W14+2], W10
 	CALL	_dEfiSense_calculatePressure
 	MOV	W0, W11
 	MOV	W1, W12
 	MOV	#lo_addr(_ind_oil_press), W10
 	CALL	_dd_Indicator_setFloatValueP
-;DPX.c,185 :: 		break;
+;DPX.c,184 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,186 :: 		case GCU_CLUTCH_FB_SW_ID:
+;DPX.c,185 :: 		case GCU_CLUTCH_FB_SW_ID:
 L_CAN_Interrupt27:
-;DPX.c,187 :: 		dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
+;DPX.c,186 :: 		dClutch_injectActualValue(firstInt, (unsigned char)secondInt);
 	MOV.B	[W14+2], W11
 	MOV	[W14+0], W10
 	CALL	_dClutch_injectActualValue
-;DPX.c,188 :: 		break;
+;DPX.c,187 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,195 :: 		case DAU_FR_DEBUG_ID:
+;DPX.c,194 :: 		case DAU_FR_DEBUG_ID:
 L_CAN_Interrupt28:
-;DPX.c,196 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
+;DPX.c,195 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_fr_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,197 :: 		break;
+;DPX.c,196 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,198 :: 		case DAU_FL_DEBUG_ID:
+;DPX.c,197 :: 		case DAU_FL_DEBUG_ID:
 L_CAN_Interrupt29:
-;DPX.c,199 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
+;DPX.c,198 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_fl_board.base, (int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_fl_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,200 :: 		break;
+;DPX.c,199 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,201 :: 		case DAU_REAR_DEBUG_ID:
+;DPX.c,200 :: 		case DAU_REAR_DEBUG_ID:
 L_CAN_Interrupt30:
-;DPX.c,202 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
+;DPX.c,201 :: 		dd_Indicator_setIntCoupleValueP(&ind_dau_r_board.base, (int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dau_r_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,203 :: 		break;
+;DPX.c,202 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,208 :: 		case GCU_DEBUG_1_ID:
+;DPX.c,207 :: 		case GCU_DEBUG_1_ID:
 L_CAN_Interrupt31:
-;DPX.c,209 :: 		dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
+;DPX.c,208 :: 		dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gcu_temp), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,210 :: 		dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
+;DPX.c,209 :: 		dd_Indicator_setIntValueP(&ind_H2O_fans.base, (secondInt));
 	MOV	[W14+2], W11
 	MOV	#lo_addr(_ind_H2O_fans), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,211 :: 		dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
+;DPX.c,210 :: 		dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
 	MOV	[W14+4], W11
 	MOV	#lo_addr(_ind_H2O_pump), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,212 :: 		dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
+;DPX.c,211 :: 		dd_Indicator_setIntValueP(&ind_fuel_pump.base, (fourthInt));
 	MOV	[W14+6], W11
 	MOV	#lo_addr(_ind_fuel_pump), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,213 :: 		break; //*/
+;DPX.c,212 :: 		break; //*/
 	GOTO	L_CAN_Interrupt19
-;DPX.c,214 :: 		case GCU_DEBUG_2_ID:
+;DPX.c,213 :: 		case GCU_DEBUG_2_ID:
 L_CAN_Interrupt32:
-;DPX.c,215 :: 		dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+;DPX.c,214 :: 		dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_gear_motor), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,216 :: 		dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
+;DPX.c,215 :: 		dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
 	MOV	[W14+2], W11
 	MOV	#lo_addr(_ind_clutch), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,217 :: 		dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
+;DPX.c,216 :: 		dd_Indicator_setIntValueP(&ind_drs.base, (thirdInt));
 	MOV	[W14+4], W11
 	MOV	#lo_addr(_ind_drs), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,218 :: 		break;
+;DPX.c,217 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,219 :: 		case DCU_DEBUG_ID:
+;DPX.c,218 :: 		case DCU_DEBUG_ID:
 L_CAN_Interrupt33:
-;DPX.c,220 :: 		dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
+;DPX.c,219 :: 		dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
 	MOV	[W14+2], W12
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dcu_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,221 :: 		if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+;DPX.c,220 :: 		if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
 	MOV	[W14+4], W0
 	CP	W0, #1
 	BRA Z	L__CAN_Interrupt57
 	GOTO	L_CAN_Interrupt34
 L__CAN_Interrupt57:
-;DPX.c,222 :: 		dDCU_isAcquiringSet();
+;DPX.c,221 :: 		dDCU_isAcquiringSet();
 	CALL	_dDCU_isAcquiringSet
-;DPX.c,223 :: 		dDCU_sentAcquiringSignal();
+;DPX.c,222 :: 		dDCU_sentAcquiringSignal();
 	CALL	_dDCU_sentAcquiringSignal
-;DPX.c,224 :: 		}
+;DPX.c,223 :: 		}
 L_CAN_Interrupt34:
-;DPX.c,225 :: 		break;
+;DPX.c,224 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,226 :: 		case GCU_AUX_ID:
+;DPX.c,225 :: 		case GCU_AUX_ID:
 L_CAN_Interrupt35:
-;DPX.c,228 :: 		dAcc_feedbackGCU(secondInt);
+;DPX.c,227 :: 		dAcc_feedbackGCU(secondInt);
 	MOV	[W14+2], W10
 	CALL	_dAcc_feedbackGCU
-;DPX.c,230 :: 		default:
-L_CAN_Interrupt36:
-;DPX.c,231 :: 		break;
+;DPX.c,229 :: 		dAutocross_feedbackGCU(fourthInt);
+	MOV	[W14+6], W10
+	CALL	_dAutocross_feedbackGCU
+;DPX.c,230 :: 		break;
 	GOTO	L_CAN_Interrupt19
-;DPX.c,232 :: 		}
+;DPX.c,231 :: 		default:
+L_CAN_Interrupt36:
+;DPX.c,232 :: 		break;
+	GOTO	L_CAN_Interrupt19
+;DPX.c,233 :: 		}
 L_CAN_Interrupt18:
 	MOV	#773, W1
 	MOV	#0, W2
@@ -687,7 +692,7 @@ L__CAN_Interrupt70:
 L__CAN_Interrupt71:
 	GOTO	L_CAN_Interrupt36
 L_CAN_Interrupt19:
-;DPX.c,236 :: 		}
+;DPX.c,237 :: 		}
 L_end_CAN_Interrupt:
 	POP	W13
 	POP	W12

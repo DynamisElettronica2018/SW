@@ -15,5 +15,6 @@ void dAutocross_startClutchRelease(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
-#endif //DPX_AUTOCROSS_H
+void dAutocross_stopAutocrossFromSW(void);
 
+#endif //DPX_AUTOCROSS_H

@@ -155,15 +155,14 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -215,16 +214,18 @@ extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
 #line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
+extern void (*d_OperatingMode_init[ 6 ])(void);
 #line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
+extern void (*d_OperatingMode_close[ 6 ])(void);
 #line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
@@ -279,7 +280,8 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 Interface dd_GraphicController_getInterface(void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 53 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 void dd_GraphicController_firePromptNotification(char *text);
 void dd_GraphicController_clearPrompt();
@@ -418,7 +420,7 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -444,34 +446,57 @@ void dAcc_stopAutoAcceleration(void);
 
 void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+void d_UI_BoardDebugModeInit();
+void d_UI_SettingsModeInit();
+void d_UI_DebugModeInit();
 void d_UI_CruiseModeInit();
 void d_UI_AccModeInit();
-void d_UI_DebugModeInit();
-void d_UI_SettingsModeInit();
-void d_UI_BoardDebugModeInit();
+void d_UI_AutocrossModeInit();
 
 void d_UI_CruiseModeClose();
 void d_UI_AccModeClose();
 void d_UI_DebugModeClose();
 void d_UI_SettingsModeClose();
 void d_UI_BoardDebugModeClose();
+void d_UI_AutocrossModeClose();
 
-void (*d_OperatingMode_init[ 5 ])(void) = {
+void (*d_OperatingMode_init[ 6 ])(void) = {
  d_UI_BoardDebugModeInit,
  d_UI_SettingsModeInit,
  d_UI_DebugModeInit,
  d_UI_CruiseModeInit,
- d_UI_AccModeInit
+ d_UI_AccModeInit,
+ d_UI_AutocrossModeInit
 };
 
 const unsigned char dd_carParametersCount = 21;
-void (*d_OperatingMode_close[ 5 ])(void) = {
+void (*d_OperatingMode_close[ 6 ])(void) = {
  d_UI_BoardDebugModeClose,
  d_UI_SettingsModeClose,
  d_UI_DebugModeClose,
  d_UI_CruiseModeClose,
- d_UI_AccModeClose
+ d_UI_AccModeClose,
+ d_UI_AutocrossModeClose
 };
 
 const unsigned char dd_carBoardsCount = 13;
@@ -575,6 +600,11 @@ void d_UI_BoardDebugModeInit() {
  dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_carBoards, dd_carBoardsCount, "Boards");
 }
 
+void d_UI_AutocrossModeInit() {
+ dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Autocross");
+}
+
+
 void d_UI_CruiseModeClose(){
 }
 
@@ -588,6 +618,9 @@ void d_UI_DebugModeClose(){
 void d_UI_BoardDebugModeClose(){
 }
 
+void d_UI_AutocrossModeClose(){
+ dAutocross_stopAutocrossFromSW();
+}
 
 
 
@@ -595,14 +628,14 @@ void d_UI_BoardDebugModeClose(){
 
 const unsigned char dd_settingsCount = 6;
 const unsigned char dd_dashboardSettingsCount =  4 ;
-#line 175 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 188 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 IntegerIndicator sett_dash_top_left = { S_DASH_TOP_L, "", "Dash. Top L.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_top_right = { S_DASH_TOP_R, "", "Dash. Top R.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_left = { S_DASH_BOTTOM_L, "", "Dash. Bottom L.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_right = { S_DASH_BOTTOM_R, "", "Dash. Bottom R.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 BooleanIndicator sett_invert_colors = { S_INVERT_COLORS, "", "Invert Colors", 0, 13,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 BooleanIndicator sett_bypass_gears = { S_BYPASS_GEARS, "", "Bypass gear shift", 0, 17,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
-#line 188 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 ydata Indicator* dd_settings[dd_settingsCount] = {
 
  (Indicator*)&sett_dash_top_left,
@@ -613,9 +646,9 @@ ydata Indicator* dd_settings[dd_settingsCount] = {
  (Indicator*)&sett_invert_colors,
  (Indicator*)&sett_bypass_gears
 };
-#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 216 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 Indicator** dd_dashboardSettings = dd_settings;
-#line 207 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 220 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_DashboardSetting_updateValue(IntegerIndicator* ind, int val) {
  ind->value = val;
  strcpy(ind->base.label, dd_carParameters[ind->value]->name);
@@ -633,7 +666,7 @@ void d_UI_SettingsModeInit() {
 
  dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_settings, dd_settingsCount, "Settings");
 }
-#line 229 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 242 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_onSettingsChange(signed char movements) {
  signed int dashboardIndicatorIndex;
  unsigned char position;
@@ -659,7 +692,7 @@ void d_UI_onSettingsChange(signed char movements) {
  default:
  break;
  }
-#line 260 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 273 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
  dashboardIndicatorIndex = ((IntegerIndicator*)settingIndicator)->value;
  if (movements) {
  dashboardIndicatorIndex+=movements;
@@ -672,7 +705,7 @@ void d_UI_onSettingsChange(signed char movements) {
  }
  d_DashboardSetting_updateValue((IntegerIndicator*)settingIndicator, dashboardIndicatorIndex);
 }
-#line 281 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 294 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_ApplySettings() {
  char i;
  Indicator* oldIndicator;

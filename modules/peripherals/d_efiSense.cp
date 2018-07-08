@@ -258,6 +258,8 @@ char dEfiSense_isDead(void);
 
 float dEfiSense_calculateSpeed(unsigned int value);
 
+void dEfiSense_getAccValue(int accValue);
+
 int dEfiSense_calculateTPS (unsigned int value);
 
 float dEfiSense_calculateOilInTemperature (unsigned int value);
@@ -310,15 +312,14 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-void d_UI_AccModeInit(void);
-#line 46 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
  DEBUG_MODE,
  CRUISE_MODE,
- ACC_MODE
+ ACC_MODE,
+ AUTOCROSS_MODE
 } OperatingMode;
 
 
@@ -370,16 +371,18 @@ extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs;
 extern IntegerIndicator ind_gear_motor;
 #line 108 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_init[ 5 ])(void);
+extern void (*d_OperatingMode_init[ 6 ])(void);
 #line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-extern void (*d_OperatingMode_close[ 5 ])(void);
+extern void (*d_OperatingMode_close[ 6 ])(void);
 #line 122 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
-#line 130 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 132 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 161 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 163 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
-
+void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
@@ -391,8 +394,10 @@ OperatingMode d_UI_getOperatingMode(void);
 int d_UI_OperatingModeChanged(void);
 
 OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -417,6 +422,25 @@ void dAcc_stopAutoAccelerationFromSW(void);
 void dAcc_stopAutoAcceleration(void);
 
 void dAcc_startClutchRelease(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -451,7 +475,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 
@@ -485,7 +509,11 @@ void dEfiSense_getAccValue(int accValue){
  dAcc_startClutchRelease();
  }
  break;
-#line 50 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+ case AUTOCROSS_MODE:
+ if(accValue >=  50  && dAutocross_hasGCUConfirmed() ==  1 ){
+ dAutocross_startClutchRelease();
+ }
+ break;
  default:
  break;
  }
