@@ -131,9 +131,6 @@ void dd_printMenuLine(unsigned char lineIndex) {
     eGlcd_fillPage(lineNumber, !color);
     dd_Menu_makeLineText(lineText, lineIndex);
     
-    //sprintf(dstr, "   Line text: \"%s\".\r\n", lineText);
-    //Debug_UART_Write(dstr);
-    
     xGlcd_Set_Font(MENU_FONT);
     xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 }
@@ -146,8 +143,6 @@ void dd_printMenu() {
     dd_Menu_DescriptionScrollingTicks++;
     for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
         if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
-           //sprintf(dstr, "Printing menu line: %d.\r\n", i);
-           //Debug_UART_Write(dstr);
            dd_printMenuLine(i);
         }
     }

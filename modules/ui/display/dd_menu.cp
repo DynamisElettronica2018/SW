@@ -1390,9 +1390,6 @@ void dd_printMenuLine(unsigned char lineIndex) {
  eGlcd_fillPage(lineNumber, !color);
  dd_Menu_makeLineText(lineText, lineIndex);
 
-
-
-
  xGlcd_Set_Font( DynamisFont_UniformTerminal6x8, 6 , 8 , 32 );
  xGlcd_Write_Text(lineText, 0, lineNumber*8, color);
 }
@@ -1405,8 +1402,6 @@ void dd_printMenu() {
  dd_Menu_DescriptionScrollingTicks++;
  for (i = dd_Menu_FirstLineIndex; i < lastLineIndex; i++) {
  if (dd_Indicator_isRequestingUpdate(i) || dd_MenuLine_hasToScroll(i) || dd_GraphicController_isFrameUpdateForced()) {
-
-
  dd_printMenuLine(i);
  }
  }
@@ -1475,7 +1470,7 @@ void dd_Menu_makeLineText(char *lineText, unsigned char lineIndex) {
 
  descriptionLength = item->descriptionLength;
  visibleDescriptionWidth = dd_MenuLine_getVisibleDescriptionWidth(lineIndex);
-#line 231 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
+#line 226 "C:/Users/utente/Desktop/git Repo/SW/modules/ui/display/dd_menu.c"
  for (lineCharIndex = 0; lineCharIndex < visibleDescriptionWidth; lineCharIndex++) {
  i = lineCharIndex + scrollingOffset;
 
