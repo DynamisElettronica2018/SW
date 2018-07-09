@@ -7,6 +7,7 @@
 #include "debug.h"
 #include "buzzer.h"
 #include "d_signalLed.h"
+#include "d_ui_controller.h"
 
 #define TRACTION_MAX_VALUE 7
 #define TRACTION_MIN_VALUE 0
@@ -71,9 +72,11 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
-     d_tractionValue = value;
-     dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
-     //d_traction_control_printNotification();   ci starebbe fare un flag che mostri le notifiche quando il tc non è nella dashboard
+     if(d_UI_getOperatingMode() != ACC_MODE){
+       d_tractionValue = value;
+       //dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+        d_traction_control_printNotification();  // ci starebbe fare un flag che mostri le notifiche quando il tc non è nella dashboard
+     }
      return;
 }
 

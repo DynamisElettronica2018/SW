@@ -485,7 +485,35 @@ OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 25 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 11 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+char Music_hasToMakeSound(void);
+
+void Music_tick(void);
+
+void Music_setSongTime(unsigned int time);
+
+void Music_playSong(unsigned char song[], unsigned int songLength);
+
+void Music_playSongNextNote(void);
+
+void Music_playNote(unsigned char note, unsigned char duration);
+
+float Music_getActualNoteDuration(unsigned char duration);
+
+float Music_getNoteFrequency(unsigned char note);
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+void Buzzer_init(void);
+
+void Buzzer_tick(void);
+
+void Buzzer_bip(void);
+#line 26 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
@@ -502,24 +530,27 @@ void dAcc_startAutoAcceleration(void){
  dAcc_autoAcceleration =  1 ;
  dAcc_releasingClutch =  0 ;
  Can_writeInt( 0b01000000010 ,  1 );
- dd_printMessage("STEADY");
  }
 }
 
 void dAcc_startClutchRelease(void){
  dd_GraphicController_clearPrompt();
- Can_writeInt( 0b01000000010 ,  2 );
  dAcc_readyToGo =  1 ;
- dd_printMessage("GOOOOO!!!");
 }
 
 void dAcc_feedbackGCU(unsigned int value){
+ Buzzer_bip();
+ if(d_UI_getOperatingMode() == ACC_MODE){
  if(value ==  1 ){
+ dd_GraphicController_clearPrompt();
  dAcc_GCUConfirmed =  1 ;
+ dd_printMessage("STEADY");
  } else if (value ==  2 ){
  dAcc_GCUConfirmed =  2 ;
+ dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
  } else if (value ==  0 ){
  dAcc_stopAutoAcceleration();
+ }
  }
 }
 
@@ -536,11 +567,10 @@ void dAcc_stopAutoAccelerationFromSW(void){
 
 void dAcc_requestAction(){
  if(!dAcc_autoAcceleration){
- dd_GraphicController_clearPrompt();
  dAcc_startAutoAcceleration();
  }
- else if (dAcc_readyToGo && dAcc_GCUConfirmed ==  2 ){
- dd_GraphicController_clearPrompt();
+ else if (dAcc_readyToGo){
+ Can_writeInt( 0b01000000010 ,  2 );
  dAcc_readyToGo =  0 ;
  dAcc_releasingClutch =  1 ;
  }

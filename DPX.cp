@@ -1006,10 +1006,9 @@ void main(){
  dd_Indicator_setIntValueP(&ind_fuel_pump.base, (thirdInt));
  break;
  case  0b01100010111 :
- dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
- dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
- dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
- dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));
+ d_traction_control_setValueFromCAN(firstInt);
+ dAcc_feedbackGCU(secondInt);
+#line 211 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  break;
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
@@ -1018,13 +1017,7 @@ void main(){
  dDCU_sentAcquiringSignal();
  }
  break;
- case  0b11111110001 :
- d_traction_control_setValueFromCAN(firstInt);
- dAcc_feedbackGCU(secondInt);
- d_drs_setValuefromCAN(thirdInt);
- dAutocross_feedbackGCU(fourthInt);
- Buzzer_bip();
- break;
+#line 225 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  default:
  break;
  }

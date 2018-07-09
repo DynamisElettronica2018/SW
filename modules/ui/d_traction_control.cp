@@ -468,7 +468,19 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
 signed char d_tractionValue = 0;
 
 void d_traction_control_printNotification(void){
@@ -529,9 +541,11 @@ void d_traction_control_move(signed char movements){
 }
 
 void d_traction_control_setValueFromCAN(unsigned int value){
+ if(d_UI_getOperatingMode() != ACC_MODE){
  d_tractionValue = value;
- dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
 
+ d_traction_control_printNotification();
+ }
  return;
 }
 

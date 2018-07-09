@@ -371,6 +371,10 @@ external4
 				dd_GraphicController_fireTimedNotification
 	d_controls_onAux2
 		dAcc_requestAction
+			dAcc_startAutoAcceleration
+				Can_writeInt
+			Can_writeInt
+		dAutocross_requestAction
 			dd_GraphicController_clearPrompt
 				dd_Dashboard_print
 				dd_Interface_printMenu
@@ -388,11 +392,6 @@ external4
 				d_UI_CruiseModeClose
 				d_UI_AccModeClose
 				d_UI_AutocrossModeClose
-			dAcc_startAutoAcceleration
-				Can_writeInt
-				dd_printMessage
-		dAutocross_requestAction
-			dd_GraphicController_clearPrompt
 			dAutocross_startAutocross
 				Can_resetWritePacket
 				Can_addIntToWritePacket
@@ -441,8 +440,6 @@ CAN_Interrupt
 		dAcc_hasGCUConfirmed
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
-			Can_writeInt
-			dd_printMessage
 		dAutocross_hasGCUConfirmed
 		dAutocross_startClutchRelease
 			dd_GraphicController_clearPrompt
@@ -503,18 +500,19 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
+	d_traction_control_setValueFromCAN
+		d_UI_getOperatingMode
+		d_traction_control_printNotification
+			dd_GraphicController_fireTimedNotification
+	dAcc_feedbackGCU
+		Buzzer_bip
+		d_UI_getOperatingMode
+		dd_GraphicController_clearPrompt
+		dd_printMessage
+		dd_GraphicController_fireTimedNotification
+		dAcc_stopAutoAcceleration
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
-	d_traction_control_setValueFromCAN
-		dd_Indicator_setIntValueP
-	dAcc_feedbackGCU
-		dAcc_stopAutoAcceleration
-	d_drs_setValueFromCAN
-		dd_Indicator_setIntValueP
-		Buzzer_bip
-	dAutocross_feedbackGCU
-		dAutocross_stopAutocross
-	Buzzer_bip
 	_Compare_Ge_Fp
 	_Long2Float
 external2

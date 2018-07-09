@@ -11,7 +11,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=DPX.c
+Value=modules\ui\d_traction_control.c
 =======
 Value=modules\peripherals\d_drs.c
 >>>>>>> drs2
@@ -91,13 +91,14 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=6
+Count=7
 File0=DPX.c
 File1=modules\ui\d_operating_modes.c
-File2=modules\peripherals\d_ebb.c
-File3=modules\peripherals\d_ebb.h
+File2=modules\ui\d_acceleration.c
+File3=modules\peripherals\d_efiSense.c
 File4=modules\ui\input-output\d_controls.c
-File5=modules\ui\display\dd_indicators.c
+File5=modules\ui\d_traction_control.c
+File6=modules\ui\d_ui_controller.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

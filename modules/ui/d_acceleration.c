@@ -21,6 +21,7 @@
 #include "debug.h"
 #include "d_ui_controller.h"
 #include "d_operating_modes.h"
+#include "buzzer.h"
 
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
@@ -38,24 +39,27 @@ void dAcc_startAutoAcceleration(void){
         dAcc_autoAcceleration = TRUE;
         dAcc_releasingClutch = FALSE;
         Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_START_ACCELERATION);
-        dd_printMessage("STEADY");
     }
 }
 
 void dAcc_startClutchRelease(void){
         dd_GraphicController_clearPrompt();
-        Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_START_CLUTCH_RELEASE);
         dAcc_readyToGo = TRUE;
-        dd_printMessage("GOOOOO!!!");
 }
 
 void dAcc_feedbackGCU(unsigned int value){
-    if(value == COMMAND_START_ACCELERATION){
-        dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
-    } else if (value == COMMAND_START_CLUTCH_RELEASE){
-        dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
-    } else if (value == COMMAND_STOP_ACCELERATION){
-        dAcc_stopAutoAcceleration();
+    Buzzer_bip();
+    if(d_UI_getOperatingMode() == ACC_MODE){
+      if(value == COMMAND_START_ACCELERATION){
+          dd_GraphicController_clearPrompt();
+          dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
+          dd_printMessage("STEADY");
+      } else if (value == COMMAND_START_CLUTCH_RELEASE){
+          dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
+          dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
+      } else if (value == COMMAND_STOP_ACCELERATION){
+          dAcc_stopAutoAcceleration();
+      }
     }
 }
 
@@ -72,11 +76,10 @@ void dAcc_stopAutoAccelerationFromSW(void){
 
 void dAcc_requestAction(){
     if(!dAcc_autoAcceleration){
-        dd_GraphicController_clearPrompt();
         dAcc_startAutoAcceleration();
     }
-    else if (dAcc_readyToGo && dAcc_GCUConfirmed == COMMAND_START_CLUTCH_RELEASE){
-        dd_GraphicController_clearPrompt();
+    else if (dAcc_readyToGo){
+        Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_START_CLUTCH_RELEASE);
         dAcc_readyToGo = FALSE;
         dAcc_releasingClutch = TRUE;
     }

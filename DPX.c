@@ -202,10 +202,12 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_fuel_pump.base, (thirdInt));
            break; //*/
        case GCU_DEBUG_2_ID:
-           dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+           d_traction_control_setValueFromCAN(firstInt);
+           dAcc_feedbackGCU(secondInt);
+          /* dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
-           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));
+           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));  */
            break;
        case DCU_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
@@ -214,13 +216,12 @@ onCanInterrupt{
                 dDCU_sentAcquiringSignal();
            }
            break;
-       case GCU_AUX_ID:
-           d_traction_control_setValueFromCAN(firstInt);
+       /*case GCU_AUX_ID:
+           //d_traction_control_setValueFromCAN(firstInt);
            dAcc_feedbackGCU(secondInt);
-           d_drs_setValuefromCAN(thirdInt);
-           dAutocross_feedbackGCU(fourthInt);
-           Buzzer_bip();
-           break;
+          // d_drs_setValuefromCAN(thirdInt);
+          // dAutocross_feedbackGCU(fourthInt);
+           break; */
        default:
            break;
     }

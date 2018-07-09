@@ -40,7 +40,7 @@ void dEfiSense_getAccValue(int accValue){    //% di acc
      switch (currentOperatingMode){
             case ACC_MODE:
                if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
-               dAcc_startClutchRelease();
+                  dAcc_startClutchRelease();
                }
                break;
             case AUTOCROSS_MODE:
