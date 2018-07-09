@@ -150,6 +150,7 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
 }
 
 void dd_GraphicController_clearPrompt(){
+     dd_GraphicController_unsetNotificationFlag();
      dd_Interface_print[dd_currentInterface]();
 }
 
@@ -170,6 +171,7 @@ void dd_GraphicController_firePromptNotification(char *text) {
         eGlcd_clear();
     
     dd_notificationIsTimed = 0;
+    dd_GraphicController_setNotificationFlag();
     dd_GraphicController_fireNotification(text, PROMPT);
 }
 
@@ -310,7 +312,12 @@ void dd_GraphicController_onTimerInterrupt(void)
         else
         {
             if (dd_notificationFlag) {
-               dd_GraphicController_handleNotification();
+               if(dd_notificationIsTimed)
+                   dd_GraphicController_handleNotification();
+               else
+               {
+                   dd_printMessage(dd_notificationText);
+               }
             }else{
             dd_Interface_print[dd_currentInterface]();
             Lcd_PrintFrame();

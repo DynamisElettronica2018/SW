@@ -1,4 +1,4 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 1 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/string.h"
 
 
@@ -24,12 +24,12 @@ char * strpbrk(char * s1, char * s2);
 char * strrchr(char *ptr, char chr);
 char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/eglcd.h"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 36 "c:/users/utente/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern const unsigned char BLACK, WHITE;
-#line 62 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 62 "c:/users/utente/desktop/git repo/sw/libs/eglcd.h"
 extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
@@ -61,11 +61,11 @@ void eGlcd_setTimerCoefficient(float coefficient);
 unsigned int eGlcd_getTextPixelLength(char *text);
 
 void Lcd_PrintFrame();
-#line 102 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 102 "c:/users/utente/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
 
 void eGlcd_fillPage(unsigned char page, char color);
-#line 115 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 115 "c:/users/utente/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -111,7 +111,7 @@ double pow(double x, double y);
 double sinh(double x);
 double cosh(double x);
 double tanh(double x);
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/glcdpins.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/glcdpins.c"
 
  sbit GLCD_D0 at RB8_bit;
  sbit GLCD_D1 at RB0_bit;
@@ -144,8 +144,8 @@ double tanh(double x);
  sbit GLCD_RW_Direction at TRISC2_bit;
  sbit GLCD_RS_Direction at TRISC1_bit;
  sbit GLCD_EN_Direction at TRISG15_bit;
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 1 "c:/users/utente/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
+#line 19 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 static const unsigned char INVERT =  2 ;
 
 static const unsigned short xColorClear = 0;
@@ -175,11 +175,11 @@ void eGlcd_init() {
 
 
  _Lcd_Init();
-#line 54 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 54 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_invertColors(void) {
-#line 64 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 64 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_clear(void) {
@@ -191,7 +191,7 @@ void eGlcd_fill(unsigned char color) {
  if (color) hex = 0xFF;
 
  _frameBuffer_Fill(color);
-#line 78 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 78 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 
@@ -221,7 +221,7 @@ void eGlcd_overwriteText(char *oldText, char *newText, unsigned char x, unsigned
 void eGlcd_clearText(char *text, unsigned char x, unsigned char y) {
  if (BLACK)
  xGlcd_Clear_Text(text, x, y, WHITE);
-#line 112 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 112 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_writeText(char *text, unsigned char x, unsigned char y) {
@@ -236,7 +236,7 @@ void eGlcd_loadImage(const char *image)
 {
 
  _frameBuffer_LoadImage(image);
-#line 129 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 129 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
 
 void eGlcd_setupTimer(void) {
@@ -509,9 +509,9 @@ void _UART_DebugFrame(){
  }
  }
  }
-#line 419 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 419 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 }
-#line 429 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 429 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 void printf(char* string);
 extern char str[100];
 
@@ -555,13 +555,13 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  {
 
  _frame_buff_side = k;
-#line 475 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 475 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for (i=page; i<page+pageCount && i<8; i++)
  {
 
  _frame_buff_page = i;
  _frame_buff_y = xOffset;
-#line 484 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 484 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if(i==page)
  {
  for (j=xOffset; j <= lastX; j++)
@@ -569,7 +569,7 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte = ~(0xFF<<pageOffset);
 
  rByte = _frameBuffer_Read();
-#line 495 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 495 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  byte&=rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -582,12 +582,12 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  {
 
  _frame_buff_page = i;
-#line 510 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 510 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 
  _frame_buff_y = j;
  _frameBuffer_Write(byte);
-#line 518 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 518 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
  else if (i == (page+pageCount-1) && pageOverflow)
@@ -597,7 +597,7 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte = (0xFF<<pageOverflow);
 
  rByte = _frameBuffer_Read();
-#line 531 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 531 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  byte &= rByte;
 
  if((j==xOffset && !((startSide1 ^ k==0) & 1) ) || (j==lastX && !((endSide2 ^ k==1)) & 1))
@@ -610,12 +610,12 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  {
 
  _frame_buff_page = i;
-#line 546 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 546 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 
  _frame_buff_y = j;
  _frameBuffer_Write(byte);
-#line 554 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 554 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
  else
@@ -628,7 +628,7 @@ void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsig
  byte = 0;
 
  _frameBuffer_Write(byte);
-#line 569 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 569 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  }
 
@@ -646,22 +646,22 @@ void eGlcd_fillPage(unsigned char page, char color)
  byte = 0xFF;
 
  _frame_buff_page = page;
-#line 589 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 589 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for(k=0; k<=1; k++)
  {
 
  _frame_buff_side = k;
  _frame_buff_y = i;
-#line 598 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 598 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  for(; i<64; i++) {
 
  _frameBuffer_Write(byte);
-#line 604 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 604 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  i = 0;
  }
 }
-#line 617 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 617 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset) {
  xGlcdSelFont = ptrFontTbl;
@@ -690,21 +690,21 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
  _frame_buff_y = xx;
  _frame_buff_page = tmp;
  dataR = _frameBuffer_Read();
-#line 652 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 652 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff >> (8 - tmpY));
  dataR = gData | dataR;
 
 
  _frameBuffer_Write(dataR);
-#line 663 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 663 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  tmp++;
  if (tmp > 7) return;
 
  _frame_buff_y = xx;
  _frame_buff_page = tmp;
  dataR = _frameBuffer_Read();
-#line 675 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 675 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  gData = pData >> (8 - tmpY);
  if (!xGLCD_Transparency)
  dataR = dataR & (0xff << tmpY);
@@ -712,18 +712,18 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
 
 
  _frameBuffer_Write(dataR);
-#line 686 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 686 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
  else {
 
  _frame_buff_side = pX/64;
  _frame_buff_y = xx;
  _frame_buff_page = tmp;
-#line 697 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 697 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  if (xGLCD_Transparency) {
 
  dataR = _frameBuffer_Read();
-#line 704 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 704 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  dataR = pData | dataR;
  }
  else
@@ -731,7 +731,7 @@ void xGLCD_Write_Data(unsigned short pX, unsigned short pY, unsigned short pData
 
 
  _frameBuffer_Write(dataR);
-#line 715 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/eGlcd.c"
+#line 715 "C:/Users/utente/Desktop/git Repo/SW/libs/eGlcd.c"
  }
 }
 

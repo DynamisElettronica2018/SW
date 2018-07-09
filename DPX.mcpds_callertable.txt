@@ -376,6 +376,7 @@ external4
 			Can_writeInt
 		dAutocross_requestAction
 			dd_GraphicController_clearPrompt
+				dd_GraphicController_unsetNotificationFlag
 				dd_Dashboard_print
 				dd_Interface_printMenu
 				dd_Dashboard_init
