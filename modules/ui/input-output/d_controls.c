@@ -228,8 +228,8 @@ onCNInterrupt{
 onRotarySwitchInterrupt{
     signed char position = 0;
     unsigned char expanderPort;
-    if(d_isCentralSelectorEnabled)
-    {
+    /*if(d_isCentralSelectorEnabled)
+    { */
         delay_ms(30);
         Delay_ms(STRANGE_BUTTON_DELAY);
         expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
@@ -239,7 +239,7 @@ onRotarySwitchInterrupt{
         else
            position = log2(expanderPort) - ROTARY_SWITCH_CENTRAL_POSITION;
         d_controls_onSelectorSwitched(position);
-    }
+    //}
     clearExternalInterrupt(ROTARY_SWITCH_INTERRUPT);
 }
 

@@ -25,6 +25,7 @@ float dRpm_getDisplayValue(void) {
 }
 
 void dRpm_set(unsigned int rpm) {
+     dd_Indicator_setIntValueP(&ind_rpm.base, rpm);
      if (rpm < RPM_STRIPE_OFFSET){
          dRpm = RPM_STRIPE_OFFSET;
      } else if ( rpm > RPM_STRIPE_MAX){
@@ -32,7 +33,6 @@ void dRpm_set(unsigned int rpm) {
      } else {
          dRpm = rpm;
      }
-     dd_Indicator_setFloatValueP(&ind_rpm.base, dRpm_getDisplayValue());
 }
 
 char dRpm_canUpdateLedStripe(void) {

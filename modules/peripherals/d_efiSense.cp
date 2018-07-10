@@ -1,8 +1,8 @@
-#line 1 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_efiSense.c"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_efisense.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -28,7 +28,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -123,19 +123,19 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 extern void dd_Dashboard_init();
 extern void dd_Dashboard_print(void);
-#line 39 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
+#line 39 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
 unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
 
 
 void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -147,9 +147,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -207,7 +207,7 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
-#line 34 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -215,8 +215,8 @@ void dSignalLed_switch(unsigned char led);
 void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/eeprom.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/eeprom.h"
 
 
 
@@ -233,7 +233,7 @@ unsigned int EEPROM_readInt(unsigned int address);
 void EEPROM_writeArray(unsigned int address, unsigned int *values);
 
 void EEPROM_readArray(unsigned int address, unsigned int *values);
-#line 15 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_hardreset.h"
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
@@ -245,7 +245,7 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 27 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_efisense.h"
+#line 27 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_efisense.h"
 void dEfiSense_heartbeat(void);
 
 void dEfiSense_getAccValue(int accValue);
@@ -277,8 +277,8 @@ float dEfiSense_calculatePressure(unsigned int value);
 float dEfiSense_calculateVoltage(unsigned int value);
 
 int dEfiSense_calculateSlip(unsigned int value);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
 
 
@@ -311,8 +311,8 @@ void d_controls_onLeftEncoder(signed char movements);
 void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 45 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 typedef enum {
  BOARD_DEBUG_MODE,
  SETTINGS_MODE,
@@ -372,23 +372,23 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 14 "c:/users/utente/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
 OperatingMode d_UI_getOperatingMode(void);
@@ -398,8 +398,8 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 13 "c:/users/utente/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 typedef enum aac_notifications{
  MEX_ON,
  MEX_READY,
@@ -424,7 +424,7 @@ void dAcc_stopAutoAccelerationFromSW(void);
 void dAcc_stopAutoAcceleration(void);
 
 void dAcc_startClutchRelease(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/ui/d_autocross.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
 
 
 
@@ -443,9 +443,9 @@ void dAutocross_startClutchRelease(void);
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/d_can.h"
-#line 1 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/utente/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -477,7 +477,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 13 "C:/Users/utente/Desktop/git Repo/SW/modules/peripherals/d_efiSense.c"
+#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 

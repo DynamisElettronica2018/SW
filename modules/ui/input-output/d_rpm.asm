@@ -41,19 +41,23 @@ L_end_dRpm_getDisplayValue:
 _dRpm_set:
 
 ;d_rpm.c,27 :: 		void dRpm_set(unsigned int rpm) {
-;d_rpm.c,28 :: 		if (rpm < RPM_STRIPE_OFFSET){
-	PUSH	W10
+;d_rpm.c,28 :: 		dd_Indicator_setIntValueP(&ind_rpm.base, rpm);
 	PUSH	W11
-	PUSH	W12
+	PUSH	W10
+	MOV	W10, W11
+	MOV	#lo_addr(_ind_rpm), W10
+	CALL	_dd_Indicator_setIntValueP
+	POP	W10
+;d_rpm.c,29 :: 		if (rpm < RPM_STRIPE_OFFSET){
 	MOV	#5000, W0
 	CP	W10, W0
 	BRA LTU	L__dRpm_set9
 	GOTO	L_dRpm_set0
 L__dRpm_set9:
-;d_rpm.c,29 :: 		dRpm = RPM_STRIPE_OFFSET;
+;d_rpm.c,30 :: 		dRpm = RPM_STRIPE_OFFSET;
 	MOV	#5000, W0
 	MOV	W0, _dRpm
-;d_rpm.c,30 :: 		} else if ( rpm > RPM_STRIPE_MAX){
+;d_rpm.c,31 :: 		} else if ( rpm > RPM_STRIPE_MAX){
 	GOTO	L_dRpm_set1
 L_dRpm_set0:
 	MOV	#11500, W0
@@ -61,28 +65,20 @@ L_dRpm_set0:
 	BRA GTU	L__dRpm_set10
 	GOTO	L_dRpm_set2
 L__dRpm_set10:
-;d_rpm.c,31 :: 		dRpm = RPM_STRIPE_MAX;
+;d_rpm.c,32 :: 		dRpm = RPM_STRIPE_MAX;
 	MOV	#11500, W0
 	MOV	W0, _dRpm
-;d_rpm.c,32 :: 		} else {
+;d_rpm.c,33 :: 		} else {
 	GOTO	L_dRpm_set3
 L_dRpm_set2:
-;d_rpm.c,33 :: 		dRpm = rpm;
+;d_rpm.c,34 :: 		dRpm = rpm;
 	MOV	W10, _dRpm
-;d_rpm.c,34 :: 		}
+;d_rpm.c,35 :: 		}
 L_dRpm_set3:
 L_dRpm_set1:
-;d_rpm.c,35 :: 		dd_Indicator_setFloatValueP(&ind_rpm.base, dRpm_getDisplayValue());
-	CALL	_dRpm_getDisplayValue
-	MOV	W0, W11
-	MOV	W1, W12
-	MOV	#lo_addr(_ind_rpm), W10
-	CALL	_dd_Indicator_setFloatValueP
 ;d_rpm.c,36 :: 		}
 L_end_dRpm_set:
-	POP	W12
 	POP	W11
-	POP	W10
 	RETURN
 ; end of _dRpm_set
 

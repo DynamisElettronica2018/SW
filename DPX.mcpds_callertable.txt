@@ -424,11 +424,8 @@ CAN_Interrupt
 	dGear_propagate
 		dGear_set
 	dRpm_set
-		dd_Indicator_setFloatValueP
+		dd_Indicator_setIntValueP
 			dd_Indicator_requestPrintUpdateP
-		dRpm_getDisplayValue
-			_Long2Float
-			_Div_FP
 	dEfiSense_heartbeat
 		dd_Indicator_setBoolValueP
 			dd_Indicator_requestPrintUpdateP
@@ -437,7 +434,6 @@ CAN_Interrupt
 	dEfiSense_getAccValue
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
-			dd_Indicator_requestPrintUpdateP
 		dAcc_hasGCUConfirmed
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
@@ -451,6 +447,7 @@ CAN_Interrupt
 			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
+		dd_Indicator_requestPrintUpdateP
 	dEfiSense_calculateWaterTemperature
 		_Long2Float
 		_Mul_FP
