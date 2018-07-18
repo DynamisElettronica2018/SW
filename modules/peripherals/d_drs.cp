@@ -441,7 +441,19 @@ void dd_GraphicController_queueColorInversion(void);
 char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
 char d_drs_status =  0 ;
 
 void d_drs_propagateChange(void){
@@ -457,8 +469,10 @@ void d_drs_propagateChange(void){
 }
 
 void d_drs_setValueFromCAN(unsigned int value){
+ if(d_UI_getOperatingMode() != ACC_MODE){
  if(d_drs_status==value){
  dd_Indicator_setIntValueP(&ind_drs.base, value);
  }else
  Buzzer_bip();
+ }
 }

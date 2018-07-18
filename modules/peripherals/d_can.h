@@ -5,11 +5,6 @@
 
 #include "../../libs/can.h"
 
-//per lo start acquisition come facciamo? E PER LE COSE DELLA RIO IN GENERALE ? Anche l'indicator al riguardo è da decidere
-//per l'ebb cosa va in settings e cosa in target?
-//il launch on off cosè? lo slip trim quando lo impostiamo?
-
-
 /************************** EFI ***************************/
 #define EFI_HALL_ID                     0b01100000100 //772
 #define EFI_WATER_TEMPERATURE_ID        0b01100001100 //780
@@ -21,11 +16,27 @@
 #define EFI_DIAG_IGN_EXHAUST_ID         0b01100001111 //783
 
 
-/************************** GCU ***************************/
+/************************ GCU *****************************/
 #define GCU_TRACTION_CONTROL_EFI_ID     0b10100000000 //1280       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
+#define GCU_FEEDBACK_ID			0b01100011001 //793
+
+/********************FEEDBACK CODES***********************/
+#define ACC_CODE        1
+#define AUTOX_CODE      2
+#define TRACTION_CODE   3
+#define DRS_CODE        4
+#define ANTISTALL_CODE	5
+
+
+/******************* COMMANDS GCU ************************/
+#define CAN_COMMAND_GCU_IS_ALIVE                       99
+#define CAN_COMMAND_CHANGE_SHIFT_TIMING                100
+#define CAN_COMMAND_SAVE_SHIFT_TIMINGS                 101
+#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_CHANGE        102
+#define CAN_COMMAND_CONFIRM_SHIFT_TIMING_SAVE          103
 
 
 /********************* STEERING WHEEL *********************/
@@ -76,40 +87,39 @@
 
 
 /************************** AUX ***************************/
-#define SW_AUX_ID                       0b11111110000 //2032       first int (second byte) used for acquisition start=1, stop=0
+#define SW_AUX_ID                       0b11111110000 //2032
 #define GCU_AUX_ID                      0b11111110001 //2033
 #define EBB_AUX_ID                      0b11111110010 //2034
 #define DAU_FR_AUX_ID                   0b11111110011 //2035
 #define DAU_FL_AUX_ID                   0b11111110100 //2036
 #define DAU_REAR_AUX_ID                 0b11111110101 //2037
 #define IMU_AUX_ID                      0b11111110110 //2038
-#define DCU_AUX_ID                      0b11111110111 //2039       first int (second byte) used for DCU acquiring signal
+#define DCU_AUX_ID                      0b11111110111 //2039
 
 
 /******************* MASKS & FILTERS **********************/
 //MASK
-#define SW_MASK_EFI_DEBUG_IMU_EBB       0b11111100000
+#define SW_MASK_EFI_DEBUG_IMU_EBB	         	0b11111100000
 //FILTERS
-#define SW_FILTER_EFI_DEBUG             0b01100000000
-#define SW_FILTER_IMU_EBB               0b11100000000
+#define SW_FILTER_EFI_DEBUG				0b01100000000
+#define SW_FILTER_IMU_EBB				0b11100000000
 
 //MASK
-#define GCU_MASK_EFI_SW_EBB             0b11111110100
+#define GCU_MASK_EFI_SW_EBB				0b11111110100
 //FILTERS
-#define GCU_FILTER_EFI                  0b01100000100
-#define GCU_FILTER_SW_DCU               0b01000000000
+#define GCU_FILTER_EFI					0b01100000100
+#define GCU_FILTER_SW_DCU				0b01000000000
 
 //MASK
-#define ALL_MASK_AUX                    0b11111110000
+#define ALL_MASK_AUX					0b11111110000
 //FILTER
-#define ALL_FILTER_AUX                  0b11111110000
+#define ALL_FILTER_AUX					0b11111110000
 
 //MASK
-#define EBB_MASK_SW_DAUFR               0b11111111111
+#define EBB_MASK_SW_DAUFR				0b11111111111
 //FILTERS
-#define EBB_FILTER_SW                   0b10000000000
-#define EBB_FILTER_DAUFR                0b11001010000
-
+#define EBB_FILTER_SW					0b10000000000
+#define EBB_FILTER_DAUFR				0b11001010000
 
 /******************************** ACQUISITION *********************************/
 
@@ -118,12 +128,14 @@
 #define COMMAND_DCU_IS_ACQUIRING 1
 
 /****************************** AUTOCROSS MODE ********************************/
+
 #define COMMAND_AUTOCROSS_START_CLUTCH_RELEASE 2
 #define COMMAND_START_AUTOCROSS 1
 #define COMMAND_STOP_AUTOCROSS  0
 
 
-/********************* ACCELERATION MODE *******************/
+/***************************** ACCELERATION MODE ******************************/
+
 #define COMMAND_START_CLUTCH_RELEASE 2
 #define COMMAND_START_ACCELERATION 1
 #define COMMAND_STOP_ACCELERATION  0

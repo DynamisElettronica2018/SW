@@ -74,8 +74,7 @@ void d_traction_control_move(signed char movements){
 void d_traction_control_setValueFromCAN(unsigned int value){
      if(d_UI_getOperatingMode() != ACC_MODE){
        d_tractionValue = value;
-       //dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
-        d_traction_control_printNotification();  // ci starebbe fare un flag che mostri le notifiche quando il tc non è nella dashboard
+        d_traction_control_printNotification();
      }
      return;
 }

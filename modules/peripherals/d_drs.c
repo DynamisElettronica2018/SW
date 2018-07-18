@@ -11,6 +11,7 @@
 #include "dd_indicators.h"
 #include "dd_interfaces.h"
 #include "dd_graphic_controller.h"
+#include "d_ui_controller.h"
 
 char d_drs_status = FALSE;
 
@@ -27,8 +28,10 @@ void d_drs_propagateChange(void){
 }
 
 void d_drs_setValueFromCAN(unsigned int value){
-     if(d_drs_status==value){
-         dd_Indicator_setIntValueP(&ind_drs.base, value);
-     }else
-         Buzzer_bip();
+     if(d_UI_getOperatingMode() != ACC_MODE){
+         if(d_drs_status==value){
+             dd_Indicator_setIntValueP(&ind_drs.base, value);
+        }else
+             Buzzer_bip();
+     }
 }

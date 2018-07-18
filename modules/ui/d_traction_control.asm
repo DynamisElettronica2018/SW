@@ -279,20 +279,20 @@ L__d_traction_control_setValueFromCAN36:
 ;d_traction_control.c,76 :: 		d_tractionValue = value;
 	MOV	#lo_addr(_d_tractionValue), W0
 	MOV.B	W10, [W0]
-;d_traction_control.c,78 :: 		d_traction_control_printNotification();  // ci starebbe fare un flag che mostri le notifiche quando il tc non è nella dashboard
+;d_traction_control.c,77 :: 		d_traction_control_printNotification();
 	CALL	_d_traction_control_printNotification
-;d_traction_control.c,79 :: 		}
+;d_traction_control.c,78 :: 		}
 L_d_traction_control_setValueFromCAN17:
-;d_traction_control.c,80 :: 		return;
-;d_traction_control.c,81 :: 		}
+;d_traction_control.c,79 :: 		return;
+;d_traction_control.c,80 :: 		}
 L_end_d_traction_control_setValueFromCAN:
 	RETURN
 ; end of _d_traction_control_setValueFromCAN
 
 _d_traction_control_init:
 
-;d_traction_control.c,83 :: 		void d_traction_control_init(void){
-;d_traction_control.c,85 :: 		}
+;d_traction_control.c,82 :: 		void d_traction_control_init(void){
+;d_traction_control.c,84 :: 		}
 L_end_d_traction_control_init:
 	RETURN
 ; end of _d_traction_control_init

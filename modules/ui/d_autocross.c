@@ -58,12 +58,14 @@ void dAutocross_stopAutocross(void) {
 
 
 void dAutocross_feedbackGCU(unsigned int value){
-    if(value == COMMAND_START_AUTOCROSS){
-        dAutocross_GCUConfirmed = COMMAND_START_AUTOCROSS;
-    } else if (value == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
-        dAutocross_GCUConfirmed = COMMAND_AUTOCROSS_START_CLUTCH_RELEASE;
-    } else if (value == COMMAND_STOP_AUTOCROSS){
-        dAutocross_stopAutocross();
+    if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
+      if(value == COMMAND_START_AUTOCROSS){
+          dAutocross_GCUConfirmed = COMMAND_START_AUTOCROSS;
+      } else if (value == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
+          dAutocross_GCUConfirmed = COMMAND_AUTOCROSS_START_CLUTCH_RELEASE;
+      } else if (value == COMMAND_STOP_AUTOCROSS){
+          dAutocross_stopAutocross();
+      }
     }
 }
 

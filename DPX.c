@@ -182,7 +182,7 @@ onCanInterrupt{
            dEbb_setEbbValueFromCAN(firstInt);
            dEbb_calibrationState(secondInt);
            dEbb_error(thirdInt);
-           break; //  */
+           break;
        case DAU_FR_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dau_fr_board.base, (int)firstInt, (int)secondInt);
            break;
@@ -202,12 +202,10 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_fuel_pump.base, (thirdInt));
            break; //*/
        case GCU_DEBUG_2_ID:
-           d_traction_control_setValueFromCAN(firstInt);
-           dAcc_feedbackGCU(secondInt);
-          /* dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_H2O_pump.base, (thirdInt));
-           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));  */
+           dd_Indicator_setIntValueP(&ind_H2O_fans.base, (fourthInt));
            break;
        case DCU_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
@@ -216,16 +214,27 @@ onCanInterrupt{
                 dDCU_sentAcquiringSignal();
            }
            break;
-       /*case GCU_AUX_ID:
-           //d_traction_control_setValueFromCAN(firstInt);
-           dAcc_feedbackGCU(secondInt);
-          // d_drs_setValuefromCAN(thirdInt);
-          // dAutocross_feedbackGCU(fourthInt);
-           break; */
+       case GCU_FEEDBACK_ID:
+           switch (firstInt){
+                  case ACC_CODE:
+                     dAcc_feedbackGCU(secondInt);
+                     break;
+                  case AUTOX_CODE:
+                     dAutocross_feedbackGCU(secondInt);
+                     break;
+                  case TRACTION_CODE:
+                     d_traction_control_setValueFromCAN(secondInt);
+                     break;
+                  case DRS_CODE:
+                     d_drs_setValuefromCAN(secondInt);
+                     break;
+                  default:
+                     break;
+           }
+           break;
        default:
            break;
     }
-
    //INTERRUPT_PROTECT(IEC1BITS.C1IE = 1);
    // IEC1BITS.C1IE = 1;
 }

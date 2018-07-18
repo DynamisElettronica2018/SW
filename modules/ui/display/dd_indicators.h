@@ -67,8 +67,8 @@ un membro specifico del tipo di dato di quell'indicatore
 /// [Indicator definition]
 typedef struct Indicator {
     Indicator_ID id;
-    /*const*/ char* name;
-    /*const*/ char* description;
+    char* name;
+    char* description;
     unsigned char nameLength;
     unsigned char descriptionLength;
     unsigned pendingPrintUpdate : 2,

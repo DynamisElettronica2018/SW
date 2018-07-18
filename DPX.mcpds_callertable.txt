@@ -498,10 +498,8 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
-	d_traction_control_setValueFromCAN
-		d_UI_getOperatingMode
-		d_traction_control_printNotification
-			dd_GraphicController_fireTimedNotification
+	dDCU_isAcquiringSet
+	dDCU_sentAcquiringSignal
 	dAcc_feedbackGCU
 		Buzzer_bip
 		d_UI_getOperatingMode
@@ -509,8 +507,17 @@ CAN_Interrupt
 		dd_printMessage
 		dd_GraphicController_fireTimedNotification
 		dAcc_stopAutoAcceleration
-	dDCU_isAcquiringSet
-	dDCU_sentAcquiringSignal
+	dAutocross_feedbackGCU
+		d_UI_getOperatingMode
+		dAutocross_stopAutocross
+	d_traction_control_setValueFromCAN
+		d_UI_getOperatingMode
+		d_traction_control_printNotification
+			dd_GraphicController_fireTimedNotification
+	d_drs_setValueFromCAN
+		d_UI_getOperatingMode
+		dd_Indicator_setIntValueP
+		Buzzer_bip
 	_Compare_Ge_Fp
 	_Long2Float
 external2

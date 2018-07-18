@@ -552,12 +552,14 @@ void dAutocross_stopAutocross(void) {
 
 
 void dAutocross_feedbackGCU(unsigned int value){
+ if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
  if(value ==  1 ){
  dAutocross_GCUConfirmed =  1 ;
  } else if (value ==  2 ){
  dAutocross_GCUConfirmed =  2 ;
  } else if (value ==  0 ){
  dAutocross_stopAutocross();
+ }
  }
 }
 

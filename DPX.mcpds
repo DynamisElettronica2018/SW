@@ -11,7 +11,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=modules\ui\input-output\d_rpm.c
+Value=DPX.c
 =======
 Value=modules\peripherals\d_drs.c
 >>>>>>> drs2
@@ -91,16 +91,13 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=9
+Count=6
 File0=DPX.c
-File1=modules\ui\display\dd_graphic_controller.c
-File2=modules\ui\display\dd_interfaces.c
-File3=modules\ui\input-output\d_controls.c
-File4=modules\ui\input-output\d_rpm.c
-File5=modules\ui\d_traction_control.c
-File6=modules\peripherals\d_gears.c
-File7=modules\ui\d_acceleration.c
-File8=modules\peripherals\d_can.h
+File1=modules\peripherals\d_can.h
+File2=modules\ui\d_traction_control.c
+File3=modules\peripherals\d_drs.c
+File4=modules\ui\d_autocross.c
+File5=modules\ui\d_acceleration.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -253,4 +250,5 @@ File61=Vectors
 [EXPANDED NODES]
 Node1=Sources
 Node2=Header Files
-Count=2
+Node3=Output Files
+Count=3
