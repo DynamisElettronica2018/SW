@@ -238,6 +238,12 @@ void dHardReset_init(void);
 
 void dHardReset_reset(void);
 
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
 char dHardReset_hasBeenReset(void);
 
 void dHardReset_setFlag(void);
@@ -409,6 +415,12 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
 unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
@@ -431,6 +443,12 @@ void dAcc_startClutchRelease(void);
 
 
 void dAutocross_init(void);
+
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
 
 void dAutocross_requestAction(void);
 

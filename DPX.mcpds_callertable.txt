@@ -193,6 +193,7 @@ main
 									CAN1IDToRegs
 								Can_getWriteFlags
 						dAcc_stopAutoAcceleration
+							d_UI_getOperatingMode
 							d_UI_AccModeInit
 				d_UI_AutocrossModeClose
 					dAutocross_stopAutocrossFromSW
@@ -201,6 +202,7 @@ main
 						dDCU_isAcquiring
 						Can_write
 						dAutocross_stopAutocross
+							d_UI_getOperatingMode
 							d_UI_AutocrossModeInit
 			d_selectorPositionToMode
 			setExternalInterrupt
@@ -240,6 +242,7 @@ main
 			I2CExpander_init
 			dRpm_enableLedStripeOutput
 		dAutocross_init
+			dHardReset_hasBeenReset
 		dd_GraphicController_init
 			dd_GraphicController_turnOnBacklight
 			eGlcd_init
@@ -322,23 +325,32 @@ main
 				setTimer
 			dd_GraphicController_forceFullFrameUpdate
 		dAcc_init
+			dHardReset_hasBeenReset
 		d_traction_control_init
 		dEbb_init
 		setInterruptPriority
 		setTimer
-	dd_GraphicController_fireTimedNotification
-		dd_GraphicController_getTmrCounterLimit
-		dd_GraphicController_setNotificationFlag
-		dd_GraphicController_fireNotification
-			strcpy
-			dd_printMessage
-				xGlcd_Set_Font
-				eGlcd_getTextPixelLength
-					strlen
-					xGlcd_Char_Width
-						_Multiply_32x32
-				eGlcd_drawRect
-				eGlcd_writeText
+	dHardReset_handleReset
+		dd_GraphicController_fireTimedNotification
+			dd_GraphicController_getTmrCounterLimit
+			dd_GraphicController_setNotificationFlag
+			dd_GraphicController_fireNotification
+				strcpy
+				dd_printMessage
+					xGlcd_Set_Font
+					eGlcd_getTextPixelLength
+						strlen
+						xGlcd_Char_Width
+							_Multiply_32x32
+					eGlcd_drawRect
+					eGlcd_writeText
+		d_UI_getOperatingMode
+		dAcc_restartAcc
+			Can_writeInt
+		dAcc_restartAutocross
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			Can_write
 	dHardReset_unsetFlag
 external4
 	d_controls_onNeutral
@@ -377,6 +389,7 @@ external4
 		dAutocross_requestAction
 			dd_GraphicController_clearPrompt
 				dd_GraphicController_unsetNotificationFlag
+				dd_GraphicController_unsetOnScreenNotification
 				dd_Dashboard_print
 				dd_Interface_printMenu
 				dd_Dashboard_init
@@ -398,7 +411,10 @@ external4
 				Can_addIntToWritePacket
 				dDCU_isAcquiring
 				Can_write
-				dd_printMessage
+				dd_GraphicController_fixNotification
+					strcpy
+					dd_printMessage
+					dd_GraphicController_setOnScreenNotification
 		dEbb_setPositionZero
 			Can_writeInt
 			dd_GraphicController_fireTimedNotification
@@ -504,7 +520,7 @@ CAN_Interrupt
 		Buzzer_bip
 		d_UI_getOperatingMode
 		dd_GraphicController_clearPrompt
-		dd_printMessage
+		dd_GraphicController_fixNotification
 		dd_GraphicController_fireTimedNotification
 		dAcc_stopAutoAcceleration
 	dAutocross_feedbackGCU
@@ -539,6 +555,10 @@ external1
 		d_selectorPositionToMode
 	clearExternalInterrupt
 cn_interrupt
+	sprintf
+	Debug_UART_Write
+		UART2_Write_Text
+			UART2_Write
 	d_controls_onLeftEncoder
 		d_UI_onSettingsChange
 			dd_Menu_selectedLine
@@ -556,6 +576,7 @@ cn_interrupt
 		d_traction_control_move
 			d_traction_control_propagateValue
 				Can_writeInt
+				d_traction_control_printNotification
 				dSignalLed_switch
 	d_controls_onRightEncoder
 		dd_Menu_moveSelection
@@ -623,12 +644,38 @@ timer1_interrupt
 		dd_printMessage
 		eGlcd_fill
 		d_UI_getOperatingMode
+		dd_GraphicController_fixNotification
 		dd_GraphicController_handleNotification
 			dd_printMessage
 			Lcd_PrintFrame
+			d_UI_getOperatingMode
+			dHardReset_hasResetOccurred
+			dAcc_hasResetOccurred
+			dAutocross_hasResetOccurred
+			dd_GraphicController_fixNotification
+			dAcc_clearReset
+			dAutocross_clearReset
+			dd_GraphicController_setOnScreenNotification
 			dd_GraphicController_clearNotification
 				eGlcd_clear
 				dd_GraphicController_unsetNotificationFlag
+			dd_Dashboard_print
+			dd_Interface_printMenu
+			dd_Dashboard_init
+			dd_Menu_init
+			d_UI_BoardDebugModeInit
+			d_UI_SettingsModeInit
+			d_UI_DebugModeInit
+			d_UI_CruiseModeInit
+			d_UI_AccModeInit
+			d_UI_AutocrossModeInit
+			d_UI_BoardDebugModeClose
+			d_UI_SettingsModeClose
+			d_UI_DebugModeClose
+			d_UI_CruiseModeClose
+			d_UI_AccModeClose
+			d_UI_AutocrossModeClose
+		dd_GraphicController_getOnScreenNotification
 		dd_Dashboard_print
 		dd_Interface_printMenu
 		dd_Dashboard_init

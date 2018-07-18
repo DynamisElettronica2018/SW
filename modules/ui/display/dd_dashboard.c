@@ -12,12 +12,15 @@
 #include "fonts/dd_fonts.h"
 #include "../../../libs/eGlcd.h"
 #include "../../../libs/basic.h"
+#include "d_ui_controller.h"
 
 #define GEAR_INIT_VALUE 54
 #define DEFAULT_EBB_VALUE 0
 
 #define MAX_EBB_VALUE 3
 #define MIN_EBB_VALUE -3
+
+#define TOP_RIGHT_CAN_REFRESH 500
 
 #define DASHBOARD_FONT_HEIGHT DynamisFont_Dashboard_HEIGHT
 
@@ -158,7 +161,7 @@ void dd_Dashboard_printIndicators(void) {
     for (index = 0; index < DASHBOARD_INDICATORS_COUNT; index++) {
         if (dd_Indicator_isRequestingUpdate(index) ||
             dd_GraphicController_isFrameUpdateForced()) {
-            dd_Dashboard_printIndicator(index);
+              dd_Dashboard_printIndicator(index);
         }
     }
 }

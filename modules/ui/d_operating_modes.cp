@@ -281,12 +281,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -432,6 +437,12 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
 unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
@@ -455,6 +466,12 @@ void dAcc_startClutchRelease(void);
 
 
 void dAutocross_init(void);
+
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
 
 void dAutocross_requestAction(void);
 

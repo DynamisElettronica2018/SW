@@ -7,10 +7,14 @@
 #include "../../../libs/basic.h"
 #include "../display/dd_graphic_controller.h"
 #include "../display/dd_indicators.h"
-
+#include "d_acceleration.h"
+#include "d_autocross.h"
+#include "d_operating_modes.h"
+#include "d_ui_controller.h"
 
 unsigned int dHardReset_counter = 0;
 int lastId=0;
+unsigned int d_hardResetOccurred = FALSE;
 
 void dHardReset_init(void) {
 char msg[14];
@@ -29,6 +33,24 @@ void dHardReset_reset(void) {
     asm {
     reset
     }
+}
+
+void dHardReset_handleReset(void){
+    dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
+    if (d_UI_getOperatingMode() == ACC_MODE){
+         dAcc_restartAcc();
+    }else if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
+         dAcc_restartAutocross();
+    }
+    d_hardResetOccurred = TRUE;
+}
+
+unsigned int dHardReset_hasResetOccurred(void){
+   return d_hardResetOccurred;
+}
+
+void dHardReset_unsetHardResetOccurred(void){
+   d_hardResetOccurred = FALSE;
 }
 
 char dHardReset_hasBeenReset(void) {

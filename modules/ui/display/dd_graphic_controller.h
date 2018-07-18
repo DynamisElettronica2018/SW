@@ -38,6 +38,10 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
 
 /** \brief Launches an alert notification on screen.
@@ -52,9 +56,10 @@ int dd_GraphicController_getNotificationFlag(void);
 */
 
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 

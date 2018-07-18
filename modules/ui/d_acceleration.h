@@ -19,6 +19,12 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
 unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();

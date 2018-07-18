@@ -170,12 +170,20 @@ onCNInterrupt{
    
    old_port_sx = a + (b << 1) + (c << 2);
    old_port_dx = d + (e << 1) + (f << 2);
+  // sprintf(dstr, "old_port_sx: %d \r\nold_port_dx: %d", old_port_sx, old_port_dx );
+  // Debug_UART_Write(dstr);
 
    new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
    new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
+   
+   //sprintf(dstr, "\r\n new_port_sx: %d \r\n new_port_dx: %d", new_port_sx, new_port_dx );
+  // Debug_UART_Write(dstr);
 
    movement_dx = new_port_dx - old_port_dx;
    movement_sx = - new_port_sx + old_port_sx;
+   
+   sprintf(dstr, "\r\n movement_sx: %d \r\n movement_dx: %d", movement_sx, movement_dx );
+   Debug_UART_Write(dstr);
 
    if (movement_dx>4)
    {

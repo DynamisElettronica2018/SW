@@ -209,12 +209,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -1424,11 +1429,131 @@ unsigned short xGlcd_Text_Width(char *text);
 
 void xGLCD_Set_Transparency(char active);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 24 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void dControls_disableCentralSelector();
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux2(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE,
+ AUTOCROSS_MODE
+} OperatingMode;
+
+
+
+
+
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_th2o;
+extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
+extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern IntegerIndicator ind_adc1_read;
+extern IntegerIndicator ind_drs;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_oil_temp_out;
+extern IntegerIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs_curr;
+extern IntegerIndicator ind_gear_motor;
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static const unsigned char INDICATOR_HEIGHT = (unsigned char) ( 64  / 2) - ( 1  * 2) - 1;
 static const unsigned char INDICATOR_WIDTH =
  (unsigned char) (( 128  -  40  -  1  * 4) / 2) - 1;
-#line 44 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 47 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static const unsigned char DASHBOARD_POSITION_COORDINATES[ 4 ][2] = {
  { 0 ,  0 },
  { 128  - INDICATOR_WIDTH - 1  * 2 - 1 ,  0 },
@@ -1493,9 +1618,9 @@ void printf(char * string);
  y = DASHBOARD_POSITION_COORDINATES[indicatorIndex][ 1 ];
 
   eGlcd_drawRect( x + 1 , y + 1 , INDICATOR_WIDTH, INDICATOR_HEIGHT ); ;
-#line 113 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 116 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 }
-#line 119 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 122 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
  Indicator* indicator = dd_currentIndicators[indicatorIndex];
  unsigned char x, y, oldLabelLength;

@@ -49,8 +49,8 @@ void main(){
     d_UIController_init();
     
     if(dHardReset_hasBeenReset()){
-       dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
-       dHardReset_unsetFlag();
+        dHardReset_handleReset();
+        dHardReset_unsetFlag();
     }
     
     while(1){

@@ -10,6 +10,12 @@ typedef enum aac_notifications{
 
 void dAcc_init(void);
 
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
 unsigned int dAcc_hasGCUConfirmed (void);
 
 void dAcc_requestAction();
@@ -233,12 +239,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -513,16 +524,67 @@ void Buzzer_init(void);
 void Buzzer_tick(void);
 
 void Buzzer_bip(void);
-#line 26 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
+
+
+
+
+
+
+
+
+
+void EEPROM_writeInt(unsigned int address, unsigned int value);
+
+unsigned int EEPROM_readInt(unsigned int address);
+
+void EEPROM_writeArray(unsigned int address, unsigned int *values);
+
+void EEPROM_readArray(unsigned int address, unsigned int *values);
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+void dHardReset_init(void);
+
+void dHardReset_reset(void);
+
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
+char dHardReset_hasBeenReset(void);
+
+void dHardReset_setFlag(void);
+
+void dHardReset_unsetFlag(void);
+
+unsigned int dHardReset_getCounter(void);
+#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
+unsigned int dAcc_resetOccurred =  0 ;
 unsigned int dAcc_GCUConfirmed =  0 ;
 
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
  dAcc_GCUConfirmed =  0 ;
+ if (dHardReset_hasBeenReset())
+ dAcc_resetOccurred =  1 ;
+}
+
+unsigned int dAcc_hasResetOccurred(void){
+ return dAcc_resetOccurred;
+}
+
+void dAcc_clearReset(void){
+ dAcc_resetOccurred =  0 ;
+}
+
+void dAcc_restartAcc(void){
+ Can_writeInt( 0b01000000010 ,  0 );
 }
 
 void dAcc_startAutoAcceleration(void){
@@ -544,7 +606,7 @@ void dAcc_feedbackGCU(unsigned int value){
  if(value ==  1 ){
  dd_GraphicController_clearPrompt();
  dAcc_GCUConfirmed =  1 ;
- dd_printMessage("STEADY");
+ dd_GraphicController_fixNotification("STEADY");
  } else if (value ==  2 ){
  dAcc_GCUConfirmed =  2 ;
  dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
@@ -557,7 +619,9 @@ void dAcc_feedbackGCU(unsigned int value){
 void dAcc_stopAutoAcceleration(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
+ if (d_UI_getOperatingMode() == ACC_MODE){
  d_UI_AccModeInit();
+ }
 }
 
 void dAcc_stopAutoAccelerationFromSW(void){

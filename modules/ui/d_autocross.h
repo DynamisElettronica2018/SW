@@ -5,6 +5,12 @@
 
 void dAutocross_init(void);
 
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
+
 void dAutocross_requestAction(void);
 
 char dAutocross_isAutocrossActive(void);

@@ -10,9 +10,6 @@ _main:
 
 ;DPX.c,39 :: 		void main(){
 ;DPX.c,41 :: 		setAllPinAsDigital();
-	PUSH	W10
-	PUSH	W11
-	PUSH	W12
 	CALL	_setAllPinAsDigital
 ;DPX.c,42 :: 		Debug_UART_Init();
 	CALL	_Debug_UART_Init
@@ -40,11 +37,8 @@ L_main0:
 	BRA NZ	L__main48
 	GOTO	L_main3
 L__main48:
-;DPX.c,52 :: 		dd_GraphicController_fireTimedNotification(HARD_RESET_NOTIFICATION_TIME, "RESET", WARNING);
-	MOV.B	#1, W12
-	MOV	#lo_addr(?lstr1_DPX), W11
-	MOV	#1000, W10
-	CALL	_dd_GraphicController_fireTimedNotification
+;DPX.c,52 :: 		dHardReset_handleReset();
+	CALL	_dHardReset_handleReset
 ;DPX.c,53 :: 		dHardReset_unsetFlag();
 	CALL	_dHardReset_unsetFlag
 ;DPX.c,54 :: 		}
@@ -55,9 +49,6 @@ L_main4:
 	GOTO	L_main4
 ;DPX.c,59 :: 		}
 L_end_main:
-	POP	W12
-	POP	W11
-	POP	W10
 L__main_end_loop:
 	BRA	L__main_end_loop
 ; end of _main

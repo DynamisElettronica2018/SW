@@ -20,6 +20,8 @@
 #include "../input-output/d_rpm.h"
 #include "d_clutch.h"
 #include "d_ui_controller.h"
+#include "d_acceleration.h"
+#include "d_autocross.h"
 
 #define DD_BACKLIGHT_PIN RG13_bit
 #define DD_BACKLIGHT_PIN_DIRECTION TRISG13_bit
@@ -30,6 +32,10 @@
 static char dd_isInterfaceChangedFromLastFrame = FALSE, dd_isFrameUpdateForced = FALSE, dd_isNextFrameUpdateForced = FALSE, dd_isColorInversionQueued = FALSE;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[MAX_INTERFACE_TITLE_LENGTH] = "";
+
+char dd_onScreenNotificationText[MAX_NOTIFICATION_LENGTH] = "";
+
+unsigned int dd_refreshTimer = 0;
 
 static Interface dd_currentInterface = DASHBOARD_INTERFACE;
 Indicator** dd_currentIndicators = NULL;
@@ -43,7 +49,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag = FALSE;
-char dd_notificationIsTimed = FALSE;
+static char dd_notificationOnScreen= FALSE;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -138,6 +144,18 @@ void dd_GraphicController_unsetNotificationFlag (void){
      dd_notificationFlag = FALSE;
 }
 
+void dd_GraphicController_setOnScreenNotification (void){
+     dd_notificationOnScreen = TRUE;
+}
+
+void dd_GraphicController_unsetOnScreenNotification (void){
+     dd_notificationOnScreen = FALSE;
+}
+
+static char dd_GraphicController_getOnScreenNotification (void){
+     return dd_notificationOnScreen;
+}
+
 void dd_GraphicController_clearNotification(void) {
      eGlcd_clear();
      dd_isFrameUpdateForced = TRUE;
@@ -149,8 +167,15 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
     dd_printMessage(dd_notificationText);
 }
 
+void dd_GraphicController_fixNotification(char *text){
+     strcpy(dd_onScreenNotificationText, text);
+     dd_printMessage(dd_onScreenNotificationText);
+     dd_GraphicController_setOnScreenNotification();
+}
+
 void dd_GraphicController_clearPrompt(){
      dd_GraphicController_unsetNotificationFlag();
+     dd_GraphicController_unsetOnScreenNotification();
      dd_Interface_print[dd_currentInterface]();
 }
 
@@ -160,28 +185,26 @@ void dd_GraphicController_clearPrompt(){
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
     dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
     dd_GraphicController_setNotificationFlag();
-    dd_notificationIsTimed = 1;
     dd_GraphicController_fireNotification(text, type);
 }
 
-void dd_GraphicController_firePromptNotification(char *text) {
-    if(dd_notificationFlag)
-        dd_GraphicController_clearNotification();
-    else
-        eGlcd_clear();
-    
-    dd_notificationIsTimed = 0;
-    dd_GraphicController_setNotificationFlag();
-    dd_GraphicController_fireNotification(text, PROMPT);
-}
 
 void dd_GraphicController_handleNotification(void) {
     if (dd_notificationTimeoutCounter > 0) {
         dd_notificationTimeoutCounter--;
+        dd_Interface_print[dd_currentInterface]();
         dd_printMessage(dd_notificationText);
         Lcd_PrintFrame();
         if (dd_notificationTimeoutCounter == 0) {
-            dd_GraphicController_clearNotification();
+            if ((d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE) && dHardReset_hasResetOccurred()
+                 && dAcc_hasResetOccurred() && dAutocross_hasResetOccurred() ){
+                  dd_GraphicController_fixNotification("READY");
+                  dAcc_clearReset();
+                  dAutocross_clearReset();
+                  dd_GraphicController_setOnScreenNotification();
+            }else
+               dd_GraphicController_clearNotification();
+            dd_notificationFlag = FALSE;
        }
     }
 }
@@ -251,6 +274,14 @@ void dd_printLogoAnimation() {
      }
 }
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void){
+        return dd_refreshTimer;
+}
+
+void dd_GraphicController_resetRefreshTimerValue(void){
+        dd_refreshTimer = 0;
+}
+
 int __counter = 0;
 
 void dd_GraphicController_onTimerInterrupt(void) 
@@ -266,6 +297,7 @@ void dd_GraphicController_onTimerInterrupt(void)
     }
 
    __counter++;
+   dd_refreshTimer++;
    
     if(dd_onStartup)
     {
@@ -304,7 +336,7 @@ void dd_GraphicController_onTimerInterrupt(void)
                dd_Interface_print[dd_currentInterface]();
                Lcd_PrintFrame();
                if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
-                  dd_printMessage("READY");
+                  dd_GraphicController_fixNotification("READY");
                }
                dd_isFrameUpdateForced = FALSE;
            }
@@ -312,16 +344,16 @@ void dd_GraphicController_onTimerInterrupt(void)
         else
         {
             if (dd_notificationFlag) {
-               if(dd_notificationIsTimed)
-                   dd_GraphicController_handleNotification();
-               else
-               {
-                   dd_printMessage(dd_notificationText);
-               }
+                dd_GraphicController_handleNotification();
+            }else if (dd_GraphicController_getOnScreenNotification()){
+                dd_Interface_print[dd_currentInterface]();
+                Lcd_PrintFrame();
+                dd_isFrameUpdateForced = FALSE;
+                dd_printMessage(dd_onScreenNotificationText);
             }else{
-            dd_Interface_print[dd_currentInterface]();
-            Lcd_PrintFrame();
-            dd_isFrameUpdateForced = FALSE;
+                dd_Interface_print[dd_currentInterface]();
+                Lcd_PrintFrame();
+                dd_isFrameUpdateForced = FALSE;
             }
         }
     }

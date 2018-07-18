@@ -31,9 +31,9 @@ diagnostics: 99	123	Compiled Successfully	d_efiSense.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 110	123	Compiled Successfully	d_gears.c
 diagnostics: 0	122	Compilation Started	string.h
-diagnostics: 173	123	Compiled Successfully	dd_dashboard.c
+diagnostics: 176	123	Compiled Successfully	dd_dashboard.c
 diagnostics: 0	122	Compilation Started	eglcd.h
-diagnostics: 341	123	Compiled Successfully	dd_graphic_controller.c
+diagnostics: 373	123	Compiled Successfully	dd_graphic_controller.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 205	123	Compiled Successfully	dd_indicators.c
 diagnostics: 0	122	Compilation Started	basic.h
@@ -43,9 +43,9 @@ diagnostics: 266	123	Compiled Successfully	dd_menu.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 39	123	Compiled Successfully	buzzer.c
 diagnostics: 0	122	Compilation Started	math.h
-diagnostics: 335	123	Compiled Successfully	d_controls.c
+diagnostics: 343	123	Compiled Successfully	d_controls.c
 diagnostics: 0	122	Compilation Started	eeprom.h
-diagnostics: 48	123	Compiled Successfully	d_hardReset.c
+diagnostics: 70	123	Compiled Successfully	d_hardReset.c
 diagnostics: 0	122	Compilation Started	basic.h
 diagnostics: 41	123	Compiled Successfully	d_paddle.c
 diagnostics: 0	122	Compilation Started	d_rpm.h
@@ -57,7 +57,7 @@ diagnostics: 27	123	Compiled Successfully	d_start.c
 diagnostics: 0	122	Compilation Started	string.h
 diagnostics: 122	123	Compiled Successfully	d_warnings.c
 diagnostics: 0	122	Compilation Started	d_acceleration.h
-diagnostics: 98	123	Compiled Successfully	d_acceleration.c
+diagnostics: 116	123	Compiled Successfully	d_acceleration.c
 diagnostics: 0	122	Compilation Started	d_controls.h
 diagnostics: 314	123	Compiled Successfully	d_operating_modes.c
 diagnostics: 0	122	Compilation Started	d_controls.h
@@ -67,13 +67,13 @@ diagnostics: 25	123	Compiled Successfully	d_sensors.c
 diagnostics: 0	122	Compilation Started	d_dcu.h
 diagnostics: 70	123	Compiled Successfully	d_dcu.c
 diagnostics: 0	122	Compilation Started	d_autocross.h
-diagnostics: 94	123	Compiled Successfully	d_autocross.c
+diagnostics: 115	123	Compiled Successfully	d_autocross.c
 diagnostics: 0	122	Compilation Started	d_traction_control.h
-diagnostics: 84	123	Compiled Successfully	d_traction_control.c
+diagnostics: 85	123	Compiled Successfully	d_traction_control.c
 diagnostics: 0	122	Compilation Started	d_drs.h
 diagnostics: 37	123	Compiled Successfully	d_drs.c
-diagnostics: 0	127	All files Compiled in 3328 ms	 
+diagnostics: 0	127	All files Compiled in 3500 ms	 
 diagnostics: 0	125	Project Linked Successfully	DPX.mcpds
-diagnostics: 0	128	Linked in 891 ms	 
-diagnostics: 0	129	Project 'DPX.mcpds' completed: 4469 ms	 
-diagnostics: 0	103	Finished successfully: 18 lug 2018, 12:00:37	DPX.mcpds
+diagnostics: 0	128	Linked in 921 ms	 
+diagnostics: 0	129	Project 'DPX.mcpds' completed: 4671 ms	 
+diagnostics: 0	103	Finished successfully: 18 lug 2018, 19:08:52	DPX.mcpds

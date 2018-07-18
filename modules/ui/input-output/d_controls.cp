@@ -266,12 +266,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -353,6 +358,12 @@ void dHardReset_init(void);
 
 void dHardReset_reset(void);
 
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
 char dHardReset_hasBeenReset(void);
 
 void dHardReset_setFlag(void);
@@ -370,6 +381,12 @@ typedef enum aac_notifications{
 }aac_notifications;
 
 void dAcc_init(void);
+
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
 
 unsigned int dAcc_hasGCUConfirmed (void);
 
@@ -643,6 +660,12 @@ void startTimer32();
 
 void dAutocross_init(void);
 
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
+
 void dAutocross_requestAction(void);
 
 char dAutocross_isAutocrossActive(void);
@@ -758,11 +781,19 @@ void dControls_disableCentralSelector()
  old_port_sx = a + (b << 1) + (c << 2);
  old_port_dx = d + (e << 1) + (f << 2);
 
+
+
  new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
  new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
 
+
+
+
  movement_dx = new_port_dx - old_port_dx;
  movement_sx = - new_port_sx + old_port_sx;
+
+ sprintf(dstr, "\r\n movement_sx: %d \r\n movement_dx: %d", movement_sx, movement_dx );
+ Debug_UART_Write(dstr);
 
  if (movement_dx>4)
  {
@@ -794,11 +825,11 @@ void dControls_disableCentralSelector()
  _CLEAR_CN_LABEL:
  clearExternalInterrupt( 9 );
 }
-#line 228 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 236 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
-#line 233 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 241 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  delay_ms(30);
  Delay_ms( 1 );
  expanderPort = ~I2CExpander_readPort( 0b01000010 );

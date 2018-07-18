@@ -233,12 +233,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -296,6 +301,12 @@ void EEPROM_readArray(unsigned int address, unsigned int *values);
 void dHardReset_init(void);
 
 void dHardReset_reset(void);
+
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
 
 char dHardReset_hasBeenReset(void);
 
@@ -1650,10 +1661,71 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 30 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 32 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 static char dd_isInterfaceChangedFromLastFrame =  0 , dd_isFrameUpdateForced =  0 , dd_isNextFrameUpdateForced =  0 , dd_isColorInversionQueued =  0 ;
 static Interface dd_lastInterface = DASHBOARD_INTERFACE;
 static char dd_lastInterfaceTitle[ 20 ] = "";
+
+char dd_onScreenNotificationText[ 20 ] = "";
+
+unsigned int dd_refreshTimer = 0;
 
 static Interface dd_currentInterface = DASHBOARD_INTERFACE;
 Indicator** dd_currentIndicators =  (void*)0 ;
@@ -1667,7 +1739,7 @@ unsigned char dd_onStartupCounterLimit = 0;
 unsigned char dd_onInterfaceChangeCounterLimit = 0;
 
 static char dd_notificationFlag =  0 ;
-char dd_notificationIsTimed =  0 ;
+static char dd_notificationOnScreen=  0 ;
 unsigned int dd_notificationTimeoutCounter = 0;
 
 void dd_GraphicController_timerSetup(void) {
@@ -1675,7 +1747,7 @@ void dd_GraphicController_timerSetup(void) {
  setTimer( 1 ,  (1.0 / 10 ) );
   IFS0bits.T1IF  = 0 ;
 }
-#line 58 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 64 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 unsigned char dd_GraphicController_getTmrCounterLimit(unsigned int period)
 {
  return (unsigned char) floor(period/1000.0* 10 );
@@ -1759,6 +1831,18 @@ void dd_GraphicController_unsetNotificationFlag (void){
  dd_notificationFlag =  0 ;
 }
 
+void dd_GraphicController_setOnScreenNotification (void){
+ dd_notificationOnScreen =  1 ;
+}
+
+void dd_GraphicController_unsetOnScreenNotification (void){
+ dd_notificationOnScreen =  0 ;
+}
+
+static char dd_GraphicController_getOnScreenNotification (void){
+ return dd_notificationOnScreen;
+}
+
 void dd_GraphicController_clearNotification(void) {
  eGlcd_clear();
  dd_isFrameUpdateForced =  1 ;
@@ -1770,36 +1854,41 @@ void dd_GraphicController_fireNotification(char *text, NotificationType type) {
  dd_printMessage(dd_notificationText);
 }
 
+void dd_GraphicController_fixNotification(char *text){
+ strcpy(dd_onScreenNotificationText, text);
+ dd_printMessage(dd_onScreenNotificationText);
+ dd_GraphicController_setOnScreenNotification();
+}
+
 void dd_GraphicController_clearPrompt(){
  dd_GraphicController_unsetNotificationFlag();
+ dd_GraphicController_unsetOnScreenNotification();
  dd_Interface_print[dd_currentInterface]();
 }
-#line 160 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 185 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type) {
  dd_notificationTimeoutCounter = dd_GraphicController_getTmrCounterLimit(time);
  dd_GraphicController_setNotificationFlag();
- dd_notificationIsTimed = 1;
  dd_GraphicController_fireNotification(text, type);
 }
 
-void dd_GraphicController_firePromptNotification(char *text) {
- if(dd_notificationFlag)
- dd_GraphicController_clearNotification();
- else
- eGlcd_clear();
-
- dd_notificationIsTimed = 0;
- dd_GraphicController_setNotificationFlag();
- dd_GraphicController_fireNotification(text, PROMPT);
-}
 
 void dd_GraphicController_handleNotification(void) {
  if (dd_notificationTimeoutCounter > 0) {
  dd_notificationTimeoutCounter--;
+ dd_Interface_print[dd_currentInterface]();
  dd_printMessage(dd_notificationText);
  Lcd_PrintFrame();
  if (dd_notificationTimeoutCounter == 0) {
+ if ((d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE) && dHardReset_hasResetOccurred()
+ && dAcc_hasResetOccurred() && dAutocross_hasResetOccurred() ){
+ dd_GraphicController_fixNotification("READY");
+ dAcc_clearReset();
+ dAutocross_clearReset();
+ dd_GraphicController_setOnScreenNotification();
+ }else
  dd_GraphicController_clearNotification();
+ dd_notificationFlag =  0 ;
  }
  }
 }
@@ -1869,6 +1958,14 @@ void dd_printLogoAnimation() {
  }
 }
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void){
+ return dd_refreshTimer;
+}
+
+void dd_GraphicController_resetRefreshTimerValue(void){
+ dd_refreshTimer = 0;
+}
+
 int __counter = 0;
 
 void dd_GraphicController_onTimerInterrupt(void)
@@ -1884,6 +1981,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
  __counter++;
+ dd_refreshTimer++;
 
  if(dd_onStartup)
  {
@@ -1907,7 +2005,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 298 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 330 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -1917,7 +2015,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
  if (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE){
- dd_printMessage("READY");
+ dd_GraphicController_fixNotification("READY");
  }
  dd_isFrameUpdateForced =  0 ;
  }
@@ -1925,12 +2023,12 @@ void dd_GraphicController_onTimerInterrupt(void)
  else
  {
  if (dd_notificationFlag) {
- if(dd_notificationIsTimed)
  dd_GraphicController_handleNotification();
- else
- {
- dd_printMessage(dd_notificationText);
- }
+ }else if (dd_GraphicController_getOnScreenNotification()){
+ dd_Interface_print[dd_currentInterface]();
+ Lcd_PrintFrame();
+ dd_isFrameUpdateForced =  0 ;
+ dd_printMessage(dd_onScreenNotificationText);
  }else{
  dd_Interface_print[dd_currentInterface]();
  Lcd_PrintFrame();
@@ -1940,5 +2038,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 341 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 373 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

@@ -22,16 +22,32 @@
 #include "d_ui_controller.h"
 #include "d_operating_modes.h"
 #include "buzzer.h"
+#include "d_hardReset.h"
 
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
 static char dAcc_readyToGo = FALSE;
+unsigned int dAcc_resetOccurred = FALSE;
 unsigned int dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
 
 void dAcc_init(void) {
     dAcc_autoAcceleration = FALSE;
     dAcc_releasingClutch = FALSE;  
     dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
+    if (dHardReset_hasBeenReset())
+         dAcc_resetOccurred = TRUE;
+}
+
+unsigned int dAcc_hasResetOccurred(void){
+   return dAcc_resetOccurred;
+}
+
+void dAcc_clearReset(void){
+   dAcc_resetOccurred = FALSE;
+}
+
+void dAcc_restartAcc(void){
+    Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_STOP_ACCELERATION);
 }
 
 void dAcc_startAutoAcceleration(void){
@@ -53,7 +69,7 @@ void dAcc_feedbackGCU(unsigned int value){
       if(value == COMMAND_START_ACCELERATION){
           dd_GraphicController_clearPrompt();
           dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
-          dd_printMessage("STEADY");
+          dd_GraphicController_fixNotification("STEADY");
       } else if (value == COMMAND_START_CLUTCH_RELEASE){
           dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
           dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
@@ -66,7 +82,9 @@ void dAcc_feedbackGCU(unsigned int value){
 void dAcc_stopAutoAcceleration(void) {
      dAcc_autoAcceleration = FALSE;
      dAcc_releasingClutch = FALSE;
-     d_UI_AccModeInit();
+     if (d_UI_getOperatingMode() == ACC_MODE){
+        d_UI_AccModeInit();
+     }
 }
 
 void dAcc_stopAutoAccelerationFromSW(void){

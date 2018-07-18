@@ -7,6 +7,12 @@
 
 void dAutocross_init(void);
 
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
+
 void dAutocross_requestAction(void);
 
 char dAutocross_isAutocrossActive(void);
@@ -226,12 +232,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -506,16 +517,70 @@ void dDCU_sentAcquiringSignal(void);
 void dDCU_tick(void);
 
 void dDCU_isAcquiringSet(void);
-#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
+
+
+
+
+
+
+
+
+
+void EEPROM_writeInt(unsigned int address, unsigned int value);
+
+unsigned int EEPROM_readInt(unsigned int address);
+
+void EEPROM_writeArray(unsigned int address, unsigned int *values);
+
+void EEPROM_readArray(unsigned int address, unsigned int *values);
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
+void dHardReset_init(void);
+
+void dHardReset_reset(void);
+
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
+char dHardReset_hasBeenReset(void);
+
+void dHardReset_setFlag(void);
+
+void dHardReset_unsetFlag(void);
+
+unsigned int dHardReset_getCounter(void);
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
 static char dAutocross_isActive =  0 ;
 static char dAutocross_releasingClutch =  0 ;
 static char dAutocross_readyToGo =  0 ;
+unsigned int dAutocross_resetOccurred =  0 ;
 unsigned int dAutocross_GCUConfirmed =  0 ;
 
 void dAutocross_init(void) {
  dAutocross_isActive =  0 ;
  dAutocross_releasingClutch =  0 ;
  dAutocross_GCUConfirmed =  0 ;
+ if (dHardReset_hasBeenReset())
+ dAutocross_resetOccurred =  1 ;
+}
+
+unsigned int dAutocross_hasResetOccurred(void){
+ return dAutocross_resetOccurred;
+}
+
+void dAutocross_clearReset(void){
+ dAutocross_resetOccurred =  0 ;
+}
+
+void dAcc_restartAutocross(void){
+ Can_resetWritePacket();
+ Can_addIntToWritePacket( 50 );
+ Can_addIntToWritePacket( 0 );
+ Can_write( 0b11111110000 );
 }
 
 unsigned int dAutocross_hasGCUConfirmed(){
@@ -530,7 +595,7 @@ void dAutocross_startAutocross(void){
  Can_addIntToWritePacket(dDCU_isAcquiring());
  Can_addIntToWritePacket( 1 );
  Can_write( 0b11111110000 );
- dd_printMessage("STEADY");
+ dd_GraphicController_fixNotification("STEADY");
  }
 }
 
@@ -547,7 +612,9 @@ void dAutocross_startClutchRelease(void){
 void dAutocross_stopAutocross(void) {
  dAutocross_isActive =  0 ;
  dAutocross_releasingClutch =  0 ;
+ if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
  d_UI_AutocrossModeInit();
+ }
 }
 
 

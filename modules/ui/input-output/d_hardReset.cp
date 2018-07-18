@@ -22,6 +22,12 @@ void dHardReset_init(void);
 
 void dHardReset_reset(void);
 
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
 char dHardReset_hasBeenReset(void);
 
 void dHardReset_setFlag(void);
@@ -273,12 +279,17 @@ void dd_GraphicController_setCollectionInterface(Interface interface, Indicator*
 
 Interface dd_GraphicController_getInterface(void);
 
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
+
+void dd_GraphicController_resetRefreshTimerValue(void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 54 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
+#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
+
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
-void dd_GraphicController_firePromptNotification(char *text);
-void dd_GraphicController_clearPrompt();
+
+void dd_GraphicController_fixNotification(char *text);
 
 void dd_GraphicController_forceFullFrameUpdate(void);
 
@@ -298,9 +309,188 @@ char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../display/dd_indicators.h"
-#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_hardReset.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+typedef enum aac_notifications{
+ MEX_ON,
+ MEX_READY,
+ MEX_GO,
+ MEX_OFF,
+}aac_notifications;
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+void dAcc_startClutchRelease(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAcc_restartAutocross(void);
+
+void dAutocross_requestAction(void);
+
+char dAutocross_isAutocrossActive(void);
+
+unsigned int dAutocross_hasGCUConfirmed(void);
+
+void dAutocross_startClutchRelease(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
+
+
+
+
+
+void dControls_init(void);
+
+void dControls_disableCentralSelector();
+
+void d_controls_onDRS(void);
+
+void d_controls_onAux2(void);
+
+void d_controls_onStartAcquisition(void);
+
+void d_controls_onNeutral(void);
+
+void d_controls_onReset(void);
+
+void d_controls_onGearDown(void);
+
+void d_controls_onGearUp(void);
+
+void d_controls_onStart(void);
+
+void d_controls_onLeftEncoder(signed char movements);
+
+void d_controls_onRightEncoder(signed char movements);
+
+void d_controls_onSelectorSwitched(signed char position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 45 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+typedef enum {
+ BOARD_DEBUG_MODE,
+ SETTINGS_MODE,
+ DEBUG_MODE,
+ CRUISE_MODE,
+ ACC_MODE,
+ AUTOCROSS_MODE
+} OperatingMode;
+
+
+
+
+
+extern FloatIndicator ind_oil_temp_in;
+extern FloatIndicator ind_th2o;
+extern IntegerIndicator ind_tps;
+extern IntegerIndicator ind_traction_control;
+extern FloatIndicator ind_oil_press;
+extern FloatIndicator ind_vbat;
+extern IntegerIndicator ind_rpm;
+extern IntegerIndicator ind_clutch_pos;
+extern IntegerIndicator ind_clutch_fb;
+extern IntegerIndicator ind_adc1_read;
+extern IntegerIndicator ind_drs;
+extern BooleanIndicator ind_efi_status;
+extern IntegerIndicator ind_efi_crash_counter;
+extern FloatIndicator ind_th2o_sx_in;
+extern FloatIndicator ind_th2o_sx_out;
+extern FloatIndicator ind_th2o_dx_in;
+extern FloatIndicator ind_th2o_dx_out;
+
+extern IntegerIndicator ind_ebb;
+extern FloatIndicator ind_oil_temp_out;
+extern IntegerIndicator ind_efi_slip;
+extern IntegerIndicator ind_launch_control;
+extern FloatIndicator ind_fuel_press;
+extern FloatIndicator ind_ebb_motor_curr;
+
+
+
+
+
+extern IntCoupleIndicator ind_ebb_board;
+extern IntCoupleIndicator ind_dcu_board;
+extern IntCoupleIndicator ind_dau_fl_board;
+extern IntCoupleIndicator ind_dau_fr_board;
+extern IntCoupleIndicator ind_dau_r_board;
+extern IntegerIndicator ind_sw_board;
+extern IntegerIndicator ind_gcu_temp;
+
+
+
+
+extern IntegerIndicator ind_fuel_pump;
+extern IntegerIndicator ind_H2O_pump;
+extern IntegerIndicator ind_H2O_fans;
+extern IntegerIndicator ind_clutch;
+extern IntegerIndicator ind_drs_curr;
+extern IntegerIndicator ind_gear_motor;
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_init[ 6 ])(void);
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+extern void (*d_OperatingMode_close[ 6 ])(void);
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_setOperatingMode(OperatingMode mode);
+void d_UI_AutocrossModeInit(void);
+void d_UI_AccModeInit(void);
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_onSettingsChange(signed char movements);
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+void d_UI_SettingsModeClose(void);
+void d_UI_AutocrossModeClose(void);
+void d_UI_AccModeClose(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
+
+OperatingMode d_UI_getOperatingMode(void);
+
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_hardReset.c"
 unsigned int dHardReset_counter = 0;
 int lastId=0;
+unsigned int d_hardResetOccurred =  0 ;
 
 void dHardReset_init(void) {
 char msg[14];
@@ -319,6 +509,24 @@ void dHardReset_reset(void) {
  asm {
  reset
  }
+}
+
+void dHardReset_handleReset(void){
+ dd_GraphicController_fireTimedNotification( 1000 , "RESET", WARNING);
+ if (d_UI_getOperatingMode() == ACC_MODE){
+ dAcc_restartAcc();
+ }else if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
+ dAcc_restartAutocross();
+ }
+ d_hardResetOccurred =  1 ;
+}
+
+unsigned int dHardReset_hasResetOccurred(void){
+ return d_hardResetOccurred;
+}
+
+void dHardReset_unsetHardResetOccurred(void){
+ d_hardResetOccurred =  0 ;
 }
 
 char dHardReset_hasBeenReset(void) {

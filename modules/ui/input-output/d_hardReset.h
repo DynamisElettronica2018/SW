@@ -16,6 +16,12 @@ void dHardReset_init(void);
 
 void dHardReset_reset(void);
 
+void dHardReset_handleReset(void);
+
+unsigned int dHardReset_hasResetOccurred(void);
+
+void dHardReset_unsetHardResetOccurred(void);
+
 char dHardReset_hasBeenReset(void);
 
 void dHardReset_setFlag(void);
