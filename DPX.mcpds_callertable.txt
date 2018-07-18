@@ -193,6 +193,7 @@ main
 									CAN1IDToRegs
 								Can_getWriteFlags
 						dAcc_stopAutoAcceleration
+							dd_GraphicController_unsetOnScreenNotification
 							d_UI_getOperatingMode
 							d_UI_AccModeInit
 				d_UI_AutocrossModeClose
@@ -202,6 +203,7 @@ main
 						dDCU_isAcquiring
 						Can_write
 						dAutocross_stopAutocross
+							dd_GraphicController_unsetOnScreenNotification
 							d_UI_getOperatingMode
 							d_UI_AutocrossModeInit
 			d_selectorPositionToMode

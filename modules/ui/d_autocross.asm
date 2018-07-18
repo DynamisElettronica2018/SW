@@ -172,25 +172,27 @@ _dAutocross_stopAutocross:
 	MOV	#lo_addr(d_autocross_dAutocross_releasingClutch), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_autocross.c,75 :: 		if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
+;d_autocross.c,75 :: 		dd_GraphicController_unsetOnScreenNotification();
+	CALL	_dd_GraphicController_unsetOnScreenNotification
+;d_autocross.c,76 :: 		if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
 	CALL	_d_UI_getOperatingMode
 	CP.B	W0, #5
 	BRA Z	L__dAutocross_stopAutocross27
 	GOTO	L_dAutocross_stopAutocross2
 L__dAutocross_stopAutocross27:
-;d_autocross.c,76 :: 		d_UI_AutocrossModeInit();
+;d_autocross.c,77 :: 		d_UI_AutocrossModeInit();
 	CALL	_d_UI_AutocrossModeInit
-;d_autocross.c,77 :: 		}
-L_dAutocross_stopAutocross2:
 ;d_autocross.c,78 :: 		}
+L_dAutocross_stopAutocross2:
+;d_autocross.c,79 :: 		}
 L_end_dAutocross_stopAutocross:
 	RETURN
 ; end of _dAutocross_stopAutocross
 
 _dAutocross_feedbackGCU:
 
-;d_autocross.c,81 :: 		void dAutocross_feedbackGCU(unsigned int value){
-;d_autocross.c,82 :: 		if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
+;d_autocross.c,82 :: 		void dAutocross_feedbackGCU(unsigned int value){
+;d_autocross.c,83 :: 		if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
 	PUSH	W10
 	CALL	_d_UI_getOperatingMode
 	POP	W10
@@ -198,65 +200,65 @@ _dAutocross_feedbackGCU:
 	BRA Z	L__dAutocross_feedbackGCU29
 	GOTO	L_dAutocross_feedbackGCU3
 L__dAutocross_feedbackGCU29:
-;d_autocross.c,83 :: 		if(value == COMMAND_START_AUTOCROSS){
+;d_autocross.c,84 :: 		if(value == COMMAND_START_AUTOCROSS){
 	CP	W10, #1
 	BRA Z	L__dAutocross_feedbackGCU30
 	GOTO	L_dAutocross_feedbackGCU4
 L__dAutocross_feedbackGCU30:
-;d_autocross.c,84 :: 		dAutocross_GCUConfirmed = COMMAND_START_AUTOCROSS;
+;d_autocross.c,85 :: 		dAutocross_GCUConfirmed = COMMAND_START_AUTOCROSS;
 	MOV	#1, W0
 	MOV	W0, _dAutocross_GCUConfirmed
-;d_autocross.c,85 :: 		} else if (value == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
+;d_autocross.c,86 :: 		} else if (value == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
 	GOTO	L_dAutocross_feedbackGCU5
 L_dAutocross_feedbackGCU4:
 	CP	W10, #2
 	BRA Z	L__dAutocross_feedbackGCU31
 	GOTO	L_dAutocross_feedbackGCU6
 L__dAutocross_feedbackGCU31:
-;d_autocross.c,86 :: 		dAutocross_GCUConfirmed = COMMAND_AUTOCROSS_START_CLUTCH_RELEASE;
+;d_autocross.c,87 :: 		dAutocross_GCUConfirmed = COMMAND_AUTOCROSS_START_CLUTCH_RELEASE;
 	MOV	#2, W0
 	MOV	W0, _dAutocross_GCUConfirmed
-;d_autocross.c,87 :: 		} else if (value == COMMAND_STOP_AUTOCROSS){
+;d_autocross.c,88 :: 		} else if (value == COMMAND_STOP_AUTOCROSS){
 	GOTO	L_dAutocross_feedbackGCU7
 L_dAutocross_feedbackGCU6:
 	CP	W10, #0
 	BRA Z	L__dAutocross_feedbackGCU32
 	GOTO	L_dAutocross_feedbackGCU8
 L__dAutocross_feedbackGCU32:
-;d_autocross.c,88 :: 		dAutocross_stopAutocross();
+;d_autocross.c,89 :: 		dAutocross_stopAutocross();
 	CALL	_dAutocross_stopAutocross
-;d_autocross.c,89 :: 		}
+;d_autocross.c,90 :: 		}
 L_dAutocross_feedbackGCU8:
 L_dAutocross_feedbackGCU7:
 L_dAutocross_feedbackGCU5:
-;d_autocross.c,90 :: 		}
-L_dAutocross_feedbackGCU3:
 ;d_autocross.c,91 :: 		}
+L_dAutocross_feedbackGCU3:
+;d_autocross.c,92 :: 		}
 L_end_dAutocross_feedbackGCU:
 	RETURN
 ; end of _dAutocross_feedbackGCU
 
 _dAutocross_stopAutocrossFromSW:
 
-;d_autocross.c,93 :: 		void dAutocross_stopAutocrossFromSW(void){
-;d_autocross.c,94 :: 		Can_resetWritePacket();
+;d_autocross.c,94 :: 		void dAutocross_stopAutocrossFromSW(void){
+;d_autocross.c,95 :: 		Can_resetWritePacket();
 	PUSH	W10
 	PUSH	W11
 	CALL	_Can_resetWritePacket
-;d_autocross.c,95 :: 		Can_addIntToWritePacket(dDCU_isAcquiring());
+;d_autocross.c,96 :: 		Can_addIntToWritePacket(dDCU_isAcquiring());
 	CALL	_dDCU_isAcquiring
 	ZE	W0, W10
 	CALL	_Can_addIntToWritePacket
-;d_autocross.c,96 :: 		Can_addIntToWritePacket(COMMAND_STOP_AUTOCROSS);
+;d_autocross.c,97 :: 		Can_addIntToWritePacket(COMMAND_STOP_AUTOCROSS);
 	CLR	W10
 	CALL	_Can_addIntToWritePacket
-;d_autocross.c,97 :: 		Can_write(SW_AUX_ID);
+;d_autocross.c,98 :: 		Can_write(SW_AUX_ID);
 	MOV	#2032, W10
 	MOV	#0, W11
 	CALL	_Can_write
-;d_autocross.c,98 :: 		dAutocross_stopAutocross();
+;d_autocross.c,99 :: 		dAutocross_stopAutocross();
 	CALL	_dAutocross_stopAutocross
-;d_autocross.c,99 :: 		}
+;d_autocross.c,100 :: 		}
 L_end_dAutocross_stopAutocrossFromSW:
 	POP	W11
 	POP	W10
@@ -265,21 +267,21 @@ L_end_dAutocross_stopAutocrossFromSW:
 
 _dAutocross_requestAction:
 
-;d_autocross.c,101 :: 		void dAutocross_requestAction(){
-;d_autocross.c,102 :: 		if(!dAutocross_isActive){
+;d_autocross.c,102 :: 		void dAutocross_requestAction(){
+;d_autocross.c,103 :: 		if(!dAutocross_isActive){
 	MOV	#lo_addr(d_autocross_dAutocross_isActive), W0
 	CP0.B	[W0]
 	BRA Z	L__dAutocross_requestAction35
 	GOTO	L_dAutocross_requestAction9
 L__dAutocross_requestAction35:
-;d_autocross.c,103 :: 		dd_GraphicController_clearPrompt();
+;d_autocross.c,104 :: 		dd_GraphicController_clearPrompt();
 	CALL	_dd_GraphicController_clearPrompt
-;d_autocross.c,104 :: 		dAutocross_startAutocross();
+;d_autocross.c,105 :: 		dAutocross_startAutocross();
 	CALL	_dAutocross_startAutocross
-;d_autocross.c,105 :: 		}
+;d_autocross.c,106 :: 		}
 	GOTO	L_dAutocross_requestAction10
 L_dAutocross_requestAction9:
-;d_autocross.c,106 :: 		else if (dAutocross_readyToGo && dAutocross_GCUConfirmed == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
+;d_autocross.c,107 :: 		else if (dAutocross_readyToGo && dAutocross_GCUConfirmed == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
 	MOV	#lo_addr(d_autocross_dAutocross_readyToGo), W0
 	CP0.B	[W0]
 	BRA NZ	L__dAutocross_requestAction36
@@ -291,33 +293,33 @@ L__dAutocross_requestAction36:
 	GOTO	L__dAutocross_requestAction15
 L__dAutocross_requestAction37:
 L__dAutocross_requestAction14:
-;d_autocross.c,107 :: 		dd_GraphicController_clearPrompt();
+;d_autocross.c,108 :: 		dd_GraphicController_clearPrompt();
 	CALL	_dd_GraphicController_clearPrompt
-;d_autocross.c,108 :: 		dAutocross_readyToGo = FALSE;
+;d_autocross.c,109 :: 		dAutocross_readyToGo = FALSE;
 	MOV	#lo_addr(d_autocross_dAutocross_readyToGo), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_autocross.c,109 :: 		dAutocross_releasingClutch = TRUE;
+;d_autocross.c,110 :: 		dAutocross_releasingClutch = TRUE;
 	MOV	#lo_addr(d_autocross_dAutocross_releasingClutch), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_autocross.c,106 :: 		else if (dAutocross_readyToGo && dAutocross_GCUConfirmed == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
+;d_autocross.c,107 :: 		else if (dAutocross_readyToGo && dAutocross_GCUConfirmed == COMMAND_AUTOCROSS_START_CLUTCH_RELEASE){
 L__dAutocross_requestAction16:
 L__dAutocross_requestAction15:
-;d_autocross.c,110 :: 		}
-L_dAutocross_requestAction10:
 ;d_autocross.c,111 :: 		}
+L_dAutocross_requestAction10:
+;d_autocross.c,112 :: 		}
 L_end_dAutocross_requestAction:
 	RETURN
 ; end of _dAutocross_requestAction
 
 _dAutocross_isAutocrossActive:
 
-;d_autocross.c,113 :: 		char dAutocross_isAutocrossActive(void) {
-;d_autocross.c,114 :: 		return dAutocross_isActive;
+;d_autocross.c,114 :: 		char dAutocross_isAutocrossActive(void) {
+;d_autocross.c,115 :: 		return dAutocross_isActive;
 	MOV	#lo_addr(d_autocross_dAutocross_isActive), W0
 	MOV.B	[W0], W0
-;d_autocross.c,115 :: 		}
+;d_autocross.c,116 :: 		}
 L_end_dAutocross_isAutocrossActive:
 	RETURN
 ; end of _dAutocross_isAutocrossActive

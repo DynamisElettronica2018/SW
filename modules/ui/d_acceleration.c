@@ -82,6 +82,7 @@ void dAcc_feedbackGCU(unsigned int value){
 void dAcc_stopAutoAcceleration(void) {
      dAcc_autoAcceleration = FALSE;
      dAcc_releasingClutch = FALSE;
+     dd_GraphicController_unsetOnScreenNotification();
      if (d_UI_getOperatingMode() == ACC_MODE){
         d_UI_AccModeInit();
      }

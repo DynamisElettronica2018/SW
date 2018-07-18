@@ -243,8 +243,10 @@ unsigned int dd_GraphicController_getRefreshTimerValue(void);
 
 void dd_GraphicController_resetRefreshTimerValue(void);
 
+void dd_GraphicController_unsetOnScreenNotification (void);
+
 int dd_GraphicController_getNotificationFlag(void);
-#line 58 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
 
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
@@ -619,6 +621,7 @@ void dAcc_feedbackGCU(unsigned int value){
 void dAcc_stopAutoAcceleration(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
+ dd_GraphicController_unsetOnScreenNotification();
  if (d_UI_getOperatingMode() == ACC_MODE){
  d_UI_AccModeInit();
  }

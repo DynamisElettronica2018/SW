@@ -42,6 +42,8 @@ unsigned int dd_GraphicController_getRefreshTimerValue(void);
 
 void dd_GraphicController_resetRefreshTimerValue(void);
 
+void dd_GraphicController_unsetOnScreenNotification (void);
+
 int dd_GraphicController_getNotificationFlag(void);
 
 /** \brief Launches an alert notification on screen.

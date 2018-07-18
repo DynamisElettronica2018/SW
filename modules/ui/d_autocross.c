@@ -72,6 +72,7 @@ void dAutocross_startClutchRelease(void){
 void dAutocross_stopAutocross(void) {
      dAutocross_isActive = FALSE;
      dAutocross_releasingClutch = FALSE;
+     dd_GraphicController_unsetOnScreenNotification();
      if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
         d_UI_AutocrossModeInit();
      }
