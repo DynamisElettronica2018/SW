@@ -191,7 +191,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -318,7 +318,6 @@ typedef enum {
 
 
 
-
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -336,8 +335,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -366,17 +365,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -465,26 +464,44 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+void dSignalLed_init(void);
+
+void dSignalLed_switch(unsigned char led);
+
+void dSignalLed_set(unsigned char led);
+
+void dSignalLed_unset(unsigned char led);
+#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
 char d_drs_status =  0 ;
+char d_drs_feedback =  0 ;
+char d_drs_lastValue =  0 ;
 
 void d_drs_propagateChange(void){
- if(d_drs_status== 1 ){
- Can_writeByte( 0b01000000101 ,  0 );
+ if(d_drs_status ==  1  && d_drs_feedback ==  1 ){
+ Can_writeInt( 0b01000000101 ,  0 );
  d_drs_status =  0 ;
- dd_GraphicController_fireTimedNotification( 500 , "DRS CLOSE", MESSAGE);
- }else if(d_drs_status== 0 ){
- Can_writeByte( 0b01000000101 ,  1 );
+ dSignalLed_unset( 3 );
+ }else if(d_drs_status ==  0  && d_drs_feedback ==  0 ){
+ Can_writeInt( 0b01000000101 ,  1 );
  d_drs_status =  1 ;
- dd_GraphicController_fireTimedNotification( 500 , "DRS OPEN", MESSAGE);
+ dSignalLed_set( 3 );
+#line 31 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
  }
 }
 
 void d_drs_setValueFromCAN(unsigned int value){
  if(d_UI_getOperatingMode() != ACC_MODE){
- if(d_drs_status==value){
+ if(d_drs_status==value && d_drs_status== 1 ){
  dd_Indicator_setIntValueP(&ind_drs.base, value);
- }else
- Buzzer_bip();
+ dd_GraphicController_fireTimedNotification( 500 , "DRS OPEN", MESSAGE);
+ }else if(d_drs_status==value && d_drs_status== 0 ){
+ dd_Indicator_setIntValueP(&ind_drs.base, value);
+ dd_GraphicController_fireTimedNotification( 500 , "DRS CLOSE", MESSAGE);
+ }
+ d_drs_feedback = value;
  }
 }

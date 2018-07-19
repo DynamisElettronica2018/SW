@@ -40,7 +40,7 @@ void dHardReset_handleReset(void){
     if (d_UI_getOperatingMode() == ACC_MODE){
          dAcc_restartAcc();
     }else if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
-         dAcc_restartAutocross();
+         dAutocross_restartAutocross();
     }
     d_hardResetOccurred = TRUE;
 }

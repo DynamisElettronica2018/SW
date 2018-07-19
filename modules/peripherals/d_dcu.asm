@@ -101,8 +101,8 @@ _dDCU_stopAcquisition:
 ;d_dcu.c,46 :: 		Can_addIntToWritePacket(COMMAND_DCU_STOP_ACQUISITION);
 	MOV	#2, W10
 	CALL	_Can_addIntToWritePacket
-;d_dcu.c,47 :: 		Can_addIntToWritePacket(dAutocross_isAutocrossActive());
-	CALL	_dAutocross_isAutocrossActive
+;d_dcu.c,47 :: 		Can_addIntToWritePacket(dAutocross_isActive());
+	CALL	_dAutocross_isActive
 	ZE	W0, W10
 	CALL	_Can_addIntToWritePacket
 ;d_dcu.c,48 :: 		Can_write(SW_AUX_ID);

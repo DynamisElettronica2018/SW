@@ -54,7 +54,6 @@ typedef enum {
 
 /********************************* INDICATORS *********************************/
 
-//extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -72,8 +71,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;

@@ -68,8 +68,8 @@ L_dHardReset_handleReset0:
 	BRA Z	L__dHardReset_handleReset7
 	GOTO	L_dHardReset_handleReset2
 L__dHardReset_handleReset7:
-;d_hardReset.c,43 :: 		dAcc_restartAutocross();
-	CALL	_dAcc_restartAutocross
+;d_hardReset.c,43 :: 		dAutocross_restartAutocross();
+	CALL	_dAutocross_restartAutocross
 ;d_hardReset.c,44 :: 		}
 L_dHardReset_handleReset2:
 L_dHardReset_handleReset1:

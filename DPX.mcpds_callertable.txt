@@ -349,7 +349,7 @@ main
 		d_UI_getOperatingMode
 		dAcc_restartAcc
 			Can_writeInt
-		dAcc_restartAutocross
+		dAutocross_restartAutocross
 			Can_resetWritePacket
 			Can_addIntToWritePacket
 			Can_write
@@ -378,7 +378,7 @@ external4
 				dd_GraphicController_fireTimedNotification
 				Can_resetWritePacket
 				Can_addIntToWritePacket
-				dAutocross_isAutocrossActive
+				dAutocross_isActive
 				Can_write
 			dDCU_startAcquisition
 				Can_writeInt
@@ -389,34 +389,15 @@ external4
 				Can_writeInt
 			Can_writeInt
 		dAutocross_requestAction
-			dd_GraphicController_clearPrompt
-				dd_GraphicController_unsetNotificationFlag
-				dd_GraphicController_unsetOnScreenNotification
-				dd_Dashboard_print
-				dd_Interface_printMenu
-				dd_Dashboard_init
-				dd_Menu_init
-				d_UI_BoardDebugModeInit
-				d_UI_SettingsModeInit
-				d_UI_DebugModeInit
-				d_UI_CruiseModeInit
-				d_UI_AccModeInit
-				d_UI_AutocrossModeInit
-				d_UI_BoardDebugModeClose
-				d_UI_SettingsModeClose
-				d_UI_DebugModeClose
-				d_UI_CruiseModeClose
-				d_UI_AccModeClose
-				d_UI_AutocrossModeClose
 			dAutocross_startAutocross
 				Can_resetWritePacket
 				Can_addIntToWritePacket
 				dDCU_isAcquiring
 				Can_write
-				dd_GraphicController_fixNotification
-					strcpy
-					dd_printMessage
-					dd_GraphicController_setOnScreenNotification
+			Can_resetWritePacket
+			Can_addIntToWritePacket
+			dDCU_isAcquiring
+			Can_write
 		dEbb_setPositionZero
 			Can_writeInt
 			dd_GraphicController_fireTimedNotification
@@ -448,21 +429,33 @@ CAN_Interrupt
 		dd_Indicator_setBoolValueP
 			dd_Indicator_requestPrintUpdateP
 		dEfiSense_isDead
-		dSignalLed_set
 	dEfiSense_getAccValue
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
 		dAcc_hasGCUConfirmed
 		dAcc_startClutchRelease
 			dd_GraphicController_clearPrompt
+				dd_GraphicController_unsetNotificationFlag
+				dd_GraphicController_unsetOnScreenNotification
+				dd_Dashboard_print
+				dd_Interface_printMenu
+				dd_Dashboard_init
+				dd_Menu_init
+				d_UI_BoardDebugModeInit
+				d_UI_SettingsModeInit
+				d_UI_DebugModeInit
+				d_UI_CruiseModeInit
+				d_UI_AccModeInit
+				d_UI_AutocrossModeInit
+				d_UI_BoardDebugModeClose
+				d_UI_SettingsModeClose
+				d_UI_DebugModeClose
+				d_UI_CruiseModeClose
+				d_UI_AccModeClose
+				d_UI_AutocrossModeClose
 		dAutocross_hasGCUConfirmed
 		dAutocross_startClutchRelease
 			dd_GraphicController_clearPrompt
-			Can_resetWritePacket
-			Can_addIntToWritePacket
-			dDCU_isAcquiring
-			Can_write
-			dd_printMessage
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 		dd_Indicator_requestPrintUpdateP
@@ -525,10 +518,16 @@ CAN_Interrupt
 		d_UI_getOperatingMode
 		dd_GraphicController_clearPrompt
 		dd_GraphicController_fixNotification
+			strcpy
+			dd_printMessage
+			dd_GraphicController_setOnScreenNotification
 		dd_GraphicController_fireTimedNotification
 		dAcc_stopAutoAcceleration
 	dAutocross_feedbackGCU
 		d_UI_getOperatingMode
+		dd_GraphicController_clearPrompt
+		dd_GraphicController_fixNotification
+		dd_GraphicController_fireTimedNotification
 		dAutocross_stopAutocross
 	d_traction_control_setValueFromCAN
 		d_UI_getOperatingMode
@@ -537,17 +536,22 @@ CAN_Interrupt
 	d_drs_setValueFromCAN
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
-		Buzzer_bip
+		dd_GraphicController_fireTimedNotification
+	d_antistall_handle
+		dd_GraphicController_fixNotification
+		dd_GraphicController_clearPrompt
+		d_UI_getOperatingMode
+		dAcc_isTimeToGo
+		dd_GraphicController_fireTimedNotification
+		dAutocross_isTimeToGo
 	_Compare_Ge_Fp
 	_Long2Float
 external2
 	d_controls_onDRS
 		d_drs_propagateChange
-			Can_writeByte
-				Can_resetWritePacket
-				Can_addByteToWritePacket
-				Can_write
-			dd_GraphicController_fireTimedNotification
+			Can_writeInt
+			dSignalLed_unset
+			dSignalLed_set
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick
@@ -582,6 +586,9 @@ timer2_interrupt
 	dPaddle_getValue
 	dClutch_send
 		Can_writeByte
+			Can_resetWritePacket
+			Can_addByteToWritePacket
+			Can_write
 	dStart_isSwitchedOn
 	dStart_sendStartMessage
 		Can_writeByte

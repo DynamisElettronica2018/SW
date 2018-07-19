@@ -2207,6 +2207,8 @@ cxtx2sid
 d_a
 d_a
 d_a_bit
+d_antistall_flag
+d_antistall_handle
 d_cansetgear
 d_controls_encoderread
 d_controls_onaux2
@@ -2223,6 +2225,8 @@ d_controls_onstartacquisition
 d_currentgear
 d_currentoperatingmode
 d_dashboardsetting_updatevalue
+d_drs_feedback
+d_drs_lastvalue
 d_drs_propagatechange
 d_drs_setvaluefromcan
 d_drs_status
@@ -2272,10 +2276,10 @@ dacc_hasresetoccurred
 dacc_init
 dacc_isautoaccelerationactive
 dacc_isreleasingclutch
+dacc_istimetogo
 dacc_requestaction
 dacc_resetoccurred
 dacc_restartacc
-dacc_restartautocross
 dacc_startautoacceleration
 dacc_startclutchrelease
 dacc_stopautoacceleration
@@ -2286,9 +2290,12 @@ dautocross_gcuconfirmed
 dautocross_hasgcuconfirmed
 dautocross_hasresetoccurred
 dautocross_init
-dautocross_isautocrossactive
+dautocross_isactive
+dautocross_isreleasingclutch
+dautocross_istimetogo
 dautocross_requestaction
 dautocross_resetoccurred
+dautocross_restartautocross
 dautocross_startautocross
 dautocross_startclutchrelease
 dautocross_stopautocross
@@ -5094,8 +5101,6 @@ ilr1
 ilr2
 ilr3
 imagefileasarray
-ind_acc_code
-ind_acc_fb
 ind_adc1_read
 ind_clutch
 ind_clutch_fb
@@ -5112,6 +5117,8 @@ ind_ebb_motor_curr
 ind_efi_crash_counter
 ind_efi_slip
 ind_efi_status
+ind_fb_code
+ind_fb_value
 ind_fuel_press
 ind_fuel_pump
 ind_gcu_temp

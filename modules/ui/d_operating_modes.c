@@ -52,8 +52,8 @@ const unsigned char dd_carBoardsCount = 13; // 5 schede T&I + 2 schede T + 7 sen
 /********************************* INDICATORS *********************************/
 IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
 
-IntegerIndicator ind_acc_code = {ACC, "ACC", "Acc", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
-IntegerIndicator ind_acc_fb = {ACC_FB, "ACC FB", "Acc Fb", 6, 6, FALSE, TRUE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_fb_code = {FB_CODE, "FB CODE", "FB code", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
+IntegerIndicator ind_fb_value = {FB_VAL, "FB VAL", "FB Val", 6, 6, FALSE, TRUE, TRUE, INT, 1, "?", 0};
 
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3, FALSE, TRUE, TRUE, INT, 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9, FALSE, TRUE, TRUE, FLOAT, 1, "?", 0};
@@ -96,8 +96,8 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i primi 4 sono quelli che di default si vedono nella dashboard                                                                        //TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
-      (Indicator*)&ind_acc_code,
-      (Indicator*)&ind_acc_fb,
+      (Indicator*)&ind_fb_code,
+      (Indicator*)&ind_fb_value,
       (Indicator*)&ind_vbat,
       (Indicator*)&ind_oil_press,
       (Indicator*)&ind_ebb,                                              //dashboard standard:  EBB, TH20, VBAT, TOIL

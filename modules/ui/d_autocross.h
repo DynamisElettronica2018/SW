@@ -9,18 +9,26 @@ unsigned int dAutocross_hasResetOccurred(void);
 
 void dAutocross_clearReset(void);
 
-void dAcc_restartAutocross(void);
+void dAutocross_restartAutocross(void);
 
-void dAutocross_requestAction(void);
+unsigned int dAutocross_hasGCUConfirmed (void);
 
-char dAutocross_isAutocrossActive(void);
+void dAutocross_requestAction();
 
-unsigned int dAutocross_hasGCUConfirmed(void);
+char dAutocross_isAutoAccelerationActive(void);
 
-void dAutocross_startClutchRelease(void);
+char dAutocross_isReleasingClutch(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
 
 #endif //DPX_AUTOCROSS_H

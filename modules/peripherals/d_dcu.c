@@ -44,7 +44,7 @@ void dDCU_stopAcquisition(void) {
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
     Can_resetWritePacket();
     Can_addIntToWritePacket(COMMAND_DCU_STOP_ACQUISITION);
-    Can_addIntToWritePacket(dAutocross_isAutocrossActive());
+    Can_addIntToWritePacket(dAutocross_isActive());
     Can_write(SW_AUX_ID);
 }
 

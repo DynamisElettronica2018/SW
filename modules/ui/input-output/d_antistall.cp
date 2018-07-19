@@ -1,82 +1,16 @@
-#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-char log2(unsigned char byte);
-
-int round(double number);
-
-void unsignedIntToString(unsigned int number, char *text);
-
-void signedIntToString(int number, char *text);
-
-unsigned char getNumberDigitCount(unsigned char number);
-
-void emptyString(char* myString);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../../libs/dspic.h"
-void setAllPinAsDigital(void);
-
-void setInterruptPriority(unsigned char device, unsigned char priority);
-
-void setExternalInterrupt(unsigned char device, char edge);
-
-void switchExternalInterruptEdge(unsigned char);
-
-char getExternalInterruptEdge(unsigned char);
-
-void clearExternalInterrupt(unsigned char);
-
-void setTimer(unsigned char device, double timePeriod);
-
-void clearTimer(unsigned char device);
-
-void turnOnTimer(unsigned char device);
-
-void turnOffTimer(unsigned char device);
-
-unsigned int getTimerPeriod(double timePeriod, unsigned char prescalerIndex);
-
-unsigned char getTimerPrescaler(double timePeriod);
-
-double getExactTimerPrescaler(double timePeriod);
-
-void setupAnalogSampling(void);
-
-void turnOnAnalogModule();
-
-void turnOffAnalogModule();
-
-void startSampling(void);
-
-unsigned int getAnalogValue(void);
-
-void setAnalogPIN(unsigned char pin);
-
-void unsetAnalogPIN(unsigned char pin);
-
-void setAnalogInterrupt(void);
-
-void unsetAnalogInterrupt(void);
-
-void clearAnalogInterrupt(void);
+#line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_antistall.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_antistall.h"
 
 
-void setAutomaticSampling(void);
-
-void unsetAutomaticSampling(void);
 
 
-void setAnalogVoltageReference(unsigned char mode);
 
-void setAnalogDataOutputFormat(unsigned char adof);
 
-int getMinimumAnalogClockConversion(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_dashboard.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_indicators.h"
+
+void d_antistall_handle(unsigned int antistallValue);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -102,7 +36,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_indicators.h"
+#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -197,66 +131,88 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_dashboard.h"
-typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_dashboard.h"
-extern void dd_Dashboard_init();
-extern void dd_Dashboard_print(void);
-#line 39 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../display/dd_dashboard.h"
-unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+char log2(unsigned char byte);
+
+int round(double number);
+
+void unsignedIntToString(unsigned int number, char *text);
+
+void signedIntToString(int number, char *text);
+
+unsigned char getNumberDigitCount(unsigned char number);
+
+void emptyString(char* myString);
+#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+typedef enum {
+ DASHBOARD_INTERFACE,
+ MENU_INTERFACE,
+} Interface;
+#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_print[ 3 ])(void);
+#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern void (*dd_Interface_init[ 3 ])(void);
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+typedef enum {
+ MESSAGE,
+ WARNING,
+ ERROR,
+ PROMPT
+} NotificationType;
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
-void dd_Dashboard_printIndicators(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/../../peripherals/../../libs/can.h"
-void Can_init(void);
+extern char dd_notificationText[ 20 ];
 
-unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
+void dd_printMessage(char * title);
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+extern Indicator** dd_currentIndicators;
 
-void Can_writeByte(unsigned long int id, unsigned char dataOut);
+extern unsigned char dd_currentIndicatorsCount;
 
-void Can_writeInt(unsigned long int id, int dataOut);
+extern char dd_currentInterfaceTitle[ 20 ];
+#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_init(void);
+#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
-void Can_addIntToWritePacket(int dataOut);
+Interface dd_GraphicController_getInterface(void);
 
-void Can_addByteToWritePacket(unsigned char dataOut);
+unsigned int dd_GraphicController_getRefreshTimerValue(void);
 
-void Can_write(unsigned long int id);
+void dd_GraphicController_resetRefreshTimerValue(void);
 
-void Can_setWritePriority(unsigned int txPriority);
+void dd_GraphicController_unsetOnScreenNotification (void);
 
-void Can_resetWritePacket(void);
+int dd_GraphicController_getNotificationFlag(void);
+#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+void dd_GraphicController_clearPrompt(void);
 
-unsigned int Can_getWriteFlags(void);
+void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
 
-unsigned char Can_B0hasBeenReceived(void);
+void dd_GraphicController_fixNotification(char *text);
 
-unsigned char Can_B1hasBeenReceived(void);
+void dd_GraphicController_forceFullFrameUpdate(void);
 
-void Can_clearB0Flag(void);
+void dd_GraphicController_forceNextFrameUpdate(void);
 
-void Can_clearB1Flag(void);
+char dd_GraphicController_isFrameUpdateForced(void);
 
-void Can_clearInterrupt(void);
+void dd_GraphicController_releaseFullFrameUpdate(void);
 
-void Can_initInterrupt(void);
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/input-output/d_paddle.h"
-void dPaddle_init(void);
+void dd_GraphicController_invertColors(void);
 
-unsigned char dPaddle_getValue(void);
+char dd_GraphicController_areColorsInverted(void);
 
-void dPaddle_readSample(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_dashboard.h"
-#line 12 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_clutch.h"
-void dClutch_set(unsigned char value);
+void dd_GraphicController_queueColorInversion(void);
 
-void dClutch_injectActualValue(unsigned char value);
+char dd_GraphicController_isColorInversionQueued(void);
 
-unsigned char dClutch_get(void);
-
-void dClutch_send(void);
+void dd_GraphicController_onTimerInterrupt(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 
@@ -370,26 +326,105 @@ void d_UI_onSettingsChange(signed char movements);
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
-#line 9 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_clutch.c"
-unsigned char dClutch_actualValue = 0, dClutch_value = 0;
+#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+void d_UIController_init();
 
-void dClutch_send(void) {
- Can_writeByte( 0b01000000001 , dClutch_value);
-}
+OperatingMode d_UI_getOperatingMode(void);
 
-void dClutch_set(unsigned char value) {
- if (value > 100) {
- value = 100;
+int d_UI_OperatingModeChanged(void);
+
+OperatingMode d_selectorPositionToMode(signed char position);
+
+OperatingMode d_UI_getOperatingMode(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+
+
+
+
+
+
+
+
+
+void dAcc_init(void);
+
+unsigned int dAcc_hasResetOccurred(void);
+
+void dAcc_clearReset(void);
+
+void dAcc_restartAcc(void);
+
+unsigned int dAcc_hasGCUConfirmed (void);
+
+void dAcc_requestAction();
+
+char dAcc_isAutoAccelerationActive(void);
+
+char dAcc_isReleasingClutch(void);
+
+void dAcc_feedbackGCU(unsigned int value);
+
+void dAcc_stopAutoAccelerationFromSW(void);
+
+void dAcc_stopAutoAcceleration(void);
+
+char dAcc_isTimeToGo(void);
+
+char dAcc_isInSteady(void);
+
+void dAcc_startClutchRelease(void);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
+
+
+
+
+
+void dAutocross_init(void);
+
+unsigned int dAutocross_hasResetOccurred(void);
+
+void dAutocross_clearReset(void);
+
+void dAutocross_restartAutocross(void);
+
+unsigned int dAutocross_hasGCUConfirmed (void);
+
+void dAutocross_requestAction();
+
+char dAutocross_isAutoAccelerationActive(void);
+
+char dAutocross_isReleasingClutch(void);
+
+void dAutocross_feedbackGCU(unsigned int value);
+
+void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
+#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_antistall.c"
+char d_antistall_flag =  0 ;
+
+void d_antistall_handle(unsigned int antistallValue){
+ switch (antistallValue){
+ case  1 :
+ dd_GraphicController_fixNotification("ANTISTALL");
+ d_antistall_flag =  1 ;
+ break;
+ case  0 :
+ d_antistall_flag =  0 ;
+ dd_GraphicController_clearPrompt();
+ if (d_UI_getOperatingMode() == ACC_MODE && dAcc_isTimeToGo()){
+ dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
+ } else if(d_UI_getOperatingMode() == AUTOCROSS_MODE && dAutocross_isTimeToGo()){
+ dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
  }
- dClutch_value = value;
- dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_value);
-}
-
-void dClutch_injectActualValue(unsigned char value) {
- dClutch_actualValue = value;
- dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_actualValue);
-}
-
-unsigned char dClutch_get(void) {
- return dClutch_actualValue;
+ break;
+ default:
+ break;
+ }
 }

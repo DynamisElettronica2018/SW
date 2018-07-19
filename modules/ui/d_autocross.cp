@@ -11,19 +11,27 @@ unsigned int dAutocross_hasResetOccurred(void);
 
 void dAutocross_clearReset(void);
 
-void dAcc_restartAutocross(void);
+void dAutocross_restartAutocross(void);
 
-void dAutocross_requestAction(void);
+unsigned int dAutocross_hasGCUConfirmed (void);
 
-char dAutocross_isAutocrossActive(void);
+void dAutocross_requestAction();
 
-unsigned int dAutocross_hasGCUConfirmed(void);
+char dAutocross_isAutoAccelerationActive(void);
 
-void dAutocross_startClutchRelease(void);
+char dAutocross_isReleasingClutch(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
@@ -80,7 +88,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -423,7 +431,6 @@ typedef enum {
 
 
 
-
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -441,8 +448,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -471,17 +478,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -496,34 +503,34 @@ OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_dcu.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 11 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/music.h"
+char Music_hasToMakeSound(void);
 
+void Music_tick(void);
 
+void Music_setSongTime(unsigned int time);
 
+void Music_playSong(unsigned char song[], unsigned int songLength);
 
+void Music_playSongNextNote(void);
 
+void Music_playNote(unsigned char note, unsigned char duration);
 
+float Music_getActualNoteDuration(unsigned char duration);
 
+float Music_getNoteFrequency(unsigned char note);
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+void Buzzer_init(void);
 
+void Buzzer_tick(void);
 
-
-void dDCU_init();
-
-void dDCU_switchAcquisition(void);
-
-void dDCU_startAcquisition(void);
-
-void dDCU_stopAcquisition(void);
-
-void dDCU_isAcquiringSet(void);
-
-char dDCU_isAcquiring(void);
-
-void dDCU_sentAcquiringSignal(void);
-
-void dDCU_tick(void);
-
-void dDCU_isAcquiringSet(void);
+void Buzzer_bip(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_hardreset.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/eeprom.h"
 
@@ -560,16 +567,47 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
-static char dAutocross_isActive =  0 ;
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_dcu.h"
+
+
+
+
+
+
+
+
+
+
+void dDCU_init();
+
+void dDCU_switchAcquisition(void);
+
+void dDCU_startAcquisition(void);
+
+void dDCU_stopAcquisition(void);
+
+void dDCU_isAcquiringSet(void);
+
+char dDCU_isAcquiring(void);
+
+void dDCU_sentAcquiringSignal(void);
+
+void dDCU_tick(void);
+
+void dDCU_isAcquiringSet(void);
+#line 18 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_autocross.c"
+static char dAutocross_active =  0 ;
 static char dAutocross_releasingClutch =  0 ;
 static char dAutocross_readyToGo =  0 ;
+static char dAutocross_timeToGo =  0 ;
+static char dAutocross_inSteady =  0 ;
 unsigned int dAutocross_resetOccurred =  0 ;
 unsigned int dAutocross_GCUConfirmed =  0 ;
 
 void dAutocross_init(void) {
- dAutocross_isActive =  0 ;
+ dAutocross_active =  0 ;
  dAutocross_releasingClutch =  0 ;
+ dAutocross_timeToGo =  0 ;
  dAutocross_GCUConfirmed =  0 ;
  if (dHardReset_hasBeenReset())
  dAutocross_resetOccurred =  1 ;
@@ -583,58 +621,51 @@ void dAutocross_clearReset(void){
  dAutocross_resetOccurred =  0 ;
 }
 
-void dAcc_restartAutocross(void){
+void dAutocross_restartAutocross(void){
  Can_resetWritePacket();
  Can_addIntToWritePacket( 50 );
  Can_addIntToWritePacket( 0 );
  Can_write( 0b11111110000 );
 }
 
-unsigned int dAutocross_hasGCUConfirmed(){
- return dAutocross_GCUConfirmed;
-}
-
 void dAutocross_startAutocross(void){
- if(!dAutocross_isActive){
- dAutocross_isActive =  1 ;
+ if(!dAutocross_active){
+ dAutocross_active =  1 ;
  dAutocross_releasingClutch =  0 ;
  Can_resetWritePacket();
  Can_addIntToWritePacket(dDCU_isAcquiring());
  Can_addIntToWritePacket( 1 );
  Can_write( 0b11111110000 );
- dd_GraphicController_fixNotification("STEADY");
  }
 }
 
 void dAutocross_startClutchRelease(void){
  dd_GraphicController_clearPrompt();
- Can_resetWritePacket();
- Can_addIntToWritePacket(dDCU_isAcquiring());
- Can_addIntToWritePacket( 2 );
- Can_write( 0b11111110000 );
  dAutocross_readyToGo =  1 ;
- dd_printMessage("GOOOOO!!!");
 }
-
-void dAutocross_stopAutocross(void) {
- dAutocross_isActive =  0 ;
- dAutocross_releasingClutch =  0 ;
- dd_GraphicController_unsetOnScreenNotification();
- if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
- d_UI_AutocrossModeInit();
- }
-}
-
 
 void dAutocross_feedbackGCU(unsigned int value){
  if(d_UI_getOperatingMode() == AUTOCROSS_MODE){
  if(value ==  1 ){
+ dd_GraphicController_clearPrompt();
  dAutocross_GCUConfirmed =  1 ;
+ dd_GraphicController_fixNotification("STEADY");
  } else if (value ==  2 ){
  dAutocross_GCUConfirmed =  2 ;
+ dAutocross_timeToGo =  1 ;
+ dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
  } else if (value ==  0 ){
  dAutocross_stopAutocross();
  }
+ }
+}
+
+void dAutocross_stopAutocross(void) {
+ dAutocross_active =  0 ;
+ dAutocross_releasingClutch =  0 ;
+ dd_GraphicController_unsetOnScreenNotification();
+ if (d_UI_getOperatingMode() == AUTOCROSS_MODE){
+ d_UI_AutocrossModeInit();
  }
 }
 
@@ -647,17 +678,31 @@ void dAutocross_stopAutocrossFromSW(void){
 }
 
 void dAutocross_requestAction(){
- if(!dAutocross_isActive){
- dd_GraphicController_clearPrompt();
+ if(!dAutocross_active){
  dAutocross_startAutocross();
  }
- else if (dAutocross_readyToGo && dAutocross_GCUConfirmed ==  2 ){
- dd_GraphicController_clearPrompt();
+ else if (dAutocross_readyToGo){
+ Can_resetWritePacket();
+ Can_addIntToWritePacket(dDCU_isAcquiring());
+ Can_addIntToWritePacket( 2 );
+ Can_write( 0b11111110000 );
  dAutocross_readyToGo =  0 ;
  dAutocross_releasingClutch =  1 ;
  }
 }
 
-char dAutocross_isAutocrossActive(void) {
- return dAutocross_isActive;
+char dAutocross_isActive(void) {
+ return dAutocross_active;
+}
+
+unsigned int dAutocross_hasGCUConfirmed(void){
+ return dAutocross_GCUConfirmed;
+}
+
+char dAutocross_isTimeToGo(void){
+ return dAutocross_timeToGo;
+}
+
+char dAutocross_isReleasingClutch(void) {
+ return dAutocross_releasingClutch;
 }

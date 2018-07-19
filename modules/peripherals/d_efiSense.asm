@@ -25,9 +25,6 @@ L__dEfiSense_heartbeat21:
 	MOV.B	W0, W11
 	MOV	#lo_addr(_ind_efi_status), W10
 	CALL	_dd_Indicator_setBoolValueP
-;d_efiSense.c,21 :: 		dSignalLed_set(DSIGNAL_LED_GREEN);
-	MOV.B	#3, W10
-	CALL	_dSignalLed_set
 ;d_efiSense.c,22 :: 		}
 L_end_dEfiSense_heartbeat:
 	POP	W11

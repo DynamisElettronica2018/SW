@@ -18,7 +18,7 @@ void dEfiSense_heartbeat(void) {
     dEfiSense_dead = FALSE;
     dEfiSense_ticks = EFI_SENSE_DEADTIME;
     dd_Indicator_setBoolValueP(&ind_efi_status.base, !dEfiSense_isDead());
-    dSignalLed_set(DSIGNAL_LED_GREEN);
+  //  dSignalLed_set(DSIGNAL_LED_GREEN);
 }
 
 void dEfiSense_tick(void) {

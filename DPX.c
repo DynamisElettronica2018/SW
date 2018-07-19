@@ -31,6 +31,7 @@
 #include "d_autocross.h"
 #include "d_drs.h"
 #include "d_controls.h"
+#include "d_antistall.h"
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
@@ -100,7 +101,7 @@ onTimer2Interrupt{
         timer2_counter3 = 0;
     }
     
-    if(timer2_EncoderTimer == 100 ){
+    if(timer2_EncoderTimer == 100){
         d_controls_EncoderRead();
     }
     // TIMER_2_PERIOD*1000 = 1s (1Hz)
@@ -226,10 +227,10 @@ onCanInterrupt{
            }
            break;
        case GCU_FEEDBACK_ID:
+           dd_Indicator_setIntValueP(&ind_fb_code.base, (firstInt));
+           dd_Indicator_setIntValueP(&ind_fb_value.base, (secondInt));
            switch (firstInt){
                   case ACC_CODE:
-                     dd_Indicator_setIntValueP(&ind_acc_code.base, (firstInt));
-                     dd_Indicator_setIntValueP(&ind_acc_fb.base, (secondInt));
                      dAcc_feedbackGCU(secondInt);
                      break;
                   case AUTOX_CODE:
@@ -240,6 +241,9 @@ onCanInterrupt{
                      break;
                   case DRS_CODE:
                      d_drs_setValuefromCAN(secondInt);
+                     break;
+                  case ANTISTALL_CODE:
+                     d_antistall_handle(secondInt);
                      break;
                   default:
                      break;

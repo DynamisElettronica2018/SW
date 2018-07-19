@@ -45,7 +45,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -172,7 +172,6 @@ typedef enum {
 
 
 
-
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -190,8 +189,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -220,17 +219,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -434,13 +433,14 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-typedef enum aac_notifications{
- MEX_ON,
- MEX_READY,
- MEX_GO,
- MEX_OFF,
-}aac_notifications;
+
+
+
+
+
+
+
+
 
 void dAcc_init(void);
 
@@ -464,6 +464,10 @@ void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 
+char dAcc_isTimeToGo(void);
+
+char dAcc_isInSteady(void);
+
 void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
@@ -478,19 +482,27 @@ unsigned int dAutocross_hasResetOccurred(void);
 
 void dAutocross_clearReset(void);
 
-void dAcc_restartAutocross(void);
+void dAutocross_restartAutocross(void);
 
-void dAutocross_requestAction(void);
+unsigned int dAutocross_hasGCUConfirmed (void);
 
-char dAutocross_isAutocrossActive(void);
+void dAutocross_requestAction();
 
-unsigned int dAutocross_hasGCUConfirmed(void);
+char dAutocross_isAutoAccelerationActive(void);
 
-void dAutocross_startClutchRelease(void);
+char dAutocross_isReleasingClutch(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
 #line 16 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_BoardDebugModeInit();
 void d_UI_SettingsModeInit();
@@ -531,8 +543,8 @@ const unsigned char dd_carBoardsCount = 13;
 
 IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 
-IntegerIndicator ind_acc_code = {ACC, "ACC", "Acc", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
-IntegerIndicator ind_acc_fb = {ACC_FB, "ACC FB", "Acc Fb", 6, 6,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
+IntegerIndicator ind_fb_code = {FB_CODE, "FB CODE", "FB code", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
+IntegerIndicator ind_fb_value = {FB_VAL, "FB VAL", "FB Val", 6, 6,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
@@ -575,8 +587,8 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
- (Indicator*)&ind_acc_code,
- (Indicator*)&ind_acc_fb,
+ (Indicator*)&ind_fb_code,
+ (Indicator*)&ind_fb_value,
  (Indicator*)&ind_vbat,
  (Indicator*)&ind_oil_press,
  (Indicator*)&ind_ebb,

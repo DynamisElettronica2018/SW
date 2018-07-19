@@ -7,7 +7,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -574,7 +574,6 @@ typedef enum {
 
 
 
-
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -592,8 +591,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -622,17 +621,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -761,13 +760,14 @@ char dd_GraphicController_isColorInversionQueued(void);
 
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-typedef enum aac_notifications{
- MEX_ON,
- MEX_READY,
- MEX_GO,
- MEX_OFF,
-}aac_notifications;
+
+
+
+
+
+
+
+
 
 void dAcc_init(void);
 
@@ -791,6 +791,10 @@ void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
 
+char dAcc_isTimeToGo(void);
+
+char dAcc_isInSteady(void);
+
 void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_autocross.h"
 
@@ -804,19 +808,27 @@ unsigned int dAutocross_hasResetOccurred(void);
 
 void dAutocross_clearReset(void);
 
-void dAcc_restartAutocross(void);
+void dAutocross_restartAutocross(void);
 
-void dAutocross_requestAction(void);
+unsigned int dAutocross_hasGCUConfirmed (void);
 
-char dAutocross_isAutocrossActive(void);
+void dAutocross_requestAction();
 
-unsigned int dAutocross_hasGCUConfirmed(void);
+char dAutocross_isAutoAccelerationActive(void);
 
-void dAutocross_startClutchRelease(void);
+char dAutocross_isReleasingClutch(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_drs.h"
 
 
@@ -830,6 +842,15 @@ void d_drs_propagateChange(void);
 
 void d_drs_setValueFromCAN(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_antistall.h"
+
+
+
+
+
+
+
+void d_antistall_handle(unsigned int antistallValue);
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
 
 
@@ -866,7 +887,7 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 36 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 37 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 int timer2_EncoderTimer = 0;
 
@@ -934,7 +955,7 @@ void main(){
  timer2_counter3 = 0;
  }
 
- if(timer2_EncoderTimer == 100 ){
+ if(timer2_EncoderTimer == 100){
  d_controls_EncoderRead();
  }
 
@@ -1060,10 +1081,10 @@ void main(){
  }
  break;
  case  0b01100011001 :
+ dd_Indicator_setIntValueP(&ind_fb_code.base, (firstInt));
+ dd_Indicator_setIntValueP(&ind_fb_value.base, (secondInt));
  switch (firstInt){
  case  1 :
- dd_Indicator_setIntValueP(&ind_acc_code.base, (firstInt));
- dd_Indicator_setIntValueP(&ind_acc_fb.base, (secondInt));
  dAcc_feedbackGCU(secondInt);
  break;
  case  2 :
@@ -1074,6 +1095,9 @@ void main(){
  break;
  case  4 :
  d_drs_setValuefromCAN(secondInt);
+ break;
+ case  5 :
+ d_antistall_handle(secondInt);
  break;
  default:
  break;

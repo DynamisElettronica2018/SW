@@ -36,7 +36,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -375,19 +375,27 @@ unsigned int dAutocross_hasResetOccurred(void);
 
 void dAutocross_clearReset(void);
 
-void dAcc_restartAutocross(void);
+void dAutocross_restartAutocross(void);
 
-void dAutocross_requestAction(void);
+unsigned int dAutocross_hasGCUConfirmed (void);
 
-char dAutocross_isAutocrossActive(void);
+void dAutocross_requestAction();
 
-unsigned int dAutocross_hasGCUConfirmed(void);
+char dAutocross_isAutoAccelerationActive(void);
 
-void dAutocross_startClutchRelease(void);
+char dAutocross_isReleasingClutch(void);
 
 void dAutocross_feedbackGCU(unsigned int value);
 
 void dAutocross_stopAutocrossFromSW(void);
+
+void dAutocross_stopAutocross(void);
+
+char dAutocross_isTimeToGo(void);
+
+char dAutocross_isActive(void);
+
+void dAutocross_startClutchRelease(void);
 #line 17 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_dcu.c"
 static char d_DCU_isAcquiring =  0 ;
 static unsigned int d_DCU_isAliveCounter = 0;
@@ -419,7 +427,7 @@ void dDCU_stopAcquisition(void) {
  dd_GraphicController_fireTimedNotification( 1500 , "Stop ACQ.", MESSAGE);
  Can_resetWritePacket();
  Can_addIntToWritePacket( 2 );
- Can_addIntToWritePacket(dAutocross_isAutocrossActive());
+ Can_addIntToWritePacket(dAutocross_isActive());
  Can_write( 0b11111110000 );
 }
 

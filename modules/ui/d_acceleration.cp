@@ -1,12 +1,13 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-#line 13 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
-typedef enum aac_notifications{
- MEX_ON,
- MEX_READY,
- MEX_GO,
- MEX_OFF,
-}aac_notifications;
+
+
+
+
+
+
+
+
 
 void dAcc_init(void);
 
@@ -29,6 +30,10 @@ void dAcc_feedbackGCU(unsigned int value);
 void dAcc_stopAutoAccelerationFromSW(void);
 
 void dAcc_stopAutoAcceleration(void);
+
+char dAcc_isTimeToGo(void);
+
+char dAcc_isInSteady(void);
 
 void dAcc_startClutchRelease(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
@@ -87,7 +92,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, FB_CODE, FB_VAL,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -430,7 +435,6 @@ typedef enum {
 
 
 
-
 extern FloatIndicator ind_oil_temp_in;
 extern FloatIndicator ind_th2o;
 extern IntegerIndicator ind_tps;
@@ -448,8 +452,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-extern IntegerIndicator ind_acc_code;
-extern IntegerIndicator ind_acc_fb;
+extern IntegerIndicator ind_fb_code;
+extern IntegerIndicator ind_fb_value;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -478,17 +482,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -571,12 +575,15 @@ unsigned int dHardReset_getCounter(void);
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
+static char dAcc_timeToGo =  0 ;
+static char dAcc_inSteady =  0 ;
 unsigned int dAcc_resetOccurred =  0 ;
 unsigned int dAcc_GCUConfirmed =  0 ;
 
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;
  dAcc_releasingClutch =  0 ;
+ dAcc_timeToGo =  0 ;
  dAcc_GCUConfirmed =  0 ;
  if (dHardReset_hasBeenReset())
  dAcc_resetOccurred =  1 ;
@@ -615,6 +622,7 @@ void dAcc_feedbackGCU(unsigned int value){
  dd_GraphicController_fixNotification("STEADY");
  } else if (value ==  2 ){
  dAcc_GCUConfirmed =  2 ;
+ dAcc_timeToGo =  1 ;
  dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
  } else if (value ==  0 ){
  dAcc_stopAutoAcceleration();
@@ -651,8 +659,12 @@ char dAcc_isAutoAccelerationActive(void) {
  return dAcc_autoAcceleration;
 }
 
-unsigned int dAcc_hasGCUConfirmed (void){
+unsigned int dAcc_hasGCUConfirmed(void){
  return dAcc_GCUConfirmed;
+}
+
+char dAcc_isTimeToGo(void){
+ return dAcc_timeToGo;
 }
 
 char dAcc_isReleasingClutch(void) {

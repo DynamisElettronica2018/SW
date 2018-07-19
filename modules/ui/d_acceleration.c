@@ -27,12 +27,15 @@
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
 static char dAcc_readyToGo = FALSE;
+static char dAcc_timeToGo = FALSE;
+static char dAcc_inSteady = FALSE;
 unsigned int dAcc_resetOccurred = FALSE;
 unsigned int dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
 
 void dAcc_init(void) {
     dAcc_autoAcceleration = FALSE;
-    dAcc_releasingClutch = FALSE;  
+    dAcc_releasingClutch = FALSE;
+    dAcc_timeToGo = FALSE;
     dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
     if (dHardReset_hasBeenReset())
          dAcc_resetOccurred = TRUE;
@@ -71,6 +74,7 @@ void dAcc_feedbackGCU(unsigned int value){
           dd_GraphicController_fixNotification("STEADY");
       } else if (value == COMMAND_START_CLUTCH_RELEASE){
           dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
+          dAcc_timeToGo = TRUE;
           dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
       } else if (value == COMMAND_STOP_ACCELERATION){
           dAcc_stopAutoAcceleration();
@@ -107,8 +111,12 @@ char dAcc_isAutoAccelerationActive(void) {
     return dAcc_autoAcceleration;
 }
 
-unsigned int dAcc_hasGCUConfirmed (void){
+unsigned int dAcc_hasGCUConfirmed(void){
    return dAcc_GCUConfirmed;
+}
+
+char dAcc_isTimeToGo(void){
+    return dAcc_timeToGo;
 }
 
 char dAcc_isReleasingClutch(void) {
