@@ -587,12 +587,12 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
- (Indicator*)&ind_fb_code,
- (Indicator*)&ind_fb_value,
- (Indicator*)&ind_vbat,
- (Indicator*)&ind_oil_press,
  (Indicator*)&ind_ebb,
  (Indicator*)&ind_th2o,
+ (Indicator*)&ind_vbat,
+ (Indicator*)&ind_oil_press,
+ (Indicator*)&ind_fb_code,
+ (Indicator*)&ind_fb_value,
  (Indicator*)&ind_traction_control,
  (Indicator*)&ind_adc1_read,
  (Indicator*)&ind_rpm,

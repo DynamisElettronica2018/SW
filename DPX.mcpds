@@ -11,7 +11,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=modules\peripherals\d_drs.c
+Value=modules\ui\d_operating_modes.c
 =======
 Value=modules\peripherals\d_drs.c
 >>>>>>> drs2
@@ -92,21 +92,15 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=14
+Count=8
 File0=DPX.c
-File1=modules\ui\input-output\d_controls.c
-File2=modules\peripherals\d_drs.c
-File3=modules\peripherals\d_drs.h
-File4=modules\ui\display\dd_indicators.h
-File5=modules\peripherals\d_ebb.c
-File6=modules\peripherals\d_efiSense.c
-File7=modules\ui\input-output\d_hardReset.c
-File8=modules\ui\d_autocross.c
-File9=modules\ui\input-output\d_antistall.c
-File10=modules\ui\input-output\d_antistall.h
-File11=modules\ui\d_autocross.h
-File12=modules\ui\d_operating_modes.c
-File13=modules\peripherals\d_dcu.c
+File1=modules\peripherals\d_ebb.c
+File2=modules\peripherals\d_efiSense.c
+File3=modules\ui\input-output\d_hardReset.c
+File4=modules\ui\d_autocross.c
+File5=modules\ui\d_autocross.h
+File6=modules\ui\d_operating_modes.c
+File7=modules\peripherals\d_dcu.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
