@@ -2,10 +2,14 @@
 // Created by Aaron Russo on 16/03/16.
 //
 
-#ifndef DP8_DISPLAY_CONTROLLER_CONTROLLER_H
-#define DP8_DISPLAY_CONTROLLER_CONTROLLER_H
+#ifndef DPX_CONTROLS_H
+#define DPX_CONTROLS_H
+
+extern int timer2_EncoderTimer;
 
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -31,4 +35,4 @@ void d_controls_onRightEncoder(signed char movements);
 
 void d_controls_onSelectorSwitched(signed char position);
 
-#endif //DP8_DISPLAY_CONTROLLER_CONTROLLER_H
+#endif //DPX_CONTROLS_H

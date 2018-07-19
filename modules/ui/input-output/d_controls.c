@@ -152,69 +152,10 @@ onGearInterrupt{
   false = down
 */
 onCNInterrupt{
-   signed char movement_dx = 0, movement_sx = 0;
-   char a, b ,c, d, e, f;
-   char old_port_dx, old_port_sx, new_port_dx, new_port_sx;
-   a = old_encoder_left_pin0;
-   b = old_encoder_left_pin1;
-   c = old_encoder_left_pin2;
-   d = old_encoder_right_pin0;
-   e = old_encoder_right_pin1;
-   f = old_encoder_right_pin2;
-   old_encoder_left_pin0  = ENCODER_LEFT_PIN0;
-   old_encoder_left_pin1  = ENCODER_LEFT_PIN1;
-   old_encoder_left_pin2  = ENCODER_LEFT_PIN2;
-   old_encoder_right_pin0 = ENCODER_RIGHT_PIN0;
-   old_encoder_right_pin1 = ENCODER_RIGHT_PIN1;
-   old_encoder_right_pin2 = ENCODER_RIGHT_PIN2;
-   
-   old_port_sx = a + (b << 1) + (c << 2);
-   old_port_dx = d + (e << 1) + (f << 2);
-  // sprintf(dstr, "old_port_sx: %d \r\nold_port_dx: %d", old_port_sx, old_port_dx );
-  // Debug_UART_Write(dstr);
-
-   new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
-   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
-   
-   //sprintf(dstr, "\r\n new_port_sx: %d \r\n new_port_dx: %d", new_port_sx, new_port_dx );
-  // Debug_UART_Write(dstr);
-
-   movement_dx = new_port_dx - old_port_dx;
-   movement_sx = - new_port_sx + old_port_sx;
-   
-   sprintf(dstr, "\r\n movement_sx: %d \r\n movement_dx: %d", movement_sx, movement_dx );
-   Debug_UART_Write(dstr);
-
-   if (movement_dx>4)
-   {
-      movement_dx -= 8;
-   }
-   else if (movement_dx<-4)
-   {
-      movement_dx += 8;
-   }
-   else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-   
-   if (movement_sx>4)
-   {
-      movement_sx -= 8;
-   }
-   else if (movement_sx<-4)
-   {
-      movement_sx += 8;
-   }
-   else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-
-   if(movement_sx){
-         d_controls_onLeftEncoder(movement_sx);
-   }
-   if(movement_dx){
-         d_controls_onRightEncoder(movement_dx);
-   }
-   
-   _CLEAR_CN_LABEL:
-   clearExternalInterrupt(CN_DEVICE);
+    timer2_EncoderTimer = 0;
+    clearExternalInterrupt(CN_DEVICE);
 }
+
 
 /*
     Char position is sent to ui_controller to determine
@@ -238,7 +179,7 @@ onRotarySwitchInterrupt{
     unsigned char expanderPort;
     /*if(d_isCentralSelectorEnabled)
     { */
-        delay_ms(30);
+        delay_ms(50);
         Delay_ms(STRANGE_BUTTON_DELAY);
         expanderPort = ~I2CExpander_readPort(I2C_ADDRESS_ROTARY_SWITCH);
         if (expanderPort == 0) {
@@ -283,6 +224,60 @@ onGeneralButtonInterrupt{
 }
 
 /******************************************************************************/
+
+void d_controls_EncoderRead(){
+   signed char movement_dx = 0, movement_sx = 0;
+   char a, b ,c, d, e, f;
+   char old_port_dx, old_port_sx, new_port_dx, new_port_sx;
+   a = old_encoder_left_pin0;
+   b = old_encoder_left_pin1;
+   c = old_encoder_left_pin2;
+   d = old_encoder_right_pin0;
+   e = old_encoder_right_pin1;
+   f = old_encoder_right_pin2;
+   old_encoder_left_pin0  = ENCODER_LEFT_PIN0;
+   old_encoder_left_pin1  = ENCODER_LEFT_PIN1;
+   old_encoder_left_pin2  = ENCODER_LEFT_PIN2;
+   old_encoder_right_pin0 = ENCODER_RIGHT_PIN0;
+   old_encoder_right_pin1 = ENCODER_RIGHT_PIN1;
+   old_encoder_right_pin2 = ENCODER_RIGHT_PIN2;
+
+   old_port_sx = a + (b << 1) + (c << 2);
+   old_port_dx = d + (e << 1) + (f << 2);
+
+   new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+   new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
+
+   movement_dx = new_port_dx - old_port_dx;
+   movement_sx = - new_port_sx + old_port_sx;
+
+   if (movement_dx>4)
+   {
+      movement_dx -= 8;
+   }
+   else if (movement_dx<-4)
+   {
+      movement_dx += 8;
+   }
+   else if (movement_dx==4 || movement_dx==-4);
+
+   if (movement_sx>4)
+   {
+      movement_sx -= 8;
+   }
+   else if (movement_sx<-4)
+   {
+      movement_sx += 8;
+   }
+   else if (movement_dx==4 || movement_dx==-4);
+
+   if(movement_sx){
+         d_controls_onLeftEncoder(movement_sx);
+   }
+   if(movement_dx){
+         d_controls_onRightEncoder(movement_dx);
+   }
+}
 
 void d_controls_onGearUp() {
     dGear_requestGearUp();

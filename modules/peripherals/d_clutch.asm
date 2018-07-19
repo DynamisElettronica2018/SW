@@ -37,9 +37,9 @@ L_dClutch_set0:
 ;d_clutch.c,19 :: 		dClutch_value = value;
 	MOV	#lo_addr(_dClutch_value), W0
 	MOV.B	W10, [W0]
-;d_clutch.c,20 :: 		dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_value);
+;d_clutch.c,20 :: 		dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_value);
 	ZE	W10, W11
-	MOV	#lo_addr(_ind_clutch_fb), W10
+	MOV	#lo_addr(_ind_clutch_pos), W10
 	CALL	_dd_Indicator_setIntValueP
 ;d_clutch.c,21 :: 		}
 L_end_dClutch_set:
@@ -56,9 +56,9 @@ _dClutch_injectActualValue:
 	PUSH	W11
 	MOV	#lo_addr(_dClutch_actualValue), W0
 	MOV.B	W10, [W0]
-;d_clutch.c,25 :: 		dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
+;d_clutch.c,25 :: 		dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_actualValue);
 	ZE	W10, W11
-	MOV	#lo_addr(_ind_clutch_pos), W10
+	MOV	#lo_addr(_ind_clutch_fb), W10
 	CALL	_dd_Indicator_setIntValueP
 ;d_clutch.c,26 :: 		}
 L_end_dClutch_injectActualValue:

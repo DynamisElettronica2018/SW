@@ -64,7 +64,6 @@ void dAcc_startClutchRelease(void){
 }
 
 void dAcc_feedbackGCU(unsigned int value){
-    Buzzer_bip();
     if(d_UI_getOperatingMode() == ACC_MODE){
       if(value == COMMAND_START_ACCELERATION){
           dd_GraphicController_clearPrompt();

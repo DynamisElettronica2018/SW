@@ -7,7 +7,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -531,7 +531,11 @@ void dd_Menu_moveSelection(signed char movements);
 
 
 
+extern int timer2_EncoderTimer;
+
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -588,7 +592,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-
+extern IntegerIndicator ind_acc_code;
+extern IntegerIndicator ind_acc_fb;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -617,17 +622,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -824,6 +829,7 @@ void dAutocross_stopAutocrossFromSW(void);
 void d_drs_propagateChange(void);
 
 void d_drs_setValueFromCAN(unsigned int value);
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdlib.h"
 
 
@@ -860,9 +866,9 @@ int min(int a, int b);
 void srand(unsigned x);
 int rand();
 int xtoi(char * s);
-#line 35 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
+#line 36 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
-
+int timer2_EncoderTimer = 0;
 
 
 void main(){
@@ -899,6 +905,7 @@ void main(){
  timer2_counter3 += 1;
  timer2_counter4 += 1;
  timer2_counter5 += 1;
+ timer2_EncoderTimer +=1;
 
 
  if (timer2_counter0 >= 5) {
@@ -925,6 +932,10 @@ void main(){
  }
 
  timer2_counter3 = 0;
+ }
+
+ if(timer2_EncoderTimer == 100 ){
+ d_controls_EncoderRead();
  }
 
  if (timer2_counter5 >= 1000) {
@@ -988,7 +999,12 @@ void main(){
  case  0b01100001101 :
  dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
  dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
+ if (dd_GraphicController_getRefreshTimerValue()>20 && (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE)){
  dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+ dd_GraphicController_resetRefreshTimerValue();
+ }else if((d_UI_getOperatingMode() != ACC_MODE && d_UI_getOperatingMode() != AUTOCROSS_MODE)){
+ dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+ }
  dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
  dEfiSense_heartbeat();
  break;
@@ -1005,7 +1021,7 @@ void main(){
  dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
  break;
  case  0b01100010000 :
- dClutch_injectActualValue((unsigned char)firstInt);
+ dClutch_injectActualValue((unsigned char)secondInt);
  break;
  case  0b11100001101 :
  dEbb_setEbbValueFromCAN(firstInt);
@@ -1046,6 +1062,8 @@ void main(){
  case  0b01100011001 :
  switch (firstInt){
  case  1 :
+ dd_Indicator_setIntValueP(&ind_acc_code.base, (firstInt));
+ dd_Indicator_setIntValueP(&ind_acc_fb.base, (secondInt));
  dAcc_feedbackGCU(secondInt);
  break;
  case  2 :

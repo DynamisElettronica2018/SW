@@ -21,7 +21,7 @@
 #define GCU_LAUNCH_CONTROL_EFI_ID       0b10100000001 //1281       MANDATO SOLO DA GCU AD EFI!!!!
 #define GCU_CLUTCH_FB_SW_ID             0b01100010000 //784
 #define GCU_GEAR_TIMING_TELEMETRY_ID    0b11100001101 //1624
-#define GCU_FEEDBACK_ID                        0b01100011001 //793
+#define GCU_FEEDBACK_ID                 0b01100011001 //793
 
 /********************FEEDBACK CODES***********************/
 #define ACC_CODE        1

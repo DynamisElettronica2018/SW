@@ -20,8 +20,6 @@
 #define MAX_EBB_VALUE 3
 #define MIN_EBB_VALUE -3
 
-#define TOP_RIGHT_CAN_REFRESH 500
-
 #define DASHBOARD_FONT_HEIGHT DynamisFont_Dashboard_HEIGHT
 
 static const unsigned char INDICATOR_HEIGHT = (unsigned char) (SCREEN_HEIGHT / 2) - (INDICATOR_MARGIN * 2) - 1;
@@ -131,7 +129,6 @@ static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
         eGlcd_writeText(indicator->name, x, y);
         eGlcd_setFont(DD_Dashboard_Font);
     }
-
     oldLabelLength = indicator->labelLength;
     //Make coordinates
     x = dd_Indicator_getLabelXCoord(indicatorIndex);

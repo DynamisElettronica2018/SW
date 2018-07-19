@@ -200,8 +200,6 @@ _d_traction_control_propagateValue:
 	MOV	#515, W10
 	MOV	#0, W11
 	CALL	_Can_writeInt
-;d_traction_control.c,59 :: 		d_traction_control_printNotification();
-	CALL	_d_traction_control_printNotification
 ;d_traction_control.c,60 :: 		dSignalLed_switch(DSIGNAL_LED_BLUE);
 	CLR	W10
 	CALL	_dSignalLed_switch

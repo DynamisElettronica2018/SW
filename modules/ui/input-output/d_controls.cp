@@ -34,7 +34,11 @@ double tanh(double x);
 
 
 
+extern int timer2_EncoderTimer;
+
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -102,7 +106,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -579,7 +583,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-
+extern IntegerIndicator ind_acc_code;
+extern IntegerIndicator ind_acc_fb;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -608,17 +613,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
+#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -764,75 +769,15 @@ void dControls_disableCentralSelector()
 }
 #line 154 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void cn_interrupt() iv IVT_ADDR_CNINTERRUPT ics ICS_AUTO {
- signed char movement_dx = 0, movement_sx = 0;
- char a, b ,c, d, e, f;
- char old_port_dx, old_port_sx, new_port_dx, new_port_sx;
- a = old_encoder_left_pin0;
- b = old_encoder_left_pin1;
- c = old_encoder_left_pin2;
- d = old_encoder_right_pin0;
- e = old_encoder_right_pin1;
- f = old_encoder_right_pin2;
- old_encoder_left_pin0 =  RD6_bit ;
- old_encoder_left_pin1 =  RD7_bit ;
- old_encoder_left_pin2 =  RG1_bit ;
- old_encoder_right_pin0 =  RD5_bit ;
- old_encoder_right_pin1 =  RD4_bit ;
- old_encoder_right_pin2 =  RD3_bit ;
-
- old_port_sx = a + (b << 1) + (c << 2);
- old_port_dx = d + (e << 1) + (f << 2);
-
-
-
- new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
- new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
-
-
-
-
- movement_dx = new_port_dx - old_port_dx;
- movement_sx = - new_port_sx + old_port_sx;
-
- sprintf(dstr, "\r\n movement_sx: %d \r\n movement_dx: %d", movement_sx, movement_dx );
- Debug_UART_Write(dstr);
-
- if (movement_dx>4)
- {
- movement_dx -= 8;
- }
- else if (movement_dx<-4)
- {
- movement_dx += 8;
- }
- else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-
- if (movement_sx>4)
- {
- movement_sx -= 8;
- }
- else if (movement_sx<-4)
- {
- movement_sx += 8;
- }
- else if (movement_dx==4 || movement_dx==-4) goto _CLEAR_CN_LABEL;
-
- if(movement_sx){
- d_controls_onLeftEncoder(movement_sx);
- }
- if(movement_dx){
- d_controls_onRightEncoder(movement_dx);
- }
-
- _CLEAR_CN_LABEL:
+ timer2_EncoderTimer = 0;
  clearExternalInterrupt( 9 );
 }
-#line 236 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+#line 177 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
  void external1() iv IVT_ADDR_INT1INTERRUPT ics ICS_AUTO {
  signed char position = 0;
  unsigned char expanderPort;
-#line 241 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
- delay_ms(30);
+#line 182 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
+ delay_ms(50);
  Delay_ms( 1 );
  expanderPort = ~I2CExpander_readPort( 0b01000010 );
  if (expanderPort == 0) {
@@ -877,6 +822,60 @@ void dControls_disableCentralSelector()
 }
 
 
+
+void d_controls_EncoderRead(){
+ signed char movement_dx = 0, movement_sx = 0;
+ char a, b ,c, d, e, f;
+ char old_port_dx, old_port_sx, new_port_dx, new_port_sx;
+ a = old_encoder_left_pin0;
+ b = old_encoder_left_pin1;
+ c = old_encoder_left_pin2;
+ d = old_encoder_right_pin0;
+ e = old_encoder_right_pin1;
+ f = old_encoder_right_pin2;
+ old_encoder_left_pin0 =  RD6_bit ;
+ old_encoder_left_pin1 =  RD7_bit ;
+ old_encoder_left_pin2 =  RG1_bit ;
+ old_encoder_right_pin0 =  RD5_bit ;
+ old_encoder_right_pin1 =  RD4_bit ;
+ old_encoder_right_pin2 =  RD3_bit ;
+
+ old_port_sx = a + (b << 1) + (c << 2);
+ old_port_dx = d + (e << 1) + (f << 2);
+
+ new_port_dx = old_encoder_right_pin0 + (old_encoder_right_pin1<<1) + (old_encoder_right_pin2<<2);
+ new_port_sx = old_encoder_left_pin0 + (old_encoder_left_pin1<<1) + (old_encoder_left_pin2<<2);
+
+ movement_dx = new_port_dx - old_port_dx;
+ movement_sx = - new_port_sx + old_port_sx;
+
+ if (movement_dx>4)
+ {
+ movement_dx -= 8;
+ }
+ else if (movement_dx<-4)
+ {
+ movement_dx += 8;
+ }
+ else if (movement_dx==4 || movement_dx==-4);
+
+ if (movement_sx>4)
+ {
+ movement_sx -= 8;
+ }
+ else if (movement_sx<-4)
+ {
+ movement_sx += 8;
+ }
+ else if (movement_dx==4 || movement_dx==-4);
+
+ if(movement_sx){
+ d_controls_onLeftEncoder(movement_sx);
+ }
+ if(movement_dx){
+ d_controls_onRightEncoder(movement_dx);
+ }
+}
 
 void d_controls_onGearUp() {
  dGear_requestGearUp();

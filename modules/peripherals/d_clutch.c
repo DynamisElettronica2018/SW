@@ -17,12 +17,12 @@ void dClutch_set(unsigned char value) {
        value = 100;
     }
     dClutch_value = value;
-    dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_value);
+    dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_value);
 }
 
 void dClutch_injectActualValue(unsigned char value) {
         dClutch_actualValue = value;
-        dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
+        dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_actualValue);
 }
 
 unsigned char dClutch_get(void) {

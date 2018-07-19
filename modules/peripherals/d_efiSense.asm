@@ -84,7 +84,7 @@ _dEfiSense_getAccValue:
 	CALL	_d_UI_getOperatingMode
 	POP	W10
 ; currentOperatingMode start address is: 0 (W0)
-;d_efiSense.c,39 :: 		dd_Indicator_setintValueP(&ind_tps.base, accValue);
+;d_efiSense.c,39 :: 		dd_Indicator_setIntValueP(&ind_tps.base, accValue);
 	PUSH	W0
 	PUSH	W10
 	MOV	W10, W11

@@ -83,7 +83,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -266,7 +266,11 @@ void dClutch_send(void);
 
 
 
+extern int timer2_EncoderTimer;
+
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -323,7 +327,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-
+extern IntegerIndicator ind_acc_code;
+extern IntegerIndicator ind_acc_fb;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -352,17 +357,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -378,12 +383,12 @@ void dClutch_set(unsigned char value) {
  value = 100;
  }
  dClutch_value = value;
- dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_value);
+ dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_value);
 }
 
 void dClutch_injectActualValue(unsigned char value) {
  dClutch_actualValue = value;
- dd_Indicator_setIntValueP(&ind_clutch_pos.base, dClutch_actualValue);
+ dd_Indicator_setIntValueP(&ind_clutch_fb.base, dClutch_actualValue);
 }
 
 unsigned char dClutch_get(void) {

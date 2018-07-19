@@ -124,7 +124,7 @@ void dd_Indicator_setFloatValueP(Indicator* ind, float value) {
     if (ind->valueType == FLOAT) {
         ((FloatIndicator*) ind)->value = value;
         dd_Indicator_requestPrintUpdateP(ind);
-    }
+        }
 }
 
 void dd_Indicator_setBoolValue(Indicator_ID id, char value) {

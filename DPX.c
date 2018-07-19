@@ -30,10 +30,11 @@
 #include "d_acceleration.h"
 #include "d_autocross.h"
 #include "d_drs.h"
+#include "d_controls.h"
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
-
+int timer2_EncoderTimer = 0;
 //sarebbe comodo decidere per cosa usare ogni signalLed a seconda delle 4 cose più importanti che vogliamo controllare sempre.
 
 void main(){
@@ -70,6 +71,7 @@ onTimer2Interrupt{
     timer2_counter3 += 1;
     timer2_counter4 += 1;
     timer2_counter5 += 1;
+    timer2_EncoderTimer +=1;
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
@@ -96,6 +98,10 @@ onTimer2Interrupt{
         }
        //dEbb_tick();
         timer2_counter3 = 0;
+    }
+    
+    if(timer2_EncoderTimer == 100 ){
+        d_controls_EncoderRead();
     }
     // TIMER_2_PERIOD*1000 = 1s (1Hz)
     if (timer2_counter5 >= 1000) {
@@ -159,7 +165,12 @@ onCanInterrupt{
         case EFI_OIL_T_ENGINE_BAT_ID:
            dd_Indicator_setFloatValueP(&ind_oil_temp_in.base, dEfiSense_calculateOilInTemperature(firstInt));
            dd_Indicator_setFloatValueP(&ind_oil_temp_out.base, dEfiSense_calculateOilOutTemperature(secondInt));
-           dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+           if (dd_GraphicController_getRefreshTimerValue()>20 && (d_UI_getOperatingMode() == ACC_MODE || d_UI_getOperatingMode() == AUTOCROSS_MODE)){
+               dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+               dd_GraphicController_resetRefreshTimerValue();
+           }else if((d_UI_getOperatingMode() != ACC_MODE && d_UI_getOperatingMode() != AUTOCROSS_MODE)){
+               dd_Indicator_setFloatValueP(&ind_th2o.base, dEfiSense_calculateTemperature(thirdInt));
+           }
            dd_Indicator_setFloatValueP(&ind_vbat.base, dEfiSense_calculateVoltage(fourthInt));
            dEfiSense_heartbeat();
            break;
@@ -176,7 +187,7 @@ onCanInterrupt{
            dd_Indicator_setFloatValueP(&ind_oil_press.base, dEfiSense_calculatePressure(secondInt));
            break;
        case GCU_CLUTCH_FB_SW_ID:
-           dClutch_injectActualValue((unsigned char)firstInt);
+           dClutch_injectActualValue((unsigned char)secondInt);
            break;
        case EBB_BIAS_ID:
            dEbb_setEbbValueFromCAN(firstInt);
@@ -217,6 +228,8 @@ onCanInterrupt{
        case GCU_FEEDBACK_ID:
            switch (firstInt){
                   case ACC_CODE:
+                     dd_Indicator_setIntValueP(&ind_acc_code.base, (firstInt));
+                     dd_Indicator_setIntValueP(&ind_acc_fb.base, (secondInt));
                      dAcc_feedbackGCU(secondInt);
                      break;
                   case AUTOX_CODE:

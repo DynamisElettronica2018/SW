@@ -45,9 +45,7 @@ _dStart_sendStartMessage:
 	MOV	#516, W10
 	MOV	#0, W11
 	CALL	_Can_writeByte
-;d_start.c,26 :: 		Buzzer_bip();
-	CALL	_Buzzer_bip
-;d_start.c,27 :: 		}
+;d_start.c,26 :: 		}
 L_end_dStart_sendStartMessage:
 	POP	W12
 	POP	W11

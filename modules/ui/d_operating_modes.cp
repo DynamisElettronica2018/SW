@@ -8,7 +8,11 @@
 
 
 
+extern int timer2_EncoderTimer;
+
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -41,7 +45,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -186,7 +190,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-
+extern IntegerIndicator ind_acc_code;
+extern IntegerIndicator ind_acc_fb;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -215,17 +220,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -520,11 +525,15 @@ void (*d_OperatingMode_close[ 6 ])(void) = {
  d_UI_AutocrossModeClose
 };
 
-const unsigned char dd_carParametersCount = 23;
+const unsigned char dd_carParametersCount = 25;
 const unsigned char dd_carBoardsCount = 13;
 
 
 IntegerIndicator ind_ebb = {EBB, "EBB", "Ebb", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
+
+IntegerIndicator ind_acc_code = {ACC, "ACC", "Acc", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
+IntegerIndicator ind_acc_fb = {ACC_FB, "ACC FB", "Acc Fb", 6, 6,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
+
 IntegerIndicator ind_tps = {TPS, "TPS", "TPS", 3, 3,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
 FloatIndicator ind_th2o = {TH2O, "TH2O", "H2O Temp.", 4, 9,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 IntegerIndicator ind_traction_control = {TRACTION_CONTROL, "TC", "Traction Control", 2, 16,  1 ,  1 ,  1 ,  1 , 1, "?", 0};
@@ -545,7 +554,7 @@ FloatIndicator ind_oil_temp_in = {OIL_TEMP_IN, "TOILI", "Oil Temp. In", 5, 12,  
 FloatIndicator ind_oil_temp_out = {OIL_TEMP_OUT, "TOILO", "Oil Temp. Out", 5, 13,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 FloatIndicator ind_efi_slip = {EFI_SLIP, "SLIP", "Slip Target", 4, 11,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 IntegerIndicator ind_launch_control = {LAUNCH_CONTROL, "LAU.C", "Launch Control", 5, 14,  0 ,  1 ,  1 ,  1 , 1, "?", 0};
-FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUELP", "Fuel Pump Press.", 5, 16,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
+FloatIndicator ind_fuel_press = {FUEL_PRESS, "FUEL P", "Fuel Pump Press.", 5, 16,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 FloatIndicator ind_ebb_motor_curr = {EBB_MOTOR_CURRENT, "I.EBB", "Ebb Motor Current", 5, 17,  0 ,  1 ,  1 ,  2 , 1, "?", 0};
 
 
@@ -566,17 +575,19 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15,  0 ,  1 ,  1 ,  1 , 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {
- (Indicator*)&ind_ebb,
- (Indicator*)&ind_th2o,
+ (Indicator*)&ind_acc_code,
+ (Indicator*)&ind_acc_fb,
  (Indicator*)&ind_vbat,
  (Indicator*)&ind_oil_press,
+ (Indicator*)&ind_ebb,
+ (Indicator*)&ind_th2o,
  (Indicator*)&ind_traction_control,
- (Indicator*)&ind_tps,
- (Indicator*)&ind_drs,
  (Indicator*)&ind_adc1_read,
  (Indicator*)&ind_rpm,
  (Indicator*)&ind_clutch_pos,
  (Indicator*)&ind_clutch_fb,
+ (Indicator*)&ind_tps,
+ (Indicator*)&ind_drs,
  (Indicator*)&ind_efi_status,
  (Indicator*)&ind_efi_crash_counter,
  (Indicator*)&ind_oil_temp_in,
@@ -652,14 +663,14 @@ void d_UI_AutocrossModeClose(){
 
 const unsigned char dd_settingsCount = 6;
 const unsigned char dd_dashboardSettingsCount =  4 ;
-#line 191 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 197 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 IntegerIndicator sett_dash_top_left = { S_DASH_TOP_L, "", "Dash. Top L.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_top_right = { S_DASH_TOP_R, "", "Dash. Top R.", 0, 12,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_left = { S_DASH_BOTTOM_L, "", "Dash. Bottom L.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 IntegerIndicator sett_dash_bottom_right = { S_DASH_BOTTOM_R, "", "Dash. Bottom R.", 0, 15,  1 ,  1 ,  0 ,  1 , 1, "?", 0};
 BooleanIndicator sett_invert_colors = { S_INVERT_COLORS, "", "Invert Colors", 0, 13,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
 BooleanIndicator sett_bypass_gears = { S_BYPASS_GEARS, "", "Bypass gear shift", 0, 17,  1 ,  1 ,  1 ,  3 , 1, "?", 0};
-#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 210 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 ydata Indicator* dd_settings[dd_settingsCount] = {
 
  (Indicator*)&sett_dash_top_left,
@@ -670,9 +681,9 @@ ydata Indicator* dd_settings[dd_settingsCount] = {
  (Indicator*)&sett_invert_colors,
  (Indicator*)&sett_bypass_gears
 };
-#line 219 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 225 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 Indicator** dd_dashboardSettings = dd_settings;
-#line 223 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 229 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_DashboardSetting_updateValue(IntegerIndicator* ind, int val) {
  ind->value = val;
  strcpy(ind->base.label, dd_carParameters[ind->value]->name);
@@ -690,7 +701,7 @@ void d_UI_SettingsModeInit() {
 
  dd_GraphicController_setCollectionInterface(MENU_INTERFACE, dd_settings, dd_settingsCount, "Settings");
 }
-#line 245 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 251 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_onSettingsChange(signed char movements) {
  signed int dashboardIndicatorIndex;
  unsigned char position;
@@ -716,7 +727,7 @@ void d_UI_onSettingsChange(signed char movements) {
  default:
  break;
  }
-#line 276 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 282 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
  dashboardIndicatorIndex = ((IntegerIndicator*)settingIndicator)->value;
  if (movements) {
  dashboardIndicatorIndex+=movements;
@@ -729,7 +740,7 @@ void d_UI_onSettingsChange(signed char movements) {
  }
  d_DashboardSetting_updateValue((IntegerIndicator*)settingIndicator, dashboardIndicatorIndex);
 }
-#line 297 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
+#line 303 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_operating_modes.c"
 void d_UI_ApplySettings() {
  char i;
  Indicator* oldIndicator;

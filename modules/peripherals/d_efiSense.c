@@ -36,7 +36,7 @@ void dEfiSense_tick(void) {
 void dEfiSense_getAccValue(int accValue){    //% di acc
      OperatingMode currentOperatingMode;
      currentOperatingMode = d_UI_getOperatingMode();
-     dd_Indicator_setintValueP(&ind_tps.base, accValue);
+     dd_Indicator_setIntValueP(&ind_tps.base, accValue);
      switch (currentOperatingMode){
             case ACC_MODE:
                if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){

@@ -33,7 +33,7 @@ typedef enum {
  CLUTCH_POSITION, OIL_TEMP_IN, OIL_TEMP_OUT, CLUTCH_FEEDBACK, DRS,
  EFI_STATUS, TRIM1, TRIM2, EFI_CRASH_COUNTER, TH2O_SX_IN, TH2O_SX_OUT,
  TH2O_DX_IN, TH2O_DX_OUT, EBB_STATE, EFI_SLIP, LAUNCH_CONTROL,
- FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP,
+ FUEL_PRESS, EBB_MOTOR_CURRENT, GCU_TEMP, ACC, ACC_FB,
 
  S_DASH_TOP_L, S_DASH_TOP_R, S_DASH_BOTTOM_L, S_DASH_BOTTOM_R,
  S_BYPASS_GEARS, S_INVERT_COLORS,
@@ -1441,7 +1441,11 @@ void xGLCD_Set_Transparency(char active);
 
 
 
+extern int timer2_EncoderTimer;
+
 void dControls_init(void);
+
+void d_controls_EncoderRead(void);
 
 void dControls_disableCentralSelector();
 
@@ -1498,7 +1502,8 @@ extern FloatIndicator ind_th2o_sx_in;
 extern FloatIndicator ind_th2o_sx_out;
 extern FloatIndicator ind_th2o_dx_in;
 extern FloatIndicator ind_th2o_dx_out;
-
+extern IntegerIndicator ind_acc_code;
+extern IntegerIndicator ind_acc_fb;
 extern IntegerIndicator ind_ebb;
 extern FloatIndicator ind_oil_temp_out;
 extern IntegerIndicator ind_efi_slip;
@@ -1527,17 +1532,17 @@ extern IntegerIndicator ind_H2O_fans;
 extern IntegerIndicator ind_clutch;
 extern IntegerIndicator ind_drs_curr;
 extern IntegerIndicator ind_gear_motor;
-#line 110 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 111 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_init[ 6 ])(void);
-#line 113 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 114 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 extern void (*d_OperatingMode_close[ 6 ])(void);
-#line 124 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 125 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_setOperatingMode(OperatingMode mode);
 void d_UI_AutocrossModeInit(void);
 void d_UI_AccModeInit(void);
-#line 134 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 135 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_onSettingsChange(signed char movements);
-#line 165 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
+#line 166 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
@@ -1551,11 +1556,11 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 25 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static const unsigned char INDICATOR_HEIGHT = (unsigned char) ( 64  / 2) - ( 1  * 2) - 1;
 static const unsigned char INDICATOR_WIDTH =
  (unsigned char) (( 128  -  40  -  1  * 4) / 2) - 1;
-#line 47 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 45 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static const unsigned char DASHBOARD_POSITION_COORDINATES[ 4 ][2] = {
  { 0 ,  0 },
  { 128  - INDICATOR_WIDTH - 1  * 2 - 1 ,  0 },
@@ -1620,9 +1625,9 @@ void printf(char * string);
  y = DASHBOARD_POSITION_COORDINATES[indicatorIndex][ 1 ];
 
   eGlcd_drawRect( x + 1 , y + 1 , INDICATOR_WIDTH, INDICATOR_HEIGHT ); ;
-#line 116 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 114 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 }
-#line 122 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
+#line 120 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_dashboard.c"
 static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
  Indicator* indicator = dd_currentIndicators[indicatorIndex];
  unsigned char x, y, oldLabelLength;
@@ -1635,7 +1640,6 @@ static void dd_Dashboard_printIndicator(unsigned char indicatorIndex) {
  eGlcd_writeText(indicator->name, x, y);
   xGlcd_Set_Font ( DynamisFont_Dashboard16x16, 16 , 16 , 32 );
  }
-
  oldLabelLength = indicator->labelLength;
 
  x = dd_Indicator_getLabelXCoord(indicatorIndex);
