@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/basic.c"
 #line 1 "c:/users/public/documents/mikroelektronika/mikroc pro for dspic/include/stdio.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);

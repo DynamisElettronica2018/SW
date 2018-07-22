@@ -1,3 +1,7 @@
+/******************************************************************************/
+//                                 D C A N . H                                //
+//                                    D P X                                   //
+/******************************************************************************/
 
 
 #ifndef DD_CAN_H
@@ -126,6 +130,7 @@
 #define COMMAND_DCU_START_ACQUISITION 1
 #define COMMAND_DCU_STOP_ACQUISITION 2
 #define COMMAND_DCU_IS_ACQUIRING 1
+#define COMMAND_DCU_CLOSE 2
 #define COMMAND_DCU_IGNORE 50
 
 /****************************** AUTOCROSS MODE ********************************/

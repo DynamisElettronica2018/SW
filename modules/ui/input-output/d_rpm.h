@@ -1,5 +1,10 @@
-#ifndef DP8_DISPLAY_CONTROLLER_D_RPM_H
-#define DP8_DISPLAY_CONTROLLER_D_RPM_H
+/******************************************************************************/
+//                                    R P M                                   //
+//                                    D P X                                   //
+/******************************************************************************/
+
+#ifndef DPX_RPM_H
+#define DPX_RPM_H
 
 #define I2C_ADDRESS_RPM_STRIPE 0b01000000
 #define RPM_STRIPE_MAX 11500
@@ -19,4 +24,4 @@ void dRpm_enableLedStripeOutput(void);
 
 void dRpm_updateLedStripe(void);
 
-#endif //DP8_DISPLAY_CONTROLLER_D_RPM_H
+#endif //DPX_RPM_H

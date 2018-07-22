@@ -72,12 +72,14 @@ void dAcc_feedbackGCU(unsigned int value){
           dd_GraphicController_clearPrompt();
           dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
           dd_GraphicController_fixNotification("STEADY");
+          dAcc_startClutchRelease();
       } else if (value == COMMAND_START_CLUTCH_RELEASE){
           dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
           dAcc_timeToGo = TRUE;
           dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
       } else if (value == COMMAND_STOP_ACCELERATION){
           dAcc_stopAutoAcceleration();
+          dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
       }
     }
 }

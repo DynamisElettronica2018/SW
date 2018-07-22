@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 23/05/16.
-//
+/******************************************************************************/
+//                                P A D D L E . H                             //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_CLUTCH_H
-#define DP8_DISPLAY_CONTROLLER_CLUTCH_H
+#ifndef DPX_PADDLE_H
+#define DPX_PADDLE_H
 
 #include "../../../libs/basic.h"
 #include "../../../libs/dsPIC.h"
@@ -18,4 +19,4 @@ unsigned char dPaddle_getValue(void);
 
 void dPaddle_readSample(void);
 
-#endif //DP8_DISPLAY_CONTROLLER_CLUTCH_H
+#endif //DPX_PADDLE_H

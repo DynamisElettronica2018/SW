@@ -15,6 +15,7 @@
 unsigned int dHardReset_counter = 0;
 int lastId=0;
 unsigned int d_hardResetOccurred = FALSE;
+unsigned int d_hardResetOccurred2 = FALSE;
 
 void dHardReset_init(void) {
 char msg[14];
@@ -43,10 +44,20 @@ void dHardReset_handleReset(void){
          dAutocross_restartAutocross();
     }
     d_hardResetOccurred = TRUE;
+    d_hardResetOccurred2 = TRUE;
+    
 }
 
 unsigned int dHardReset_hasResetOccurred(void){
    return d_hardResetOccurred;
+}
+
+unsigned int dHardReset_hasResetOccurred2(void){
+   return d_hardResetOccurred2;
+}
+
+void dHardReset_unsetHardResetOccurred2(void){
+   d_hardResetOccurred2 = FALSE;
 }
 
 void dHardReset_unsetHardResetOccurred(void){

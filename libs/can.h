@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 03/07/16.
-//
+/******************************************************************************/
+//                                  C A N . H                                 //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_CAN_H
-#define DP8_DISPLAY_CONTROLLER_CAN_H
+#ifndef DPX_CAN_H
+#define DPX_CAN_H
 
 #define CAN_RETRY_LIMIT 50
 #define CAN_DEFAULT_FLAGS _CAN_TX_STD_FRAME & _CAN_TX_NO_RTR_FRAME
@@ -80,4 +81,4 @@ void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
 
-#endif //DP8_DISPLAY_CONTROLLER_CAN_H
+#endif //DPX_CAN_H

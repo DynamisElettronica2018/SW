@@ -39,11 +39,11 @@ void dEfiSense_getAccValue(int accValue){    //% di acc
      currentOperatingMode = d_UI_getOperatingMode();
      dd_Indicator_setIntValueP(&ind_tps.base, accValue);
      switch (currentOperatingMode){
-            case ACC_MODE:
+           /* case ACC_MODE:
                if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
                   dAcc_startClutchRelease();
                }
-               break;
+               break; */
             case AUTOCROSS_MODE:
                if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAutocross_hasGCUConfirmed() == COMMAND_START_AUTOCROSS){
                   dAutocross_startClutchRelease();

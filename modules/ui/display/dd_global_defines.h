@@ -1,3 +1,9 @@
+/******************************************************************************/
+//                           G L O B A L  D E F I N E S                       //
+//                                    D P X                                   //
+/******************************************************************************/
+
+
 //  In order to work properly library requires to #define on your main file
 //  OSC_FREQ_MHZ (Clock Frequency in Mhz, default: 32)
 //  Optionally you can also define

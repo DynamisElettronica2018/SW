@@ -1,6 +1,8 @@
-//
-// Created by Aaron Russo on 10/06/16.
-//
+/******************************************************************************/
+//                                e G L C D . H                               //
+//                                    D P X                                   //
+/******************************************************************************/
+
 // Enhanced Glcd library
 // This expansion takes advantage of the already existing
 // MikroC Glcd and xGlcd libraries, enabling compatibility

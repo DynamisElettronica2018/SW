@@ -1,13 +1,14 @@
-//
-//  DP8 LCD Dashboard
-//  Aaron Russo 01/03/2016
-//
+/******************************************************************************/
+//                              D A S H B O A R D                             //
+//                                    D P X                                   //
+/******************************************************************************/
+
 //  Dashboard is the main frame
 //  Indicator is the small rectangle containing data
 //
 
-#ifndef DP8_DISPLAY_CONTROLLER_DD_DASHBOARD_H
-#define DP8_DISPLAY_CONTROLLER_DD_DASHBOARD_H
+#ifndef DPX_DISPLAY_CONTROLLER_DD_DASHBOARD_H
+#define DPX_DISPLAY_CONTROLLER_DD_DASHBOARD_H
 
 #include "dd_indicators.h"
 
@@ -62,4 +63,4 @@ the first which are necessary.
 */
 
 
-#endif //DP8_DISPLAY_CONTROLLER_DD_DASHBOARD_H
+#endif //DPX_DISPLAY_CONTROLLER_DD_DASHBOARD_H

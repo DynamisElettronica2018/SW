@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_gears.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -15,7 +15,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 52 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -47,7 +47,7 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 30 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
+#line 32 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_gears.h"
 void dGear_init(void);
 
 void dGear_requestGearUp();

@@ -9,6 +9,8 @@
 
 
 
+
+
 static const unsigned char DYNAMIS_LOGO[1024] = {
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
@@ -970,7 +972,7 @@ static const unsigned short DynamisFont_UniformTerminal6x8[] = {
 };
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -982,7 +984,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -1042,7 +1044,7 @@ void setAnalogDataOutputFormat(unsigned char adof);
 int getMinimumAnalogClockConversion(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -1057,10 +1059,10 @@ void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern const unsigned char BLACK, WHITE;
-#line 62 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 64 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
@@ -1092,11 +1094,11 @@ void eGlcd_setTimerCoefficient(float coefficient);
 unsigned int eGlcd_getTextPixelLength(char *text);
 
 void Lcd_PrintFrame();
-#line 102 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 104 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
 
 void eGlcd_fillPage(unsigned char page, char color);
-#line 115 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 117 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 

@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 17/07/16.
-//
+/******************************************************************************/
+//                             E F I  S E N S E . H                           //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_EFISENSE_H
-#define DP8_DISPLAY_CONTROLLER_D_EFISENSE_H
+#ifndef DPX_DISPLAY_CONTROLLER_D_EFISENSE_H
+#define DPX_DISPLAY_CONTROLLER_D_EFISENSE_H
 
 #include "../ui/display/dd_dashboard.h"
 #include "../ui/input-output/d_signalLed.h"
@@ -56,4 +57,4 @@ float dEfiSense_calculateVoltage(unsigned int value);
 
 int dEfiSense_calculateSlip(unsigned int value);
 
-#endif //DP8_DISPLAY_CONTROLLER_D_EFISENSE_H
+#endif //DPX_DISPLAY_CONTROLLER_D_EFISENSE_H

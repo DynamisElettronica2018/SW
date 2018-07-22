@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_interfaces.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -13,23 +13,23 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
 } Interface;
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 41 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_print[ 3 ])(void);
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 49 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_init[ 3 ])(void);
-#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 66 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR,
  PROMPT
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 76 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
@@ -38,7 +38,7 @@ extern char dd_notificationText[ 20 ];
 void dd_printMessage(char * title);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -64,7 +64,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -159,12 +159,12 @@ void dd_Indicator_switchBoolValueP(Indicator* ind);
 void dd_Indicator_switchBoolValue(Indicator_ID id);
 
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
-#line 23 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
+#line 24 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 typedef enum {TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT} DashboardPosition;
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 extern void dd_Dashboard_init();
 extern void dd_Dashboard_print(void);
-#line 39 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
+#line 40 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_dashboard.h"
 unsigned char dd_Dashboard_getIndicatorIndexAtPosition(DashboardPosition position);
 
 
@@ -188,7 +188,7 @@ void dd_boardDebug_makeLineText(char *lineText, unsigned char lineIndex);
 void dd_boardDebug_moveSelection(signed char movements);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 16 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_init();
 void dd_printMenu();
 
@@ -201,10 +201,12 @@ void dd_Menu_setX_OFFSET(unsigned char x);
 void dd_Menu_setHeight(unsigned char height);
 
 void dd_Menu_setWidth(unsigned char width);
-#line 33 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_menu.h"
 void dd_Menu_moveSelection(signed char movements);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dd_fonts.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/fonts/dynamis_logo.h"
+
+
 
 
 
@@ -1174,10 +1176,10 @@ static const unsigned short DynamisFont_UniformTerminal6x8[] = {
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_global_defines.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern const unsigned char BLACK, WHITE;
-#line 62 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 64 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
@@ -1209,11 +1211,11 @@ void eGlcd_setTimerCoefficient(float coefficient);
 unsigned int eGlcd_getTextPixelLength(char *text);
 
 void Lcd_PrintFrame();
-#line 102 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 104 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
 
 void eGlcd_fillPage(unsigned char page, char color);
-#line 115 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
+#line 117 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 
@@ -1235,15 +1237,15 @@ void xGLCD_Set_Transparency(char active);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
-#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 21 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
@@ -1255,7 +1257,7 @@ void dd_GraphicController_resetRefreshTimerValue(void);
 void dd_GraphicController_unsetOnScreenNotification (void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 61 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
 
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);

@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 13/07/16.
-//
+/******************************************************************************/
+//                                  E B B . H                                 //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_EBB_H
-#define DP8_DISPLAY_CONTROLLER_D_EBB_H
+#ifndef DPX_EBB_H
+#define DPX_EBB_H
 
 #include "../ui/display/dd_dashboard.h"
 #include "d_can.h"
@@ -49,21 +50,4 @@ void dEbb_calibrationState(unsigned int value);
 
 void dEbb_error(unsigned int value);
 
-/******************************************************************************/
-/*void dEbb_calibrateSwitch(void);
-
-void dEbb_setEbbMotorStateFromCAN(unsigned int motorState);
-
-void dEbb_setEbbMotorSenseFromCAN(unsigned int motorSense);
-
-int dEbb_isCalibrateing(void);
-
-void dEbb_calibrateUp(void);
-
-void dEbb_calibrateDown(void);
-
-void dEbb_calibratePause(void);
-
-void dEbb_calibrateStop(void);*/
-/******************************************************************************/
-#endif //DP8_DISPLAY_CONTROLLER_D_EBB_H
+#endif //DPX_EBB_H

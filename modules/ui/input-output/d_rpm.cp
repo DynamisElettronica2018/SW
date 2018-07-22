@@ -1,14 +1,6 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_rpm.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
-
-
-
-
-
-
-
-
-
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 void dRpm_init();
 
 void dRpm_set(unsigned int rpm);
@@ -22,7 +14,7 @@ void dRpm_enableLedStripeOutput(void);
 void dRpm_updateLedStripe(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -36,7 +28,7 @@ double getExecTime(void);
 void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -49,14 +41,14 @@ unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
-#line 9 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
-void I2CExpander_init(unsigned char address, char direction);
 #line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
-void I2CExpander_setPort(unsigned char address, unsigned char port);
+void I2CExpander_init(unsigned char address, char direction);
 #line 21 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
+void I2CExpander_setPort(unsigned char address, unsigned char port);
+#line 27 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/i2c_expander.h"
 unsigned char I2CExpander_readPort(unsigned char address);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -82,7 +74,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -179,6 +171,8 @@ void dd_Indicator_switchBoolValue(Indicator_ID id);
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
 
 
 

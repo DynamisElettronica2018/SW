@@ -1,9 +1,11 @@
-//
-// Created by Aaron Russo on 19/03/16.
-//
+/******************************************************************************/
+//                             I N D I C A T O R S . H                        //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_INDICATORS_H
-#define DP8_DISPLAY_CONTROLLER_INDICATORS_H
+
+#ifndef DPX_DISPLAY_CONTROLLER_INDICATORS_H
+#define DPX_DISPLAY_CONTROLLER_INDICATORS_H
 
 #define MAX_INDICATOR_VALUE_LENGTH 10
 
@@ -184,4 +186,4 @@ void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
 *   a great overhead. Thus it must be chosen carefully.
 */
 
-#endif //DP8_DISPLAY_CONTROLLER_INDICATORS_H
+#endif //DPX_DISPLAY_CONTROLLER_INDICATORS_H

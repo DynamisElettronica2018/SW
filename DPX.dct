@@ -2235,6 +2235,7 @@ d_ebb
 d_gearmotorstate
 d_getgearmotorstate
 d_hardresetoccurred
+d_hardresetoccurred2
 d_isneutralset
 d_not_a
 d_operatingmode_close
@@ -2490,6 +2491,7 @@ dd_refreshtimer
 dd_settings
 dd_settingscount
 dd_tmr1counter
+ddcu_handlemessage
 ddcu_init
 ddcu_isacquiring
 ddcu_isacquiringset
@@ -2666,11 +2668,13 @@ dhardreset_getcounter
 dhardreset_handlereset
 dhardreset_hasbeenreset
 dhardreset_hasresetoccurred
+dhardreset_hasresetoccurred2
 dhardreset_init
 dhardreset_reset
 dhardreset_setflag
 dhardreset_unsetflag
 dhardreset_unsethardresetoccurred
+dhardreset_unsethardresetoccurred2
 disi
 disi
 disi_bit

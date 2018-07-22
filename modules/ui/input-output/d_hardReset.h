@@ -1,3 +1,7 @@
+/******************************************************************************/
+//                             H A R D R E S E T . H                          //
+//                                    D P X                                   //
+/******************************************************************************/
 
 
 #ifndef DPX_DISPLAY_CONTROLLER_D_HARDRESET_H
@@ -21,6 +25,10 @@ void dHardReset_handleReset(void);
 unsigned int dHardReset_hasResetOccurred(void);
 
 void dHardReset_unsetHardResetOccurred(void);
+
+unsigned int dHardReset_hasResetOccurred2(void);
+
+void dHardReset_unsetHardResetOccurred2(void);
 
 char dHardReset_hasBeenReset(void);
 

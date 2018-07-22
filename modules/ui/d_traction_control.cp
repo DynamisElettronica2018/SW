@@ -7,6 +7,9 @@
 
 
 
+
+
+
 void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
@@ -18,7 +21,7 @@ void d_traction_control_setValueFromCAN(unsigned int value);
 void d_traction_control_propagateValue(signed char value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 52 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -51,7 +54,7 @@ void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -77,7 +80,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -174,6 +177,8 @@ void dd_Indicator_switchBoolValue(Indicator_ID id);
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
 
 
 
@@ -289,7 +294,7 @@ void d_UI_AccModeClose(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -301,38 +306,38 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 12 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  DASHBOARD_INTERFACE,
  MENU_INTERFACE,
 } Interface;
-#line 35 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 41 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_print[ 3 ])(void);
-#line 43 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 49 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern void (*dd_Interface_init[ 3 ])(void);
-#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 66 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 typedef enum {
  MESSAGE,
  WARNING,
  ERROR,
  PROMPT
 } NotificationType;
-#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
+#line 76 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
 extern const char dd_notificationTitles[ 4 ][ 20 ];
 
 
 extern char dd_notificationText[ 20 ];
 
 void dd_printMessage(char * title);
-#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 21 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 extern Indicator** dd_currentIndicators;
 
 extern unsigned char dd_currentIndicatorsCount;
 
 extern char dd_currentInterfaceTitle[ 20 ];
-#line 29 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 30 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_init(void);
-#line 37 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_setCollectionInterface(Interface interface, Indicator** indicator_collection, unsigned char indicator_count, char* title);
 
 Interface dd_GraphicController_getInterface(void);
@@ -344,7 +349,7 @@ void dd_GraphicController_resetRefreshTimerValue(void);
 void dd_GraphicController_unsetOnScreenNotification (void);
 
 int dd_GraphicController_getNotificationFlag(void);
-#line 60 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
+#line 61 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 void dd_GraphicController_clearPrompt(void);
 
 void dd_GraphicController_fireTimedNotification(unsigned int time, char *text, NotificationType type);
@@ -370,7 +375,7 @@ char dd_GraphicController_isColorInversionQueued(void);
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();
@@ -387,7 +392,7 @@ void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -464,7 +469,7 @@ void Music_playNote(unsigned char note, unsigned char duration);
 float Music_getActualNoteDuration(unsigned char duration);
 
 float Music_getNoteFrequency(unsigned char note);
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);
@@ -473,7 +478,7 @@ void Buzzer_bip(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
-#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);
@@ -483,7 +488,7 @@ void dSignalLed_set(unsigned char led);
 void dSignalLed_unset(unsigned char led);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
-#line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_ui_controller.h"
 void d_UIController_init();
 
 OperatingMode d_UI_getOperatingMode(void);
@@ -493,7 +498,7 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 15 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
+#line 19 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_traction_control.c"
 signed char d_tractionValue = 0;
 
 void d_traction_control_printNotification(void){

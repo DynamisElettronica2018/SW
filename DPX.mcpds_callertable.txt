@@ -386,8 +386,8 @@ external4
 				Can_write
 				dSignalLed_unset
 			dDCU_startAcquisition
-				Can_writeInt
 				dd_GraphicController_fireTimedNotification
+				Can_writeInt
 	d_controls_onAux2
 		dAcc_requestAction
 			dAcc_startAutoAcceleration
@@ -437,8 +437,8 @@ CAN_Interrupt
 	dEfiSense_getAccValue
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
-		dAcc_hasGCUConfirmed
-		dAcc_startClutchRelease
+		dAutocross_hasGCUConfirmed
+		dAutocross_startClutchRelease
 			dd_GraphicController_clearPrompt
 				dd_GraphicController_unsetNotificationFlag
 				dd_GraphicController_unsetOnScreenNotification
@@ -458,9 +458,6 @@ CAN_Interrupt
 				d_UI_CruiseModeClose
 				d_UI_AccModeClose
 				d_UI_AutocrossModeClose
-		dAutocross_hasGCUConfirmed
-		dAutocross_startClutchRelease
-			dd_GraphicController_clearPrompt
 	dEfiSense_calculateTPS
 	dd_Indicator_setFloatValueP
 		dd_Indicator_requestPrintUpdateP
@@ -517,9 +514,14 @@ CAN_Interrupt
 			dd_Indicator_requestPrintUpdateP
 	dd_Indicator_setIntCoupleValueP
 		dd_Indicator_requestPrintUpdateP
-	dDCU_isAcquiringSet
-	dDCU_sentAcquiringSignal
-		dSignalLed_set
+	dDCU_handleMessage
+		dDCU_isAcquiringSet
+		dDCU_sentAcquiringSignal
+			dSignalLed_set
+		dSignalLed_unset
+		dHardReset_hasResetOccurred2
+		dd_GraphicController_fireTimedNotification
+		dHardReset_unsetHardResetOccurred2
 	dAcc_feedbackGCU
 		d_UI_getOperatingMode
 		dd_GraphicController_clearPrompt
@@ -527,6 +529,8 @@ CAN_Interrupt
 			strcpy
 			dd_printMessage
 			dd_GraphicController_setOnScreenNotification
+		dAcc_startClutchRelease
+			dd_GraphicController_clearPrompt
 		dd_GraphicController_fireTimedNotification
 		dAcc_stopAutoAcceleration
 	dAutocross_feedbackGCU

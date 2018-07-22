@@ -1,9 +1,11 @@
-//
-// Created by Aaron Russo on 08/07/16.
-//
+/******************************************************************************/
+//                             S I G N A L L E D . H                          //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_SIGNALLED_H
-#define DP8_DISPLAY_CONTROLLER_D_SIGNALLED_H
+
+#ifndef DPX_SIGNALLED_H
+#define DPX_SIGNALLED_H
 
 #include "../../../libs/basic.h"
 #include "../../../libs/dsPIC.h"
@@ -39,4 +41,4 @@ void dSignalLed_set(unsigned char led);
 
 void dSignalLed_unset(unsigned char led);
 
-#endif //DP8_DISPLAY_CONTROLLER_D_SIGNALLED_H
+#endif //DPX_SIGNALLED_H

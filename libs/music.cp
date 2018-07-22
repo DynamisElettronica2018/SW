@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/music.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/music.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -15,7 +15,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);

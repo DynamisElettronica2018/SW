@@ -19,9 +19,9 @@ _dEfiSense_heartbeat:
 	CALL	_dEfiSense_isDead
 	CP0.B	W0
 	CLR.B	W0
-	BRA NZ	L__dEfiSense_heartbeat21
+	BRA NZ	L__dEfiSense_heartbeat14
 	INC.B	W0
-L__dEfiSense_heartbeat21:
+L__dEfiSense_heartbeat14:
 	MOV.B	W0, W11
 	MOV	#lo_addr(_ind_efi_status), W10
 	CALL	_dd_Indicator_setBoolValueP
@@ -41,9 +41,9 @@ _dEfiSense_tick:
 ;d_efiSense.c,26 :: 		if (dEfiSense_ticks > 0) {
 	MOV	_dEfiSense_ticks, W0
 	CP	W0, #0
-	BRA GTU	L__dEfiSense_tick23
+	BRA GTU	L__dEfiSense_tick16
 	GOTO	L_dEfiSense_tick0
-L__dEfiSense_tick23:
+L__dEfiSense_tick16:
 ;d_efiSense.c,27 :: 		dEfiSense_ticks -= 1;
 	MOV	#1, W1
 	MOV	#lo_addr(_dEfiSense_ticks), W0
@@ -51,17 +51,17 @@ L__dEfiSense_tick23:
 ;d_efiSense.c,28 :: 		if (dEfiSense_ticks == 0) {
 	MOV	_dEfiSense_ticks, W0
 	CP	W0, #0
-	BRA Z	L__dEfiSense_tick24
+	BRA Z	L__dEfiSense_tick17
 	GOTO	L_dEfiSense_tick1
-L__dEfiSense_tick24:
+L__dEfiSense_tick17:
 ;d_efiSense.c,29 :: 		dEfiSense_die();
 	CALL	_dEfiSense_die
 ;d_efiSense.c,30 :: 		if (dEfiSense_detectReset) {
 	MOV	#lo_addr(_dEfiSense_detectReset), W0
 	CP0.B	[W0]
-	BRA NZ	L__dEfiSense_tick25
+	BRA NZ	L__dEfiSense_tick18
 	GOTO	L_dEfiSense_tick2
-L__dEfiSense_tick25:
+L__dEfiSense_tick18:
 ;d_efiSense.c,31 :: 		dHardReset_reset();
 	CALL	_dHardReset_reset
 ;d_efiSense.c,32 :: 		}
@@ -95,65 +95,40 @@ _dEfiSense_getAccValue:
 ;d_efiSense.c,41 :: 		switch (currentOperatingMode){
 	GOTO	L_dEfiSense_getAccValue3
 ; currentOperatingMode end address is: 0 (W0)
-;d_efiSense.c,42 :: 		case ACC_MODE:
-L_dEfiSense_getAccValue5:
-;d_efiSense.c,43 :: 		if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
-	MOV	#50, W0
-	CP	W10, W0
-	BRA GE	L__dEfiSense_getAccValue27
-	GOTO	L__dEfiSense_getAccValue17
-L__dEfiSense_getAccValue27:
-	CALL	_dAcc_hasGCUConfirmed
-	CP	W0, #1
-	BRA Z	L__dEfiSense_getAccValue28
-	GOTO	L__dEfiSense_getAccValue16
-L__dEfiSense_getAccValue28:
-L__dEfiSense_getAccValue15:
-;d_efiSense.c,44 :: 		dAcc_startClutchRelease();
-	CALL	_dAcc_startClutchRelease
-;d_efiSense.c,43 :: 		if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAcc_hasGCUConfirmed() == COMMAND_START_ACCELERATION){
-L__dEfiSense_getAccValue17:
-L__dEfiSense_getAccValue16:
-;d_efiSense.c,46 :: 		break;
-	GOTO	L_dEfiSense_getAccValue4
 ;d_efiSense.c,47 :: 		case AUTOCROSS_MODE:
-L_dEfiSense_getAccValue9:
+L_dEfiSense_getAccValue5:
 ;d_efiSense.c,48 :: 		if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAutocross_hasGCUConfirmed() == COMMAND_START_AUTOCROSS){
 	MOV	#50, W0
 	CP	W10, W0
-	BRA GE	L__dEfiSense_getAccValue29
-	GOTO	L__dEfiSense_getAccValue19
-L__dEfiSense_getAccValue29:
+	BRA GE	L__dEfiSense_getAccValue20
+	GOTO	L__dEfiSense_getAccValue12
+L__dEfiSense_getAccValue20:
 	CALL	_dAutocross_hasGCUConfirmed
 	CP	W0, #1
-	BRA Z	L__dEfiSense_getAccValue30
-	GOTO	L__dEfiSense_getAccValue18
-L__dEfiSense_getAccValue30:
-L__dEfiSense_getAccValue14:
+	BRA Z	L__dEfiSense_getAccValue21
+	GOTO	L__dEfiSense_getAccValue11
+L__dEfiSense_getAccValue21:
+L__dEfiSense_getAccValue10:
 ;d_efiSense.c,49 :: 		dAutocross_startClutchRelease();
 	CALL	_dAutocross_startClutchRelease
 ;d_efiSense.c,48 :: 		if(accValue >= EFI_SENSE_MIN_ACC_VALUE && dAutocross_hasGCUConfirmed() == COMMAND_START_AUTOCROSS){
-L__dEfiSense_getAccValue19:
-L__dEfiSense_getAccValue18:
+L__dEfiSense_getAccValue12:
+L__dEfiSense_getAccValue11:
 ;d_efiSense.c,51 :: 		break;
 	GOTO	L_dEfiSense_getAccValue4
 ;d_efiSense.c,52 :: 		default:
-L_dEfiSense_getAccValue13:
+L_dEfiSense_getAccValue9:
 ;d_efiSense.c,53 :: 		break;
 	GOTO	L_dEfiSense_getAccValue4
 ;d_efiSense.c,54 :: 		}
 L_dEfiSense_getAccValue3:
 ; currentOperatingMode start address is: 0 (W0)
-	CP.B	W0, #4
-	BRA NZ	L__dEfiSense_getAccValue31
-	GOTO	L_dEfiSense_getAccValue5
-L__dEfiSense_getAccValue31:
 	CP.B	W0, #5
-	BRA NZ	L__dEfiSense_getAccValue32
-	GOTO	L_dEfiSense_getAccValue9
-L__dEfiSense_getAccValue32:
+	BRA NZ	L__dEfiSense_getAccValue22
+	GOTO	L_dEfiSense_getAccValue5
+L__dEfiSense_getAccValue22:
 ; currentOperatingMode end address is: 0 (W0)
-	GOTO	L_dEfiSense_getAccValue13
+	GOTO	L_dEfiSense_getAccValue9
 L_dEfiSense_getAccValue4:
 ;d_efiSense.c,55 :: 		}
 L_end_dEfiSense_getAccValue:
@@ -174,9 +149,9 @@ _dEfiSense_die:
 	CALL	_dEfiSense_isDead
 	CP0.B	W0
 	CLR.B	W0
-	BRA NZ	L__dEfiSense_die34
+	BRA NZ	L__dEfiSense_die24
 	INC.B	W0
-L__dEfiSense_die34:
+L__dEfiSense_die24:
 	MOV.B	W0, W11
 	MOV.B	#13, W10
 	CALL	_dd_Indicator_setBoolValue

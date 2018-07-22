@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 31/07/16.
-//
+/******************************************************************************/
+//                                  D C U . H                                 //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_RIO_H
-#define DP8_DISPLAY_CONTROLLER_D_RIO_H
+#ifndef DPX_DCU_H
+#define DPX_DCU_H
 
 #define DCU_TICK_PERIOD 1000 //ms
 #define DCU_DEAD_TIME   5000 //ms
@@ -22,6 +23,8 @@ char dDCU_isAcquiring(void);
 
 void dDCU_sentAcquiringSignal(void);
 
+void dDCU_handleMessage(unsigned int acquisitionState);
+
 void dDCU_tick(void);
 
 void dDCU_isAcquiringSet(void);
@@ -36,4 +39,4 @@ void dDCU_isAcquiringSet(void);
    To increment the counter dDCU_tick() must be called, on every DCU_TICK_PERIOD.
 **/
 
-#endif //DP8_DISPLAY_CONTROLLER_D_RIO_H
+#endif //DPX_DCU_H

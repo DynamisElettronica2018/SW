@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_sensors.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -15,7 +15,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -74,7 +74,7 @@ void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef enum {
 
  EBB, TH2O, OIL_PRESS, TPS, VBAT, RPM, ADC1, TRACTION_CONTROL,
@@ -100,7 +100,7 @@ typedef struct {
  int first;
  int second;
 } IntCouple;
-#line 68 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
+#line 70 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../display/dd_indicators.h"
 typedef struct Indicator {
  Indicator_ID id;
  char* name;
@@ -197,7 +197,7 @@ void dd_Indicator_switchBoolValue(Indicator_ID id);
 void dd_Indicator_parseValueLabel(unsigned char indicatorIndex);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/../../peripherals/d_can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
+#line 52 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -232,6 +232,8 @@ void Can_initInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_operating_modes.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
+
+
 
 
 
@@ -343,7 +345,7 @@ void d_UI_onSettingsChange(signed char movements);
 void d_UI_SettingsModeClose(void);
 void d_UI_AutocrossModeClose(void);
 void d_UI_AccModeClose(void);
-#line 19 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
+#line 23 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/d_sensors.h"
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);

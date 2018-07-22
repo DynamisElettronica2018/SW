@@ -1,9 +1,11 @@
-//
-// Created by Aaron Russo on 28/03/16.
-//
+/******************************************************************************/
+//                            D Y N A M I S  L O G O                          //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H
-#define DP8_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H
+
+#ifndef DPX_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H
+#define DPX_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H
 
 static const unsigned char DYNAMIS_LOGO[1024] = {
         255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
@@ -55,4 +57,4 @@ static const unsigned char DYNAMIS_LOGO[1024] = {
         255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255
 };
 
-#endif //DP8_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H
+#endif //DPX_DISPLAY_CONTROLLER_DYNAMIS_LOGO_H

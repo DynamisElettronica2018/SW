@@ -11,10 +11,12 @@
 #include "d_signalLed.h"
 #include "debug.h"
 #include "d_autocross.h"
+#include "d_hardReset.h"
 
 #define DCU_ACQUISITION_NOTIF_DURATION  1500 //ms
 
 static char d_DCU_isAcquiring = FALSE;
+static char d_DCU_previousState = FALSE;
 static unsigned int d_DCU_isAliveCounter = 0;  //ms counter
 
 void dDCU_init(){
@@ -31,17 +33,18 @@ void dDCU_switchAcquisition(void) {
 }
 
 void dDCU_startAcquisition(void) {
-    Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
+  //  Can_writeInt(SW_AUX_ID, COMMAND_DCU_STOP_ACQUISITION);
     d_DCU_isAliveCounter = 0;
-    d_DCU_isAcquiring = TRUE;
+  // d_DCU_isAcquiring = TRUE;
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Start ACQ.", MESSAGE);
-    delay_ms(500);
+    d_DCU_previousState = COMMAND_DCU_START_ACQUISITION;
     Can_writeInt(SW_AUX_ID, COMMAND_DCU_START_ACQUISITION);
 }
 
 void dDCU_stopAcquisition(void) {
     d_DCU_isAcquiring = FALSE;
     dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
+    d_DCU_previousState = COMMAND_DCU_STOP_ACQUISITION;
     Can_resetWritePacket();
     Can_addIntToWritePacket(COMMAND_DCU_STOP_ACQUISITION);
     Can_addIntToWritePacket(dAutocross_isActive());
@@ -70,4 +73,28 @@ char dDCU_isAcquiring(){
 void dDCU_sentAcquiringSignal(){
      dSignalLed_set(DSIGNAL_LED_GREEN);
      d_DCU_isAliveCounter = 0;
+}
+
+void dDCU_handleMessage(unsigned int acquisitionState){
+      if(acquisitionState == COMMAND_DCU_IS_ACQUIRING){
+            dDCU_isAcquiringSet();
+            dDCU_sentAcquiringSignal();
+      }else if(acquisitionState == COMMAND_DCU_STOP_ACQUISITION){
+            d_DCU_isAcquiring = FALSE;
+            dSignalLed_unset(DSIGNAL_LED_GREEN);
+      }else if(acquisitionState == COMMAND_DCU_CLOSE){
+            d_DCU_isAcquiring = FALSE;
+            dSignalLed_unset(DSIGNAL_LED_GREEN);
+      }
+      if(acquisitionState != d_DCU_previousState){
+           if(acquisitionState == COMMAND_DCU_IS_ACQUIRING && !dHardReset_hasResetOccurred2()){
+              dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Start ACQ.", MESSAGE);
+           }else if (acquisitionState == COMMAND_DCU_STOP_ACQUISITION){
+              dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
+           }else if (acquisitionState == COMMAND_DCU_CLOSE){
+              dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "Stop ACQ.", MESSAGE);
+              dHardReset_unsetHardResetOccurred2();
+           }
+           d_DCU_previousState = acquisitionState;
+      }
 }

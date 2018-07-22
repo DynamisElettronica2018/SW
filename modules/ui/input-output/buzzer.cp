@@ -1,7 +1,7 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/buzzer.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -15,7 +15,7 @@ unsigned char getNumberDigitCount(unsigned char number);
 void emptyString(char* myString);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -92,7 +92,7 @@ void Music_playNote(unsigned char note, unsigned char duration);
 float Music_getActualNoteDuration(unsigned char duration);
 
 float Music_getNoteFrequency(unsigned char note);
-#line 18 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
+#line 20 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/buzzer.h"
 void Buzzer_init(void);
 
 void Buzzer_tick(void);

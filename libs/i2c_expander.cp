@@ -1,14 +1,14 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/i2c_expander.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
-#line 9 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
-void I2CExpander_init(unsigned char address, char direction);
 #line 15 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
-void I2CExpander_setPort(unsigned char address, unsigned char port);
+void I2CExpander_init(unsigned char address, char direction);
 #line 21 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
+void I2CExpander_setPort(unsigned char address, unsigned char port);
+#line 27 "c:/users/sofia/desktop/git repo/sw/libs/i2c_expander.h"
 unsigned char I2CExpander_readPort(unsigned char address);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();

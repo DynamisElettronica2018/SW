@@ -26,10 +26,10 @@ char * strstr(char * s1, char * s2);
 char * strtok(char * s1, char * s2);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 36 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 38 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern float EGLCD_TIMER_COEFFICIENT;
 extern const unsigned char BLACK, WHITE;
-#line 62 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 64 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 extern unsigned char* frameBuff;
 
 void eGlcd_init(void);
@@ -61,11 +61,11 @@ void eGlcd_setTimerCoefficient(float coefficient);
 unsigned int eGlcd_getTextPixelLength(char *text);
 
 void Lcd_PrintFrame();
-#line 102 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 104 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void eGlcd_drawRect(unsigned char x, unsigned char y, unsigned char width, unsigned char height);
 
 void eGlcd_fillPage(unsigned char page, char color);
-#line 115 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
+#line 117 "c:/users/sofia/desktop/git repo/sw/libs/eglcd.h"
 void xGlcd_Set_Font(const char *ptrFontTbl, unsigned short font_width,
  unsigned short font_height, unsigned int font_offset);
 

@@ -16,7 +16,7 @@ char Buttons_isPressureProtracted(void);
 void Buttons_clearPressureProtraction(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 17 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -28,7 +28,7 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 184 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
+#line 186 "c:/users/sofia/desktop/git repo/sw/libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -89,7 +89,7 @@ int getMinimumAnalogClockConversion(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/input-output/d_signalled.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/input-output/../../../libs/basic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/input-output/../../../libs/dspic.h"
-#line 34 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/input-output/d_signalled.h"
+#line 36 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/input-output/d_signalled.h"
 void dSignalLed_init(void);
 
 void dSignalLed_switch(unsigned char led);

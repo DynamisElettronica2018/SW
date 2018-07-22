@@ -1,7 +1,7 @@
-//
-//  DPX UI Operating Modes
-//  Luca Colagrande 28/02/2018
-//
+/******************************************************************************/
+//                           O P E R A T I N G  M O D E S                     //
+//                                    D P X                                   //
+/******************************************************************************/
 
 #ifndef D_UI_OPERATING_MODES_H
 #define D_UI_OPERATING_MODES_H

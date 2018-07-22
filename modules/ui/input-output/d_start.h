@@ -1,9 +1,10 @@
-//
-// Created by Aaron Russo on 15/07/16.
-//
+/******************************************************************************/
+//                                S T A R T . H                               //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_D_START_H
-#define DP8_DISPLAY_CONTROLLER_D_START_H
+#ifndef DPX_START_H
+#define DPX_START_H
 
 #include "../../peripherals/d_can.h"
 #include "../../../libs/basic.h"
@@ -16,4 +17,4 @@ char dStart_isSwitchedOn(void);
 
 void dStart_sendStartMessage(void);
 
-#endif //DP8_DISPLAY_CONTROLLER_D_START_H
+#endif //DPX_START_H

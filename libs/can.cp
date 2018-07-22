@@ -1,6 +1,6 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/libs/can.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
-#line 51 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
+#line 52 "c:/users/sofia/desktop/git repo/sw/libs/can.h"
 void Can_init(void);
 
 unsigned int Can_read(unsigned long int *id, char* dataBuffer, unsigned int *dataLength, unsigned int *inFlags);
@@ -36,7 +36,7 @@ void Can_initInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/peripherals/../../libs/can.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/../modules/ui/display/dd_global_defines.h"
-#line 3 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
+#line 9 "c:/users/sofia/desktop/git repo/sw/libs/debug.h"
 extern char dstr[100];
 
 void Debug_UART_Init();

@@ -36,7 +36,6 @@
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
 int timer2_EncoderTimer = 0;
-//sarebbe comodo decidere per cosa usare ogni signalLed a seconda delle 4 cose più importanti che vogliamo controllare sempre.
 
 void main(){
 
@@ -227,10 +226,11 @@ onCanInterrupt{
            break;
        case DCU_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
-           if(thirdInt == COMMAND_DCU_IS_ACQUIRING){
+           /*if(thirdInt == (unsigned int)COMMAND_DCU_IS_ACQUIRING){
                 dDCU_isAcquiringSet();
                 dDCU_sentAcquiringSignal();
-           }
+           }*/
+           dDCU_handleMessage(thirdInt);
            break;
        case GCU_FEEDBACK_ID:
            dd_Indicator_setIntValueP(&ind_fb_code.base, (firstInt));

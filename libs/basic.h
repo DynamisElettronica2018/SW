@@ -1,9 +1,11 @@
-//
-// Created by Aaron Russo on 26/01/16.
-//
+/******************************************************************************/
+//                                 B A S I C . H                              //
+//                                    D P X                                   //
+/******************************************************************************/
 
-#ifndef DP8_DISPLAY_CONTROLLER_BASIC_H
-#define DP8_DISPLAY_CONTROLLER_BASIC_H
+
+#ifndef DPX_DISPLAY_CONTROLLER_BASIC_H
+#define DPX_DISPLAY_CONTROLLER_BASIC_H
 
 #define TRUE 1
 #define FALSE 0
@@ -24,4 +26,4 @@ unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
 
-#endif //DP8_DISPLAY_CONTROLLER_BASIC_H
+#endif //DPX_DISPLAY_CONTROLLER_BASIC_H

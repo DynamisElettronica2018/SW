@@ -1,6 +1,8 @@
-//
-// Created by Aaron Russo on 16/08/16.
-//
+/******************************************************************************/
+//                                 C L U T C H                                //
+//                                    D P X                                   //
+/******************************************************************************/
+
 
 #ifndef DP8_DISPLAY_CONTROLLER_D_CLUTCH_H
 #define DP8_DISPLAY_CONTROLLER_D_CLUTCH_H
