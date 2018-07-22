@@ -46,6 +46,7 @@ void dDCU_stopAcquisition(void) {
     Can_addIntToWritePacket(COMMAND_DCU_STOP_ACQUISITION);
     Can_addIntToWritePacket(dAutocross_isActive());
     Can_write(SW_AUX_ID);
+    dSignalLed_unset(DSIGNAL_LED_GREEN);
 }
 
 void dDCU_tick(void){
@@ -54,6 +55,7 @@ void dDCU_tick(void){
          dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
          d_DCU_isAcquiring = 0;
          d_DCU_isAliveCounter = 0;
+         dSignalLed_unset(DSIGNAL_LED_GREEN);
      }
 }
 
@@ -66,5 +68,6 @@ char dDCU_isAcquiring(){
 }
 
 void dDCU_sentAcquiringSignal(){
+     dSignalLed_set(DSIGNAL_LED_GREEN);
      d_DCU_isAliveCounter = 0;
 }

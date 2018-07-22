@@ -109,7 +109,10 @@ _dDCU_stopAcquisition:
 	MOV	#2032, W10
 	MOV	#0, W11
 	CALL	_Can_write
-;d_dcu.c,49 :: 		}
+;d_dcu.c,49 :: 		dSignalLed_unset(DSIGNAL_LED_GREEN);
+	MOV.B	#3, W10
+	CALL	_dSignalLed_unset
+;d_dcu.c,50 :: 		}
 L_end_dDCU_stopAcquisition:
 	POP	W12
 	POP	W11
@@ -119,8 +122,8 @@ L_end_dDCU_stopAcquisition:
 
 _dDCU_tick:
 
-;d_dcu.c,51 :: 		void dDCU_tick(void){
-;d_dcu.c,52 :: 		d_DCU_isAliveCounter += DCU_TICK_PERIOD;
+;d_dcu.c,52 :: 		void dDCU_tick(void){
+;d_dcu.c,53 :: 		d_DCU_isAliveCounter += DCU_TICK_PERIOD;
 	PUSH	W10
 	PUSH	W11
 	PUSH	W12
@@ -128,27 +131,30 @@ _dDCU_tick:
 	MOV	#1000, W0
 	ADD	W1, W0, W1
 	MOV	W1, d_dcu_d_DCU_isAliveCounter
-;d_dcu.c,53 :: 		if(d_DCU_isAliveCounter >= DCU_DEAD_TIME){
+;d_dcu.c,54 :: 		if(d_DCU_isAliveCounter >= DCU_DEAD_TIME){
 	MOV	#5000, W0
 	CP	W1, W0
 	BRA GEU	L__dDCU_tick11
 	GOTO	L_dDCU_tick4
 L__dDCU_tick11:
-;d_dcu.c,54 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
+;d_dcu.c,55 :: 		dd_GraphicController_fireTimedNotification(DCU_ACQUISITION_NOTIF_DURATION, "DCU DEAD", ERROR);
 	MOV.B	#2, W12
 	MOV	#lo_addr(?lstr3_d_dcu), W11
 	MOV	#1500, W10
 	CALL	_dd_GraphicController_fireTimedNotification
-;d_dcu.c,55 :: 		d_DCU_isAcquiring = 0;
+;d_dcu.c,56 :: 		d_DCU_isAcquiring = 0;
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W1
 	CLR	W0
 	MOV.B	W0, [W1]
-;d_dcu.c,56 :: 		d_DCU_isAliveCounter = 0;
+;d_dcu.c,57 :: 		d_DCU_isAliveCounter = 0;
 	CLR	W0
 	MOV	W0, d_dcu_d_DCU_isAliveCounter
-;d_dcu.c,57 :: 		}
+;d_dcu.c,58 :: 		dSignalLed_unset(DSIGNAL_LED_GREEN);
+	MOV.B	#3, W10
+	CALL	_dSignalLed_unset
+;d_dcu.c,59 :: 		}
 L_dDCU_tick4:
-;d_dcu.c,58 :: 		}
+;d_dcu.c,60 :: 		}
 L_end_dDCU_tick:
 	POP	W12
 	POP	W11
@@ -158,34 +164,39 @@ L_end_dDCU_tick:
 
 _dDCU_isAcquiringSet:
 
-;d_dcu.c,60 :: 		void dDCU_isAcquiringSet(){
-;d_dcu.c,61 :: 		d_DCU_isAcquiring = TRUE;
+;d_dcu.c,62 :: 		void dDCU_isAcquiringSet(){
+;d_dcu.c,63 :: 		d_DCU_isAcquiring = TRUE;
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W1
 	MOV.B	#1, W0
 	MOV.B	W0, [W1]
-;d_dcu.c,62 :: 		}
+;d_dcu.c,64 :: 		}
 L_end_dDCU_isAcquiringSet:
 	RETURN
 ; end of _dDCU_isAcquiringSet
 
 _dDCU_isAcquiring:
 
-;d_dcu.c,64 :: 		char dDCU_isAcquiring(){
-;d_dcu.c,65 :: 		return d_DCU_isAcquiring;
+;d_dcu.c,66 :: 		char dDCU_isAcquiring(){
+;d_dcu.c,67 :: 		return d_DCU_isAcquiring;
 	MOV	#lo_addr(d_dcu_d_DCU_isAcquiring), W0
 	MOV.B	[W0], W0
-;d_dcu.c,66 :: 		}
+;d_dcu.c,68 :: 		}
 L_end_dDCU_isAcquiring:
 	RETURN
 ; end of _dDCU_isAcquiring
 
 _dDCU_sentAcquiringSignal:
 
-;d_dcu.c,68 :: 		void dDCU_sentAcquiringSignal(){
-;d_dcu.c,69 :: 		d_DCU_isAliveCounter = 0;
+;d_dcu.c,70 :: 		void dDCU_sentAcquiringSignal(){
+;d_dcu.c,71 :: 		dSignalLed_set(DSIGNAL_LED_GREEN);
+	PUSH	W10
+	MOV.B	#3, W10
+	CALL	_dSignalLed_set
+;d_dcu.c,72 :: 		d_DCU_isAliveCounter = 0;
 	CLR	W0
 	MOV	W0, d_dcu_d_DCU_isAliveCounter
-;d_dcu.c,70 :: 		}
+;d_dcu.c,73 :: 		}
 L_end_dDCU_sentAcquiringSignal:
+	POP	W10
 	RETURN
 ; end of _dDCU_sentAcquiringSignal

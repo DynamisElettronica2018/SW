@@ -12,6 +12,7 @@
 #include "d_acceleration.h"
 #include "input-output/d_controls.h"
 #include "d_autocross.h"
+#include "d_traction_control.h"
 
 void d_UI_BoardDebugModeInit();
 void d_UI_SettingsModeInit();
@@ -142,6 +143,7 @@ static ydata Indicator* dd_carBoards[dd_carBoardsCount] =  {
 
 void d_UI_CruiseModeInit() {
      dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Race");
+     d_traction_control_setOldValue();
 }
 
 void d_UI_AccModeInit(){
@@ -158,6 +160,7 @@ void d_UI_BoardDebugModeInit() {
 
 void d_UI_AutocrossModeInit() {
      dd_GraphicController_setCollectionInterface(DASHBOARD_INTERFACE, dd_carParameters, dd_carParametersCount, "Autocross");
+     d_traction_control_setOldValue();
 }
 
 

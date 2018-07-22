@@ -1987,19 +1987,8 @@ void dd_GraphicController_resetRefreshTimerValue(void){
 
 int __counter = 0;
 
-void dd_GraphicController_onTimerInterrupt(void)
-{
- if ( __counter == 10 )
- {
- dSignalLed_set( 1 );
- }
- if (__counter == 20)
- {
- dSignalLed_unset( 1 );
- __counter = 0;
- }
+void dd_GraphicController_onTimerInterrupt(void){
 
- __counter++;
  dd_refreshTimer++;
 
  if(dd_onStartup)
@@ -2024,7 +2013,7 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
  else if (dd_onInterfaceChange)
  {
-#line 330 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 319 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
  dd_tmr1Counter++;
  if(dd_tmr1Counter >= dd_onInterfaceChangeCounterLimit)
  {
@@ -2057,5 +2046,5 @@ void dd_GraphicController_onTimerInterrupt(void)
  }
 
   IFS0bits.T1IF  = 0 ;
-#line 373 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
+#line 362 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/display/dd_graphic_controller.c"
 }

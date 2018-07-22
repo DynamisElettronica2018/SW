@@ -4,6 +4,7 @@
 /******************************************************************************/
 
 #include "d_ui_controller.h"
+#include "input-output/d_signalLed.h"
 #include "../libs/dsPIC.h"
 #include "display/dd_graphic_controller.h"
 #include "display/dd_menu.h"
@@ -12,7 +13,6 @@
 #include "input-output/buzzer.h"
 #include "input-output/d_paddle.h"
 #include "d_sensors.h"
-#include "input-output/d_signalLed.h"
 #include "input-output/d_rpm.h"
 #include "../libs/debug.h"
 #include "d_acceleration.h"
@@ -86,10 +86,9 @@ void d_controls_onLeftEncoder(signed char movements) {
                  //dd_Menu_moveSelection(movements);
                  break;
             case AUTOCROSS_MODE:
+            case ACC_MODE:
             case CRUISE_MODE:
                  d_traction_control_move(movements);
-                 break;
-            case ACC_MODE:
                  break;
             default:
                  return;
@@ -105,12 +104,11 @@ void d_controls_onRightEncoder(signed char movements) {
             case DEBUG_MODE:
                 dd_Menu_moveSelection(movements);
               break;
+            case ACC_MODE:
             case AUTOCROSS_MODE:
             case CRUISE_MODE:
                 dEbb_move(movements);
                 break;
-            case ACC_MODE:
-              break;
             default:
                  return;
      }

@@ -244,9 +244,9 @@ int d_UI_OperatingModeChanged(void);
 OperatingMode d_selectorPositionToMode(signed char position);
 
 OperatingMode d_UI_getOperatingMode(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../libs/dspic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
-#line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 15 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
 char log2(unsigned char byte);
 
 int round(double number);
@@ -258,7 +258,9 @@ void signedIntToString(int number, char *text);
 unsigned char getNumberDigitCount(unsigned char number);
 
 void emptyString(char* myString);
-#line 184 "c:/users/sofia/desktop/git repo/sw/libs/../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
+#line 184 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
 void setAllPinAsDigital(void);
 
 void setInterruptPriority(unsigned char device, unsigned char priority);
@@ -316,6 +318,15 @@ void setAnalogVoltageReference(unsigned char mode);
 void setAnalogDataOutputFormat(unsigned char adof);
 
 int getMinimumAnalogClockConversion(void);
+#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+void dSignalLed_init(void);
+
+void dSignalLed_switch(unsigned char led);
+
+void dSignalLed_set(unsigned char led);
+
+void dSignalLed_unset(unsigned char led);
+#line 1 "c:/users/sofia/desktop/git repo/sw/libs/../libs/dspic.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_graphic_controller.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_indicators.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/display/dd_interfaces.h"
@@ -516,17 +527,6 @@ void dPaddle_readSample(void);
 unsigned int d_SWTemp_getTempValue(void);
 
 void d_sensors_sendSWTemp(void);
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/basic.h"
-#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/../../../libs/dspic.h"
-#line 34 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
-void dSignalLed_init(void);
-
-void dSignalLed_switch(unsigned char led);
-
-void dSignalLed_set(unsigned char led);
-
-void dSignalLed_unset(unsigned char led);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_rpm.h"
 
 
@@ -673,6 +673,8 @@ void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
 
+void d_traction_control_setOldValue(void);
+
 void d_traction_control_setValueFromCAN(unsigned int value);
 
 void d_traction_control_propagateValue(signed char value);
@@ -760,10 +762,9 @@ void d_controls_onLeftEncoder(signed char movements) {
 
  break;
  case AUTOCROSS_MODE:
+ case ACC_MODE:
  case CRUISE_MODE:
  d_traction_control_move(movements);
- break;
- case ACC_MODE:
  break;
  default:
  return;
@@ -779,11 +780,10 @@ void d_controls_onRightEncoder(signed char movements) {
  case DEBUG_MODE:
  dd_Menu_moveSelection(movements);
  break;
+ case ACC_MODE:
  case AUTOCROSS_MODE:
  case CRUISE_MODE:
  dEbb_move(movements);
- break;
- case ACC_MODE:
  break;
  default:
  return;
@@ -795,7 +795,7 @@ OperatingMode d_selectorPositionToMode(signed char position){
  position =  0 ;
  return position- -3 ;
 }
-#line 127 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+#line 125 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

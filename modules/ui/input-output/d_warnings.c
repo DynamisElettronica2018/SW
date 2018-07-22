@@ -98,7 +98,7 @@ void dWarnings_check(void){
           }
      }  */
 }
-
+/*
 void dWarnings_flash(unsigned int ii){
      Buzzer_bip();
      dd_GraphicController_fireTimedNotification(0.7, LIMITS_DESCRIPTIONS[ii], WARNING);
@@ -119,4 +119,4 @@ void dWarnings_unsetParameter(unsigned int ii){
      if(or == 0){
           dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
      }
-}
+} */

@@ -10,6 +10,8 @@
 
 void d_drs_propagateChange(void);
 
+char d_drs_isOpen(void);
+
 void d_drs_setValueFromCAN(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
 #line 15 "c:/users/sofia/desktop/git repo/sw/libs/basic.h"
@@ -484,12 +486,10 @@ void d_drs_propagateChange(void){
  if(d_drs_status ==  1  && d_drs_feedback ==  1 ){
  Can_writeInt( 0b01000000101 ,  0 );
  d_drs_status =  0 ;
- dSignalLed_unset( 3 );
  }else if(d_drs_status ==  0  && d_drs_feedback ==  0 ){
  Can_writeInt( 0b01000000101 ,  1 );
  d_drs_status =  1 ;
- dSignalLed_set( 3 );
-#line 31 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
+#line 29 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_drs.c"
  }
 }
 
@@ -497,11 +497,15 @@ void d_drs_setValueFromCAN(unsigned int value){
  if(d_UI_getOperatingMode() != ACC_MODE){
  if(d_drs_status==value && d_drs_status== 1 ){
  dd_Indicator_setIntValueP(&ind_drs.base, value);
- dd_GraphicController_fireTimedNotification( 500 , "DRS OPEN", MESSAGE);
+ dd_GraphicController_fireTimedNotification( 1000 , "DRS OPEN", MESSAGE);
  }else if(d_drs_status==value && d_drs_status== 0 ){
  dd_Indicator_setIntValueP(&ind_drs.base, value);
- dd_GraphicController_fireTimedNotification( 500 , "DRS CLOSE", MESSAGE);
+ dd_GraphicController_fireTimedNotification( 1000 , "DRS CLOSE", MESSAGE);
  }
  d_drs_feedback = value;
  }
+}
+
+char d_drs_isOpen(void){
+ return d_drs_feedback;
 }

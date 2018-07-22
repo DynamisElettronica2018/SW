@@ -707,6 +707,8 @@ void dAutocross_startClutchRelease(void);
 
 void d_drs_propagateChange(void);
 
+char d_drs_isOpen(void);
+
 void d_drs_setValueFromCAN(unsigned int value);
 #line 78 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_controls.c"
 static unsigned char old_encoder_left_pin0 = 0;

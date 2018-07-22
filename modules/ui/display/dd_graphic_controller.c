@@ -284,20 +284,9 @@ void dd_GraphicController_resetRefreshTimerValue(void){
 
 int __counter = 0;
 
-void dd_GraphicController_onTimerInterrupt(void) 
-{
-    if ( __counter == 10 )
-    {
-       dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
-    }
-    if (__counter == 20)
-    {
-       dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
-     __counter = 0;
-    }
-
-   __counter++;
-   dd_refreshTimer++;
+void dd_GraphicController_onTimerInterrupt(void){
+     
+    dd_refreshTimer++;
    
     if(dd_onStartup)
     {

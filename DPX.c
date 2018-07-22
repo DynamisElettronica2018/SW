@@ -101,6 +101,13 @@ onTimer2Interrupt{
         timer2_counter3 = 0;
     }
     
+    if(timer2_counter4 >= 100){
+        if(d_drs_isOpen()){
+          dSignalLed_set(DSIGNAL_LED_RED_RIGHT);
+        } else
+          dSignalLed_unset(DSIGNAL_LED_RED_RIGHT);
+    }
+    
     if(timer2_EncoderTimer == 100){
         d_controls_EncoderRead();
     }
@@ -126,7 +133,6 @@ onCanInterrupt{
     //INTERRUPT_PROTECT(IEC1BITS.C1IE = 0);
     //IEC1BITS.C1IE = 0;
     Can_clearInterrupt();         //la posizione del clear interrup deve essere per forza questa.
-    dSignalLed_switch(DSIGNAL_LED_RED_RIGHT);
     Can_read(&id, dataBuffer, &dataLen, &flags);
 
     //Buzzer_bip();

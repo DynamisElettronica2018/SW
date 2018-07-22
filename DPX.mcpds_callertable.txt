@@ -173,10 +173,21 @@ main
 					dd_GraphicController_setCollectionInterface
 				d_UI_CruiseModeInit
 					dd_GraphicController_setCollectionInterface
+					d_traction_control_setOldValue
+						d_traction_control_propagateValue
+							Can_writeInt
+								Can_resetWritePacket
+								Can_addIntToWritePacket
+									Can_addByteToWritePacket
+								Can_write
+									CAN1Write
+										CAN1IDToRegs
+									Can_getWriteFlags
 				d_UI_AccModeInit
 					dd_GraphicController_setCollectionInterface
 				d_UI_AutocrossModeInit
 					dd_GraphicController_setCollectionInterface
+					d_traction_control_setOldValue
 				d_UI_BoardDebugModeClose
 				d_UI_SettingsModeClose
 					d_UI_ApplySettings
@@ -185,13 +196,6 @@ main
 				d_UI_AccModeClose
 					dAcc_stopAutoAccelerationFromSW
 						Can_writeInt
-							Can_resetWritePacket
-							Can_addIntToWritePacket
-								Can_addByteToWritePacket
-							Can_write
-								CAN1Write
-									CAN1IDToRegs
-								Can_getWriteFlags
 						dAcc_stopAutoAcceleration
 							dd_GraphicController_unsetOnScreenNotification
 							d_UI_getOperatingMode
@@ -380,6 +384,7 @@ external4
 				Can_addIntToWritePacket
 				dAutocross_isActive
 				Can_write
+				dSignalLed_unset
 			dDCU_startAcquisition
 				Can_writeInt
 				dd_GraphicController_fireTimedNotification
@@ -412,7 +417,6 @@ external3
 	clearExternalInterrupt
 CAN_Interrupt
 	Can_clearInterrupt
-	dSignalLed_switch
 	Can_read
 		Can_B0hasBeenReceived
 		Can_clearB0Flag
@@ -429,6 +433,7 @@ CAN_Interrupt
 		dd_Indicator_setBoolValueP
 			dd_Indicator_requestPrintUpdateP
 		dEfiSense_isDead
+		dSignalLed_set
 	dEfiSense_getAccValue
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
@@ -514,6 +519,7 @@ CAN_Interrupt
 		dd_Indicator_requestPrintUpdateP
 	dDCU_isAcquiringSet
 	dDCU_sentAcquiringSignal
+		dSignalLed_set
 	dAcc_feedbackGCU
 		d_UI_getOperatingMode
 		dd_GraphicController_clearPrompt
@@ -550,8 +556,6 @@ external2
 	d_controls_onDRS
 		d_drs_propagateChange
 			Can_writeInt
-			dSignalLed_unset
-			dSignalLed_set
 	clearExternalInterrupt
 timer4_interrupt
 	Buzzer_tick
@@ -601,6 +605,9 @@ timer2_interrupt
 			I2C1_Stop
 		_Long2Float
 		_Float2Longint
+	d_drs_isOpen
+	dSignalLed_set
+	dSignalLed_unset
 	d_controls_EncoderRead
 		d_controls_onLeftEncoder
 			d_UI_onSettingsChange
@@ -618,8 +625,6 @@ timer2_interrupt
 				d_DashboardSetting_updateValue
 			d_traction_control_move
 				d_traction_control_propagateValue
-					Can_writeInt
-					dSignalLed_switch
 		d_controls_onRightEncoder
 			dd_Menu_moveSelection
 				dd_Menu_scroll
@@ -641,10 +646,9 @@ timer2_interrupt
 	dDCU_isAcquiring
 	dDCU_tick
 		dd_GraphicController_fireTimedNotification
+		dSignalLed_unset
 timer1_interrupt
 	dd_GraphicController_onTimerInterrupt
-		dSignalLed_set
-		dSignalLed_unset
 		eGlcd_clear
 		Lcd_PrintFrame
 		dd_printMessage

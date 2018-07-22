@@ -11,6 +11,8 @@ void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
 
+void d_traction_control_setOldValue(void);
+
 void d_traction_control_setValueFromCAN(unsigned int value);
 
 void d_traction_control_propagateValue(signed char value);
@@ -534,10 +536,12 @@ void d_traction_control_printNotification(void){
  }
 }
 
+void d_traction_control_setOldValue(void){
+ d_traction_control_propagateValue(d_tractionValue);
+}
+
 void d_traction_control_propagateValue(signed char value){
  Can_writeInt( 0b01000000011 , (int) value);
-
- dSignalLed_switch( 0 );
 }
 
 void d_traction_control_move(signed char movements){

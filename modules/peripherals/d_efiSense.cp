@@ -512,7 +512,8 @@ void Can_clearB1Flag(void);
 void Can_clearInterrupt(void);
 
 void Can_initInterrupt(void);
-#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
+#line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_signalled.h"
+#line 14 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_efiSense.c"
 unsigned int dEfiSense_ticks =  1000 ;
 char dEfiSense_dead =  1 , dEfiSense_detectReset =  0 ;
 
@@ -521,7 +522,7 @@ void dEfiSense_heartbeat(void) {
  dEfiSense_dead =  0 ;
  dEfiSense_ticks =  1000 ;
  dd_Indicator_setBoolValueP(&ind_efi_status.base, !dEfiSense_isDead());
-
+ dSignalLed_set( 0 );
 }
 
 void dEfiSense_tick(void) {

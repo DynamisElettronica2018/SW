@@ -4,9 +4,11 @@
 
 #define DRS_OPEN 1
 #define DRS_CLOSE 0
-#define DRS_NOTIFICATION_TIME 500
+#define DRS_NOTIFICATION_TIME 1000
 
 void d_drs_propagateChange(void);
+
+char d_drs_isOpen(void);
 
 void d_drs_setValueFromCAN(unsigned int value);
 

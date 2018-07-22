@@ -694,6 +694,8 @@ void d_traction_control_move(signed char movements);
 
 void d_traction_control_init(void);
 
+void d_traction_control_setOldValue(void);
+
 void d_traction_control_setValueFromCAN(unsigned int value);
 
 void d_traction_control_propagateValue(signed char value);
@@ -840,6 +842,8 @@ void dAutocross_startClutchRelease(void);
 
 void d_drs_propagateChange(void);
 
+char d_drs_isOpen(void);
+
 void d_drs_setValueFromCAN(unsigned int value);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_controls.h"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/input-output/d_antistall.h"
@@ -955,6 +959,13 @@ void main(){
  timer2_counter3 = 0;
  }
 
+ if(timer2_counter4 >= 100){
+ if(d_drs_isOpen()){
+ dSignalLed_set( 1 );
+ } else
+ dSignalLed_unset( 1 );
+ }
+
  if(timer2_EncoderTimer == 100){
  d_controls_EncoderRead();
  }
@@ -980,7 +991,6 @@ void main(){
 
 
  Can_clearInterrupt();
- dSignalLed_switch( 1 );
  Can_read(&id, dataBuffer, &dataLen, &flags);
 
 

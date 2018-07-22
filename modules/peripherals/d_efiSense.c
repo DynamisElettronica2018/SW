@@ -9,6 +9,7 @@
 #include "d_acceleration.h"
 #include "d_autocross.h"
 #include "d_can.h"
+#include "d_signalLed.h"
 
 unsigned int dEfiSense_ticks = EFI_SENSE_DEADTIME;
 char dEfiSense_dead = TRUE, dEfiSense_detectReset = FALSE;
@@ -18,7 +19,7 @@ void dEfiSense_heartbeat(void) {
     dEfiSense_dead = FALSE;
     dEfiSense_ticks = EFI_SENSE_DEADTIME;
     dd_Indicator_setBoolValueP(&ind_efi_status.base, !dEfiSense_isDead());
-  //  dSignalLed_set(DSIGNAL_LED_GREEN);
+    dSignalLed_set(DSIGNAL_LED_BLUE);
 }
 
 void dEfiSense_tick(void) {

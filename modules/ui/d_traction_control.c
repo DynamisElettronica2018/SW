@@ -54,10 +54,12 @@ void d_traction_control_printNotification(void){
            }
 }
 
+void d_traction_control_setOldValue(void){
+     d_traction_control_propagateValue(d_tractionValue);
+}
+
 void d_traction_control_propagateValue(signed char value){
       Can_writeInt(SW_TRACTION_CONTROL_GCU_ID, (int) value);
-    //  d_traction_control_printNotification();
-      dSignalLed_switch(DSIGNAL_LED_BLUE);
 }
 
 void d_traction_control_move(signed char movements){

@@ -2226,6 +2226,7 @@ d_currentgear
 d_currentoperatingmode
 d_dashboardsetting_updatevalue
 d_drs_feedback
+d_drs_isopen
 d_drs_lastvalue
 d_drs_propagatechange
 d_drs_setvaluefromcan
@@ -2246,6 +2247,7 @@ d_traction_control_init
 d_traction_control_move
 d_traction_control_printnotification
 d_traction_control_propagatevalue
+d_traction_control_setoldvalue
 d_traction_control_setvaluefromcan
 d_tractionvalue
 d_ui_accmodeclose
@@ -2942,10 +2944,7 @@ dstart_switchoff
 dstart_switchon
 dstr
 dwarnings_check
-dwarnings_flash
 dwarnings_init
-dwarnings_setparameter
-dwarnings_unsetparameter
 edt
 edt
 edt_bit

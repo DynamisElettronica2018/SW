@@ -370,25 +370,3 @@ void dWarnings_init(void){
 void dWarnings_check(void){
 #line 100 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/input-output/d_warnings.c"
 }
-
-void dWarnings_flash(unsigned int ii){
- Buzzer_bip();
- dd_GraphicController_fireTimedNotification(0.7, LIMITS_DESCRIPTIONS[ii], WARNING);
-}
-
-void dWarnings_setParameter(unsigned int ii){
- WARNINGS_FLAG[ii] = 1;
- dSignalLed_set( 1 );
- dWarnings_flash(ii);
-}
-
-void dWarnings_unsetParameter(unsigned int ii){
- int nn, or = 0;
- WARNINGS_FLAG[ii] = 0;
- for(nn = 0; nn <  3 ; nn += 1){
- or += WARNINGS_FLAG[nn];
- }
- if(or == 0){
- dSignalLed_unset( 1 );
- }
-}
