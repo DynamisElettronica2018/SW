@@ -638,7 +638,6 @@ timer2_interrupt
 				dEbb_propagateValue
 					Can_writeInt
 					dd_Indicator_setIntValueP
-					dEbb_printNotification
 				dd_GraphicController_fireTimedNotification
 				dd_Indicator_setStringValueP
 	d_sensors_sendSWTemp

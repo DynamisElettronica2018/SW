@@ -548,15 +548,14 @@ void dEbb_propagateEbbChange(void) {
 #line 101 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
  default:
  dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
- dEbb_printNotification();
  break;
  }
 }
 
 void dEbb_propagateValue(signed char value){
  Can_writeInt( 0b10000000000 , (int)(value +  8 ));
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value)); +
- dEbb_printNotification();
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+
 }
 
 void dEbb_move(signed char movements){
@@ -601,7 +600,7 @@ void dEbb_error(unsigned int value){
  dd_Indicator_setStringValueP(EBB, "/");
  }
 }
-#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 231 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }

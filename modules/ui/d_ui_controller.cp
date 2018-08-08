@@ -744,7 +744,6 @@ void d_controls_onLeftEncoder(signed char movements) {
  break;
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
-
  break;
  case AUTOCROSS_MODE:
  case ACC_MODE:
@@ -759,8 +758,6 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
  switch (d_currentOperatingMode) {
  case SETTINGS_MODE:
-
-
  case BOARD_DEBUG_MODE:
  case DEBUG_MODE:
  dd_Menu_moveSelection(movements);
@@ -776,11 +773,11 @@ void d_controls_onRightEncoder(signed char movements) {
 }
 
 OperatingMode d_selectorPositionToMode(signed char position){
- if (position >  2  || position <  -3  )
+ if (position >  1  || position <  -3  )
  position =  0 ;
  return position- -3 ;
 }
-#line 125 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_ui_controller.c"
+
 void d_controls_onSelectorSwitched(signed char position) {
  d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

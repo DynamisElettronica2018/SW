@@ -217,7 +217,7 @@ onCanInterrupt{
            dd_Indicator_setIntValueP(&ind_gcu_temp.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_drs_curr.base, (secondInt));
            dd_Indicator_setIntValueP(&ind_fuel_pump.base, (thirdInt));
-           break; //*/
+           break;
        case GCU_DEBUG_2_ID:
            dd_Indicator_setIntValueP(&ind_gear_motor.base, (firstInt));
            dd_Indicator_setIntValueP(&ind_clutch.base, (secondInt));
@@ -226,10 +226,6 @@ onCanInterrupt{
            break;
        case DCU_DEBUG_ID:
            dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
-           /*if(thirdInt == (unsigned int)COMMAND_DCU_IS_ACQUIRING){
-                dDCU_isAcquiringSet();
-                dDCU_sentAcquiringSignal();
-           }*/
            dDCU_handleMessage(thirdInt);
            break;
        case GCU_FEEDBACK_ID:

@@ -83,7 +83,6 @@ void d_controls_onLeftEncoder(signed char movements) {
                  break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
-                 //dd_Menu_moveSelection(movements);
                  break;
             case AUTOCROSS_MODE:
             case ACC_MODE:
@@ -98,8 +97,6 @@ void d_controls_onLeftEncoder(signed char movements) {
 void d_controls_onRightEncoder(signed char movements) {
      switch (d_currentOperatingMode) {
             case SETTINGS_MODE:
-              //d_UI_onSettingsChange(movements);
-              //break;
             case BOARD_DEBUG_MODE:
             case DEBUG_MODE:
                 dd_Menu_moveSelection(movements);
@@ -115,13 +112,11 @@ void d_controls_onRightEncoder(signed char movements) {
 }
 
 OperatingMode d_selectorPositionToMode(signed char position){
-     if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )
+     if (position > FIRST_MODE_POSITION || position < LAST_MODE_POSITION )      //settare first position come autocross per includere la modalità autocross
         position = CRUISE_MODE_POSITION;
      return position-LEFTMOST_OPMODE_POSITION;
 }
 
-/** Shifts position to get zero based index which corresponds to the opmode index definition.
-*/
 void d_controls_onSelectorSwitched(signed char position) {
      d_UI_setOperatingMode(d_selectorPositionToMode(position));
 }

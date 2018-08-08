@@ -1061,7 +1061,6 @@ void main(){
  break;
  case  0b01100011000 :
  dd_Indicator_setIntCoupleValueP(&ind_dcu_board.base,(int)firstInt, (int)secondInt);
-#line 233 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  dDCU_handleMessage(thirdInt);
  break;
  case  0b01100011001 :

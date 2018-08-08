@@ -624,7 +624,7 @@ L_CAN_Interrupt46:
 	MOV	[W14+4], W11
 	MOV	#lo_addr(_ind_fuel_pump), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,220 :: 		break; //*/
+;DPX.c,220 :: 		break;
 	GOTO	L_CAN_Interrupt23
 ;DPX.c,221 :: 		case GCU_DEBUG_2_ID:
 L_CAN_Interrupt47:
@@ -653,63 +653,63 @@ L_CAN_Interrupt48:
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_dcu_board), W10
 	CALL	_dd_Indicator_setIntCoupleValueP
-;DPX.c,233 :: 		dDCU_handleMessage(thirdInt);
+;DPX.c,229 :: 		dDCU_handleMessage(thirdInt);
 	MOV	[W14+4], W10
 	CALL	_dDCU_handleMessage
-;DPX.c,234 :: 		break;
+;DPX.c,230 :: 		break;
 	GOTO	L_CAN_Interrupt23
-;DPX.c,235 :: 		case GCU_FEEDBACK_ID:
+;DPX.c,231 :: 		case GCU_FEEDBACK_ID:
 L_CAN_Interrupt49:
-;DPX.c,236 :: 		dd_Indicator_setIntValueP(&ind_fb_code.base, (firstInt));
+;DPX.c,232 :: 		dd_Indicator_setIntValueP(&ind_fb_code.base, (firstInt));
 	MOV	[W14+0], W11
 	MOV	#lo_addr(_ind_fb_code), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,237 :: 		dd_Indicator_setIntValueP(&ind_fb_value.base, (secondInt));
+;DPX.c,233 :: 		dd_Indicator_setIntValueP(&ind_fb_value.base, (secondInt));
 	MOV	[W14+2], W11
 	MOV	#lo_addr(_ind_fb_value), W10
 	CALL	_dd_Indicator_setIntValueP
-;DPX.c,238 :: 		switch (firstInt){
+;DPX.c,234 :: 		switch (firstInt){
 	GOTO	L_CAN_Interrupt50
-;DPX.c,239 :: 		case ACC_CODE:
+;DPX.c,235 :: 		case ACC_CODE:
 L_CAN_Interrupt52:
-;DPX.c,240 :: 		dAcc_feedbackGCU(secondInt);
+;DPX.c,236 :: 		dAcc_feedbackGCU(secondInt);
 	MOV	[W14+2], W10
 	CALL	_dAcc_feedbackGCU
-;DPX.c,241 :: 		break;
+;DPX.c,237 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,242 :: 		case AUTOX_CODE:
+;DPX.c,238 :: 		case AUTOX_CODE:
 L_CAN_Interrupt53:
-;DPX.c,243 :: 		dAutocross_feedbackGCU(secondInt);
+;DPX.c,239 :: 		dAutocross_feedbackGCU(secondInt);
 	MOV	[W14+2], W10
 	CALL	_dAutocross_feedbackGCU
-;DPX.c,244 :: 		break;
+;DPX.c,240 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,245 :: 		case TRACTION_CODE:
+;DPX.c,241 :: 		case TRACTION_CODE:
 L_CAN_Interrupt54:
-;DPX.c,246 :: 		d_traction_control_setValueFromCAN(secondInt);
+;DPX.c,242 :: 		d_traction_control_setValueFromCAN(secondInt);
 	MOV	[W14+2], W10
 	CALL	_d_traction_control_setValueFromCAN
-;DPX.c,247 :: 		break;
+;DPX.c,243 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,248 :: 		case DRS_CODE:
+;DPX.c,244 :: 		case DRS_CODE:
 L_CAN_Interrupt55:
-;DPX.c,249 :: 		d_drs_setValuefromCAN(secondInt);
+;DPX.c,245 :: 		d_drs_setValuefromCAN(secondInt);
 	MOV	[W14+2], W10
 	CALL	_d_drs_setValueFromCAN
-;DPX.c,250 :: 		break;
+;DPX.c,246 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,251 :: 		case ANTISTALL_CODE:
+;DPX.c,247 :: 		case ANTISTALL_CODE:
 L_CAN_Interrupt56:
-;DPX.c,252 :: 		d_antistall_handle(secondInt);
+;DPX.c,248 :: 		d_antistall_handle(secondInt);
 	MOV	[W14+2], W10
 	CALL	_d_antistall_handle
-;DPX.c,253 :: 		break;
+;DPX.c,249 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,254 :: 		default:
+;DPX.c,250 :: 		default:
 L_CAN_Interrupt57:
-;DPX.c,255 :: 		break;
+;DPX.c,251 :: 		break;
 	GOTO	L_CAN_Interrupt51
-;DPX.c,256 :: 		}
+;DPX.c,252 :: 		}
 L_CAN_Interrupt50:
 	MOV	[W14+0], W0
 	CP	W0, #1
@@ -738,13 +738,13 @@ L__CAN_Interrupt98:
 L__CAN_Interrupt99:
 	GOTO	L_CAN_Interrupt57
 L_CAN_Interrupt51:
-;DPX.c,257 :: 		break;
+;DPX.c,253 :: 		break;
 	GOTO	L_CAN_Interrupt23
-;DPX.c,258 :: 		default:
+;DPX.c,254 :: 		default:
 L_CAN_Interrupt58:
-;DPX.c,259 :: 		break;
+;DPX.c,255 :: 		break;
 	GOTO	L_CAN_Interrupt23
-;DPX.c,260 :: 		}
+;DPX.c,256 :: 		}
 L_CAN_Interrupt22:
 	MOV	#773, W1
 	MOV	#0, W2
@@ -876,7 +876,7 @@ L__CAN_Interrupt114:
 L__CAN_Interrupt115:
 	GOTO	L_CAN_Interrupt58
 L_CAN_Interrupt23:
-;DPX.c,263 :: 		}
+;DPX.c,259 :: 		}
 L_end_CAN_Interrupt:
 	POP	W13
 	POP	W12

@@ -100,15 +100,14 @@ void dEbb_propagateEbbChange(void) {
         break;*/
     default:
         dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-        dEbb_printNotification();
         break;
     }
 }
 
 void dEbb_propagateValue(signed char value){
      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
-     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value)); +
-     dEbb_printNotification();
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+     //dEbb_printNotification();
 }
 
 void dEbb_move(signed char movements){
