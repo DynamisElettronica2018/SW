@@ -97,13 +97,13 @@ IntegerIndicator ind_gear_motor = {GEAR_MOTOR, "GEAR MOTOR", "Gear Motor Curr.",
 IntegerIndicator ind_fuel_pump = {FUEL_PUMP, "FUEL PUMP", "Fuel Pump Curr.", 9, 15, FALSE, TRUE, TRUE, INT, 8, "  ?    ?", 0 };
 
 static ydata Indicator* dd_carParameters[dd_carParametersCount] = {      //i primi 4 sono quelli che di default si vedono nella dashboard                                                                        //TOP_LEFT, TOP_RIGHT, BOTTOM_RIGHT, BOTTOM_LEFT
-      (Indicator*)&ind_ebb,                                              //dashboard standard:  EBB, TH20, VBAT, TOIL
+      (Indicator*)&ind_traction_control,                                              //dashboard standard:  TC, TH20, VBAT, TOIL
       (Indicator*)&ind_th2o,
       (Indicator*)&ind_vbat,
       (Indicator*)&ind_oil_press,
       (Indicator*)&ind_fb_code,
       (Indicator*)&ind_fb_value,
-      (Indicator*)&ind_traction_control,
+      (Indicator*)&ind_ebb,
       (Indicator*)&ind_adc1_read,
       (Indicator*)&ind_rpm,
       (Indicator*)&ind_clutch_pos,

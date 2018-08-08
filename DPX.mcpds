@@ -11,7 +11,7 @@ Value=0
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-Value=modules\ui\input-output\d_hardReset.h
+Value=modules\peripherals\d_ebb.c
 =======
 Value=modules\peripherals\d_drs.c
 >>>>>>> drs2
@@ -92,15 +92,11 @@ Count=0
 Count=0
 ActiveImageIndex=-1
 [OPENED_FILES]
-Count=8
+Count=4
 File0=DPX.c
-File1=modules\ui\d_acceleration.c
-File2=modules\peripherals\d_efiSense.c
-File3=modules\peripherals\d_dcu.c
-File4=modules\peripherals\d_dcu.h
-File5=modules\ui\input-output\d_hardReset.c
-File6=modules\peripherals\d_can.h
-File7=modules\ui\input-output\d_hardReset.h
+File1=modules\ui\d_traction_control.c
+File2=modules\ui\d_operating_modes.c
+File3=modules\peripherals\d_ebb.c
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]

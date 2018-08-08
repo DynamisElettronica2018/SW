@@ -543,6 +543,7 @@ void d_traction_control_printNotification(void){
 
 void d_traction_control_setOldValue(void){
  d_traction_control_propagateValue(d_tractionValue);
+ dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
 }
 
 void d_traction_control_propagateValue(signed char value){
@@ -564,7 +565,8 @@ void d_traction_control_move(signed char movements){
 void d_traction_control_setValueFromCAN(unsigned int value){
  if(d_UI_getOperatingMode() != ACC_MODE){
  d_tractionValue = value;
- d_traction_control_printNotification();
+ dd_Indicator_setIntValueP(&ind_traction_control.base, d_tractionValue);
+
  }
  return;
 }

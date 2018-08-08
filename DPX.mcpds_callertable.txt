@@ -183,6 +183,8 @@ main
 									CAN1Write
 										CAN1IDToRegs
 									Can_getWriteFlags
+						dd_Indicator_setIntValueP
+							dd_Indicator_requestPrintUpdateP
 				d_UI_AccModeInit
 					dd_GraphicController_setCollectionInterface
 				d_UI_AutocrossModeInit
@@ -428,7 +430,6 @@ CAN_Interrupt
 		dGear_set
 	dRpm_set
 		dd_Indicator_setIntValueP
-			dd_Indicator_requestPrintUpdateP
 	dEfiSense_heartbeat
 		dd_Indicator_setBoolValueP
 			dd_Indicator_requestPrintUpdateP
@@ -506,6 +507,8 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dEbb_setEbbValueFromCAN
 		dd_Indicator_setIntValueP
+		dEbb_printNotification
+			dd_GraphicController_fireTimedNotification
 	dEbb_calibrationState
 	dEbb_error
 		dd_GraphicController_fireTimedNotification
@@ -541,8 +544,7 @@ CAN_Interrupt
 		dAutocross_stopAutocross
 	d_traction_control_setValueFromCAN
 		d_UI_getOperatingMode
-		d_traction_control_printNotification
-			dd_GraphicController_fireTimedNotification
+		dd_Indicator_setIntValueP
 	d_drs_setValueFromCAN
 		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
@@ -636,6 +638,8 @@ timer2_interrupt
 				dEbb_propagateValue
 					Can_writeInt
 					dd_Indicator_setIntValueP
+					dEbb_printNotification
+				dd_GraphicController_fireTimedNotification
 				dd_Indicator_setStringValueP
 	d_sensors_sendSWTemp
 		d_SWTemp_getTempValue

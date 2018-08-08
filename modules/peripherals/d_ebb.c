@@ -80,13 +80,13 @@ void dEbb_printNotification(void){
 void dEbb_setEbbValueFromCAN(unsigned int value){
      dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
      dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-    // dEbb_printNotification();
+     dEbb_printNotification();
 }
 
 
 void dEbb_propagateEbbChange(void) {
  switch (dEbb_state){
-    case EBB_IS_CALIBRATING:
+    /*case EBB_IS_CALIBRATING:
         dd_Indicator_setStringValue(EBB, "=0=");
         break;
     case EBB_MOTOR_STOPPED:
@@ -97,16 +97,18 @@ void dEbb_propagateEbbChange(void) {
         break;
     case EBB_MOTOR_ROTATEING:
         dd_Indicator_setStringValue(EBB, "...");
-        break;
+        break;*/
     default:
         dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+        dEbb_printNotification();
         break;
     }
 }
 
 void dEbb_propagateValue(signed char value){
      Can_writeInt(SW_BRAKE_BIAS_EBB_ID, (int)(value + EBB_DAGO_OFFSET));
-     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+     dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value)); +
+     dEbb_printNotification();
 }
 
 void dEbb_move(signed char movements){
@@ -121,6 +123,7 @@ void dEbb_move(signed char movements){
          dEbb_Value = value;
          dEbb_propagateValue(value);
       }else
+         dd_GraphicController_fireTimedNotification(EBB_NOTIFICATION_TIME, "EBB ERROR", MESSAGE);
          dd_Indicator_setStringValueP(EBB, "/");
 }
 

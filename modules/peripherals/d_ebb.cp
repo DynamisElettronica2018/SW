@@ -539,33 +539,24 @@ void dEbb_printNotification(void){
 void dEbb_setEbbValueFromCAN(unsigned int value){
  dEbb_Value = (int)(value -  8 );
  dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-
+ dEbb_printNotification();
 }
 
 
 void dEbb_propagateEbbChange(void) {
  switch (dEbb_state){
- case  100 :
- dd_Indicator_setStringValue(EBB, "=0=");
- break;
- case  122 :
- dd_Indicator_setStringValue(EBB, "/");
- break;
- case  124 :
- dd_Indicator_setStringValue(EBB, ";");
- break;
- case  10 :
- dd_Indicator_setStringValue(EBB, "...");
- break;
+#line 101 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
  default:
  dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
+ dEbb_printNotification();
  break;
  }
 }
 
 void dEbb_propagateValue(signed char value){
  Can_writeInt( 0b10000000000 , (int)(value +  8 ));
- dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value));
+ dd_Indicator_setIntValueP(&ind_ebb.base, (int) (value)); +
+ dEbb_printNotification();
 }
 
 void dEbb_move(signed char movements){
@@ -580,6 +571,7 @@ void dEbb_move(signed char movements){
  dEbb_Value = value;
  dEbb_propagateValue(value);
  }else
+ dd_GraphicController_fireTimedNotification( 1000 , "EBB ERROR", MESSAGE);
  dd_Indicator_setStringValueP(EBB, "/");
 }
 
@@ -609,7 +601,7 @@ void dEbb_error(unsigned int value){
  dd_Indicator_setStringValueP(EBB, "/");
  }
 }
-#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 204 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 228 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 231 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }
