@@ -1,6 +1,12 @@
 #line 1 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+void dAcc_execute(void);
+
+void dAcc_requestAction(void);
+
+void dAcc_feedback(unsigned int value);
+
 void dAcc_init(void);
 
 unsigned int dAcc_hasResetOccurred(void);
@@ -570,14 +576,19 @@ void dHardReset_setFlag(void);
 void dHardReset_unsetFlag(void);
 
 unsigned int dHardReset_getCounter(void);
-#line 27 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
+#line 100 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/ui/d_acceleration.c"
 static char dAcc_autoAcceleration =  0 ;
 static char dAcc_releasingClutch =  0 ;
 static char dAcc_readyToGo =  0 ;
 static char dAcc_timeToGo =  0 ;
 static char dAcc_inSteady =  0 ;
 unsigned int dAcc_resetOccurred =  0 ;
+
 unsigned int dAcc_GCUConfirmed =  0 ;
+
+
+
+
 
 void dAcc_init(void) {
  dAcc_autoAcceleration =  0 ;

@@ -9,7 +9,6 @@
 #include "dd_graphic_controller.h"
 #include "debug.h"
 
-
 int dEbb_localValue = 0, dEbb_motorState = 0;
 signed char dEbb_value = 0;
 //char dEbb_charValue = '0';
@@ -21,7 +20,6 @@ unsigned int dEbb_isSetZero = FALSE;
 unsigned int dEbb_errorOccurred = FALSE;
 
 char textMessage;
-
 
 signed char d_ebb = 0;
 
@@ -80,7 +78,7 @@ void dEbb_printNotification(void){
 void dEbb_setEbbValueFromCAN(unsigned int value){
      dEbb_Value = (int)(value - EBB_DAGO_OFFSET);
      dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
-     dEbb_printNotification();
+     //dEbb_printNotification();
 }
 
 

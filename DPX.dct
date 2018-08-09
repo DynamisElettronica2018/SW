@@ -9988,6 +9988,7 @@ time_datetoepoch
 time_epochtodate
 time_jd1970
 timer1_interrupt
+timer2_acctimer
 timer2_counter0
 timer2_counter1
 timer2_counter2

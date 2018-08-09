@@ -507,8 +507,6 @@ CAN_Interrupt
 		dd_Indicator_setIntValueP
 	dEbb_setEbbValueFromCAN
 		dd_Indicator_setIntValueP
-		dEbb_printNotification
-			dd_GraphicController_fireTimedNotification
 	dEbb_calibrationState
 	dEbb_error
 		dd_GraphicController_fireTimedNotification
@@ -543,7 +541,6 @@ CAN_Interrupt
 		dd_GraphicController_fireTimedNotification
 		dAutocross_stopAutocross
 	d_traction_control_setValueFromCAN
-		d_UI_getOperatingMode
 		dd_Indicator_setIntValueP
 	d_drs_setValueFromCAN
 		d_UI_getOperatingMode

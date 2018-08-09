@@ -559,6 +559,12 @@ void stopTimer32();
 void startTimer32();
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+void dAcc_execute(void);
+
+void dAcc_requestAction(void);
+
+void dAcc_feedback(unsigned int value);
+
 void dAcc_init(void);
 
 unsigned int dAcc_hasResetOccurred(void);

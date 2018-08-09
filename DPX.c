@@ -35,7 +35,7 @@
 #include <stdlib.h>
 
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
-int timer2_EncoderTimer = 0;
+int timer2_EncoderTimer = 0, timer2_AccTimer = 0;
 
 void main(){
 
@@ -71,7 +71,8 @@ onTimer2Interrupt{
     timer2_counter3 += 1;
     timer2_counter4 += 1;
     timer2_counter5 += 1;
-    timer2_EncoderTimer +=1;
+    timer2_EncoderTimer += 1;
+    timer2_AccTimer += 1;
 
     // TIMER_2_PERIOD*5 = 5ms (200Hz)
     if (timer2_counter0 >= 5) {
@@ -110,6 +111,13 @@ onTimer2Interrupt{
     if(timer2_EncoderTimer == 100){
         d_controls_EncoderRead();
     }
+    
+   /* if(timer2_AccTimer >= 25){
+       if(d_UI_getOperatingMode() == ACC_MODE){
+           dAcc_execute();
+        }
+        timer2_AccTimer = 0;
+    } */
     // TIMER_2_PERIOD*1000 = 1s (1Hz)
     if (timer2_counter5 >= 1000) {
         d_sensors_sendSWTemp();

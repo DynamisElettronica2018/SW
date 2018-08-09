@@ -23,6 +23,79 @@
 #include "d_operating_modes.h"
 #include "buzzer.h"
 #include "d_hardReset.h"
+  /*
+#define ACC_READY 1
+#define ACC_STEADY 2
+#define ACC_GO 3
+#define ACC_STOP 0
+
+unsigned int dAcc_state = ACC_STOP;
+unsigned int dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
+
+
+void dAcc_feedback(unsigned int value){
+    if(d_UI_getOperatingMode() == ACC_MODE){
+      switch(value){
+         case
+      if(value == COMMAND_START_ACCELERATION){
+          dd_GraphicController_clearPrompt();
+          dAcc_GCUConfirmed = COMMAND_START_ACCELERATION;
+          dd_GraphicController_fixNotification("STEADY");
+          dAcc_startClutchRelease();
+      } else if (value == COMMAND_START_CLUTCH_RELEASE){
+          dAcc_GCUConfirmed = COMMAND_START_CLUTCH_RELEASE;
+          dAcc_timeToGo = TRUE;
+          dd_GraphicController_fireTimedNotification(1000, "GOOOOO!!!", WARNING);
+      } else if (value == COMMAND_STOP_ACCELERATION){
+          dAcc_stopAutoAcceleration();
+          dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
+      }
+    }
+}
+
+void dAcc_action(void){
+      switch(dAcc_state){
+          case ACC_READY:
+                 dAcc_state = ACC_STEADY;
+                 Can_writeInt(SW_ACCELERATION_GCU_ID, COMMAND_START_ACCELERATION);
+               break;
+          case ACC_STEADY:
+
+               break;
+          case ACC_GO:
+
+               break;
+          case ACC_STOP:
+               dAcc_state = ACC_READY;
+               break;
+          default:
+              dAcc_state = ACC_STOP;
+              break;
+      }
+}
+
+void dAcc_execute(void){
+      switch(dAcc_state){
+          case ACC_READY:
+          
+               break;
+          case ACC_STEADY:
+
+               break;
+          case ACC_GO:
+
+               break;
+          case ACC_STOP:
+               dAcc_state = ACC_READY;
+               break;
+          default:
+              dAcc_state = ACC_STOP;
+              break;
+      }
+}                 */
+
+
+
 
 static char dAcc_autoAcceleration = FALSE;
 static char dAcc_releasingClutch = FALSE;
@@ -30,7 +103,12 @@ static char dAcc_readyToGo = FALSE;
 static char dAcc_timeToGo = FALSE;
 static char dAcc_inSteady = FALSE;
 unsigned int dAcc_resetOccurred = FALSE;
+
 unsigned int dAcc_GCUConfirmed = COMMAND_STOP_ACCELERATION;
+
+
+
+
 
 void dAcc_init(void) {
     dAcc_autoAcceleration = FALSE;

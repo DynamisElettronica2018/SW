@@ -758,6 +758,12 @@ char dd_GraphicController_isColorInversionQueued(void);
 void dd_GraphicController_onTimerInterrupt(void);
 #line 1 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
 #line 14 "c:/users/sofia/desktop/git repo/sw/modules/ui/d_acceleration.h"
+void dAcc_execute(void);
+
+void dAcc_requestAction(void);
+
+void dAcc_feedback(unsigned int value);
+
 void dAcc_init(void);
 
 unsigned int dAcc_hasResetOccurred(void);
@@ -870,7 +876,7 @@ int rand();
 int xtoi(char * s);
 #line 37 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
 int timer2_counter0 = 0, timer2_counter1 = 0, timer2_counter2 = 0, timer2_counter3 = 0, timer2_counter4 = 0, timer2_counter5 = 0, timer2_counter6 = 0;
-int timer2_EncoderTimer = 0;
+int timer2_EncoderTimer = 0, timer2_AccTimer = 0;
 
 void main(){
 
@@ -906,7 +912,8 @@ void main(){
  timer2_counter3 += 1;
  timer2_counter4 += 1;
  timer2_counter5 += 1;
- timer2_EncoderTimer +=1;
+ timer2_EncoderTimer += 1;
+ timer2_AccTimer += 1;
 
 
  if (timer2_counter0 >= 5) {
@@ -945,7 +952,7 @@ void main(){
  if(timer2_EncoderTimer == 100){
  d_controls_EncoderRead();
  }
-
+#line 122 "C:/Users/sofia/Desktop/GIT REPO/SW/DPX.c"
  if (timer2_counter5 >= 1000) {
  d_sensors_sendSWTemp();
  if(dDCU_isAcquiring()){

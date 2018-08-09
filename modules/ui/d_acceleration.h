@@ -11,6 +11,12 @@
 
 #define DAAC_RAMP_TIME_STEP 10
 
+void dAcc_execute(void);
+
+void dAcc_requestAction(void);
+
+void dAcc_feedback(unsigned int value);
+
 void dAcc_init(void);
 
 unsigned int dAcc_hasResetOccurred(void);

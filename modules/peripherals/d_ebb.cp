@@ -468,7 +468,7 @@ void resetTimer32(void);
 double getExecTime(void);
 void stopTimer32();
 void startTimer32();
-#line 13 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 12 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 int dEbb_localValue = 0, dEbb_motorState = 0;
 signed char dEbb_value = 0;
 
@@ -480,7 +480,6 @@ unsigned int dEbb_isSetZero =  0 ;
 unsigned int dEbb_errorOccurred =  0 ;
 
 char textMessage;
-
 
 signed char d_ebb = 0;
 
@@ -539,13 +538,13 @@ void dEbb_printNotification(void){
 void dEbb_setEbbValueFromCAN(unsigned int value){
  dEbb_Value = (int)(value -  8 );
  dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
- dEbb_printNotification();
+
 }
 
 
 void dEbb_propagateEbbChange(void) {
  switch (dEbb_state){
-#line 101 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 99 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
  default:
  dd_Indicator_setIntValueP(&ind_ebb.base, (int) (dEbb_value));
  break;
@@ -600,7 +599,7 @@ void dEbb_error(unsigned int value){
  dd_Indicator_setStringValueP(EBB, "/");
  }
 }
-#line 203 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 201 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 void dEbb_tick(void) {
-#line 230 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
+#line 228 "C:/Users/sofia/Desktop/GIT REPO/SW/modules/peripherals/d_ebb.c"
 }
